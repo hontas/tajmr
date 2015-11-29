@@ -7,7 +7,7 @@
     "node" : "5.x"
   },
   "scripts": {
-    "start": "node server/server.js",
+    "start": "node server.js",
     "build": "browserify --transform babelify --entry client/app.js --outfile public/js/main.js --standalone app",
     "dev": "nodemon --exec 'npm run build -- --debug' --watch client --ext js,jsx",
     "server": "nodemon --exec 'npm start' --watch server",

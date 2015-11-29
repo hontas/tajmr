@@ -1,4 +1,3 @@
 tajmr
 =====
-> Record some time sometime
-(tajmr.herokuapp.com)(https://tajmr.herokuapp.com/)
+> Record some time sometime [tajmr](https://tajmr.herokuapp.com/)
