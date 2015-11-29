@@ -3,16 +3,20 @@
   "version": "0.1.0",
   "description": "Record some time sometime",
   "main": "main.js",
+  "engines" : {
+    "node" : "4.2.x"
+  },
   "scripts": {
+    "start": "node server/server.js",
     "build": "browserify --transform babelify --entry client/app.js --outfile public/js/main.js --standalone app",
     "dev": "nodemon --exec 'npm run build -- --debug' --watch client --ext js,jsx",
-    "server": "nodemon --exec 'babel-node server/server.js' --watch server",
+    "server": "nodemon --exec 'npm start' --watch server",
     "electron": "electron ."
   },
   "author": "Pontus Lundin <lundin.pontus@gmail.com> (https://github.com/hontas)",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/hontas/tajmr.git"
+    "type": "git",
+    "url": "https://github.com/hontas/tajmr.git"
   },
   "license": "ISC",
   "devDependencies": {
@@ -27,5 +31,8 @@
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-timer-mixin": "^0.13.3"
+  },
+  "dependencies": {
+    "express": "^4.13.3"
   }
 }

@@ -1,5 +1,5 @@
-import path from 'path';
-import express from 'express';
+const path = require('path');
+const express = require('express');
 
 const port = 5000;
 const publicPath = path.resolve(__dirname, '../public');
@@ -12,6 +12,5 @@ app.get('/*', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(publicPath);
   console.log('Server running at http://localhost:%s', port);
 });
