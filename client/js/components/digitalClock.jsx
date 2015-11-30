@@ -3,7 +3,7 @@ import { getTimePartsFromElapsedTime } from '../utils/time';
 
 const DigitalClock = ({ time }) => {
   const { hours, minutes, seconds } = getTimePartsFromElapsedTime(time);
-  const timestring = `${hours}:${minutes}:${seconds}`;
+  const timestring = `${hours}:${minutes}`;
 
   return (
     <div className="digital-clock">

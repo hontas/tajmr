@@ -1,8 +1,11 @@
 import React, { PropTypes } from 'react';
 
-const Button = ({ onClick, text }) => {
+const Button = (props) => {
+  const { onClick, text, className } = props;
+  const classNames = className ? `${className} button` : 'button';
+
   return (
-    <button className="button" onClick={ onClick }>{ text }</button>
+    <button { ...props } className={ classNames }>{ text }</button>
   );
 };
 

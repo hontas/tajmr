@@ -2,21 +2,28 @@ import React, { PropTypes } from 'react';
 import store from '../store/store';
 import IntervalListItem from './intervalListItem.jsx';
 
-const IntervalList = ({ intervals }) => {
+export default React.createClass({
+  propTypes: {
+    intervals: PropTypes.arrayOf(PropTypes.object).isRequired
+  },
 
-  const children = intervals
-    .filter(({ startedWorkingAt, stoppedWorkingAt }) => startedWorkingAt && stoppedWorkingAt)
-    .map((interval) => <IntervalListItem { ...interval } key={ interval.id } />);
+  render() {
+    const children = this.props.intervals
+      .filter(({ startedWorkingAt, stoppedWorkingAt }) => startedWorkingAt && stoppedWorkingAt)
+      .map((interval) => <IntervalListItem { ...interval } key={ interval.id } onUpdate={ this.onUpdate } onDelete={ this.onDelete } />);
 
-  return (
-    <ul className="interval-list">
-      { children }
-    </ul>
-  );
-};
+    return (
+      <ul className="interval-list">
+        { children }
+      </ul>
+    );
+  },
 
-IntervalList.propTypes = {
-  intervals: PropTypes.arrayOf(PropTypes.object).isRequired
-};
+  onDelete(id) {
+    store.removeInterval(id);
+  },
 
-export default IntervalList;
+  onUpdate(interval) {
+    store.updateInterval(interval);
+  },
+});

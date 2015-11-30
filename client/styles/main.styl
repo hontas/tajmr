@@ -29,23 +29,23 @@ body {
 .header {
   flex: 1;
   display: flex;
-}
 
-.header h1 {
-  font-size: 30vw;
-  margin: 0 auto;
+  h1 {
+    font-size: 30vw;
+    margin: 0 auto;
+  }
 }
 
 .digital-clock {
   flex: 1;
   display: flex;
-}
 
-.digital-clock time {
-  font-size: 15vw;
-  display: block;
-  line-height: 20vw;
-  margin: 0 auto;
+  time {
+    font-size: 15vw;
+    display: block;
+    line-height: 20vw;
+    margin: 0 auto;
+  }
 }
 
 .button {
@@ -59,14 +59,14 @@ body {
   padding: 0.5em 1em;
   width: 100%;
   -webkit-user-select: none;
-}
 
-.button:hover {
-  background: #e9e9e9;
-}
+  &:hover {
+    background: #e9e9e9;
+  }
 
-.button:active {
-  background: #ddd;
+  &:active {
+    background: #ddd;
+  }
 }
 
 
@@ -78,30 +78,43 @@ body {
 .interval-list-item {
   display: flex;
   margin-bottom: 0.5em;
+
+  & > * {
+    flex: 1;
+    margin-left: 0.5em;
+  }
+
+  & > input {
+    border-width: 0px;
+    font-size: 1em;
+    padding: 0.5em;
+  }
+
+  .interval-list-item-note {
+    flex: 4;
+  }
+
+  .button {
+    display: inline-block;
+    flex: 2;
+    font-size: 1em;
+    margin-top: 0;
+    width: auto;
+  }
+
+  .delete {
+    border-left: 1px solid lightgray;
+    flex: .5;
+    margin-left: 0;
+    padding: 0.5em;
+
+    &:hover {
+      background: red;
+      color: white;
+    }
+  }
 }
 
-.interval-list-item > * {
-  flex: 1;
-  margin-left: 0.5em;
-}
-
-.interval-list-item input {
-  border-width: 0px;
-  font-size: 1em;
-  padding: 0.5em;
-}
-
-.interval-list-item-note {
-  flex: 4;
-}
-
-.interval-list-item .button {
-  display: inline-block;
-  flex: 2;
-  font-size: 1em;
-  margin-top: 0;
-  width: auto;
-}
 
 @media screen and (min-width: 768px) {
 

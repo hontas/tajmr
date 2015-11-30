@@ -8,6 +8,13 @@ import DigitalClock from './digitalClock.jsx';
 import Button from './button.jsx';
 import IntervalList from './intervalList.jsx';
 
+function isToday({ startedWorkingAt }) {
+  const today = new Date();
+  const date = new Date(startedWorkingAt);
+
+  return date.toLocaleDateString() === today.toLocaleDateString();
+}
+
 export default React.createClass({
   mixins: [TimerMixin],
 
@@ -44,9 +51,11 @@ export default React.createClass({
   render() {
     const { intervals, currentInterval } = this.state;
     const intervalSum = intervals
+      .filter(isToday)
       .filter((interval) => interval.stoppedWorkingAt)
       .map((interval) => interval.stoppedWorkingAt - interval.startedWorkingAt)
       .reduce((sum, curr) => (sum + curr), 0);
+
     const elapsedTime = currentInterval ? intervalSum + Date.now() - currentInterval.startedWorkingAt : intervalSum;
     const buttonText = currentInterval ? 'Take a break ▐▐' : 'Start workin\' ▶';
 

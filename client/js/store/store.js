@@ -33,6 +33,23 @@ const store = Object.assign({}, baseStore, {
     _currentIntervalId = null;
     persistToLocalStorage();
     this.emitChange();
+  },
+
+  updateInterval(interval) {
+    const id = interval.id;
+    if (_intervals[id]) {
+      _intervals[id] = Object.assign({}, _intervals[id], interval);
+    }
+    persistToLocalStorage();
+    this.emitChange();
+  },
+
+  removeInterval(id) {
+    if (_intervals[id]) {
+      delete _intervals[id];
+    }
+    persistToLocalStorage();
+    this.emitChange();
   }
 });
 
