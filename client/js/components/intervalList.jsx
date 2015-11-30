@@ -9,7 +9,6 @@ export default React.createClass({
 
   render() {
     const children = this.props.intervals
-      .filter(({ startedWorkingAt, stoppedWorkingAt }) => startedWorkingAt && stoppedWorkingAt)
       .map((interval) => <IntervalListItem { ...interval } key={ interval.id } onUpdate={ this.onUpdate } onDelete={ this.onDelete } />);
 
     return (
@@ -25,5 +24,5 @@ export default React.createClass({
 
   onUpdate(interval) {
     store.updateInterval(interval);
-  },
+  }
 });

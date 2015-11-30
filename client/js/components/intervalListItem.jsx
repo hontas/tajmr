@@ -5,7 +5,7 @@ import Button from './button.jsx';
 export default React.createClass({
   propTypes: {
     startedWorkingAt: PropTypes.number.isRequired,
-    stoppedWorkingAt: PropTypes.number.isRequired,
+    stoppedWorkingAt: PropTypes.number,
     onUpdate: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     note: PropTypes.string
@@ -25,10 +25,25 @@ export default React.createClass({
     const endTime = end ? end : `${hours2}:${minutes2}`;
     const text = comment ? comment : note;
 
+    const getEndTimeAttributes = () => {
+      if (stoppedWorkingAt) {
+        return {
+          value: endTime,
+          onChange: this.onEndChange
+        };
+      } else {
+        return {
+          value: "in progress",
+          disabled: true
+        };
+      }
+    };
+
     return (
       <li className="interval-list-item">
         <input value={ startTime } className="interval-list-item-time" onChange={ this.onStartChange } />
-        <input value={ endTime } className="interval-list-item-time" onChange={ this.onEndChange } />
+        <input className="interval-list-item-time" { ...getEndTimeAttributes() } />
+
         <input value={ text } className="interval-list-item-note" placeholder="Anteckning" onChange={ this.onCommentChange } />
         <Button className="update" onClick={ this.onUpdate } text="Uppdatera" />
         <Button className="delete" onClick={ this.onDelete } text="⌫" />

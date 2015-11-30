@@ -84,10 +84,17 @@ body {
     margin-left: 0.5em;
   }
 
-  & > input {
-    border-width: 0px;
+  .interval-list-item-note,
+  .interval-list-item-time {
+    border-width: 0;
     font-size: 1em;
     padding: 0.5em;
+
+    &[disabled] {
+      background: whitesmoke;
+      color: darkgray;
+      cursor: not-allowed;
+    }
   }
 
   .interval-list-item-note {
