@@ -8,6 +8,8 @@ import DigitalClock from './digitalClock.jsx';
 import Button from './button.jsx';
 import IntervalList from './intervalList.jsx';
 
+const oneMinute = 1000 * 60;
+
 function isToday({ startedWorkingAt }) {
   const today = new Date();
   const date = new Date(startedWorkingAt);
@@ -34,7 +36,7 @@ export default React.createClass({
           this.clearInterval(intervalId);
           intervalId = null;
         } else {
-          intervalId = this.setInterval(this.forceUpdate, 1000);
+          intervalId = this.setInterval(this.forceUpdate, oneMinute);
         }
       };
     })();
