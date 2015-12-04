@@ -28,8 +28,12 @@
   "license": "ISC",
   "devDependencies": {
     "electron-prebuilt": "^0.35.1",
+    "eslint": "^1.10.3",
+    "eslint-plugin-react": "^3.11.2",
     "nodemon": "^1.8.1",
-    "parallelshell": "^2.0.0"
+    "parallelshell": "^2.0.0",
+    "react-redux": "^4.0.0",
+    "redux": "^3.0.4"
   },
   "dependencies": {
     "babel-cli": "^6.2.0",
