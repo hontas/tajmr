@@ -10,7 +10,7 @@ export function getTimePartsFromElapsedTime(timestamp) {
   return { hours, minutes, seconds };
 }
 
-export function getTimePartsFromTimestamp(timestamp) {
+export function getTimePartsFromTimestamp(timestamp) {
   const date = new Date(timestamp);
   const hours = zeroPad(date.getHours());
   const minutes = zeroPad(date.getMinutes());

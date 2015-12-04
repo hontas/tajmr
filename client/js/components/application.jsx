@@ -1,103 +1,87 @@
-import React from 'react';
-import TimerMixin from 'react-timer-mixin';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 
-import store from '../store/store';
-import constants from '../constants';
+import { addInterval, updateInterval, completeInterval, removeInterval } from '../actions';
 import Header from './header.jsx';
 import DigitalClock from './digitalClock.jsx';
 import Button from './button.jsx';
 import IntervalList from './intervalList.jsx';
 
-const oneMinute = 1000 * 60;
-
-function isToday({ startedWorkingAt }) {
+function isToday({ startTime }) {
   const today = new Date();
-  const date = new Date(startedWorkingAt);
+  const date = new Date(startTime);
 
   return date.toLocaleDateString() === today.toLocaleDateString();
 }
 
-export default React.createClass({
-  mixins: [TimerMixin],
+function isComplete({ endTime }) {
+  return endTime;
+}
 
-  getInitialState() {
-    return {
-      intervals: store.getIntervals(),
-      currentInterval: store.getCurrentInterval()
-    };
+function getTimeInterval({ startTime, endTime }) {
+  return endTime - startTime;
+}
+
+function sum(res, curr) {
+  return res + curr;
+}
+
+const Application = React.createClass({
+  propTypes: {
+    activeInterval: PropTypes.shape({
+      startTime: PropTypes.number.isRequired
+    }),
+    dispatch: PropTypes.func.isRequired,
+    intervals: PropTypes.arrayOf(PropTypes.object).isRequired
   },
 
-  componentDidMount() {
-    store.addChangeListener(this.onStoreChange);
-    this.toggleIntervalRender = (() => {
-      let intervalId;
-      return () => {
-        if (intervalId) {
-          this.clearInterval(intervalId);
-          intervalId = null;
-        } else {
-          intervalId = this.setInterval(this.forceUpdate, oneMinute);
-        }
-      };
-    })();
-
-    if (this.state.currentInterval) {
-      this.toggleIntervalRender();
-    }
-  },
-
-  componentWillUnmount() {
-    store.removeChangeListener(this.onStoreChange);
-  },
-
-  render() {
-    const { intervals, currentInterval } = this.state;
+  render() {
+    const { intervals, activeInterval } = this.props;
     const intervalSum = intervals
       .filter(isToday)
-      .filter((interval) => interval.stoppedWorkingAt)
-      .map((interval) => interval.stoppedWorkingAt - interval.startedWorkingAt)
-      .reduce((sum, curr) => (sum + curr), 0);
+      .filter(isComplete)
+      .map(getTimeInterval)
+      .reduce(sum, 0);
 
-    const elapsedTime = currentInterval ? intervalSum + Date.now() - currentInterval.startedWorkingAt : intervalSum;
-    const buttonText = currentInterval ? 'Take a break ▐▐' : 'Start workin\' ▶';
+    const elapsedTime = activeInterval ? intervalSum + Date.now() - activeInterval.startTime : intervalSum;
+    const buttonText = activeInterval ? 'Take a break ▐▐' : 'Start workin\' ▶';
 
     return (
       <div className="application">
         <Header />
         <DigitalClock time={ elapsedTime } />
         <Button onClick={ this.onClick } text={ buttonText } />
-        <IntervalList intervals={ intervals }/>
+        <IntervalList intervals={ intervals } onDelete={ this.onDelete } onUpdate={ this.onUpdate } />
       </div>
     );
   },
 
-  onStoreChange() {
-    this.setState({
-      intervals: store.getIntervals(),
-      currentInterval: store.getCurrentInterval()
-    });
-  },
-
   onClick() {
-    if (this.state.currentInterval) {
-      this.takeABreak();
+    const { dispatch, activeInterval } = this.props;
+    if (activeInterval) {
+      dispatch(completeInterval(activeInterval));
     } else {
-      this.startWorking();
+      dispatch(addInterval());
     }
   },
 
-  startWorking() {
-    this.toggleIntervalRender();
-    store.startedWorking(Date.now());
+  onDelete(id) {
+    const { dispatch } = this.props;
+    dispatch(removeInterval(id));
   },
 
-  takeABreak() {
-    const { currentInterval: { id } } = this.state;
-    this.toggleIntervalRender();
-
-    store.stoppedWorking({
-      timestamp: Date.now(),
-      intervalId: id
-    });
+  onUpdate(interval) {
+    const { dispatch } = this.props;
+    dispatch(updateInterval(interval));
   }
 });
+
+function select({ intervals: intervalMap }) {
+  const intervals = Object.keys(intervalMap).map((id) => intervalMap[id]);
+  return {
+    intervals,
+    activeInterval: intervals.find((interval) => !interval.endTime)
+  };
+}
+
+export default connect(select)(Application);

@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import store from '../store/store';
 import IntervalListItem from './intervalListItem.jsx';
 
 function sortBy(array, prop) {
@@ -10,25 +9,23 @@ function sortBy(array, prop) {
 
 export default React.createClass({
   propTypes: {
-    intervals: PropTypes.arrayOf(PropTypes.object).isRequired
+    intervals: PropTypes.arrayOf(PropTypes.object).isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onUpdate: PropTypes.func.isRequired
   },
 
   render() {
-    const children = sortBy(this.props.intervals, 'startedWorkingAt')
-      .map((interval) => <IntervalListItem { ...interval } key={ interval.id } onUpdate={ this.onUpdate } onDelete={ this.onDelete } />);
+    const { onUpdate, onDelete } = this.props;
+    const children = sortBy(this.props.intervals, 'startTime')
+      .map((interval) => <IntervalListItem { ...interval }
+          key={ interval.id }
+          onDelete={ onDelete }
+          onUpdate={ onUpdate }/>);
 
     return (
       <ul className="interval-list">
         { children }
       </ul>
     );
-  },
-
-  onDelete(id) {
-    store.removeInterval(id);
-  },
-
-  onUpdate(interval) {
-    store.updateInterval(interval);
   }
 });

@@ -4,36 +4,37 @@ import Button from './button.jsx';
 
 export default React.createClass({
   propTypes: {
-    startedWorkingAt: PropTypes.number.isRequired,
-    stoppedWorkingAt: PropTypes.number,
-    onUpdate: PropTypes.func.isRequired,
+    endTime: PropTypes.number,
+    id: PropTypes.string.isRequired,
+    note: PropTypes.string,
     onDelete: PropTypes.func.isRequired,
-    note: PropTypes.string
+    onUpdate: PropTypes.func.isRequired,
+    startTime: PropTypes.number.isRequired
   },
 
-  getInitialState() {
+  getInitialState() {
     return {};
   },
 
-  render() {
-    const { startedWorkingAt, stoppedWorkingAt, note } = this.props;
+  render() {
+    const { startTime, endTime, note } = this.props;
     const { start, end, comment } = this.state;
-    const { hours: hours1, minutes: minutes1 } = getTimePartsFromTimestamp(startedWorkingAt);
-    const { hours: hours2, minutes: minutes2 } = getTimePartsFromTimestamp(stoppedWorkingAt);
+    const { hours: hours1, minutes: minutes1 } = getTimePartsFromTimestamp(startTime);
+    const { hours: hours2, minutes: minutes2 } = getTimePartsFromTimestamp(endTime);
 
-    const startTime = start ? start : `${hours1}:${minutes1}`;
-    const endTime = end ? end : `${hours2}:${minutes2}`;
+    const startTimeString = start ? start : `${hours1}:${minutes1}`;
+    const endTimeString = end ? end : `${hours2}:${minutes2}`;
     const text = comment ? comment : note;
 
     const getEndTimeAttributes = () => {
-      if (stoppedWorkingAt) {
+      if (endTime) {
         return {
-          value: endTime,
+          value: endTimeString,
           onChange: this.onEndChange
         };
       } else {
         return {
-          value: "in progress",
+          value: 'in progress',
           disabled: true
         };
       }
@@ -41,43 +42,14 @@ export default React.createClass({
 
     return (
       <li className="interval-list-item">
-        <input value={ startTime } className="interval-list-item-time" onChange={ this.onStartChange } />
+        <input className="interval-list-item-time" onChange={ this.onStartChange } value={ startTimeString } />
         <input className="interval-list-item-time" { ...getEndTimeAttributes() } />
 
-        <input value={ text } className="interval-list-item-note" placeholder="Anteckning" onChange={ this.onCommentChange } />
+        <input className="interval-list-item-note" onChange={ this.onCommentChange } placeholder="Anteckning" value={ text } />
         <Button className="update" onClick={ this.onUpdate } text="Uppdatera" />
         <Button className="delete" onClick={ this.onDelete } text="⌫" />
       </li>
     );
-  },
-
-  onUpdate() {
-    const { id, note, startedWorkingAt, stoppedWorkingAt } = this.props;
-    const { comment, start, end } = this.state;
-    const text = comment || note || '';
-
-    this.props.onUpdate({
-      id,
-      note: text,
-      startedWorkingAt: this.getUpdatedTimeFor(start, startedWorkingAt),
-      stoppedWorkingAt: this.getUpdatedTimeFor(end, stoppedWorkingAt)
-    });
-  },
-
-  onDelete() {
-    this.props.onDelete(this.props.id);
-  },
-
-  onStartChange(evt) {
-    this.setState({ start: evt.target.value });
-  },
-
-  onEndChange(evt) {
-    this.setState({ end: evt.target.value });
-  },
-
-  onCommentChange(evt) {
-    this.setState({ comment: evt.target.value });
   },
 
   getUpdatedTimeFor(updated, originalTime) {
@@ -95,5 +67,34 @@ export default React.createClass({
     date.setMinutes(minutes);
 
     return date.getTime();
+  },
+
+  onUpdate() {
+    const { id, note, startTime, endTime } = this.props;
+    const { comment, start, end } = this.state;
+    const text = comment || note || '';
+
+    this.props.onUpdate({
+      id,
+      note: text,
+      startTime: this.getUpdatedTimeFor(start, startTime),
+      endTime: this.getUpdatedTimeFor(end, endTime)
+    });
+  },
+
+  onDelete() {
+    this.props.onDelete(this.props.id);
+  },
+
+  onStartChange(evt) {
+    this.setState({ start: evt.target.value });
+  },
+
+  onEndChange(evt) {
+    this.setState({ end: evt.target.value });
+  },
+
+  onCommentChange(evt) {
+    this.setState({ comment: evt.target.value });
   }
 });

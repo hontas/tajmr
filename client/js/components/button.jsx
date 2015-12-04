@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
 const Button = (props) => {
-  const { onClick, text, className } = props;
+  const { className, text } = props;
   const classNames = className ? `${className} button` : 'button';
 
   return (
@@ -10,6 +10,7 @@ const Button = (props) => {
 };
 
 Button.propTypes = {
+  className: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired
 };

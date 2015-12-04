@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default (props) => {
+export default () => {
   return (
     <header className="header">
-      <h1>TimR</h1>
+      <h1>{ 'TimR' }</h1>
     </header>
   );
 };

@@ -1,0 +1,9 @@
+export const LOCAL_STORAGE_KEY = 'timr-app.intervals';
+
+export const INTERVAL_ADD = 'INTERVAL_ADD';
+export const INTERVAL_UPDATE = 'INTERVAL_UPDATE';
+export const INTERVAL_COMPLETE = 'INTERVAL_COMPLETE';
+export const INTERVAL_REMOVE = 'INTERVAL_REMOVE';
+
+export const STARTED_WORKING = 'STARTED_WORKING';
+export const STOPPED_WORKING = 'STOPPED_WORKING';
