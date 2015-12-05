@@ -1,11 +1,11 @@
-function zeroPad(num) {
+export function zeroPad(num) {
   return num < 10 ? '0' + num : num;
 }
 
 export function getTimePartsFromElapsedTime(timestamp) {
-  const hours = zeroPad(Math.floor(timestamp / 1000 / 3600));
-  const minutes = zeroPad(Math.floor(timestamp / 1000 / 60) % 60);
-  const seconds = zeroPad(Math.floor(timestamp / 1000) % 60);
+  const hours = Math.floor(timestamp / 1000 / 3600);
+  const minutes = Math.floor(timestamp / 1000 / 60) % 60;
+  const seconds = Math.floor(timestamp / 1000) % 60;
 
   return { hours, minutes, seconds };
 }

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import TimerMixin from 'react-timer-mixin';
-import { getTimePartsFromElapsedTime } from '../../utils/time';
+import { getTimePartsFromElapsedTime, zeroPad } from '../../utils/time';
+import notify from '../../utils/notification';
 
 const oneMinute = 1000 * 60;
 
@@ -20,7 +21,11 @@ export default React.createClass({
     const { from, elapsed } = this.props;
     const time = Date.now() - from + elapsed;
     const { hours, minutes } = getTimePartsFromElapsedTime(time);
-    const timestring = `${hours}:${minutes}`;
+    const timestring = `${zeroPad(hours)}:${zeroPad(minutes)}`;
+
+    if (minutes === 0) {
+      notify(`Nu har du jobbat i ${hours} timmar.`);
+    }
 
     return (
       <div className="digital-clock">
