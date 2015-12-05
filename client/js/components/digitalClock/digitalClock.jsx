@@ -19,7 +19,7 @@ export default React.createClass({
 
   render() {
     const { from, elapsed } = this.props;
-    const time = Date.now() - from + elapsed;
+    const time = from ? Date.now() - from + elapsed : elapsed;
     const { hours, minutes } = getTimePartsFromElapsedTime(time);
     const timestring = `${zeroPad(hours)}:${zeroPad(minutes)}`;
 

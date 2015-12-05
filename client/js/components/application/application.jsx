@@ -14,12 +14,12 @@ function isToday({ startTime }) {
   return date.toLocaleDateString() === today.toLocaleDateString();
 }
 
-function isComplete({ stoppedWorkingAt }) {
-  return stoppedWorkingAt;
+function isComplete({ endTime }) {
+  return endTime;
 }
 
-function getTimeInterval({ startTime, stoppedWorkingAt }) {
-  return stoppedWorkingAt - startTime;
+function getTimeInterval({ startTime, endTime }) {
+  return endTime - startTime;
 }
 
 function sum(res, curr) {
@@ -79,7 +79,7 @@ function select({ intervals: intervalMap }) {
   const intervals = Object.keys(intervalMap).map((id) => intervalMap[id]);
   return {
     intervals,
-    activeInterval: intervals.find((interval) => !interval.stoppedWorkingAt)
+    activeInterval: intervals.find((interval) => !interval.endTime)
   };
 }
 
