@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import { getTimePartsFromTimestamp } from '../utils/time';
-import Button from './button.jsx';
+import { getTimePartsFromTimestamp } from '../../utils/time';
+import Button from '../button/button.jsx';
 
 export default React.createClass({
   propTypes: {

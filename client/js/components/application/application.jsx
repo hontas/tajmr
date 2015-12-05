@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { addInterval, updateInterval, completeInterval, removeInterval } from '../actions';
-import Header from './header.jsx';
-import DigitalClock from './digitalClock.jsx';
-import Button from './button.jsx';
-import IntervalList from './intervalList.jsx';
+import { addInterval, updateInterval, completeInterval, removeInterval } from '../../actions';
+import Header from '../header/header.jsx';
+import DigitalClock from '../digitalClock/digitalClock.jsx';
+import Button from '../button/button.jsx';
+import IntervalList from '../intervalList/intervalList.jsx';
 
 function isToday({ startTime }) {
   const today = new Date();
@@ -14,12 +14,12 @@ function isToday({ startTime }) {
   return date.toLocaleDateString() === today.toLocaleDateString();
 }
 
-function isComplete({ endTime }) {
-  return endTime;
+function isComplete({ stoppedWorkingAt }) {
+  return stoppedWorkingAt;
 }
 
-function getTimeInterval({ startTime, endTime }) {
-  return endTime - startTime;
+function getTimeInterval({ startTime, stoppedWorkingAt }) {
+  return stoppedWorkingAt - startTime;
 }
 
 function sum(res, curr) {
@@ -43,13 +43,12 @@ const Application = React.createClass({
       .map(getTimeInterval)
       .reduce(sum, 0);
 
-    const elapsedTime = activeInterval ? intervalSum + Date.now() - activeInterval.startTime : intervalSum;
     const buttonText = activeInterval ? 'Take a break ▐▐' : 'Start workin\' ▶';
 
     return (
       <div className="application">
         <Header />
-        <DigitalClock time={ elapsedTime } />
+        <DigitalClock elapsed={ intervalSum } from={ activeInterval ? activeInterval.startTime : 0 } />
         <Button onClick={ this.onClick } text={ buttonText } />
         <IntervalList intervals={ intervals } onDelete={ this.onDelete } onUpdate={ this.onUpdate } />
       </div>
@@ -80,7 +79,7 @@ function select({ intervals: intervalMap }) {
   const intervals = Object.keys(intervalMap).map((id) => intervalMap[id]);
   return {
     intervals,
-    activeInterval: intervals.find((interval) => !interval.endTime)
+    activeInterval: intervals.find((interval) => !interval.stoppedWorkingAt)
   };
 }
 
