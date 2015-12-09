@@ -3,7 +3,8 @@ const fiveSeconds = 5000;
 function spawnNotification(theBody, theIcon, theTitle) {
   const options = {
       body: theBody,
-      icon: theIcon
+      icon: theIcon,
+      tag: theTitle
   };
   return new Notification(theTitle, options);
 }
