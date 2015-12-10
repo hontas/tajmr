@@ -2,6 +2,20 @@ import React, { PropTypes } from 'react';
 import { getTimePartsFromTimestamp } from '../../utils/time';
 import Button from '../button/button.jsx';
 
+function debounce(fn, timeout = 400, thisArg) {
+  let timeoutId;
+  return function (...args) {
+    const context = thisArg || this;
+    if (timeoutId) {
+      timeoutId = clearTimeout(timeoutId);
+    }
+
+    timeoutId = setTimeout(() => {
+      fn.apply(context, args);
+    }, timeout);
+  };
+}
+
 export default React.createClass({
   propTypes: {
     endTime: PropTypes.number,
@@ -14,6 +28,10 @@ export default React.createClass({
 
   getInitialState() {
     return {};
+  },
+
+  componentDidMount() {
+    this.debouncedUpdate = debounce(this.onUpdate);
   },
 
   render() {
@@ -34,7 +52,7 @@ export default React.createClass({
         };
       } else {
         return {
-          value: 'in progress',
+          value: 'active',
           disabled: true
         };
       }
@@ -46,7 +64,6 @@ export default React.createClass({
         <input className="interval-list-item-time" { ...getEndTimeAttributes() } />
 
         <input className="interval-list-item-note" onChange={ this.onCommentChange } placeholder="Anteckning" value={ text } />
-        <Button className="update" onClick={ this.onUpdate } text="Uppdatera" />
         <Button className="delete" onClick={ this.onDelete } text="⌫" />
       </li>
     );
@@ -87,14 +104,14 @@ export default React.createClass({
   },
 
   onStartChange(evt) {
-    this.setState({ start: evt.target.value });
+    this.setState({ start: evt.target.value }, this.debouncedUpdate);
   },
 
   onEndChange(evt) {
-    this.setState({ end: evt.target.value });
+    this.setState({ end: evt.target.value }, this.debouncedUpdate);
   },
 
   onCommentChange(evt) {
-    this.setState({ comment: evt.target.value });
+    this.setState({ comment: evt.target.value }, this.debouncedUpdate);
   }
 });

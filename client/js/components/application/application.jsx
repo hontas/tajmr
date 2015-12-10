@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import { addInterval, updateInterval, completeInterval, removeInterval } from '../../actions';
+import Navbar from '../navbar/navbar.jsx';
 import Header from '../header/header.jsx';
 import DigitalClock from '../digitalClock/digitalClock.jsx';
 import Button from '../button/button.jsx';
@@ -48,6 +49,7 @@ const Application = React.createClass({
 
     return (
       <div className="application">
+        <Navbar />
         <Header />
         <DigitalClock elapsed={ intervalSum } from={ activeInterval ? activeInterval.startTime : 0 } />
         <Button onClick={ this.onClick } text={ buttonText } />
