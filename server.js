@@ -1,13 +1,14 @@
-const express = require('express');
-const app = express();
+'use strict';
+
+if (process.env.NODE_ENV === 'development') {
+  const config = require('./config.json');
+  process.env.MONGOLAB_URI = config.mongo_uri;
+  process.env.LOGIN_HASH = config.login_hash;
+}
+
+const app = require('./server/app');
 
 app.set('port', (process.env.PORT || 5000));
-
-app.use(express.static(__dirname + '/public'));
-
-app.get('/*', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
-});
 
 app.listen(app.get('port'), () => {
   console.log('Server running at http://localhost:%s', app.get('port'));

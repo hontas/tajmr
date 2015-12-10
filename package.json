@@ -19,7 +19,7 @@
     "watch": "parallelshell 'npm run watch:server' 'npm run watch:scripts' 'npm run watch:styles'",
     "watch:scripts": "nodemon --exec 'npm run build -- --debug' --watch client --ext js,jsx",
     "watch:styles": "npm run styles -- --watch",
-    "watch:server": "nodemon --exec 'npm start' --watch server"
+    "watch:server": "nodemon --exec 'NODE_ENV=development npm start' --watch server"
   },
   "author": "Pontus Lundin <lundin.pontus@gmail.com> (https://github.com/hontas)",
   "repository": {
@@ -39,14 +39,19 @@
     "babel-preset-es2015": "^6.1.18",
     "babel-preset-react": "^6.1.18",
     "babelify": "^7.2.0",
+    "basic-auth": "^1.0.3",
+    "body-parser": "^1.14.1",
     "browserify": "^12.0.1",
+    "compression": "^1.6.0",
     "cuid": "^1.3.8",
     "express": "^4.13.3",
+    "md5": "^2.0.0",
+    "mongodb": "^2.0.49",
     "react": "^0.14.3",
-    "react-redux": "^4.0.0",
-    "redux": "^3.0.4",
     "react-dom": "^0.14.3",
+    "react-redux": "^4.0.0",
     "react-timer-mixin": "^0.13.3",
+    "redux": "^3.0.4",
     "stylus": "^0.52.4"
   }
 }

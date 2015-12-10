@@ -1,11 +1,12 @@
 const fiveSeconds = 5000;
 
-function spawnNotification(theBody, theIcon, theTitle) {
+function spawnNotification(body, icon, title) {
   const options = {
-      body: theBody,
-      icon: theIcon
+      body: body,
+      icon: icon,
+      tag: title
   };
-  return new Notification(theTitle, options);
+  return new Notification(title, options);
 }
 
 module.exports = (message) => {

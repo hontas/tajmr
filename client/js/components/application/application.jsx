@@ -6,6 +6,7 @@ import Header from '../header/header.jsx';
 import DigitalClock from '../digitalClock/digitalClock.jsx';
 import Button from '../button/button.jsx';
 import IntervalList from '../intervalList/intervalList.jsx';
+import IntervalStats from '../intervalStats/intervalStats.jsx';
 
 function isToday({ startTime }) {
   const today = new Date();
@@ -51,6 +52,7 @@ const Application = React.createClass({
         <DigitalClock elapsed={ intervalSum } from={ activeInterval ? activeInterval.startTime : 0 } />
         <Button onClick={ this.onClick } text={ buttonText } />
         <IntervalList intervals={ intervals } onDelete={ this.onDelete } onUpdate={ this.onUpdate } />
+        <IntervalStats intervals={ intervals} />
       </div>
     );
   },
