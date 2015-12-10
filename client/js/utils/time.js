@@ -1,3 +1,5 @@
+const weekDays = ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'];
+
 export function zeroPad(num) {
   return num < 10 ? '0' + num : num;
 }
@@ -17,4 +19,22 @@ export function getTimePartsFromTimestamp(timestamp) {
   const seconds = zeroPad(date.getSeconds());
 
   return { hours, minutes, seconds };
+}
+
+export function getWeekday(date) {
+  return weekDays[date.getDay()];
+}
+
+export function startOfDay(date) {
+  const newDate = new Date(date);
+  newDate.setHours(0);
+  newDate.setMinutes(0);
+  newDate.setSeconds(0);
+  return newDate;
+}
+
+export function subtractDays(date, days = 0) {
+  const newDate = new Date(date);
+  newDate.setDate(newDate.getDate() - days);
+  return newDate;
 }
