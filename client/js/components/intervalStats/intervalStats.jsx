@@ -2,18 +2,9 @@ import React, { PropTypes } from 'react';
 import IntervalStatsItem from './intervalStatsItem.jsx';
 import {
   getTimePartsFromElapsedTime,
-  subtractDays,
   getWeekday,
-  startOfDay,
   zeroPad
 } from '../../utils/time';
-
-const today = startOfDay(new Date());
-const oneWeekBack = subtractDays(today, 7);
-
-function byOneWeekBack(interval) {
-  return interval.startTime > oneWeekBack;
-}
 
 function getIntervalAndDate(interval) {
   const date = new Date(interval.startTime);
@@ -37,8 +28,8 @@ function groupByDate(res, curr) {
 
 const IntervalStats = ({ intervals }) => {
   const dateMap = intervals
-    .filter(byOneWeekBack)
     .map(getIntervalAndDate)
+    .slice(0, 5)
     .reduce(groupByDate, {});
 
   const intervalsDayList = Object.keys(dateMap)
