@@ -1,5 +1,11 @@
 import { combineReducers } from 'redux';
-import { INTERVAL_ADD, INTERVAL_UPDATE, INTERVAL_COMPLETE, INTERVAL_REMOVE } from '../constants';
+import {
+  INTERVAL_ADD,
+  INTERVAL_UPDATE,
+  INTERVAL_COMPLETE,
+  INTERVAL_REMOVE,
+  TOGGLE_DISPLAY_NOTIFICATIONS
+} from '../constants';
 
 function intervals(state = {}, action) {
   switch (action.type) {
@@ -22,7 +28,17 @@ function version(state = null) {
   return state;
 }
 
+function displayNotifications(state = true, action) {
+  switch (action.type) {
+    case TOGGLE_DISPLAY_NOTIFICATIONS:
+      return !state;
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
+  displayNotifications,
   intervals,
   version
 });

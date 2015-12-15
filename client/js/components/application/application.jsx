@@ -1,7 +1,13 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { addInterval, updateInterval, completeInterval, removeInterval } from '../../actions';
+import {
+  addInterval,
+  updateInterval,
+  completeInterval,
+  removeInterval,
+  toggleDisplayNotifications
+} from '../../actions';
 import Navbar from '../navbar/navbar.jsx';
 import Header from '../header/header.jsx';
 import DigitalClock from '../digitalClock/digitalClock.jsx';
@@ -49,9 +55,9 @@ const Application = React.createClass({
 
     return (
       <div className="application">
-        <Navbar />
+        <Navbar { ...this.props } onToggleNotifications={ this.onToggleNotifications } />
         <Header />
-        <DigitalClock elapsed={ intervalSum } from={ activeInterval ? activeInterval.startTime : 0 } />
+        <DigitalClock { ...this.props } elapsed={ intervalSum } from={ activeInterval ? activeInterval.startTime : 0 } />
         <Button onClick={ this.onClick } text={ buttonText } />
         <IntervalList intervals={ intervals } onDelete={ this.onDelete } onUpdate={ this.onUpdate } />
         <IntervalStats intervals={ intervals} />
@@ -76,14 +82,19 @@ const Application = React.createClass({
   onUpdate(interval) {
     const { dispatch } = this.props;
     dispatch(updateInterval(interval));
+  },
+
+  onToggleNotifications() {
+    this.props.dispatch(toggleDisplayNotifications());
   }
 });
 
-function select({ intervals: intervalMap }) {
+function select({ intervals: intervalMap, displayNotifications }) {
   const intervals = Object.keys(intervalMap).map((id) => intervalMap[id]);
   return {
     intervals,
-    activeInterval: intervals.find((interval) => !interval.endTime)
+    activeInterval: intervals.find((interval) => !interval.endTime),
+    displayNotifications
   };
 }
 

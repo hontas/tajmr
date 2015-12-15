@@ -1,5 +1,11 @@
 import cuid from 'cuid';
-import { INTERVAL_ADD, INTERVAL_UPDATE, INTERVAL_COMPLETE, INTERVAL_REMOVE } from '../constants';
+import {
+  INTERVAL_ADD,
+  INTERVAL_UPDATE,
+  INTERVAL_COMPLETE,
+  INTERVAL_REMOVE,
+  TOGGLE_DISPLAY_NOTIFICATIONS
+} from '../constants';
 
 export function addInterval() {
   return {
@@ -31,5 +37,11 @@ export function removeInterval(id) {
   return {
     type: INTERVAL_REMOVE,
     id
+  };
+}
+
+export function toggleDisplayNotifications() {
+  return {
+    type: TOGGLE_DISPLAY_NOTIFICATIONS
   };
 }
