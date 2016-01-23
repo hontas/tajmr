@@ -1,6 +1,6 @@
 {
   "name": "tajmr",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Record some time sometime",
   "main": "main.js",
   "engines": {
