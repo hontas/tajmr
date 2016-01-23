@@ -6,16 +6,21 @@ const Navbar = ({ onToggleNotifications, displayNotifications }) => {
 
   return (
     <div className="navbar">
+      <h1 className="brand">{ 'TimR' }</h1>
+      <div className="version">{ `v${pkg.version}` }</div>
+
       <nav style={ { display: 'inline' } }>
-        <ul style={ { display: 'inline', listStyle: 'none', padding: 0 } }>
+        <ul className="navbar-menu">
           <li style={ floatLeft }>
             <label>
               { 'Notifications ' }
               <input onChange={ onToggleNotifications } type="checkbox" checked={ displayNotifications } />
             </label>
           </li>
+          <li style={ floatLeft }>
+            <a href="/logout">Logga ut</a>
+          </li>
         </ul>
-        <div className="version">{ `v${pkg.version}` }</div>
       </nav>
     </div>
   );

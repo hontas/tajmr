@@ -1,12 +1,10 @@
-'use strict';
+import config from 'exp-config';
 
-if (process.env.NODE_ENV === 'development') {
-  const config = require('./config.json');
-  process.env.MONGOLAB_URI = config.mongo_uri;
-  process.env.LOGIN_HASH = config.login_hash;
+if (config.useDevServer) {
+  process.env.MONGOLAB_URI = 'mongodb://localhost:27017/tajmr';
 }
 
-const app = require('./server/app');
+import app from './server/app';
 
 app.set('port', (process.env.PORT || 5000));
 

@@ -1,17 +1,29 @@
-'use strict';
+import passport from 'passport';
+import users from '../lib/users';
 
-const path = require('path');
-const express = require('express');
-const auth = require('../lib/auth');
+const passportOptions = {
+  successRedirect: '/',
+  failureRedirect: '/login'
+};
+
+function isLoggedIn(req, res, next) {
+  console.log(passport);
+  if (req.isAuthenticated()) return next();
+  res.redirect('/login');
+}
 
 module.exports = function routes(app) {
 
-  app.use(express.static(path.resolve(__dirname, '../../public')));
+  app.get('/login', (req, res) => res.render('login'));
+  app.get('/register', (req, res) => res.render('register'));
 
-  app.get('/login', auth.login);
+  app.post('/login', passport.authenticate('local', passportOptions));
+  app.post('/register', users.post);
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../../public', 'index.html'));
+  app.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
   });
 
+  app.get('/', isLoggedIn, (req, res) => res.render('index', { user: req.user }));
 };

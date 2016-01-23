@@ -9,7 +9,6 @@ import {
   toggleDisplayNotifications
 } from '../../actions';
 import Navbar from '../navbar/navbar.jsx';
-import Header from '../header/header.jsx';
 import DigitalClock from '../digitalClock/digitalClock.jsx';
 import Button from '../button/button.jsx';
 import IntervalList from '../intervalList/intervalList.jsx';
@@ -56,7 +55,6 @@ const Application = React.createClass({
     return (
       <div className="application">
         <Navbar { ...this.props } onToggleNotifications={ this.onToggleNotifications } />
-        <Header />
         <DigitalClock { ...this.props } elapsed={ intervalSum } from={ activeInterval ? activeInterval.startTime : 0 } />
         <Button onClick={ this.onClick } text={ buttonText } />
         <IntervalList intervals={ intervals } onDelete={ this.onDelete } onUpdate={ this.onUpdate } />
