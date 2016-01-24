@@ -18,11 +18,10 @@ ReactDOM.render(
 
 
 getJSON('/api/user')
-  .then((user) => store.dispatch(userLoggedIn(user)))
-  .catch((err) => {
-    store.dispatch(userLoggedOut());
-    throw err;
+  .then((user) => {
+    store.dispatch(userLoggedIn(user));
+      return findAll()
+        .then((res) => store.dispatch(intervalsFetched(res)))
+        .catch((err) => console.log(err));
   })
-  .then(findAll)
-  .then((res) => store.dispatch(intervalsFetched(res)))
-  .catch((err) => console.log(err));
+  .catch(() => store.dispatch(userLoggedOut()));

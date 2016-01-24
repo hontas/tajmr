@@ -11,3 +11,10 @@ export function fromMongoId(document) {
 export function idQuery(id) {
   return { _id: new ObjectId(id) };
 }
+
+export function logAndPass(message) {
+  return (value) => {
+    console.log(message, value);
+    return value;
+  };
+}
