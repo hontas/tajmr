@@ -5,7 +5,7 @@ const Navbar = ({ onToggleNotifications, user, userSettings }) => {
   const floatLeft = { float: 'left' };
 
   function getUserNav() {
-    if (user.username) {
+    if (user) {
       const name = user.username.split('@')[0];
       return <a href="/logout">{ 'Logout ' + name }</a>;
     } else {

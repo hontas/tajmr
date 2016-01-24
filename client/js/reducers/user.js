@@ -4,12 +4,12 @@ import {
   TOGGLE_DISPLAY_NOTIFICATIONS
 } from '../constants';
 
-export function user(state = {}, action) {
+export function user(state = null, action) {
   switch (action.type) {
     case USER_LOGGED_IN:
       return action.user;
     case USER_LOGGED_OUT:
-      return {};
+      return null;
     default:
       return state;
   }

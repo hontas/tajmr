@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 
 import store from './store';
 import { getJSON } from './utils/webApi';
-import { userLoggedIn } from './actions/authActions';
+import { userLoggedIn, userLoggedOut } from './actions/userActions';
 import Application from './components/application/application.jsx';
 
 ReactDOM.render(
@@ -16,4 +16,4 @@ ReactDOM.render(
 
 getJSON('/user')
   .then((user) => store.dispatch(userLoggedIn(user)))
-  .catch(() => store.dispatch(userLoggedIn({})));
+  .catch(() => store.dispatch(userLoggedOut()));
