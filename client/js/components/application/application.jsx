@@ -1,16 +1,9 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import {
-  addInterval,
-  updateInterval,
-  completeInterval,
-  removeInterval,
-  toggleDisplayNotifications
-} from '../../actions';
 import Navbar from '../navbar/navbar.jsx';
 import DigitalClock from '../digitalClock/digitalClock.jsx';
-import Button from '../button/button.jsx';
+import WorkButton from '../workButton/workButton.jsx';
 import IntervalList from '../intervalList/intervalList.jsx';
 import IntervalStats from '../intervalStats/intervalStats.jsx';
 
@@ -50,40 +43,15 @@ const Application = React.createClass({
       .map(getTimeInterval)
       .reduce(sum, 0);
 
-    const buttonText = activeInterval ? 'Take a break ▐▐' : 'Start workin\' ▶';
-
     return (
       <div className="application">
-        <Navbar { ...this.props } onToggleNotifications={ this.onToggleNotifications } />
+        <Navbar { ...this.props } />
         <DigitalClock { ...this.props } elapsed={ intervalSum } from={ activeInterval ? activeInterval.startTime : 0 } />
-        <Button onClick={ this.onClick } text={ buttonText } />
-        <IntervalList intervals={ intervals } onDelete={ this.onDelete } onUpdate={ this.onUpdate } />
+        <WorkButton { ...this.props } />
+        <IntervalList intervals={ intervals } { ...this.props } />
         <IntervalStats intervals={ intervals } />
       </div>
     );
-  },
-
-  onClick() {
-    const { dispatch, activeInterval } = this.props;
-    if (activeInterval) {
-      dispatch(completeInterval(activeInterval));
-    } else {
-      dispatch(addInterval());
-    }
-  },
-
-  onDelete(id) {
-    const { dispatch } = this.props;
-    dispatch(removeInterval(id));
-  },
-
-  onUpdate(interval) {
-    const { dispatch } = this.props;
-    dispatch(updateInterval(interval));
-  },
-
-  onToggleNotifications() {
-    this.props.dispatch(toggleDisplayNotifications());
   }
 });
 

@@ -1,5 +1,10 @@
 import React, { PropTypes } from 'react';
+
 import IntervalListItem from './intervalListItem.jsx';
+import {
+  updateInterval,
+  removeInterval
+} from '../../actions';
 
 const last24Hours = (Date.now() - 1000 * 3600 * 24);
 
@@ -15,24 +20,33 @@ function sameDayOrActive(interval) {
 
 export default React.createClass({
   propTypes: {
-    intervals: PropTypes.arrayOf(PropTypes.object).isRequired,
-    onDelete: PropTypes.func.isRequired,
-    onUpdate: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    intervals: PropTypes.arrayOf(PropTypes.object).isRequired
   },
 
   render() {
-    const { onUpdate, onDelete } = this.props;
     const children = sortBy(this.props.intervals, 'startTime')
       .filter(sameDayOrActive)
       .map((interval) => <IntervalListItem { ...interval }
           key={ interval.id }
-          onDelete={ onDelete }
-          onUpdate={ onUpdate }/>);
+          onDelete={ this.onDelete }
+          onUpdate={ this.onUpdate }/>);
 
     return (
       <ul className="interval-list">
         { children }
       </ul>
     );
+  },
+
+  onDelete(id) {
+    const { dispatch } = this.props;
+    dispatch(removeInterval(id));
+  },
+
+  onUpdate(interval) {
+    const { dispatch } = this.props;
+    dispatch(updateInterval(interval));
   }
+
 });
