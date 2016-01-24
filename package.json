@@ -13,7 +13,7 @@
     "prebuild": "rm -rf public && mkdir public && npm run copy",
     "build": "NODE_ENV=production webpack --progress --optimize-minimize",
     "postversion": "git push --follow-tags",
-    "watch": "nodemon --exec 'npm start'"
+    "watch": "nodemon --exec 'npm start' --ignore client/ --ignore public/"
   },
   "author": "Pontus Lundin <lundin.pontus@gmail.com> (https://github.com/hontas)",
   "repository": {

@@ -6,12 +6,6 @@ const passportOptions = {
   failureRedirect: '/login'
 };
 
-function isLoggedIn(req, res, next) {
-  console.log(passport);
-  if (req.isAuthenticated()) return next();
-  res.redirect('/login');
-}
-
 module.exports = function routes(app) {
 
   app.get('/login', (req, res) => res.render('login'));
@@ -25,5 +19,12 @@ module.exports = function routes(app) {
     res.redirect('/');
   });
 
-  app.get('/', isLoggedIn, (req, res) => res.render('index', { user: req.user }));
+  app.get('/user', (req, res) => {
+    if (req.isAuthenticated()) {
+      return res.json(req.user);
+    }
+    res.status(401).json({});
+  });
+
+  app.get('/', (req, res) => res.render('index'));
 };

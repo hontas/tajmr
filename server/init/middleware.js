@@ -32,8 +32,8 @@ module.exports = function (app) {
   app.use(compression());
   app.use(cookieParser());
   app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(session({ secret: 'tisbettertoforgivethanforget' }));
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(session({ resave: true, saveUninitialized: true, secret: 'tisbettertoforgivethanforget' }));
   app.use(passport.initialize());
   app.use(passport.session());
 

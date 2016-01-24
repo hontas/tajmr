@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import store from './store';
+import { getJSON } from './utils/webApi';
+import { userLoggedIn } from './actions/authActions';
 import Application from './components/application/application.jsx';
 
 ReactDOM.render(
@@ -11,3 +13,7 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+
+getJSON('/user')
+  .then((user) => store.dispatch(userLoggedIn(user)))
+  .catch(() => store.dispatch(userLoggedIn({})));

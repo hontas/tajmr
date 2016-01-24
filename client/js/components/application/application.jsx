@@ -58,7 +58,7 @@ const Application = React.createClass({
         <DigitalClock { ...this.props } elapsed={ intervalSum } from={ activeInterval ? activeInterval.startTime : 0 } />
         <Button onClick={ this.onClick } text={ buttonText } />
         <IntervalList intervals={ intervals } onDelete={ this.onDelete } onUpdate={ this.onUpdate } />
-        <IntervalStats intervals={ intervals} />
+        <IntervalStats intervals={ intervals } />
       </div>
     );
   },
@@ -87,12 +87,13 @@ const Application = React.createClass({
   }
 });
 
-function select({ intervals: intervalMap, displayNotifications }) {
+function select({ intervals: intervalMap, userSettings, user }) {
   const intervals = Object.keys(intervalMap).map((id) => intervalMap[id]);
   return {
+    user,
     intervals,
     activeInterval: intervals.find((interval) => !interval.endTime),
-    displayNotifications
+    userSettings
   };
 }
 

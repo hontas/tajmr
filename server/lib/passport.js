@@ -2,12 +2,9 @@ import passport from 'passport';
 import { Strategy } from 'passport-local';
 import users from '../db/users';
 
-passport.serializeUser((user, done) => {
-  done(null, user._id);
-});
+passport.serializeUser((user, done) => done(null, user._id));
 
 passport.deserializeUser((id, done) => {
-  console.log('deserializeUser', id);
   users.findById(id)
     .then((user) => done(null, user))
     .catch((err) => done(err, false));
@@ -25,5 +22,6 @@ passport.use(new Strategy((username, password, done) => {
       }
 
       done(null, user);
-    });
+    })
+    .catch(done);
 }));

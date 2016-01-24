@@ -1,8 +1,17 @@
 import React, { PropTypes } from 'react';
 import pkg from '../../../../package.json';
 
-const Navbar = ({ onToggleNotifications, displayNotifications }) => {
+const Navbar = ({ onToggleNotifications, user, userSettings }) => {
   const floatLeft = { float: 'left' };
+
+  function getUserNav() {
+    if (user.username) {
+      const name = user.username.split('@')[0];
+      return <a href="/logout">{ 'Logout ' + name }</a>;
+    } else {
+      return <div><a href="/login">Login</a>{ ' | ' }<a href="/register">Register</a></div>;
+    }
+  }
 
   return (
     <div className="navbar">
@@ -14,11 +23,11 @@ const Navbar = ({ onToggleNotifications, displayNotifications }) => {
           <li style={ floatLeft }>
             <label>
               { 'Notifications ' }
-              <input onChange={ onToggleNotifications } type="checkbox" checked={ displayNotifications } />
+              <input onChange={ onToggleNotifications } type="checkbox" checked={ userSettings.displayNotifications } />
             </label>
           </li>
           <li style={ floatLeft }>
-            <a href="/logout">Logga ut</a>
+            { getUserNav() }
           </li>
         </ul>
       </nav>
@@ -27,8 +36,8 @@ const Navbar = ({ onToggleNotifications, displayNotifications }) => {
 };
 
 Navbar.propTypes = {
-  displayNotifications: PropTypes.bool.isRequired,
-  onToggleNotifications: PropTypes.func.isRequired
+  onToggleNotifications: PropTypes.func.isRequired,
+  userSettings: PropTypes.object.isRequired
 };
 
 export default Navbar;
