@@ -1,6 +1,6 @@
 import md5 from 'md5';
 import mongoClient from './mongoClient';
-import { ObjectId } from 'mongodb';
+import { idQuery } from './utils';
 
 function connect() {
   return mongoClient.connect('users');
@@ -19,7 +19,7 @@ function transform(users) {
     const password = user.password;
     user.validPassword = (pass) => {
       return makeHash(user.username, pass) === password;
-    }
+    };
     delete user.password;
     return user;
   });
@@ -39,18 +39,14 @@ function findOne({ collection, query }) {
 
 module.exports = {
   add({ username, password }) {
-    console.log('users.add', username, password);
     return connect()
       .then(({ db, collection }) => {
-        console.log('connected');
         const query = { username };
         return findOne({ collection, query })
           .then((user) => {
-            console.log('user', user);
             if (user) throw new Error('Username taken');
 
             const hashword = makeHash(username, password);
-            console.log('hash', hashword);
             return collection.insertOne({ username, password: hashword });
           })
           .then((resp) => ({
@@ -80,6 +76,6 @@ module.exports = {
   },
 
   findById(id) {
-    return this.findOne({ _id: new ObjectId(id) });
+    return this.findOne(idQuery(id));
   }
 };

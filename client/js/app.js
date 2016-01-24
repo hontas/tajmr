@@ -4,6 +4,8 @@ import { Provider } from 'react-redux';
 
 import store from './store';
 import { getJSON } from './utils/webApi';
+import { findAll } from './utils/intervalsApi';
+import { intervalsFetched } from './actions';
 import { userLoggedIn, userLoggedOut } from './actions/userActions';
 import Application from './components/application/application.jsx';
 
@@ -14,6 +16,13 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-getJSON('/user')
+
+getJSON('/api/user')
   .then((user) => store.dispatch(userLoggedIn(user)))
-  .catch(() => store.dispatch(userLoggedOut()));
+  .catch((err) => {
+    store.dispatch(userLoggedOut());
+    throw err;
+  })
+  .then(findAll)
+  .then((res) => store.dispatch(intervalsFetched(res)))
+  .catch((err) => console.log(err));

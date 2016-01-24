@@ -1,3 +1,12 @@
+function createErrorObject(response) {
+  return (err) => {
+    return Promise.reject(Object.assign(err, {
+        status: response.status,
+        statusText: response.statusText
+      }));
+  };
+}
+
 function ajax(url, method, data) {
   const options = {
     method: method,
@@ -13,11 +22,12 @@ function ajax(url, method, data) {
   }
 
   return fetch(url, options)
-    .then(function (response) {
+    .then((response) => {
       if (response.ok) {
         return response;
       }
-      return response.json().then((json) => Promise.reject(json));
+
+      return response.json().then(createErrorObject(response));
     })
     .then((response) => {
       if (response.status !== 204) {
@@ -29,11 +39,11 @@ function ajax(url, method, data) {
         window.location.href = error.redirectUrl;
       }
 
-      const err = error instanceof Error ? error :
-        typeof error === 'string' ? Error(error) :
-          Error(error.error);
+      if (error instanceof Error) {
+        error = { error: error.toString() };
+      }
 
-      return Promise.reject(err);
+      return Promise.reject(error);
     });
 }
 

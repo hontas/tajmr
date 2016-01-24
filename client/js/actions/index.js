@@ -1,19 +1,28 @@
 import cuid from 'cuid';
+
 import {
   INTERVAL_ADD,
   INTERVAL_UPDATE,
   INTERVAL_COMPLETE,
   INTERVAL_REMOVE,
+  INTERVALS_FETCHED,
   TOGGLE_DISPLAY_NOTIFICATIONS
 } from '../constants';
 
-export function addInterval() {
+export function addInterval(interval = {
+  id: cuid(),
+  startTime: Date.now()
+}) {
   return {
     type: INTERVAL_ADD,
-    interval: {
-      id: cuid(),
-      startTime: Date.now()
-    }
+    interval
+  };
+}
+
+export function intervalsFetched(intervals) {
+  return {
+    type: INTERVALS_FETCHED,
+    intervals
   };
 }
 

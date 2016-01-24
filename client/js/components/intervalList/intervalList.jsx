@@ -1,10 +1,8 @@
 import React, { PropTypes } from 'react';
 
+import { update, remove } from '../../utils/intervalsApi';
 import IntervalListItem from './intervalListItem.jsx';
-import {
-  updateInterval,
-  removeInterval
-} from '../../actions';
+import { updateInterval, removeInterval } from '../../actions';
 
 const last24Hours = (Date.now() - 1000 * 3600 * 24);
 
@@ -21,7 +19,11 @@ function sameDayOrActive(interval) {
 export default React.createClass({
   propTypes: {
     dispatch: PropTypes.func.isRequired,
-    intervals: PropTypes.arrayOf(PropTypes.object).isRequired
+    intervals: PropTypes.arrayOf(PropTypes.object).isRequired,
+    user: PropTypes.shape({
+      id: PropTypes.string,
+      username: PropTypes.string
+    })
   },
 
   render() {
@@ -40,12 +42,23 @@ export default React.createClass({
   },
 
   onDelete(id) {
-    const { dispatch } = this.props;
+    const { dispatch, user } = this.props;
+    if (user) {
+      return remove(id)
+        .then(() => dispatch(removeInterval(id)));
+    }
+
     dispatch(removeInterval(id));
   },
 
   onUpdate(interval) {
-    const { dispatch } = this.props;
+    const { dispatch, user } = this.props;
+    if (user) {
+      return update(updateInterval(interval))
+        .then((res) => dispatch(updateInterval(res)))
+        .catch((err) => console.log('Failed to update interval', err));
+    }
+
     dispatch(updateInterval(interval));
   }
 

@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 
+import { start, update } from '../../utils/intervalsApi';
 import Button from '../button/button.jsx';
-import { addInterval, completeInterval } from '../../actions';
+import { addInterval, completeInterval, updateInterval } from '../../actions';
 
 export default React.createClass({
   propTypes: {
@@ -9,7 +10,8 @@ export default React.createClass({
       startTime: PropTypes.number.isRequired
     }),
     className: PropTypes.string,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    user: PropTypes.object
   },
 
   render() {
@@ -22,11 +24,24 @@ export default React.createClass({
   },
 
   onClick() {
-    const { dispatch, activeInterval } = this.props;
-    if (activeInterval) {
-      dispatch(completeInterval(activeInterval));
-    } else {
-      dispatch(addInterval());
+    const { dispatch, activeInterval, user } = this.props;
+
+    if (activeInterval && user) {
+      return update(completeInterval(activeInterval))
+        .then((res) => dispatch(updateInterval(res)))
+        .catch((err) => console.log('Failed to update interval', err));
     }
+
+    if (activeInterval) {
+      return dispatch(completeInterval(activeInterval));
+    }
+
+    if (user) {
+      return start(addInterval())
+        .then((res) => dispatch(addInterval(res)))
+        .catch((err) => console.log('Failed to create interval', err));
+    }
+
+    dispatch(addInterval());
   }
 });
