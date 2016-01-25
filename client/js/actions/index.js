@@ -1,6 +1,7 @@
 import cuid from 'cuid';
 
 import {
+  CONNECTED,
   INTERVAL_ADD,
   INTERVAL_UPDATE,
   INTERVAL_COMPLETE,
@@ -16,6 +17,13 @@ export function addInterval(interval = {
   return {
     type: INTERVAL_ADD,
     interval
+  };
+}
+
+export function connect(value) {
+  return {
+    type: CONNECTED,
+    value
   };
 }
 

@@ -1,6 +1,6 @@
 import md5 from 'md5';
 import mongoClient from './mongoClient';
-import { idQuery } from './utils';
+import { queryFromId } from './utils';
 
 function connect() {
   return mongoClient.connect('users');
@@ -76,6 +76,6 @@ module.exports = {
   },
 
   findById(id) {
-    return this.findOne(idQuery(id));
+    return this.findOne(queryFromId(id));
   }
 };

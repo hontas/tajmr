@@ -14,7 +14,7 @@ export function post(req, res) {
 
 export function get(req, res) {
   if (req.isAuthenticated()) return res.json(req.user);
-  res.status(401).json({});
+  res.status(204).end();
 }
 
 export function put(req, res) {

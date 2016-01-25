@@ -1,4 +1,5 @@
 export const LOCAL_STORAGE_KEY = 'timr-app.intervals';
+export const CONNECTED = 'CONNECTED';
 
 export const INTERVAL_ADD = 'INTERVAL_ADD';
 export const INTERVAL_UPDATE = 'INTERVAL_UPDATE';

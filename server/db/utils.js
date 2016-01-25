@@ -8,7 +8,7 @@ export function fromMongoId(document) {
   };
 }
 
-export function idQuery(id) {
+export function queryFromId(id) {
   return { _id: new ObjectId(id) };
 }
 

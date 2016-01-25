@@ -30,6 +30,7 @@ module.exports = function routes(app) {
 
   app.post('/api/intervals', isAuthenticated, intervals.create);
   app.get('/api/intervals', isAuthenticated, intervals.findAll);
+  app.get('/api/intervals/:id', isAuthenticated, intervals.findOne);
   app.put('/api/intervals/:id', isAuthenticated, intervals.update);
   app.delete('/api/intervals/:id', isAuthenticated, intervals.remove);
 
