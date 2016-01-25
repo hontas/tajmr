@@ -21,7 +21,10 @@ getJSON('/api/user')
   .then((user) => {
     store.dispatch(userLoggedIn(user));
       return findAll()
-        .then((res) => store.dispatch(intervalsFetched(res)))
+        .then((res) => {
+          console.log(res);
+          store.dispatch(intervalsFetched(res));
+        })
         .catch((err) => console.log(err));
   })
   .catch(() => store.dispatch(userLoggedOut()));
