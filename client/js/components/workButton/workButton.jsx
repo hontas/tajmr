@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 import { start, update } from '../../utils/intervalsApi';
 import Button from '../button/button.jsx';
-import { addInterval, completeInterval, updateInterval } from '../../actions';
+import { addInterval, completeInterval } from '../../actions';
 
 export default React.createClass({
   propTypes: {
@@ -27,8 +27,9 @@ export default React.createClass({
     const { dispatch, activeInterval, user } = this.props;
 
     if (activeInterval && user) {
-      return update(completeInterval(activeInterval))
-        .then((res) => dispatch(updateInterval(res)))
+      const updateAction = completeInterval(activeInterval);
+      dispatch(updateAction);
+      return update(updateAction)
         .catch((err) => console.log('Failed to update interval', err));
     }
 

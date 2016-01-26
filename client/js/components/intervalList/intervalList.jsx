@@ -54,8 +54,9 @@ export default React.createClass({
   onUpdate(interval) {
     const { dispatch, user } = this.props;
     if (user) {
-      return update(updateInterval(interval))
-        .then((res) => dispatch(updateInterval(res)))
+      const updateAction = updateInterval(interval);
+      dispatch(updateAction);
+      return update(updateAction)
         .catch((err) => console.log('Failed to update interval', err));
     }
 
