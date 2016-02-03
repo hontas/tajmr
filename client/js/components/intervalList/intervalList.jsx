@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
+import Spinner from 'react-spinkit';
 
 import { update, remove } from '../../utils/intervalsApi';
 import IntervalListItem from './intervalListItem.jsx';
-import { updateInterval, removeInterval } from '../../actions';
+import { updateInterval, removeInterval } from '../../actions/intervals';
 
 const last24Hours = (Date.now() - 1000 * 3600 * 24);
 
@@ -27,7 +28,8 @@ export default React.createClass({
   },
 
   render() {
-    const children = sortBy(this.props.intervals, 'startTime')
+    const { intervals, isFetching } = this.props;
+    const children = sortBy(intervals, 'startTime')
       .filter(sameDayOrActive)
       .map((interval) => <IntervalListItem { ...interval }
           key={ interval.id }
@@ -36,7 +38,12 @@ export default React.createClass({
 
     return (
       <ul className="interval-list">
-        { children }
+        { !isFetching ? children :
+          <div style={ { textAlign: 'center' } }>
+            <Spinner spinnerName="three-bounce" noFadeIn />
+            <p>Loading intervals</p>
+          </div>
+        }
       </ul>
     );
   },

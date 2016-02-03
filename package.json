@@ -24,7 +24,9 @@
   "devDependencies": {
     "eslint": "^1.10.3",
     "eslint-plugin-react": "^3.11.2",
-    "nodemon": "^1.8.1"
+    "nodemon": "^1.8.1",
+    "redux-logger": "^2.4.0",
+    "redux-thunk": "^1.0.3"
   },
   "dependencies": {
     "babel-cli": "^6.2.0",
@@ -55,8 +57,9 @@
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.0",
+    "react-spinkit": "^1.1.4",
     "react-timer-mixin": "^0.13.3",
-    "redux": "^3.0.4",
+    "redux": "^3.2.1",
     "socket.io": "^1.4.4",
     "style-loader": "^0.13.0",
     "stylus": "^0.52.4",

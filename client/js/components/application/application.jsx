@@ -32,12 +32,15 @@ const Application = React.createClass({
       startTime: PropTypes.number.isRequired
     }),
     dispatch: PropTypes.func.isRequired,
-    intervals: PropTypes.arrayOf(PropTypes.object).isRequired
+    intervals: PropTypes.shape({
+      items: PropTypes.array.isRequired,
+      isFetching: PropTypes.bool.isRequired
+    }).isRequired
   },
 
   render() {
     const { intervals, activeInterval } = this.props;
-    const intervalSum = intervals
+    const intervalSum = intervals.items
       .filter(isToday)
       .filter(isComplete)
       .map(getTimeInterval)
@@ -48,19 +51,19 @@ const Application = React.createClass({
         <Navbar { ...this.props } />
         <DigitalClock { ...this.props } elapsed={ intervalSum } from={ activeInterval ? activeInterval.startTime : 0 } />
         <WorkButton { ...this.props } />
-        <IntervalList intervals={ intervals } { ...this.props } />
-        <IntervalStats intervals={ intervals } />
+        <IntervalList { ...this.props } intervals={ intervals.items } />
+        <IntervalStats intervals={ intervals.items } />
       </div>
     );
   }
 });
 
-function select({ intervals: intervalMap, userSettings, user }) {
-  const intervals = Object.keys(intervalMap).map((id) => intervalMap[id]);
+function select({ intervals, userSettings, user }) {
   return {
     user,
+    isFetching: intervals.isFetching,
     intervals,
-    activeInterval: intervals.find((interval) => !interval.endTime),
+    activeInterval: intervals.items.find((interval) => !interval.endTime),
     userSettings
   };
 }

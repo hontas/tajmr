@@ -33,7 +33,11 @@ module.exports = function (app) {
   app.use(cookieParser());
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(session({ resave: true, saveUninitialized: true, secret: 'tisbettertoforgivethanforget' }));
+  app.use(session({
+    resave: false,
+    saveUninitialized: false,
+    secret: 'tisbettertoforgivethanforget'
+  }));
   app.use(passport.initialize());
   app.use(passport.session());
 

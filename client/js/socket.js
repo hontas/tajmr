@@ -1,32 +1,33 @@
 import io from 'socket.io-client';
 import { getJSON } from './utils/webApi';
-import * as actions from './actions';
+import { updateInterval, removeInterval } from './actions/intervals';
+import { connect } from './actions';
 
 export function init(dispatch) {
   const socket = io();
 
   socket.on('connect', () => {
-    dispatch(actions.connect(true));
+    dispatch(connect(true));
   });
 
   socket.on('disconnect', () => {
-    dispatch(actions.connect(false));
+    dispatch(connect(false));
   });
 
   socket.on('interval created', (id) => {
     console.log('interval created: %s', id);
     getJSON(`/api/intervals/${id}`)
-      .then((res) => dispatch(actions.updateInterval(res)));
+      .then((res) => dispatch(updateInterval(res)));
   });
 
   socket.on('interval updated', (id) => {
     console.log('interval updated: %s', id);
     getJSON(`/api/intervals/${id}`)
-      .then((res) => dispatch(actions.updateInterval(res)));
+      .then((res) => dispatch(updateInterval(res)));
   });
 
   socket.on('interval deleted', (id) => {
     console.log('interval deleted: %s', id);
-    dispatch(actions.removeInterval(id));
+    dispatch(removeInterval(id));
   });
 }

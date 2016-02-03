@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 import { start, update } from '../../utils/intervalsApi';
 import Button from '../button/button.jsx';
-import { addInterval, completeInterval } from '../../actions';
+import { addInterval, completeInterval } from '../../actions/intervals';
 
 export default React.createClass({
   propTypes: {
