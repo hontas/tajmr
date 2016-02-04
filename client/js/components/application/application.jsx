@@ -58,8 +58,9 @@ const Application = React.createClass({
   }
 });
 
-function select({ intervals, userSettings, user }) {
+function select({ isConnected, intervals, userSettings, user }) {
   return {
+    isConnected,
     user,
     isFetching: intervals.isFetching,
     intervals,

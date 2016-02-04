@@ -1,10 +1,14 @@
 import { postJSON, putJSON, getJSON, delJSON } from './webApi';
 
-export function start({ interval }) {
+export function start(interval) {
   return postJSON('/api/intervals', interval);
 }
 
-export function update({ interval }) {
+export function update(interval) {
+  if (typeof interval.id === 'undefined') {
+    return start(interval);
+  }
+
   return putJSON(`/api/intervals/${interval.id}`, interval);
 }
 
