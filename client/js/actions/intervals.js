@@ -58,7 +58,7 @@ export function attemptUpdate(interval) {
     dispatch(requestIntervalUpdate());
 
     return intervalsApi.update(interval)
-      .then(() => dispatch(intervalUpdated()))
+      .then((res) => dispatch(updateInterval(res)))
       .catch(() => dispatch(intervalUpdated()));
   };
 }
