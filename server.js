@@ -1,11 +1,13 @@
-import config from 'exp-config';
-import * as socket from './server/lib/socket';
+'use strict';
+
+const config = require('exp-config');
+const socket = require('./server/lib/socket');
 
 if (config.useDevServer) {
   process.env.MONGOLAB_URI = 'mongodb://localhost:27017/tajmr';
 }
 
-import app from './server/app';
+const app = require('./server/app');
 
 app.set('port', (process.env.PORT || 5000));
 

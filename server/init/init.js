@@ -1,7 +1,9 @@
-import path from 'path';
-import express from 'express';
-import middleware from './middleware';
-import routes from './routes';
+'use strict';
+
+const path = require('path');
+const express = require('express');
+const middleware = require('./middleware');
+const routes = require('./routes');
 
 module.exports = function init() {
   const app = express();

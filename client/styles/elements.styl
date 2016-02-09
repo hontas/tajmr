@@ -1,0 +1,40 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+a {
+  color: purple;
+  position: relative;
+  text-decoration: none;
+
+  &:after {
+    background-color: currentColor;
+    content: '';
+    display: block;
+    height: 1px;
+    transform: scaleX(0.001);
+    transition: transform 0.2s ease-out;
+  }
+
+  &:hover {
+    text-decoration: none;
+    &:after {
+      transform: scaleX(1);
+    }
+  }
+}

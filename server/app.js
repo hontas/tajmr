@@ -1,4 +1,6 @@
-import initApp from './init/init';
+'use strict';
+
+const initApp = require('./init/init');
 
 const app = initApp();
 

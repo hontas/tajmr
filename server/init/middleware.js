@@ -1,15 +1,12 @@
-import config from 'exp-config';
-import path from 'path';
-import express from 'express';
-import compression from 'compression';
-import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
-import passport from 'passport';
-import session from 'express-session';
-import morgan from 'morgan';
-import errorhandler from 'errorhandler';
+'use strict';
 
-require('../lib/passport');
+const config = require('exp-config');
+const path = require('path');
+const express = require('express');
+const compression = require('compression');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const errorhandler = require('errorhandler');
 
 module.exports = function (app) {
 
@@ -30,16 +27,8 @@ module.exports = function (app) {
   app.use(express.static(path.resolve(__dirname, '../../public')));
 
   app.use(compression());
-  app.use(cookieParser());
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(session({
-    resave: false,
-    saveUninitialized: false,
-    secret: 'tisbettertoforgivethanforget'
-  }));
-  app.use(passport.initialize());
-  app.use(passport.session());
 
   app.disable('x-powered-by');
 };

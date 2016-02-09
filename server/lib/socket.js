@@ -1,4 +1,6 @@
-import socketIo from 'socket.io';
+'use strict';
+
+const socketIo = require('socket.io');
 
 let io;
 
@@ -6,7 +8,7 @@ function getSocketCount() {
   return Object.keys(io.sockets.connected).length;
 }
 
-export function init(server) {
+function init(server) {
   io = socketIo.listen(server);
 
   io.sockets.on('connect', (socket) => {
@@ -19,14 +21,21 @@ export function init(server) {
   });
 }
 
-export function broadcastIntervalCreated(id) {
+function broadcastIntervalCreated(id) {
   io.emit('interval created', id);
 }
 
-export function broadcastIntervalUpdate(id) {
+function broadcastIntervalUpdate(id) {
   io.emit('interval updated', id);
 }
 
-export function broadcastIntervalDelete(id) {
+function broadcastIntervalDelete(id) {
   io.emit('interval deleted', id);
 }
+
+module.exports = {
+  init,
+  broadcastIntervalCreated,
+  broadcastIntervalUpdate,
+  broadcastIntervalDelete
+};

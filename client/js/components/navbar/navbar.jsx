@@ -1,36 +1,38 @@
 import React, { PropTypes } from 'react';
 import Spinner from 'react-spinkit';
 
+import Login from '../auth/login.jsx';
+import UserMenu from '../user/userMenu.jsx';
 import pkg from '../../../../package.json';
 import { toggleDisplayNotifications } from '../../actions';
 
 export default React.createClass({
   propTypes: {
     dispatch: PropTypes.func.isRequired,
-    isConnected: PropTypes.bool.isRequired,
     intervals: PropTypes.shape({
       isSaving: PropTypes.bool.isRequired
     }).isRequired,
+    isConnected: PropTypes.bool.isRequired,
     user: PropTypes.shape({
-      username: PropTypes.string.isRequired
+      uid: PropTypes.string.isRequired,
+      password: PropTypes.shape({
+        email: PropTypes.string.isRequired,
+        profileImageURL: PropTypes.string.isRequired
+      }).isRequired
     }),
     userSettings: PropTypes.shape({
       displayNotifications: PropTypes.bool
     }).isRequired
   },
 
-  render() {
-    const { user, userSettings, isConnected, intervals: { isSaving } } = this.props;
-    const floatLeft = { float: 'left' };
+  getInitialState() {
+    return {};
+  },
 
-    function getUserNav() {
-      if (user) {
-        const name = user.username.split('@')[0];
-        return <a href="/logout">{ 'Logout ' + name }</a>;
-      } else {
-        return <div><a href="/login">{ 'Login' }</a>{ ' | ' }<a href="/register">{ 'Register' }</a></div>;
-      }
-    }
+  render() {
+    const { user, isConnected, intervals: { isSaving } } = this.props;
+    const { showLogin, showUserMenu } = this.state;
+    const floatLeft = { float: 'left' };
 
     const spinnerStyle = { color: 'gray', float: 'left', marginLeft: '1em', transform: 'scale(.75)' };
 
@@ -43,18 +45,25 @@ export default React.createClass({
         <nav style={ { display: 'inline' } }>
           <ul className="navbar-menu">
             <li style={ floatLeft }>
-              <label>
-                { 'Notifications ' }
-                <input checked={ userSettings.displayNotifications } onChange={ this.onToggleNotifications } type="checkbox" />
-              </label>
-            </li>
-            <li style={ floatLeft }>
-              { getUserNav() }
+              { user ?
+                <div className="profile"><a href="#" onClick={ this.openDialog('UserMenu') }>{ 'Meny' }</a><img alt="profile image" className="profile-image" src={ user.password.profileImageURL }/></div> :
+                <a href="#" onClick={ this.openDialog('Login') }>{ 'Logga in' }</a>
+              }
+              { !user && showLogin && <Login /> }
+              { user && showUserMenu && <UserMenu user={ user } /> }
             </li>
           </ul>
         </nav>
       </div>
     );
+  },
+
+  openDialog(dialog) {
+    const key = `show${dialog}`;
+    return (evt) => {
+      evt.preventDefault();
+      this.replaceState({ [key]: !this.state[key] });
+    };
   },
 
   onToggleNotifications() {
