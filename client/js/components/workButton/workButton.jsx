@@ -34,10 +34,6 @@ export default React.createClass({
       return dispatch(updateInterval(completeInterval));
     }
 
-    if (user) {
-      return dispatch(attemptUpdate({ startTime: Date.now() }));
-    }
-
-    dispatch(addInterval());
+    return dispatch(attemptUpdate({ startTime: Date.now() }));
   }
 });

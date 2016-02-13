@@ -1,8 +1,8 @@
 import {
   USER_LOGGED_IN,
   USER_LOGGED_OUT,
-  TOGGLE_DISPLAY_NOTIFICATIONS
-} from '../constants';
+  USER_UPDATE_SETTINGS
+} from '../actions/userActions';
 
 export function user(state = null, action) {
   switch (action.type) {
@@ -17,9 +17,10 @@ export function user(state = null, action) {
 
 export function userSettings(state = {}, action) {
   switch (action.type) {
-    case TOGGLE_DISPLAY_NOTIFICATIONS:
-      const displayNotifications = !state.displayNotifications;
-      return Object.assign({}, state, { displayNotifications });
+    case USER_UPDATE_SETTINGS:
+      return Object.assign({}, state, action.settings);
+    case USER_LOGGED_OUT:
+      return {};
     default:
       return state;
   }

@@ -21,6 +21,7 @@ export default React.createClass({
       }).isRequired
     }),
     userSettings: PropTypes.shape({
+      firstName: PropTypes.string,
       displayNotifications: PropTypes.bool
     }).isRequired
   },
@@ -30,7 +31,7 @@ export default React.createClass({
   },
 
   render() {
-    const { user, isConnected, intervals: { isSaving } } = this.props;
+    const { user, userSettings, isConnected, intervals: { isSaving } } = this.props;
     const { showLogin, showUserMenu } = this.state;
     const floatLeft = { float: 'left' };
 
@@ -39,18 +40,21 @@ export default React.createClass({
     return (
       <div className="navbar">
         <h1 className="brand">{ 'TimR' }</h1>
-        <div className="version">{ `v${pkg.version}` }{ isConnected && ' connected' }</div>
+        <div className="version">{ `v${pkg.version}` }{ isConnected && ' connected' }{ userSettings.displayName && ` as ${ userSettings.displayName }` }</div>
         { isSaving && <Spinner noFadeIn overrideSpinnerClassName="spin-kit-spinner" spinnerName="wave" style={ spinnerStyle } /> }
 
         <nav style={ { display: 'inline' } }>
           <ul className="navbar-menu">
             <li style={ floatLeft }>
               { user ?
-                <div className="profile"><a href="#" onClick={ this.openDialog('UserMenu') }>{ 'Meny' }</a><img alt="profile image" className="profile-image" src={ user.password.profileImageURL }/></div> :
+                <div className="profile">
+                  <a href="#" onClick={ this.openDialog('UserMenu') }>{ 'Meny' }</a>
+                  <img alt="profile image" className="profile-image" src={ user.password.profileImageURL }/>
+                </div> :
                 <a href="#" onClick={ this.openDialog('Login') }>{ 'Logga in' }</a>
               }
               { !user && showLogin && <Login /> }
-              { user && showUserMenu && <UserMenu user={ user } /> }
+              { user && showUserMenu && <UserMenu { ...this.props } /> }
             </li>
           </ul>
         </nav>

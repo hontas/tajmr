@@ -10,11 +10,12 @@ function createErrorObject(response) {
 function ajax(url, method, data) {
   const options = {
     method: method,
+    mode: 'cors',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    credentials: 'include'
+    credentials: 'omit'
   };
 
   if (data) {
@@ -26,7 +27,6 @@ function ajax(url, method, data) {
       if (response.ok) {
         return response;
       }
-
       return response.json().then(createErrorObject(response));
     })
     .then((response) => {

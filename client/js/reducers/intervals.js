@@ -9,6 +9,11 @@ import {
   REQUEST_INTERVAL_UPDATE
 } from '../actions/intervals';
 
+import {
+  USER_LOGGED_IN,
+  USER_LOGGED_OUT
+} from '../actions/userActions';
+
 function getIndexById(array, id) {
   return array.indexOf(array.find((item) => item.id === id));
 }
@@ -19,6 +24,11 @@ export function intervals(state = {
     items: []
   }, action) {
   switch (action.type) {
+    case USER_LOGGED_IN:
+    case USER_LOGGED_OUT:
+      return Object.assign({}, state, {
+        items: []
+      });
     case REQUEST_INTERVALS:
       return Object.assign({}, state, {
         isFetching: true
