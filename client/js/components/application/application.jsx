@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import Navbar from '../navbar/navbar.jsx';
 import DigitalClock from '../digitalClock/digitalClock.jsx';
-import WorkButton from '../workButton/workButton.jsx';
+import WorkButton from '../button/workButton.jsx';
 import IntervalList from '../intervalList/intervalList.jsx';
 import IntervalStats from '../intervalStats/intervalStats.jsx';
 

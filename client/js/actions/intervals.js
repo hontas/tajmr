@@ -2,8 +2,8 @@ import cuid from 'cuid';
 import * as intervalsApi from '../utils/intervalsApi';
 
 export const INTERVAL_ADD = 'INTERVAL_ADD';
-export const INTERVAL_UPDATE = 'INTERVAL_UPDATE';
 export const INTERVAL_UPDATED = 'INTERVAL_UPDATED';
+export const INTERVAL_UPDATE_FAILED = 'INTERVAL_UPDATE_FAILED';
 export const INTERVAL_COMPLETE = 'INTERVAL_COMPLETE';
 export const INTERVAL_REMOVE = 'INTERVAL_REMOVE';
 export const INTERVALS_FETCHED = 'INTERVALS_FETCHED';
@@ -35,14 +35,24 @@ export function requestIntervalUpdate() {
   return { type: REQUEST_INTERVAL_UPDATE };
 }
 
-export function intervalUpdated() {
-  return { type: INTERVAL_UPDATED };
+export function intervalUpdated(interval) {
+  return {
+    type: INTERVAL_UPDATED,
+    interval
+  };
 }
 
-export function updateInterval(interval) {
+export function intervalUpdateFailed(error) {
   return {
-    type: INTERVAL_UPDATE,
-    interval
+    type: INTERVAL_UPDATE_FAILED,
+    error
+  };
+}
+
+export function attemptRemove(id) {
+  return (dispatch) => {
+    dispatch(requestIntervalUpdate());
+    intervalsApi.remove(id);
   };
 }
 
@@ -58,8 +68,8 @@ export function attemptUpdate(interval) {
     dispatch(requestIntervalUpdate());
 
     return intervalsApi.update(interval)
-      .then((res) => dispatch(updateInterval(res)))
-      .catch(() => dispatch(intervalUpdated()));
+      .then((res) => dispatch(intervalUpdated(res)))
+      .catch((err) => dispatch(intervalUpdateFailed(err)));
   };
 }
 

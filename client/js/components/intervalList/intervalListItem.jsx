@@ -69,10 +69,14 @@ export default React.createClass({
     );
   },
 
+  validateTime(time) {
+    return /^\d{2}\:\d{2}$/.test(time);
+  },
+
   getUpdatedTimeFor(updated, originalTime) {
     if (!updated) {
       return originalTime;
-    } else if (!/^\d{2}\:\d{2}$/.test(updated)) {
+    } else if (!this.validateTime(updated)) {
       console.log('Wrong format %s - should be XX:XX where X is a positive integer', updated);
       return originalTime;
     }
@@ -83,6 +87,7 @@ export default React.createClass({
     date.setHours(hours);
     date.setMinutes(minutes);
 
+    console.log('returning new time', date.getTime(), originalTime);
     return date.getTime();
   },
 
@@ -90,6 +95,10 @@ export default React.createClass({
     const { id, note, startTime, endTime } = this.props;
     const { comment, start, end } = this.state;
     const text = comment || note || '';
+
+    if (!this.validateTime(start) || end && !this.validateTime(end)) {
+      return;
+    }
 
     this.props.onUpdate({
       id,

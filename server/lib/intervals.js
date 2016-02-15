@@ -1,7 +1,9 @@
 'use strict';
 
 const intervals = {
-  find() { return Promise.resolve(); }
+  find() {
+    return Promise.resolve();
+  }
 };
 
 function errorResponse(res, method, status = 500) {

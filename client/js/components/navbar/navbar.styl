@@ -1,39 +1,36 @@
 .navbar {
-  background: #EEE;
+  background: $primary-color-dark;
   padding: 0.5em;
 
   .version {
     color: #AAA;
-    float: left;
+    vertical-align: middle;
   }
 
   .brand {
-    float: left;
+    color: $text-color-primary;
     font-size: 1.25em;
     line-height: 0.85em;
     margin: 0 0.4em;
+  }
+
+  .pure-menu-children {
+    left: -125%;
+  }
+
+  .profile-image {
+    border-radius: 50%;
+    margin-left: 0.5em;
+    position: relative;
+    top: 3px;
+    vertical-align: middle;
+    width: 30px;
   }
 }
 
 .navbar-menu {
   float: right;
-  list-style: none;
-  padding: 0;
-  margin: 0
-  li {
-    margin-left: 5px;
-  }
-}
-
-.profile {
-  padding-right: 35px;
-  position: relative;
-
-  .profile-image {
-    border-radius: 50%;
-    position: absolute;
-    top: -5px;
-    right: -7px;
-    width: 29px;
+  a {
+    color: $text-color-light;
   }
 }

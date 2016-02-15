@@ -7,6 +7,7 @@
     "node": "5.x"
   },
   "scripts": {
+    "lint": "eslint --ignore-path .gitignore .",
     "postinstall": "npm run build",
     "start": "node --harmony_modules --harmony_destructuring --harmony_rest_parameters --harmony_default_parameters server.js",
     "copy": "cp client/favicon.ico public && cp -a client/assets public/assets",

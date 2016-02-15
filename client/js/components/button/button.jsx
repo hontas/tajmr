@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 
 const Button = (props) => {
   const { className, text } = props;
-  const classNames = className ? `${className} button` : 'button';
+  const classes = classNames('pure-button button', className);
 
   return (
-    <button { ...props } className={ classNames }>{ text }</button>
+    <button { ...props } className={ classes }>{ text }</button>
   );
 };
 

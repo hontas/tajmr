@@ -2,7 +2,7 @@
 
 import store from '../store';
 import { getJSON } from './webApi';
-import { updateInterval, removeInterval, fetchIntervals } from '../actions/intervals';
+import { intervalUpdated, removeInterval, fetchIntervals } from '../actions/intervals';
 import { userLoggedIn, userLoggedOut, updateSettings } from '../actions/userActions';
 
 const firebaseUrl = 'https://tajmr.firebaseio.com';
@@ -52,12 +52,12 @@ export default {
 
     intervals.on('child_added', (snapshot) => {
       const newInterval = Object.assign({id: snapshot.key() }, snapshot.val());
-      store.dispatch(updateInterval(newInterval));
+      store.dispatch(intervalUpdated(newInterval));
     });
 
     intervals.on('child_changed', (snapshot) => {
       const updatedInterval = Object.assign({id: snapshot.key() }, snapshot.val());
-      store.dispatch(updateInterval(updatedInterval));
+      store.dispatch(intervalUpdated(updatedInterval));
     });
 
     intervals.on('child_removed', (snapshot) => {

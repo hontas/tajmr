@@ -6,7 +6,7 @@ const Login = () => {
     <form className="auth-form" onSubmit={ handleSubmit }>
       <input name="username" type="email" />
       <input name="password" type="password" />
-      <button type="submit">{ 'Logga in' }</button>
+      <button className="pure-button" type="submit">{ 'Logga in' }</button>
     </form>
     );
 };

@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Spinner from 'react-spinkit';
+import classNames from 'classnames';
 
 import Login from '../auth/login.jsx';
 import UserMenu from '../user/userMenu.jsx';
@@ -10,6 +11,7 @@ export default React.createClass({
   propTypes: {
     dispatch: PropTypes.func.isRequired,
     intervals: PropTypes.shape({
+      isFetching: PropTypes.bool.isRequired,
       isSaving: PropTypes.bool.isRequired
     }).isRequired,
     isConnected: PropTypes.bool.isRequired,
@@ -31,33 +33,47 @@ export default React.createClass({
   },
 
   render() {
-    const { user, userSettings, isConnected, intervals: { isSaving } } = this.props;
+    const { user, userSettings, isConnected, intervals: { isSaving, isFetching } } = this.props;
     const { showLogin, showUserMenu } = this.state;
-    const floatLeft = { float: 'left' };
+    const isLoading = isSaving || isFetching;
 
-    const spinnerStyle = { color: 'gray', float: 'left', marginLeft: '1em', transform: 'scale(.75)' };
+    const spinnerStyle = { transform: 'scale(.75)' };
+    const loginMenuClasses = classNames('pure-menu-item pure-menu-has-children', { 'pure-menu-active': !user && showLogin });
+    const userMenuClasses = classNames('pure-menu-item pure-menu-has-children', { 'pure-menu-active': user && showUserMenu });
 
     return (
-      <div className="navbar">
-        <h1 className="brand">{ 'TimR' }</h1>
-        <div className="version">{ `v${pkg.version}` }{ isConnected && ' connected' }{ userSettings.displayName && ` as ${ userSettings.displayName }` }</div>
-        { isSaving && <Spinner noFadeIn overrideSpinnerClassName="spin-kit-spinner" spinnerName="wave" style={ spinnerStyle } /> }
+      <div className="navbar pure-menu pure-menu-horizontal pure-menu-fixed">
+        <h1 className="brand pure-menu-heading">{ 'TimR' }</h1>
+        <span className="version">{ `v${pkg.version}` }</span>
+        { isLoading &&
+          <div style={ { color: 'gray', display: 'inline-block', marginLeft: '1em' } }>
+            <Spinner noFadeIn overrideSpinnerClassName="spin-kit-spinner" spinnerName="wave" />
+            <small style={ { verticalAlign: 'middle' } }>{ isFetching ? 'Laddar intervall...' : 'Sparar...' }</small>
+          </div>
+        }
 
-        <nav style={ { display: 'inline' } }>
-          <ul className="navbar-menu">
-            <li style={ floatLeft }>
-              { user ?
-                <div className="profile">
-                  <a href="#" onClick={ this.openDialog('UserMenu') }>{ 'Meny' }</a>
-                  <img alt="profile image" className="profile-image" src={ user.password.profileImageURL }/>
-                </div> :
-                <a href="#" onClick={ this.openDialog('Login') }>{ 'Logga in' }</a>
-              }
-              { !user && showLogin && <Login /> }
-              { user && showUserMenu && <UserMenu { ...this.props } /> }
+        <ul className="navbar-menu pure-menu-list">
+          { !user ?
+            <li className={ loginMenuClasses }>
+              <a href="#" className="pure-menu-link" onClick={ this.openDialog('Login') }>{ 'Logga in' }</a>
+              <ul className="pure-menu-children">
+                  <li className="pure-menu-item">
+                    <Login />
+                  </li>
+              </ul>
             </li>
-          </ul>
-        </nav>
+            :
+            <li className={ userMenuClasses }>
+              <a href="#" className="pure-menu-link" onClick={ this.openDialog('UserMenu') }>{ 'Inställningar' }</a>
+              <ul className="pure-menu-children">
+                <li className="pure-menu-item">
+                  <UserMenu { ...this.props } />
+                </li>
+              </ul>
+            </li>
+          }
+          { user && <img alt="profile image" className="profile-image" src={ user.password.profileImageURL }/> }
+        </ul>
       </div>
     );
   },

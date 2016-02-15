@@ -7,13 +7,11 @@ function withoutId(object) {
 }
 
 export function start(interval) {
-  //return postJSON('/api/intervals', interval);
-
   const auth = firebaseApi.ref.getAuth();
-  const intervalDeluxe = Object.assign({
+  const intervalDeluxe = Object.assign({}, interval, {
     user: auth && auth.uid,
     createdAt: Date.now()
-  }, interval);
+  });
 
   return new Promise((resolve) => {
     const newId = firebaseApi.ref
@@ -26,23 +24,24 @@ export function start(interval) {
 }
 
 export function update(interval) {
-  //return putJSON(`/api/intervals/${interval.id}`, interval);
-
-  const intervalDeluxe = Object.assign({
+  const intervalDeluxe = Object.assign({}, interval, {
     updatedAt: Date.now()
-  }, interval);
+  });
 
   if (typeof intervalDeluxe.id === 'undefined') {
     return start(intervalDeluxe);
   }
 
+  if (typeof intervalDeluxe.endTime === 'undefined') {
+    delete intervalDeluxe.endTime;
+  }
+
   return new Promise((resolve, reject) => {
-    firebaseApi.ref
-      .child('intervals')
+    firebaseApi.intervals
       .child(intervalDeluxe.id)
       .update(withoutId(intervalDeluxe), (err) => {
         if (err) return reject(err);
-        resolve(interval);
+        resolve(intervalDeluxe);
       });
   });
 }

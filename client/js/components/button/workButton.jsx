@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
-import Button from '../button/button.jsx';
-import { attemptUpdate, addInterval, updateInterval } from '../../actions/intervals';
+import Button from './button.jsx';
+import { attemptUpdate, addInterval } from '../../actions/intervals';
 
 export default React.createClass({
   propTypes: {
@@ -15,23 +15,19 @@ export default React.createClass({
 
   render() {
     const { activeInterval } = this.props;
-    const buttonText = activeInterval ? 'Take a break ▐▐' : 'Start workin\' ▶';
+    const buttonText = activeInterval ? 'Ta en fika ▐▐' : 'Börja debitera ▶';
 
     return (
-      <Button onClick={ this.onClick } text={ buttonText } />
+      <Button onClick={ this.onClick } text={ buttonText } className="work-button" />
     );
   },
 
   onClick() {
-    const { dispatch, activeInterval, user } = this.props;
+    const { dispatch, activeInterval } = this.props;
 
     if (activeInterval) {
       const completeInterval = Object.assign({}, activeInterval, { endTime: Date.now() });
-      if (user) {
-        return dispatch(attemptUpdate(completeInterval));
-      }
-
-      return dispatch(updateInterval(completeInterval));
+      return dispatch(attemptUpdate(completeInterval));
     }
 
     return dispatch(attemptUpdate({ startTime: Date.now() }));

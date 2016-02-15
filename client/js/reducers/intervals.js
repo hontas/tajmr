@@ -1,7 +1,7 @@
 import {
   INTERVAL_ADD,
-  INTERVAL_UPDATE,
   INTERVAL_UPDATED,
+  INTERVAL_UPDATE_FAILED,
   INTERVAL_COMPLETE,
   INTERVAL_REMOVE,
   INTERVALS_FETCHED,
@@ -48,15 +48,16 @@ export function intervals(state = {
       return Object.assign({}, state, {
         isSaving: true
       });
-    case INTERVAL_UPDATE:
+    case INTERVAL_UPDATED:
     case INTERVAL_COMPLETE:
       const updatedIndex = getIndexById(state.items, action.interval.id);
       return Object.assign({}, state, {
         isSaving: false,
         items: [ ...state.items.slice(0, updatedIndex), action.interval, ...state.items.slice(updatedIndex + 1) ]
       });
-    case INTERVAL_UPDATED:
+    case INTERVAL_UPDATE_FAILED:
       return Object.assign({}, state, {
+        error: action.error,
         isSaving: false
       });
     case INTERVAL_REMOVE:
