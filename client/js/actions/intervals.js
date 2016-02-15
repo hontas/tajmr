@@ -67,8 +67,9 @@ export function attemptUpdate(interval) {
   return (dispatch) => {
     dispatch(requestIntervalUpdate());
 
+    // only need to handle failure as firebase automatically will
+    // fire a change event that we handle
     return intervalsApi.update(interval)
-      .then((res) => dispatch(intervalUpdated(res)))
       .catch((err) => dispatch(intervalUpdateFailed(err)));
   };
 }

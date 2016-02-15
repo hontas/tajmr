@@ -96,7 +96,7 @@ export default React.createClass({
     const { comment, start, end } = this.state;
     const text = comment || note || '';
 
-    if (!this.validateTime(start) || end && !this.validateTime(end)) {
+    if ((start && !this.validateTime(start)) || (end && !this.validateTime(end))) {
       return;
     }
 
