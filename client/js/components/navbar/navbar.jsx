@@ -43,7 +43,7 @@ export default React.createClass({
 
     return (
       <div className="navbar pure-menu pure-menu-horizontal pure-menu-fixed">
-        <h1 className="brand pure-menu-heading">{ 'TimR' }</h1>
+        <h1 className="brand pure-menu-heading">{ 'TajmR' }</h1>
         <span className="version">{ `v${pkg.version}` }</span>
         { isLoading &&
           <div style={ { color: 'gray', display: 'inline-block', marginLeft: '1em' } }>

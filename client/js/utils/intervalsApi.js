@@ -6,42 +6,42 @@ function withoutId(object) {
   return newObj;
 }
 
-export function start(interval) {
+function start(interval) {
   const auth = firebaseApi.ref.getAuth();
-  const intervalDeluxe = Object.assign({}, interval, {
+  const updatedInterval = Object.assign({}, interval, {
     user: auth && auth.uid,
-    createdAt: Date.now()
+    createdAt: interval.startTime
   });
 
   return new Promise((resolve) => {
     const newId = firebaseApi.ref
       .child('intervals')
-      .push(interval)
+      .push(updatedInterval)
       .key();
 
-    resolve(Object.assign({ id: newId }, intervalDeluxe));
+    resolve(Object.assign({ id: newId }, updatedInterval));
   });
 }
 
 export function update(interval) {
-  const intervalDeluxe = Object.assign({}, interval, {
+  const updatedInterval = Object.assign({}, interval, {
     updatedAt: Date.now()
   });
 
-  if (typeof intervalDeluxe.id === 'undefined') {
-    return start(intervalDeluxe);
+  if (typeof updatedInterval.id === 'undefined') {
+    return start(updatedInterval);
   }
 
-  if (typeof intervalDeluxe.endTime === 'undefined') {
-    delete intervalDeluxe.endTime;
+  if (typeof updatedInterval.endTime === 'undefined') {
+    delete updatedInterval.endTime;
   }
 
   return new Promise((resolve, reject) => {
     firebaseApi.intervals
-      .child(intervalDeluxe.id)
-      .update(withoutId(intervalDeluxe), (err) => {
+      .child(updatedInterval.id)
+      .update(withoutId(updatedInterval), (err) => {
         if (err) return reject(err);
-        resolve(intervalDeluxe);
+        resolve(updatedInterval);
       });
   });
 }
