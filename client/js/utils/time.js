@@ -1,4 +1,4 @@
-const weekDays = ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'];
+export const weekDays = ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'];
 
 export function zeroPad(num) {
   return num < 10 ? '0' + num : num;

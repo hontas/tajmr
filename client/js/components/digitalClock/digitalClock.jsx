@@ -23,7 +23,7 @@ export default React.createClass({
     const { hours, minutes } = getTimePartsFromElapsedTime(time);
     const timestring = `${zeroPad(hours)}:${zeroPad(minutes)}`;
 
-    if (false && from && hours && minutes === 0) {
+    if (from && hours && minutes === 0) {
       notify(`Nu har du jobbat i ${hours} timmar.`);
     }
 

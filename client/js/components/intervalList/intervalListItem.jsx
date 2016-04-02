@@ -77,7 +77,7 @@ export default React.createClass({
     if (!updated) {
       return originalTime;
     } else if (!this.validateTime(updated)) {
-      console.log('Wrong format %s - should be XX:XX where X is a positive integer', updated);
+      console.log('Wrong format %s - should be XX:XX where X is a positive integer', updated); // eslint-disable-line no-console
       return originalTime;
     }
 
@@ -87,7 +87,6 @@ export default React.createClass({
     date.setHours(hours);
     date.setMinutes(minutes);
 
-    console.log('returning new time', date.getTime(), originalTime);
     return date.getTime();
   },
 

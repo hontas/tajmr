@@ -7,7 +7,7 @@
     "node": "5.x"
   },
   "scripts": {
-    "lint": "eslint --ignore-path .gitignore .",
+    "lint": "eslint --ignore-path .gitignore --ext .js,.jsx .",
     "postinstall": "npm run build",
     "start": "node --harmony_modules --harmony_destructuring --harmony_rest_parameters --harmony_default_parameters server.js",
     "copy": "cp client/favicon.ico public && cp -a client/assets public/assets",
@@ -49,7 +49,7 @@
     "react": "^0.14.8",
     "react-dom": "^0.14.8",
     "react-redux": "^4.4.1",
-    "react-spinkit": "^1.1.4",
+    "react-spinkit": "git://github.com/hontas/react-spinkit.git#master",
     "react-timer-mixin": "^0.13.3",
     "redux": "^3.2.1",
     "redux-logger": "^2.6.1",

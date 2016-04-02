@@ -8,7 +8,7 @@ const intervals = {
 
 function errorResponse(res, method, status = 500) {
   return (error) => {
-    console.log('error in', method, error);
+    console.log('error in', method, error); // eslint-disable-line no-console
     res.status(status).json(error);
   };
 }

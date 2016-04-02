@@ -1,11 +1,7 @@
 import React, { PropTypes } from 'react';
-import Spinner from 'react-spinkit';
 
-import { remove } from '../../utils/intervalsApi';
+import * as propTypes from '../../constants/propTypes';
 import IntervalListItem from './intervalListItem.jsx';
-import { attemptUpdate, attemptRemove, removeInterval } from '../../actions/intervals';
-
-const last24Hours = (Date.now() - 1000 * 3600 * 24);
 
 function sortBy(array, prop) {
   return array.slice().sort((a, b) => {
@@ -13,44 +9,24 @@ function sortBy(array, prop) {
   });
 }
 
-function sameDayOrActive(interval) {
-  return !interval.endTime || interval.startTime > last24Hours;
-}
+const IntervalList = ({ intervals, onDelete, onUpdate }) => {
+  const children = sortBy(intervals, 'startTime')
+    .map((interval) => <IntervalListItem { ...interval }
+        key={ interval.id }
+        onDelete={ onDelete }
+        onUpdate={ onUpdate } />);
 
-export default React.createClass({
-  propTypes: {
-    dispatch: PropTypes.func.isRequired,
-    intervals: PropTypes.arrayOf(PropTypes.object).isRequired,
-    user: PropTypes.shape({
-      id: PropTypes.string,
-      username: PropTypes.string
-    })
-  },
+  return (
+    <ul className="interval-list">
+      { children }
+    </ul>
+  );
+};
 
-  render() {
-    const { intervals } = this.props;
-    const children = sortBy(intervals, 'startTime')
-      .filter(sameDayOrActive)
-      .map((interval) => <IntervalListItem { ...interval }
-          key={ interval.id }
-          onDelete={ this.onDelete }
-          onUpdate={ this.onUpdate }/>);
+IntervalList.propTypes = {
+  intervals: propTypes.intervals.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired
+};
 
-    return (
-      <ul className="interval-list">
-        { children }
-      </ul>
-    );
-  },
-
-  onDelete(id) {
-    const { dispatch } = this.props;
-    dispatch(attemptRemove(id));
-  },
-
-  onUpdate(interval) {
-    const { dispatch } = this.props;
-    dispatch(attemptUpdate(interval));
-  }
-
-});
+export default IntervalList;

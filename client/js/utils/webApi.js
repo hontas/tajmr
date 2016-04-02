@@ -32,6 +32,8 @@ function ajax(url, method, data) {
     .then((response) => {
       if (response.status !== 204) {
         return response.json();
+      } else {
+        return response;
       }
     })
     .catch((error) => {

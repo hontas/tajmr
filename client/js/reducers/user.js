@@ -17,8 +17,13 @@ export function user(state = null, action) {
 
 export function userSettings(state = {}, action) {
   switch (action.type) {
+    case USER_LOGGED_IN:
+      return {
+        displayNotifications: true,
+        displayPreviousIntervals: true
+      };
     case USER_UPDATE_SETTINGS:
-      return Object.assign({}, state, action.settings);
+      return { ...state, ...action.settings };
     case USER_LOGGED_OUT:
       return {};
     default:

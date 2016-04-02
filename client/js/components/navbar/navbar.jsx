@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Spinner from 'react-spinkit';
 import classNames from 'classnames';
 
@@ -7,25 +8,17 @@ import UserMenu from '../user/userMenu.jsx';
 import pkg from '../../../../package.json';
 import { toggleDisplayNotifications } from '../../actions';
 
-export default React.createClass({
+const Navbar = React.createClass({
   propTypes: {
     dispatch: PropTypes.func.isRequired,
-    intervals: PropTypes.shape({
-      isFetching: PropTypes.bool.isRequired,
-      isSaving: PropTypes.bool.isRequired
-    }).isRequired,
-    isConnected: PropTypes.bool.isRequired,
+    isFetching: PropTypes.bool.isRequired,
+    isSaving: PropTypes.bool.isRequired,
     user: PropTypes.shape({
       uid: PropTypes.string.isRequired,
       password: PropTypes.shape({
-        email: PropTypes.string.isRequired,
         profileImageURL: PropTypes.string.isRequired
       }).isRequired
-    }),
-    userSettings: PropTypes.shape({
-      firstName: PropTypes.string,
-      displayNotifications: PropTypes.bool
-    }).isRequired
+    })
   },
 
   getInitialState() {
@@ -33,11 +26,10 @@ export default React.createClass({
   },
 
   render() {
-    const { user, userSettings, isConnected, intervals: { isSaving, isFetching } } = this.props;
+    const { user, isSaving, isFetching } = this.props;
     const { showLogin, showUserMenu } = this.state;
     const isLoading = isSaving || isFetching;
 
-    const spinnerStyle = { transform: 'scale(.75)' };
     const loginMenuClasses = classNames('pure-menu-item pure-menu-has-children', { 'pure-menu-active': !user && showLogin });
     const userMenuClasses = classNames('pure-menu-item pure-menu-has-children', { 'pure-menu-active': user && showUserMenu });
 
@@ -55,7 +47,7 @@ export default React.createClass({
         <ul className="navbar-menu pure-menu-list">
           { !user ?
             <li className={ loginMenuClasses }>
-              <a href="#" className="pure-menu-link" onClick={ this.openDialog('Login') }>{ 'Logga in' }</a>
+              <a className="pure-menu-link" href="#" onClick={ this.openDialog('Login') }>{ 'Logga in' }</a>
               <ul className="pure-menu-children">
                   <li className="pure-menu-item">
                     <Login />
@@ -64,7 +56,7 @@ export default React.createClass({
             </li>
             :
             <li className={ userMenuClasses }>
-              <a href="#" className="pure-menu-link" onClick={ this.openDialog('UserMenu') }>{ 'Inställningar' }</a>
+              <a className="pure-menu-link" href="#" onClick={ this.openDialog('UserMenu') }>{ 'Inställningar' }</a>
               <ul className="pure-menu-children">
                 <li className="pure-menu-item">
                   <UserMenu { ...this.props } />
@@ -90,3 +82,15 @@ export default React.createClass({
     this.props.dispatch(toggleDisplayNotifications());
   }
 });
+
+function mapStateToProps({ intervals, userSettings, user }) {
+  return {
+    user,
+    isFetching: intervals.isFetching,
+    isSaving: intervals.isSaving,
+    activeInterval: intervals.items.find((interval) => !interval.endTime),
+    userSettings
+  };
+}
+
+export default connect(mapStateToProps)(Navbar);

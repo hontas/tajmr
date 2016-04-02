@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
-export default ({ day, time }) => {
+const IntervalStatsItem = ({ day, time }) => {
   return (
     <div className="interval-stats-item">
       <h4>{ day }</h4>
@@ -8,3 +8,10 @@ export default ({ day, time }) => {
     </div>
   );
 };
+
+IntervalStatsItem.propTypes = {
+  day: PropTypes.string.isRequired,
+  time: PropTypes.string.isRequired
+};
+
+export default IntervalStatsItem;

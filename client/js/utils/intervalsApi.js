@@ -40,8 +40,11 @@ export function update(interval) {
     firebaseApi.intervals
       .child(updatedInterval.id)
       .update(withoutId(updatedInterval), (err) => {
-        if (err) return reject(err);
-        resolve(updatedInterval);
+        if (err) {
+          reject(err);
+        } else {
+          resolve(updatedInterval);
+        }
       });
   });
 }
@@ -52,8 +55,11 @@ export function remove(intervalId) {
       .child('intervals')
       .child(intervalId)
       .remove((err) => {
-        if (err) return reject(err);
-        resolve();
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
       });
   });
 }
@@ -64,12 +70,14 @@ export function findAll() {
   return new Promise((resolve, reject) => {
     function success(data) {
       const values = data.val();
-      if (!values) return resolve([]);
-
-      resolve(Object.keys(values)
-        .map((id) => {
-          return Object.assign({ id }, values[id]);
-        }));
+      if (!values) {
+        resolve([]);
+      } else {
+        resolve(Object.keys(values)
+          .map((id) => {
+            return Object.assign({ id }, values[id]);
+          }));
+      }
     }
 
     firebaseApi.ref.child('intervals')

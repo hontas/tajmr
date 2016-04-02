@@ -1,4 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+
+import * as propTypes from '../../constants/propTypes';
 import IntervalStatsItem from './intervalStatsItem.jsx';
 import {
   getTimePartsFromElapsedTime,
@@ -50,7 +53,13 @@ const IntervalStats = ({ intervals }) => {
 };
 
 IntervalStats.propTypes = {
-  intervals: PropTypes.arrayOf(PropTypes.object).isRequired
+  intervals: propTypes.intervals.isRequired
 };
 
-export default IntervalStats;
+function mapStateToProps({ intervals }) {
+  return {
+    intervals: intervals.items
+  };
+}
+
+export default connect(mapStateToProps)(IntervalStats);

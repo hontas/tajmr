@@ -4,15 +4,11 @@ const path = require('path');
 const webpack = require('webpack');
 const config = require('exp-config');
 
+const plugins = [];
 const entry = {
   app: [path.resolve(__dirname, 'client/js/app.js')],
   styles: path.resolve(__dirname, 'client/styles/index.js')
 };
-const plugins = [
-  new webpack.ProvidePlugin({
-    'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
-  })
-];
 
 if (config.useDevServer) {
   entry.app.push('webpack-hot-middleware/client?reload=true&noInfo=true');

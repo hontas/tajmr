@@ -28,8 +28,11 @@ export default {
       firebase.authWithPassword({
         email, password
       }, (error, authData) => {
-        if (error) return reject(error);
-        resolve(authData);
+        if (error) {
+          reject(error);
+        } else {
+          resolve(authData);
+        }
       });
     });
   },
