@@ -22,12 +22,13 @@ const CurrentIntervals = React.createClass({
         .filter(({ endTime }) => endTime) // is complete
         .map(getTimeInterval)
         .reduce(sum, 0);
+    const activeAndCurrentIntervals = activeInterval ? [].concat(activeInterval, intervals) : intervals;
 
     return (
       <div className="current-intervals">
         <DigitalClock elapsed={ intervalSum } from={ activeInterval ? activeInterval.startTime : 0 } />
         <WorkButton activeInterval={ !!activeInterval } onClick={ this.onClick } />
-        <IntervalList intervals={ intervals } onDelete={ this.onDelete } onUpdate={ this.onUpdate } />
+        <IntervalList intervals={ activeAndCurrentIntervals } onDelete={ this.onDelete } onUpdate={ this.onUpdate } />
         <WeekStats intervals={ weekIntervals } />
       </div>
     );
