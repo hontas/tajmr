@@ -16,13 +16,13 @@ const CurrentIntervals = React.createClass({
   render() {
     const { intervals, userSettings } = this.props;
 
-    return (
-      <div className="previous-intervals" hidden={ userSettings.displayPreviousIntervals }>
-        <h3>{ 'Tidigare' }</h3>
-        <IntervalList intervals={ intervals } onDelete={ this.onDelete } onUpdate={ this.onUpdate } />
-        <IntervalStats intervals={ intervals } />
-      </div>
-    );
+    return userSettings.displayPreviousIntervals ? (
+        <div className="previous-intervals">
+          <h3>{ 'Tidigare' }</h3>
+          <IntervalList intervals={ intervals } onDelete={ this.onDelete } onUpdate={ this.onUpdate } />
+          <IntervalStats intervals={ intervals } />
+        </div>
+      ) : <div />;
   },
 
   onDelete(id) {

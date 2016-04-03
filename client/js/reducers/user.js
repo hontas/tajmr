@@ -25,7 +25,10 @@ export function userSettings(state = {}, action) {
     case USER_UPDATE_SETTINGS:
       return { ...state, ...action.settings };
     case USER_LOGGED_OUT:
-      return {};
+      return {
+        displayNotifications: false,
+        displayPreviousIntervals: false
+      };
     default:
       return state;
   }

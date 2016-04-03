@@ -38,3 +38,18 @@ export function subtractDays(date, days = 0) {
   newDate.setDate(newDate.getDate() - days);
   return newDate;
 }
+
+const sameYear = (a, b) => a.getFullYear() === b.getFullYear();
+const sameMonth = (a, b) => a.getMonth() === b.getMonth();
+const sameDay = (a, b) => a.getDate() === b.getDate();
+
+export function isToday(date) {
+  const today = new Date();
+  return sameYear(today, date) && sameMonth(today, date) && sameDay(today, date);
+}
+
+export function isCurrentWeek(date) {
+  const weekStart = new Date();
+  weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+  return sameDay(date, weekStart);
+}

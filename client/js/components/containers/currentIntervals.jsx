@@ -7,6 +7,7 @@ import WorkButton from '../button/workButton.jsx';
 import IntervalList from '../intervalList/intervalList.jsx';
 import WeekStats from '../intervalStats/weekStats.jsx';
 import { attemptUpdate, attemptRemove } from '../../actions/intervals';
+import { isToday, isCurrentWeek } from '../../utils/time';
 
 const CurrentIntervals = React.createClass({
   propTypes: {
@@ -56,21 +57,6 @@ const CurrentIntervals = React.createClass({
   }
 });
 
-function isToday({ startTime }) {
-  const today = new Date();
-  const date = new Date(startTime);
-
-  return date.getDate() === today.getDate();
-}
-
-function isSameWeek({ startTime }) {
-  const weekStart = new Date();
-  const date = new Date(startTime);
-  weekStart.setDate(weekStart.getDate() - weekStart.getDay());
-
-  return date.getDate() === weekStart.getDate();
-}
-
 function getTimeInterval({ startTime, endTime }) {
   return endTime - startTime;
 }
@@ -81,8 +67,8 @@ function sum(res, curr) {
 
 function mapStateToProps({ intervals }) {
   return {
-    intervals: intervals.items.filter(isToday),
-    weekIntervals: intervals.items.filter(isSameWeek),
+    intervals: intervals.items.filter(({ startTime }) => isToday(new Date(startTime))),
+    weekIntervals: intervals.items.filter(({ startTime }) => isCurrentWeek(new Date(startTime))),
     activeInterval: intervals.items.find((interval) => !interval.endTime)
   };
 }
