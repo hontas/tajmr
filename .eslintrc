@@ -9,6 +9,8 @@
     "es6": true
   },
   "rules": {
+    "prefer-arrow-callback": "error",
+    "arrow-parens": ["error", "always"],
     "func-style": ["error", "declaration", { "allowArrowFunctions": true }],
     "no-alert": 2,
     "no-array-constructor": 2,

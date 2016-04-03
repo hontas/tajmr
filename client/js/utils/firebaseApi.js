@@ -12,7 +12,7 @@ firebase.onAuth((authData) => {
   if (authData) {
     store.dispatch(userLoggedIn(authData));
     getJSON(`${firebaseUrl}/users/${authData.uid}.json`)
-      .then(settings => store.dispatch(updateSettings(settings)));
+      .then((settings) => store.dispatch(updateSettings(settings)));
   } else {
     store.dispatch(userLoggedOut());
   }
