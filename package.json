@@ -52,7 +52,6 @@
     "react-spinkit": "git://github.com/hontas/react-spinkit.git#master",
     "react-timer-mixin": "^0.13.3",
     "redux": "^3.2.1",
-    "redux-logger": "^2.6.1",
     "redux-thunk": "^2.0.1",
     "socket.io": "^1.4.4",
     "style-loader": "^0.13.1",
