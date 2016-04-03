@@ -51,5 +51,5 @@ export function isToday(date) {
 export function isCurrentWeek(date) {
   const weekStart = new Date();
   weekStart.setDate(weekStart.getDate() - weekStart.getDay());
-  return sameDay(date, weekStart);
+  return sameYear(weekStart, date) && sameMonth(weekStart, date) && sameDay(date, weekStart);
 }
