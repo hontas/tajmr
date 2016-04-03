@@ -16,8 +16,6 @@ const WeekStats = ({ intervals }) => {
   const grouped = intervals
     .reduce(groupByWeekDay, {});
 
-  console.log(grouped);
-
   return (
     <div className="week-stats">
       <h3>{ 'Veckostatistik' }</h3>
