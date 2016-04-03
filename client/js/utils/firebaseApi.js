@@ -19,7 +19,7 @@ firebase.onAuth((authData) => {
 
   // using setImmediate due to async problem causing
   // intervalsApi to say that firebaseApi was undefined..
-  setImmediate(() => store.dispatch(fetchIntervals()));
+  setTimeout(() => store.dispatch(fetchIntervals()));
 });
 
 export default {
