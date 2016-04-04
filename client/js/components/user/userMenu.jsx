@@ -12,7 +12,8 @@ const UserMenu = ({ user, userSettings, dispatch }) => {
     };
   }
 
-  function saveUserSettings() {
+  function saveUserSettings(evt) {
+    evt.preventDefault();
     firebaseApi.ref.child('users').child(user.uid).set(userSettings);
   }
 
