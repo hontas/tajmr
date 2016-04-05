@@ -35,5 +35,9 @@ describe('time', () => {
       expect(isSameWeek(date, new Date('2016-04-09T07:00:00')), 'saturday').to.be.true();
       expect(isSameWeek(date, new Date('2016-04-10T07:00:00')), 'sunday').to.be.true();
     });
+
+    it('should handle weeks over months', () => {
+      expect(isSameWeek(new Date('2016-04-03T07:00:00'), new Date('2016-03-28T07:00:00'))).to.be.true();
+    });
   });
 });

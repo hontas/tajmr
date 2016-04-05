@@ -52,15 +52,21 @@ export function isSameWeek(date1, date2) {
   if (!(date1 instanceof Date && date2 instanceof Date)) throw Error('Must supply valid dates');
 
   const dates = [new Date(date1), new Date(date2)].sort((a, b) => a.getTime() - b.getTime());
+  const oneWeek = 1000 * 60 * 60 * 24 * 7;
+  const timestampDiff = dates
+    .map((d) => d.getTime())
+    .reduce((sum, curr) => curr - sum);
 
-  if (sameYear(date1, date2)) {
-    if (sameMonth(date1, date2)) {
-      if (sameDay(date1, date2)) {
-        return true;
-      }
-      const diff = dates[1].getDate() - dates[0].getDate();
-      return (dates[0].getDay() ? diff < 7 : diff === 0);
+  if (timestampDiff < oneWeek) {
+    // less than 7 days apart
+    if (!dates[0].getDay() && dates[1].getDay()) {
+      return false;
     }
+    if (dates[0].getDay() && !dates[1].getDay()) {
+      // date[1] is next sunday
+      return true;
+    }
+    return dates[0].getDay() <= dates[1].getDay();
   }
   return false;
 }
