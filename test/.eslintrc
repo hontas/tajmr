@@ -1,0 +1,13 @@
+{
+  "extends": "../.eslintrc",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "env": {
+    "mocha": true
+  },
+  "rules": {
+    "no-console": 0
+  }
+}

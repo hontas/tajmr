@@ -9,6 +9,8 @@
   "scripts": {
     "lint": "eslint --ignore-path .gitignore --ext .js,.jsx .",
     "postinstall": "npm run build",
+    "test": "mocha --recursive --compilers js:babel-register --reporter nyan",
+    "tdd": "npm test -- --watch --watch-extensions jsx --no-exit",
     "start": "node --harmony_modules --harmony_destructuring --harmony_rest_parameters --harmony_default_parameters server.js",
     "copy": "cp client/favicon.ico public && cp -a client/assets public/assets",
     "prebuild": "rm -rf public && mkdir public && npm run copy",
@@ -23,6 +25,8 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "chai": "^3.5.0",
+    "dirty-chai": "^1.2.2",
     "eslint": "^2.6.0",
     "eslint-plugin-react": "^4.2.3",
     "nodemon": "^1.9.1"

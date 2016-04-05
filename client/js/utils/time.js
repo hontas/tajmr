@@ -48,8 +48,23 @@ export function isToday(date) {
   return sameYear(today, date) && sameMonth(today, date) && sameDay(today, date);
 }
 
+export function isSameWeek(date1, date2) {
+  if (!(date1 instanceof Date && date2 instanceof Date)) throw Error('Must supply valid dates');
+
+  const dates = [new Date(date1), new Date(date2)].sort((a, b) => a.getTime() - b.getTime());
+
+  if (sameYear(date1, date2)) {
+    if (sameMonth(date1, date2)) {
+      if (sameDay(date1, date2)) {
+        return true;
+      }
+      const diff = dates[1].getDate() - dates[0].getDate();
+      return (dates[0].getDay() ? diff < 7 : diff === 0);
+    }
+  }
+  return false;
+}
+
 export function isCurrentWeek(date) {
-  const weekStart = new Date();
-  weekStart.setDate(weekStart.getDate() - weekStart.getDay());
-  return sameYear(weekStart, date) && sameMonth(weekStart, date) && sameDay(date, weekStart);
+  return isSameWeek(date, new Date());
 }
