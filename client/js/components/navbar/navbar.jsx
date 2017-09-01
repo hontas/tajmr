@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Spinner from 'react-spinkit';
+import { Wave } from 'better-react-spinkit';
 import classNames from 'classnames';
 
 import Login from '../auth/login.jsx';
@@ -39,7 +39,7 @@ const Navbar = React.createClass({
         <span className="version">{ `v${pkg.version}` }</span>
         { isLoading &&
           <div style={ { color: 'gray', display: 'inline-block', marginLeft: '1em' } }>
-            <Spinner noFadeIn overrideSpinnerClassName="spin-kit-spinner" spinnerName="wave" />
+            <Wave color="currentColor" className="spin-kit-spinner" />
             <small style={ { verticalAlign: 'middle' } }>{ isFetching ? 'Laddar intervall...' : 'Sparar...' }</small>
           </div>
         }
