@@ -15,20 +15,16 @@ export function user(state = null, action) {
   }
 }
 
-export function userSettings(state = {}, action) {
+const initialState = {
+  displayNotifications: false,
+  displayPreviousIntervals: false
+};
+export function userSettings(state = initialState, action) {
   switch (action.type) {
-    case USER_LOGGED_IN:
-      return {
-        displayNotifications: true,
-        displayPreviousIntervals: true
-      };
     case USER_UPDATE_SETTINGS:
       return { ...state, ...action.settings };
     case USER_LOGGED_OUT:
-      return {
-        displayNotifications: false,
-        displayPreviousIntervals: false
-      };
+      return initialState;
     default:
       return state;
   }

@@ -1,5 +1,8 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import { getTimePartsFromTimestamp } from '../../utils/time';
+import DatePicker from '../datepicker/index.jsx'; // 📅
 import Button from '../button/button.jsx';
 
 function debounce(fn, timeout = 400, thisArg) {
@@ -60,6 +63,7 @@ export default React.createClass({
 
     return (
       <li className="interval-list-item">
+        <DatePicker date={ startTime } />
         <input className="interval-list-item-time" onChange={ this.onStartChange } value={ startTimeString } />
         <input className="interval-list-item-time" { ...getEndTimeAttributes() } />
 
@@ -70,7 +74,7 @@ export default React.createClass({
   },
 
   validateTime(time) {
-    return /^\d{2}\:\d{2}$/.test(time);
+    return /^\d{2}:\d{2}$/.test(time);
   },
 
   getUpdatedTimeFor(updated, originalTime) {

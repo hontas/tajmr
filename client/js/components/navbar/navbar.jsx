@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Wave } from 'better-react-spinkit';
 import classNames from 'classnames';
@@ -14,10 +15,7 @@ const Navbar = React.createClass({
     isFetching: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,
     user: PropTypes.shape({
-      uid: PropTypes.string.isRequired,
-      password: PropTypes.shape({
-        profileImageURL: PropTypes.string.isRequired
-      }).isRequired
+      uid: PropTypes.string.isRequired
     })
   },
 
@@ -27,10 +25,10 @@ const Navbar = React.createClass({
 
   render() {
     const { user, isSaving, isFetching } = this.props;
-    const { showLogin, showUserMenu } = this.state;
+    const { showLoginMenu, showUserMenu } = this.state;
     const isLoading = isSaving || isFetching;
 
-    const loginMenuClasses = classNames('pure-menu-item pure-menu-has-children', { 'pure-menu-active': !user && showLogin });
+    const loginMenuClasses = classNames('pure-menu-item pure-menu-has-children', { 'pure-menu-active': !user && showLoginMenu });
     const userMenuClasses = classNames('pure-menu-item pure-menu-has-children', { 'pure-menu-active': user && showUserMenu });
 
     return (
@@ -47,7 +45,7 @@ const Navbar = React.createClass({
         <ul className="navbar-menu pure-menu-list">
           { !user ?
             <li className={ loginMenuClasses }>
-              <a className="pure-menu-link" href="#" onClick={ this.openDialog('Login') }>{ 'Logga in' }</a>
+              <a className="pure-menu-link" href="#" onClick={ this.toggleLoginDialog }>{ 'Logga in' }</a>
               <ul className="pure-menu-children">
                   <li className="pure-menu-item">
                     <Login />
@@ -56,10 +54,10 @@ const Navbar = React.createClass({
             </li>
             :
             <li className={ userMenuClasses }>
-              <a className="pure-menu-link" href="#" onClick={ this.openDialog('UserMenu') }>{ 'Inställningar' }</a>
+              <a className="pure-menu-link" href="#" onClick={ this.toggleUserDialog }>{ 'Inställningar' }</a>
               <ul className="pure-menu-children">
                 <li className="pure-menu-item">
-                  <UserMenu { ...this.props } />
+                  <UserMenu { ...this.props } onClose={ this.toggleUserDialog }/>
                 </li>
               </ul>
             </li>
@@ -70,12 +68,16 @@ const Navbar = React.createClass({
     );
   },
 
-  openDialog(dialog) {
-    const key = `show${dialog}`;
-    return (evt) => {
-      evt.preventDefault();
-      this.replaceState({ [key]: !this.state[key] });
-    };
+  toggleUserDialog(evt) {
+    const key = 'showUserMenu';
+    if (evt) evt.preventDefault();
+    this.replaceState({ [key]: !this.state[key] });
+  },
+
+  toggleLoginDialog(evt) {
+    const key = 'showLoginMenu';
+    if (evt) evt.preventDefault();
+    this.replaceState({ [key]: !this.state[key] });
   },
 
   onToggleNotifications() {

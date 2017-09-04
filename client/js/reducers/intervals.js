@@ -61,6 +61,7 @@ export function intervals(state = {
 
     case INTERVAL_UPDATED:
     case INTERVAL_COMPLETE: {
+      console.log('updated/completed');
       const updatedIndex = getIndexById(state.items, action.interval.id);
       return Object.assign({}, state, {
         isSaving: false,

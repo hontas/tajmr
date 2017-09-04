@@ -65,25 +65,8 @@ export function remove(intervalId) {
 }
 
 export function findAll() {
-  const auth = firebaseApi.ref.getAuth();
-
-  return new Promise((resolve, reject) => {
-    function success(data) {
-      const values = data.val();
-      if (!values) {
-        resolve([]);
-      } else {
-        resolve(Object.keys(values)
-          .map((id) => {
-            return Object.assign({ id }, values[id]);
-          }));
-      }
-    }
-
-    firebaseApi.ref.child('intervals')
-      .orderByChild('user')
-      .equalTo(auth && auth.uid)
-      .limitToLast(100)
-      .once('value', success, reject);
-  });
+  return firebaseApi.getAllIntervals()
+    .then((intervals) =>
+      Object.keys(intervals)
+        .map((id) => ({ id, ...intervals[id] })));
 }

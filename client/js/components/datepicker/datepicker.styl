@@ -1,0 +1,33 @@
+$block = '.date-picker';
+
+{$block} {
+  margin-left: .5em;
+  margin-right: -.5em;
+  padding-right: .5em;
+  position: relative;
+
+  &__icon {
+    font-size: 1.5em;
+    line-height: 1.5833333333em; // 38px/16px/1.5em
+  }
+
+  &__calendar {
+    display: none;
+    font-size: smaller;
+    left: .8em;
+    padding-top: .6em;
+    position: absolute;
+    top: 2.8em;
+
+    .DayPicker-wrapper {
+      background: white;
+      color: #333;
+    }
+  }
+
+  &:hover {
+    {$block}__calendar {
+      display: block;
+    }
+  }
+}

@@ -11,11 +11,10 @@ const entry = {
 };
 
 if (config.useDevServer) {
-  entry.app.push('webpack-hot-middleware/client?reload=true&noInfo=true');
+  entry.app.push('webpack-hot-middleware/client?reload=true');
   plugins.push(
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin()
   );
 }
 
@@ -33,16 +32,16 @@ module.exports = {
     loaders: [{
       test: /\.jsx?$/,
       exclude: /(node_modules|bower_components)/,
-      loader: 'babel'
+      loader: 'babel-loader'
     }, {
       test: /\.json$/,
-      loader: 'json'
+      loader: 'json-loader'
     }, {
       test: /\.styl$/,
-      loader: 'style!css!stylus'
+      loader: 'style-loader!css-loader!stylus-loader'
     }, {
       test: /\.css$/,
-      loader: 'style!css'
+      loader: 'style-loader!css-loader'
     }]
   },
   plugins,
