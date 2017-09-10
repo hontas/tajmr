@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import TimerMixin from 'react-timer-mixin';
 import { getTimePartsFromElapsedTime, zeroPad } from '../../utils/time';
 import notify from '../../utils/notification';

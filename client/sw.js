@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tajmr-v1';
+const CACHE_NAME = 'tajmr-v2';
 let urlsToCache = [
   '/',
   '/assets/manifest.json',
@@ -37,15 +37,18 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.url.startsWith(self.location.origin)) {
-    event.respondWith(
-      caches.match(event.request)
-        .then((response) => {
-          if (response) {
-            return response;
+    event.respondWith((async function aiife() {
+      const cache = await caches.open(CACHE_NAME);
+      const response = await cache.match(event.request);
+      const fetchPromise = fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse.ok) {
+            cache.put(event.request, networkResponse.clone());
           }
+          return networkResponse;
+        });
 
-          return fetch(event.request);
-        })
-    );
+      return response || fetchPromise;
+    }()));
   }
 });
