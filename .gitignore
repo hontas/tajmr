@@ -4,4 +4,4 @@ node_modules/
 .DS_Store
 *.sublime-*
 npm-*
-.package-lock.json
+package-lock.json

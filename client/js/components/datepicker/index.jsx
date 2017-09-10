@@ -3,9 +3,14 @@ import PropTypes from 'prop-types';
 import DayPicker from 'react-day-picker';
 import classNames from 'classnames';
 
+// 📅
+import Calendar from '../icons/Calendar.jsx';
+
 const DatePicker = ({ className, date, onDayClick }) => (
   <div className={ classNames('date-picker', className) }>
-    <div className="date-picker__icon">📅</div>
+    <div className="date-picker__icon">
+      <Calendar />
+    </div>
     <DayPicker
       canChangeMonth={ false }
       className="date-picker__calendar"
