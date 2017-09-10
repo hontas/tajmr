@@ -1,9 +1,9 @@
+import md5 from 'md5';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 
 import store from '../store';
-import { getJSON } from './webApi';
 import { intervalUpdated, removeInterval, fetchIntervals } from '../actions/intervals';
 import { userLoggedIn, userLoggedOut, updateSettings } from '../actions/userActions';
 
@@ -25,10 +25,12 @@ const database = firebase.database();
 const auth = firebase.auth();
 
 auth.onAuthStateChanged((user) => {
-  console.log('authstate changed', user);
+  const garavatarUrl = 'https://www.gravatar.com/avatar';
   if (user) {
-    console.log('logged in');
-    //store.dispatch(userLoggedIn(user));
+    store.dispatch(userLoggedIn({
+      ...user,
+      photoURL: user.photoURL || `${garavatarUrl}/${md5(user.email)}`
+    }));
     database.ref('users/' + user.uid).once('value')
       .then((settings) => {
         store.dispatch(updateSettings(settings.val()));
@@ -45,11 +47,12 @@ auth.onAuthStateChanged((user) => {
 const api = {
   login(email, password) {
     return auth.signInWithEmailAndPassword(email, password)
-      .then((user) => console.log('user', user));
+      .catch((err) => console.error(err));
   },
 
   logout() {
-    return firebase.unauth();
+    return auth.signOut()
+      .catch((err) => console.error(err));
   },
 
   ref: firebase,
