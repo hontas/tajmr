@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Trashcan from '../icons/Trashcan.jsx';
 import { getTimePartsFromTimestamp } from '../../utils/time';
-import DatePicker from '../datepicker/index.jsx'; // 📅
+import DatePicker from '../datepicker/index.jsx';
 import Button from '../button/button.jsx';
 
 function debounce(fn, timeout = 400, thisArg) {
@@ -69,7 +70,9 @@ export default React.createClass({
         <input className="interval-list-item-time" { ...getEndTimeAttributes() } />
 
         <input className="interval-list-item-note" onChange={ this.onCommentChange } placeholder="Anteckning" value={ text } />
-        <Button className="delete" onClick={ this.onDelete } text="⌫" />
+        <Button className="delete" onClick={ this.onDelete }>
+          <Trashcan size={20} />
+        </Button>
       </li>
     );
   },

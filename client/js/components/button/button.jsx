@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { FadingCircle } from 'better-react-spinkit';
 
-const Button = ({ className, text, isLoading, ...rest }) => {
+const Button = ({ className, text, isLoading, children, ...rest }) => {
   const classes = classNames('pure-button button', className);
 
   return (
     <button { ...rest } className={ classes }>
-      { text }
+      { text ? text : null }
+      { children ? children : null }
 
       { isLoading &&
         <FadingCircle className="spin-kit-spinner" color="currentColor" size={ 15 } />
@@ -21,7 +22,11 @@ Button.propTypes = {
   className: PropTypes.string,
   isLoading: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired
+  text: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element)
+  ]),
 };
 
 export default Button;
