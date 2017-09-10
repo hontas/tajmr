@@ -63,8 +63,9 @@ export default React.createClass({
 
     return (
       <li className="interval-list-item">
-        <DatePicker date={ startTime } />
+        <DatePicker date={ startTime } onDayClick={(startDate) => this.onUpdate({ startDate })} />
         <input className="interval-list-item-time" onChange={ this.onStartChange } value={ startTimeString } />
+        <DatePicker date={ endTime } onDayClick={(endDate) => this.onUpdate({ endDate })} />
         <input className="interval-list-item-time" { ...getEndTimeAttributes() } />
 
         <input className="interval-list-item-note" onChange={ this.onCommentChange } placeholder="Anteckning" value={ text } />
@@ -77,24 +78,34 @@ export default React.createClass({
     return /^\d{2}:\d{2}$/.test(time);
   },
 
-  getUpdatedTimeFor(updated, originalTime) {
-    if (!updated) {
+  getUpdatedTimeFor(updated, originalTime, newDate) {
+    if (!updated && !newDate) {
       return originalTime;
-    } else if (!this.validateTime(updated)) {
+    }
+
+    if (updated && !this.validateTime(updated)) {
       console.log('Wrong format %s - should be XX:XX where X is a positive integer', updated); // eslint-disable-line no-console
       return originalTime;
     }
 
     const date = new Date(originalTime);
-    const [hours, minutes] = updated.split(':');
 
-    date.setHours(hours);
-    date.setMinutes(minutes);
+    if (updated) {
+      const [hours, minutes] = updated.split(':');
 
+      date.setHours(hours);
+      date.setMinutes(minutes);
+    }
+
+    if (newDate) {
+      date.setDate((new Date(newDate)).getDate());
+    }
+
+    console.log('date', date);
     return date.getTime();
   },
 
-  onUpdate() {
+  onUpdate({ startDate, endDate }) {
     const { id, note, startTime, endTime } = this.props;
     const { comment, start, end } = this.state;
     const text = comment || note || '';
@@ -106,8 +117,8 @@ export default React.createClass({
     this.props.onUpdate({
       id,
       note: text,
-      startTime: this.getUpdatedTimeFor(start, startTime),
-      endTime: this.getUpdatedTimeFor(end, endTime)
+      startTime: this.getUpdatedTimeFor(start, startTime, startDate),
+      endTime: this.getUpdatedTimeFor(end, endTime, endDate)
     });
   },
 

@@ -14,10 +14,11 @@ $block = '.date-picker';
   &__calendar {
     display: none;
     font-size: smaller;
-    left: .8em;
+    left: 0;
     padding-top: .6em;
     position: absolute;
     top: 2.8em;
+    z-index: 10;
 
     .DayPicker-wrapper {
       background: white;
@@ -25,7 +26,8 @@ $block = '.date-picker';
     }
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
     {$block}__calendar {
       display: block;
     }

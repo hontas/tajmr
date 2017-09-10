@@ -28,8 +28,6 @@ const Navbar = React.createClass({
     const { showLoginMenu, showUserMenu } = this.state;
     const isLoading = isSaving || isFetching;
 
-    console.log('user', user);
-
     const loginMenuClasses = classNames('pure-menu-item pure-menu-has-children', { 'pure-menu-active': !user && showLoginMenu });
     const userMenuClasses = classNames('pure-menu-item pure-menu-has-children', { 'pure-menu-active': user && showUserMenu });
 
