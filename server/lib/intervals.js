@@ -1,5 +1,3 @@
-'use strict';
-
 const intervals = {
   find() {
     return Promise.resolve();
