@@ -1,19 +1,16 @@
-import cuid from 'cuid';
-import * as intervalsApi from '../utils/intervalsApi';
+import firebaseApi from '../utils/firebaseApi';
 
 export const INTERVAL_ADD = 'INTERVAL_ADD';
 export const INTERVAL_UPDATED = 'INTERVAL_UPDATED';
 export const INTERVAL_UPDATE_FAILED = 'INTERVAL_UPDATE_FAILED';
 export const INTERVAL_COMPLETE = 'INTERVAL_COMPLETE';
 export const INTERVAL_REMOVE = 'INTERVAL_REMOVE';
+export const INTERVALS_REQUEST = 'INTERVALS_REQUEST';
+export const INTERVALS_REQUEST_FAILED = 'INTERVALS_REQUEST_FAILED';
 export const INTERVALS_FETCHED = 'INTERVALS_FETCHED';
-export const REQUEST_INTERVALS = 'REQUEST_INTERVALS';
 export const REQUEST_INTERVAL_UPDATE = 'REQUEST_INTERVAL_UPDATE';
 
-export function addInterval(interval = {
-    id: cuid(),
-    startTime: Date.now()
-  }) {
+export function intervalAdded(interval) {
   return {
     type: INTERVAL_ADD,
     interval
@@ -21,14 +18,7 @@ export function addInterval(interval = {
 }
 
 export function requestIntervals() {
-  return { type: REQUEST_INTERVALS };
-}
-
-export function intervalsFetched(intervals) {
-  return {
-    type: INTERVALS_FETCHED,
-    intervals
-  };
+  return { type: INTERVALS_REQUEST };
 }
 
 export function requestIntervalUpdate() {
@@ -42,6 +32,20 @@ export function intervalUpdated(interval) {
   };
 }
 
+function intervalsFetched(intervals) {
+  return {
+    type: INTERVALS_FETCHED,
+    intervals
+  };
+}
+
+function intervalsRequestFailed(error) {
+  return {
+    type: INTERVALS_REQUEST_FAILED,
+    error
+  };
+}
+
 export function intervalUpdateFailed(error) {
   return {
     type: INTERVAL_UPDATE_FAILED,
@@ -52,7 +56,8 @@ export function intervalUpdateFailed(error) {
 export function attemptRemove(id) {
   return (dispatch) => {
     dispatch(requestIntervalUpdate());
-    intervalsApi.remove(id);
+    firebaseApi.removeInterval(id)
+      .then(() => dispatch(removeInterval(id)));
   };
 }
 
@@ -67,20 +72,24 @@ export function attemptUpdate(interval) {
   return (dispatch) => {
     dispatch(requestIntervalUpdate());
 
-    // only need to handle failure as firebase automatically will
-    // fire a change event that we handle
-    return intervalsApi.update(interval)
-      .then((res) => dispatch(intervalUpdated(res)))
+    // only need to handle failure here because
+    // firebase fires change event that we handle
+    if (!interval.id) {
+      return firebaseApi.createInterval(interval)
+        .catch((err) => dispatch(intervalUpdateFailed(err)));
+    }
+
+    return firebaseApi.updateInterval(interval)
       .catch((err) => dispatch(intervalUpdateFailed(err)));
   };
 }
 
-export function fetchIntervals() {
+export function fetchIntervalsForUser() {
   return (dispatch) => {
-    dispatch(requestIntervals());
+    dispatch(requestIntervals);
 
-    return intervalsApi.findAll()
-      .then((intervals) => dispatch(intervalsFetched(intervals)))
-      .catch(() => dispatch(intervalsFetched([])));
+    return firebaseApi.fetchIntervalsForUser()
+        .then((intervals) => dispatch(intervalsFetched(intervals)))
+        .catch((error) => dispatch(intervalsRequestFailed(error)));
   };
 }

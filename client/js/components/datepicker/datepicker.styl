@@ -1,8 +1,6 @@
 $block = '.date-picker';
 
 {$block} {
-  margin-left: .5em;
-  margin-right: -.5em;
   padding-right: .5em;
   position: relative;
 
@@ -30,5 +28,9 @@ $block = '.date-picker';
     {$block}__calendar {
       display: block;
     }
+  }
+
+  &--disabled {
+    color: lightblue;
   }
 }

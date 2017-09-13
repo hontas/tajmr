@@ -15,20 +15,25 @@ class UserMenu extends React.Component {
   }
 
   render() {
-    const { userSettings } = this.props;
-    const { displayNotifications, displayPreviousIntervals } = userSettings;
+    const { userSettings, user } = this.props;
+    const { displayNotifications, displayPreviousIntervals, displayName } = userSettings;
     const { isSavingUserSettings } = this.state;
 
     return (
       <form className="pure-form pure-form-stacked user-menu">
-        <label className="pure-checkbox">{ 'Visa notifiering ' }
-          <input checked={ displayNotifications } onChange={ this.handleChange('displayNotifications') } style={ { float: 'right' } } type="checkbox" />
-        </label>
-        <label className="pure-checkbox">{ 'Visa tidigare ' }
-          <input checked={ displayPreviousIntervals } onChange={ this.handleChange('displayPreviousIntervals') } style={ { float: 'right' } } type="checkbox" />
-        </label>
+        <fieldset>
+          <legend>
+            <input autoCapitalize spellCheck="false" type="text" value={ displayName } onChange={ this.handleChange('displayName') } placeholder="display name" />
+          </legend>
+          <label className="pure-checkbox">{ 'Visa notifiering ' }
+            <input checked={ displayNotifications } onChange={ this.handleChange('displayNotifications') } style={ { float: 'right' } } type="checkbox" />
+          </label>
+          <label className="pure-checkbox">{ 'Visa tidigare ' }
+            <input checked={ displayPreviousIntervals } onChange={ this.handleChange('displayPreviousIntervals') } style={ { float: 'right' } } type="checkbox" />
+          </label>
+        </fieldset>
         <Button className="pure-button-primary" isLoading={ isSavingUserSettings } onClick={ this.saveUserSettings } text="Spara" />
-        <button className="pure-button" onClick={ firebaseApi.logout }>{ 'Logga ut' }</button>
+          <button className="pure-button" onClick={ firebaseApi.logout }>{ 'Logga ut' }</button>
       </form>
     );
   }
@@ -45,14 +50,10 @@ class UserMenu extends React.Component {
   saveUserSettings = (evt) => {
     evt.preventDefault();
     const { user, userSettings, onClose } = this.props;
-    this.setState({
-      isSavingUserSettings: true
-    });
+    this.setState({ isSavingUserSettings: true });
 
-    firebaseApi
-      .users
-      .child(user.uid)
-      .set(userSettings, () => {
+    firebaseApi.saveUserData(user.uid, userSettings)
+      .then((msg) => {
         this.setState({ isSavingUserSettings: false });
         onClose();
       });

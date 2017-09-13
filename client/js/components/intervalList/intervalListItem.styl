@@ -2,28 +2,18 @@
   display: flex;
   margin-bottom: 0.5em;
 
-  .interval-list-item-note,
-  .interval-list-item-time {
+  .interval-list-item-note {
     color: #333;
     font-size: 1em;
     padding: 0.5em;
+    flex: 4;
+    margin: 0 0.5em;
 
     &[disabled] {
       background: whitesmoke;
       color: darkgray;
       cursor: not-allowed;
     }
-  }
-
-  .interval-list-item-time {
-    border-width: 0;
-    flex-basis: 62px;
-    margin: 0 0.5em;
-  }
-
-  .interval-list-item-note {
-    flex: 4;
-    margin: 0 0.5em;
   }
 
   .button {

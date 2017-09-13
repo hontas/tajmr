@@ -20,8 +20,8 @@ const CurrentIntervals = React.createClass({
     return userSettings.displayPreviousIntervals ? (
         <div className="previous-intervals">
           <h3>{ 'Tidigare' }</h3>
-          <IntervalList intervals={ intervals } onDelete={ this.onDelete } onUpdate={ this.onUpdate } />
           <IntervalStats intervals={ intervals } />
+          <IntervalList intervals={ intervals } onDelete={ this.onDelete } onUpdate={ this.onUpdate } />
         </div>
       ) : <div />;
   },
@@ -45,9 +45,10 @@ function isNotToday({ startTime }) {
 }
 
 function mapStateToProps({ intervals, userSettings }) {
+  const intervalList = Object.keys(intervals.items).map((key) => intervals.items[key]);
   return {
     userSettings,
-    intervals: intervals.items
+    intervals: intervalList
       .filter(({ endTime }) => endTime) // is completed
       .filter(isNotToday)
   };

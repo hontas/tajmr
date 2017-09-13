@@ -4,8 +4,8 @@ import {
   INTERVAL_UPDATE_FAILED,
   INTERVAL_COMPLETE,
   INTERVAL_REMOVE,
+  INTERVALS_REQUEST,
   INTERVALS_FETCHED,
-  REQUEST_INTERVALS,
   REQUEST_INTERVAL_UPDATE
 } from '../actions/intervals';
 
@@ -14,44 +14,43 @@ import {
   USER_LOGGED_OUT
 } from '../actions/userActions';
 
-function getIndexById(array, id) {
-  return array.indexOf(array.find((item) => item.id === id));
-}
-
-function addOrReplace(currentIntervals, updatedInterval, index) {
-  return index === -1 ?
-    [ ...currentIntervals, updatedInterval ] :
-    [ ...currentIntervals.slice(0, index), updatedInterval, ...currentIntervals.slice(index + 1) ];
-}
-
 export function intervals(state = {
     isFetching: false,
     isSaving: false,
-    items: []
+    items: {}
   }, action) {
   switch (action.type) {
     case USER_LOGGED_IN:
     case USER_LOGGED_OUT:
       return Object.assign({}, state, {
-        items: []
+        items: {}
       });
 
-    case REQUEST_INTERVALS:
+    case INTERVALS_REQUEST:
       return Object.assign({}, state, {
         isFetching: true
       });
 
-    case INTERVALS_FETCHED:
-      return Object.assign({}, state, {
-        isFetching: false,
-        items: action.intervals,
-        lastUpdated: action.receivedAt
-      });
+    case INTERVALS_FETCHED: {
+      const items = Object.keys(action.intervals)
+        .map((id) => ({ ...action.intervals[id], id }))
+        .reduce((res, curr) => {
+          res[curr.id] = curr;
+          return res;
+        }, {});
+      return {
+        ...state,
+        items
+      };
+    }
 
     case INTERVAL_ADD:
       return Object.assign({}, state, {
         isSaving: false,
-        items: [ action.interval, ...state.items ]
+        items: {
+          ...state.items,
+          [action.interval.id]: action.interval
+        }
       });
 
     case REQUEST_INTERVAL_UPDATE:
@@ -61,11 +60,12 @@ export function intervals(state = {
 
     case INTERVAL_UPDATED:
     case INTERVAL_COMPLETE: {
-      console.log('updated/completed');
-      const updatedIndex = getIndexById(state.items, action.interval.id);
       return Object.assign({}, state, {
         isSaving: false,
-        items: addOrReplace(state.items, action.interval, updatedIndex)
+        items: {
+          ...state.items,
+          [action.interval.id]: action.interval
+        }
       });
     }
 
@@ -76,10 +76,11 @@ export function intervals(state = {
       });
 
     case INTERVAL_REMOVE: {
-      const deletedIndex = getIndexById(state.items, action.id);
+      const copy = { ...state.items };
+      delete copy[action.id];
       return Object.assign({}, state, {
         isSaving: false,
-        items: [ ...state.items.slice(0, deletedIndex), ...state.items.slice(deletedIndex + 1) ]
+        items: copy
       });
     }
 

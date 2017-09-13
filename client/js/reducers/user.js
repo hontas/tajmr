@@ -17,7 +17,9 @@ export function user(state = null, action) {
 
 const initialState = {
   displayNotifications: false,
-  displayPreviousIntervals: false
+  displayPreviousIntervals: false,
+  displayName: '',
+  hoursInWeek: 40
 };
 export function userSettings(state = initialState, action) {
   switch (action.type) {

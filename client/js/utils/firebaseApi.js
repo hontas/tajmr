@@ -1,14 +1,10 @@
-import md5 from 'md5';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 
 import store from '../store';
-import { intervalUpdated, removeInterval, fetchIntervals } from '../actions/intervals';
+import { intervalAdded, intervalUpdated, fetchIntervalsForUser } from '../actions/intervals';
 import { userLoggedIn, userLoggedOut, updateSettings } from '../actions/userActions';
-
-// const firebaseUrl = 'https://tajmr.firebaseio.com';
-// const firebase = new Firebase(firebaseUrl);
 
 // Initialize Firebase
 const config = {
@@ -25,23 +21,15 @@ const database = firebase.database();
 const auth = firebase.auth();
 
 auth.onAuthStateChanged((user) => {
-  const garavatarUrl = 'https://www.gravatar.com/avatar';
   if (user) {
-    store.dispatch(userLoggedIn({
-      ...user,
-      photoURL: user.photoURL || `${garavatarUrl}/${md5(user.email)}`
-    }));
+    store.dispatch(userLoggedIn(user));
     database.ref('users/' + user.uid).once('value')
-      .then((settings) => {
-        store.dispatch(updateSettings(settings.val()));
-      });
+      .then((settings) => store.dispatch(updateSettings(settings.val())));
+
+    store.dispatch(fetchIntervalsForUser(user.uid));
   } else {
     store.dispatch(userLoggedOut());
   }
-
-  // using setImmediate due to async problem causing
-  // intervalsApi to say that firebaseApi was undefined..
-  setTimeout(() => store.dispatch(fetchIntervals()));
 });
 
 const api = {
@@ -57,40 +45,59 @@ const api = {
 
   ref: firebase,
 
-  intervals: database.ref('intervals'),
+  intervals: database.ref().child('intervals'),
 
-  users: database.ref('users'),
+  createInterval(data) {
+    const id = database.ref().child('intervals').push().key;
+    const user = api.getCurrentUserId();
+    return api.updateInterval({ ...data, id, user, createdAt: Date.now() });
+  },
 
-  getAllIntervals() {
+  updateInterval({ id, ...interval }) {
+    return database.ref(`intervals/${id}`)
+      .set({ ...interval, updatedAt: Date.now() });
+  },
+
+  removeInterval(id) {
+    return database.ref(`intervals/${id}`).remove();
+  },
+
+  fetchIntervalsForUser({ limit = 10 } = {}) {
     return api.intervals
       .orderByChild('user')
       .equalTo(auth.currentUser && auth.currentUser.uid)
-      .limitToLast(50)
+      .limitToLast(limit)
       .once('value')
       .then((snapshot) => (snapshot.val()));
   },
 
+  getCurrentUserId() {
+    return auth.currentUser && auth.currentUser.uid;
+  },
+
+  saveUserData(userId, data) {
+    return database.ref('users/' + userId).set(data);
+  },
+
   init() {
-    const intervals = api.intervals
-          .orderByChild('user');
+    api.intervals
+      .orderByChild('startTime')
+      .startAt(Date.now())
+      .on('child_added', (snapshot) => {
+        const interval = snapshot.val();
+        const userId = auth.currentUser && auth.currentUser.uid;
+        console.log('child_added!!!!', interval);
 
-    intervals.on('child_added', (snapshot) => {
+        if (interval.user !== userId) return;
+
+        const id = snapshot.key;
+        store.dispatch(intervalAdded({ ...interval, id }));
+      });
+
+    api.intervals.on('child_changed', (snapshot) => {
       const interval = snapshot.val();
-      const userId = auth.currentUser && auth.currentUser.uid;
-
-      if (interval.user !== userId) return;
-
-      const newInterval = Object.assign({id: snapshot.key }, snapshot.val());
-      store.dispatch(intervalUpdated(newInterval));
-    });
-
-    intervals.on('child_changed', (snapshot) => {
-      const updatedInterval = Object.assign({id: snapshot.key }, snapshot.val());
-      store.dispatch(intervalUpdated(updatedInterval));
-    });
-
-    intervals.on('child_removed', (snapshot) => {
-      store.dispatch(removeInterval(snapshot.key));
+      const id = snapshot.key;
+      store.dispatch(intervalUpdated({ ...interval, id }));
     });
   }
 };

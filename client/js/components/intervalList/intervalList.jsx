@@ -5,15 +5,19 @@ import * as propTypes from '../../constants/propTypes';
 import IntervalListItem from './intervalListItem.jsx';
 
 function sortBy(array, prop) {
-  return array.slice().sort((a, b) => {
-    return b[prop] - a[prop];
-  });
+  return array
+    .slice()
+    .sort((a, b) => {
+      return b[prop] - a[prop];
+    })
+    .slice(0, 10);
 }
 
 const IntervalList = ({ intervals, onDelete, onUpdate }) => {
   const children = sortBy(intervals, 'startTime')
-    .map((interval) => <IntervalListItem { ...interval }
+    .map((interval) => <IntervalListItem
         key={ interval.id }
+        interval={ interval }
         onDelete={ onDelete }
         onUpdate={ onUpdate } />);
 

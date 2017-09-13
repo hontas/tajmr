@@ -58,7 +58,7 @@ IntervalStats.propTypes = {
 
 function mapStateToProps({ intervals }) {
   return {
-    intervals: intervals.items
+    intervals: Object.keys(intervals.items).map((key) => intervals.items[key])
   };
 }
 

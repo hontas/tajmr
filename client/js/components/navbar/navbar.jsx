@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Wave } from 'better-react-spinkit';
 import classNames from 'classnames';
+import md5 from 'md5';
 
 import Login from '../auth/login.jsx';
 import UserMenu from '../user/userMenu.jsx';
 import pkg from '../../../../package.json';
-import { toggleDisplayNotifications } from '../../actions';
+
+const garavatarUrl = 'https://www.gravatar.com/avatar';
 
 const Navbar = React.createClass({
   propTypes: {
@@ -27,6 +29,7 @@ const Navbar = React.createClass({
     const { user, isSaving, isFetching } = this.props;
     const { showLoginMenu, showUserMenu } = this.state;
     const isLoading = isSaving || isFetching;
+    const photoURL = user && (user.photoURL  || `${garavatarUrl}/${md5(user.email)}`);
 
     const loginMenuClasses = classNames('pure-menu-item pure-menu-has-children', { 'pure-menu-active': !user && showLoginMenu });
     const userMenuClasses = classNames('pure-menu-item pure-menu-has-children', { 'pure-menu-active': user && showUserMenu });
@@ -62,7 +65,7 @@ const Navbar = React.createClass({
               </ul>
             </li>
           }
-          { user && <img alt="profile image" className="profile-image" src={ user.photoURL }/> }
+          { user && <img alt="profile image" className="profile-image" src={ photoURL }/> }
         </ul>
       </div>
     );
@@ -78,10 +81,6 @@ const Navbar = React.createClass({
     const key = 'showLoginMenu';
     if (evt) evt.preventDefault();
     this.replaceState({ [key]: !this.state[key] });
-  },
-
-  onToggleNotifications() {
-    this.props.dispatch(toggleDisplayNotifications());
   }
 });
 
@@ -90,7 +89,6 @@ function mapStateToProps({ intervals, userSettings, user }) {
     user,
     isFetching: intervals.isFetching,
     isSaving: intervals.isSaving,
-    activeInterval: intervals.items.find((interval) => !interval.endTime),
     userSettings
   };
 }
