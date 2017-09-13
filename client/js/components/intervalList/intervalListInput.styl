@@ -1,0 +1,25 @@
+.interval-list-input {
+  display: flex;
+  color: white;
+  border-width: 0;
+  flex-basis: 62px;
+  margin-left: .5em;
+
+  &__input {
+    color: #333;
+    font-size: 1em;
+    padding: 0.5em;
+
+    &[disabled] {
+      background: whitesmoke;
+      color: darkgray;
+      cursor: not-allowed;
+    }
+  }
+
+  &--error {
+    background: red;
+    border-color: darkred;
+    color: darkred;
+  }
+}
