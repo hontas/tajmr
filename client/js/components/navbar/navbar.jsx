@@ -11,20 +11,13 @@ import UserMenu from '../user/userMenu.jsx';
 import pkg from '../../../../package.json';
 
 const garavatarUrl = 'https://www.gravatar.com/avatar';
+const preventDefault = (evt) => evt.preventDefault();
 
-const Navbar = React.createClass({
-  propTypes: {
-    dispatch: PropTypes.func.isRequired,
-    isFetching: PropTypes.bool.isRequired,
-    isSaving: PropTypes.bool.isRequired,
-    user: PropTypes.shape({
-      uid: PropTypes.string.isRequired
-    })
-  },
-
-  getInitialState() {
-    return {};
-  },
+class Navbar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
   render() {
     const { user, isSaving, isFetching } = this.props;
@@ -32,8 +25,7 @@ const Navbar = React.createClass({
     const isLoading = isSaving || isFetching;
     const photoURL = user && (user.photoURL  || `${garavatarUrl}/${md5(user.email)}`);
 
-    const loginMenuClasses = classNames('pure-menu-item pure-menu-has-children', { 'pure-menu-active': !user && showLoginMenu });
-    const userMenuClasses = classNames('pure-menu-item pure-menu-has-children pure-menu-allow-hover', { 'pure-menu-active': user && showUserMenu });
+    const menuClasses = 'pure-menu-item pure-menu-has-children pure-menu-allow-hover';
 
     return (
       <div className="navbar pure-menu pure-menu-horizontal pure-menu-fixed">
@@ -48,8 +40,8 @@ const Navbar = React.createClass({
 
         <ul className="navbar-menu pure-menu-list">
           { !user ?
-            <li className={ loginMenuClasses }>
-              <a className="pure-menu-link" href="#" onClick={ this.toggleLoginDialog }>
+            <li className={ menuClasses }>
+              <a className="pure-menu-link" href="#" onClick={ preventDefault }>
                 { 'Logga in' }
               </a>
               <ul className="pure-menu-children">
@@ -59,14 +51,14 @@ const Navbar = React.createClass({
               </ul>
             </li>
             :
-            <li className={ userMenuClasses }>
-              <a className="pure-menu-link" href="#" onClick={ this.toggleUserDialog }>
+            <li className={ menuClasses }>
+              <a className="pure-menu-link" href="#" onClick={ preventDefault }>
                 <Cog size={ 16 } />
                 <span className="menu-link__text">{ 'Inställningar' }</span>
               </a>
               <ul className="pure-menu-children">
                 <li className="pure-menu-item">
-                  <UserMenu { ...this.props } onClose={ this.toggleUserDialog }/>
+                  <UserMenu { ...this.props }/>
                 </li>
               </ul>
             </li>
@@ -75,20 +67,17 @@ const Navbar = React.createClass({
         </ul>
       </div>
     );
-  },
-
-  toggleUserDialog(evt) {
-    const key = 'showUserMenu';
-    if (evt) evt.preventDefault();
-    this.replaceState({ [key]: !this.state[key] });
-  },
-
-  toggleLoginDialog(evt) {
-    const key = 'showLoginMenu';
-    if (evt) evt.preventDefault();
-    this.replaceState({ [key]: !this.state[key] });
   }
-});
+};
+
+Navbar.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  isSaving: PropTypes.bool.isRequired,
+  user: PropTypes.shape({
+    uid: PropTypes.string.isRequired
+  })
+};
 
 function mapStateToProps({ intervals, userSettings, user }) {
   return {

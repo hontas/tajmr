@@ -49,20 +49,18 @@ class UserMenu extends React.Component {
 
   saveUserSettings = (evt) => {
     evt.preventDefault();
-    const { user, userSettings, onClose } = this.props;
+    const { user, userSettings } = this.props;
     this.setState({ isSavingUserSettings: true });
 
     firebaseApi.saveUserData(user.uid, userSettings)
       .then((msg) => {
         this.setState({ isSavingUserSettings: false });
-        onClose();
       });
   }
 }
 
 UserMenu.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
   user: PropTypes.shape({
     uid: PropTypes.string.isRequired
   }).isRequired,
