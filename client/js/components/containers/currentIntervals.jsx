@@ -5,23 +5,26 @@ import { connect } from 'react-redux';
 import * as propTypes from '../../constants/propTypes';
 import DigitalClock from '../digitalClock/digitalClock.jsx';
 import WorkButton from '../button/workButton.jsx';
+import ProgressBar from '../ui-elements/progressBar.jsx';
 import IntervalList from '../intervalList/intervalList.jsx';
 import WeekStats from '../intervalStats/weekStats.jsx';
 import { attemptUpdate, attemptRemove } from '../../actions/intervals';
-import { isToday, isCurrentWeek } from '../../utils/time';
+import { isToday, isCurrentWeek, getHours } from '../../utils/time';
 
 class CurrentIntervals extends React.Component {
   render() {
-    const { intervals, activeInterval, weekIntervals } = this.props;
+    const { intervals, activeInterval, weekIntervals, userSettings } = this.props;
     const intervalSum = intervals
         .filter(isComplete)
         .map(getTimeInterval)
         .reduce(sum, 0);
     const activeAndCurrentIntervals = activeInterval ? [].concat(activeInterval, intervals) : intervals;
+    const hoursInWeek = userSettings.hoursInWeek || 40;;
 
     return (
       <div className="current-intervals">
         <DigitalClock elapsed={ intervalSum } from={ activeInterval ? activeInterval.startTime : 0 } />
+        <ProgressBar progress={getHours(intervalSum)} max={ hoursInWeek / 5 } />
         <WorkButton activeInterval={ !!activeInterval } onClick={ this.onClick } />
         <IntervalList intervals={ activeAndCurrentIntervals } onDelete={ this.onDelete } onUpdate={ this.onUpdate } />
         <WeekStats intervals={ weekIntervals } />
@@ -63,7 +66,7 @@ CurrentIntervals.propTypes = {
   weekIntervals: propTypes.intervals.isRequired
 }
 
-function mapStateToProps({ intervals }) {
+function mapStateToProps({ intervals, userSettings }) {
   const intervalList = Object.keys(intervals.items).map((id) => ({
     ...intervals.items[id],
     id
@@ -72,7 +75,8 @@ function mapStateToProps({ intervals }) {
   return {
     intervals: intervalList.filter(({ endTime }) => endTime).filter(({ startTime }) => isToday(new Date(startTime))),
     weekIntervals: intervalList.filter(({ startTime }) => isCurrentWeek(new Date(startTime))),
-    activeInterval: intervalList.find((interval) => !interval.endTime)
+    activeInterval: intervalList.find((interval) => !interval.endTime),
+    userSettings
   };
 }
 

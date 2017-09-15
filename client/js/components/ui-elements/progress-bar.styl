@@ -1,0 +1,20 @@
+.progress-bar {
+  display: flex;
+  border: 1px solid rgba(255, 255, 255, .75);
+  margin: 1em;
+}
+
+.progress-bar__rest,
+.progress-bar__progress {
+  flex: 1;
+  height: 1em;
+}
+
+.progress-bar__progress {
+  background-color: $text-color-light;
+}
+
+.progress-bar__overtime {
+  background-color: $danger-color;
+  border-left: 1px solid alpha($danger-color-dark, .75);
+}
