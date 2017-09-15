@@ -6,3 +6,6 @@ tajmr
 ```shell
 npm run watch
 ```
+
+## Todo
+- build script that busts caches, upgrades version -> service worker

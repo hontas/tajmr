@@ -27,7 +27,7 @@ class CurrentIntervals extends React.Component {
         <ProgressBar progress={getHours(intervalSum)} max={ hoursInWeek / 5 } />
         <WorkButton activeInterval={ !!activeInterval } onClick={ this.onClick } />
         <IntervalList intervals={ activeAndCurrentIntervals } onDelete={ this.onDelete } onUpdate={ this.onUpdate } />
-        <WeekStats intervals={ weekIntervals } />
+        <WeekStats intervals={ weekIntervals } userSettings={userSettings} />
       </div>
     );
   }

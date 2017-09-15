@@ -1,6 +1,7 @@
 import React from 'react';
 import * as propTypes from '../../constants/propTypes';
 
+import ProgressBar from '../ui-elements/progressBar.jsx';
 import WeekStatsItem from './weekStatsItem.jsx';
 import {
   getTimePartsFromElapsedTime,
@@ -49,7 +50,11 @@ function mashUpWeekAndIntervals(intervals) {
   }));
 }
 
-const WeekStats = ({ intervals }) => (
+function sumTime(res, curr) {
+  return res + (curr.endTime - curr.startTime);
+}
+
+const WeekStats = ({ intervals, userSettings }) => (
   <div className="week-stats">
     <h3>{ 'Veckostatistik' }</h3>
     <div className="flex-container flex--align-end">
@@ -59,11 +64,13 @@ const WeekStats = ({ intervals }) => (
             <WeekStatsItem key={day.weekday} { ...day } />)
       }
     </div>
+    <ProgressBar progress={getHours(intervals.reduce(sumTime, 0))} max={ userSettings.hoursInWeek } />
   </div>
 );
 
 WeekStats.propTypes = {
-  intervals: propTypes.intervals.isRequired
+  intervals: propTypes.intervals.isRequired,
+  userSettings: propTypes.userSettings
 };
 
 export default WeekStats;
