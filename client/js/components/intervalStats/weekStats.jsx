@@ -56,8 +56,8 @@ function sumTime(res, curr) {
 
 const WeekStats = ({ intervals, userSettings }) => (
   <div className="week-stats">
-    <h3>{ 'Veckostatistik' }</h3>
-    <div className="flex-container flex--align-end">
+    <h3 className="week-stats__title">{ 'Veckostatistik' }</h3>
+    <div className="week-stats__bars flex-container flex--align-end">
       {
         mashUpWeekAndIntervals(intervals)
           .map((day) =>
