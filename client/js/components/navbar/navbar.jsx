@@ -5,6 +5,7 @@ import { Wave } from 'better-react-spinkit';
 import classNames from 'classnames';
 import md5 from 'md5';
 
+import Cog from '../icons/Cog.jsx';
 import Login from '../auth/login.jsx';
 import UserMenu from '../user/userMenu.jsx';
 import pkg from '../../../../package.json';
@@ -32,7 +33,7 @@ const Navbar = React.createClass({
     const photoURL = user && (user.photoURL  || `${garavatarUrl}/${md5(user.email)}`);
 
     const loginMenuClasses = classNames('pure-menu-item pure-menu-has-children', { 'pure-menu-active': !user && showLoginMenu });
-    const userMenuClasses = classNames('pure-menu-item pure-menu-has-children', { 'pure-menu-active': user && showUserMenu });
+    const userMenuClasses = classNames('pure-menu-item pure-menu-has-children pure-menu-allow-hover', { 'pure-menu-active': user && showUserMenu });
 
     return (
       <div className="navbar pure-menu pure-menu-horizontal pure-menu-fixed">
@@ -48,7 +49,9 @@ const Navbar = React.createClass({
         <ul className="navbar-menu pure-menu-list">
           { !user ?
             <li className={ loginMenuClasses }>
-              <a className="pure-menu-link" href="#" onClick={ this.toggleLoginDialog }>{ 'Logga in' }</a>
+              <a className="pure-menu-link" href="#" onClick={ this.toggleLoginDialog }>
+                { 'Logga in' }
+              </a>
               <ul className="pure-menu-children">
                   <li className="pure-menu-item">
                     <Login />
@@ -57,7 +60,10 @@ const Navbar = React.createClass({
             </li>
             :
             <li className={ userMenuClasses }>
-              <a className="pure-menu-link" href="#" onClick={ this.toggleUserDialog }>{ 'Inställningar' }</a>
+              <a className="pure-menu-link" href="#" onClick={ this.toggleUserDialog }>
+                <Cog size={ 16 } />
+                <span className="menu-link__text">{ 'Inställningar' }</span>
+              </a>
               <ul className="pure-menu-children">
                 <li className="pure-menu-item">
                   <UserMenu { ...this.props } onClose={ this.toggleUserDialog }/>
@@ -65,7 +71,7 @@ const Navbar = React.createClass({
               </ul>
             </li>
           }
-          { user && <img alt="profile image" className="profile-image" src={ photoURL }/> }
+          { user && <img alt="avatar" className="profile-image" src={ photoURL }/> }
         </ul>
       </div>
     );

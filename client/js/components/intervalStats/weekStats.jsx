@@ -1,45 +1,66 @@
 import React from 'react';
 import * as propTypes from '../../constants/propTypes';
-import { getWeekday, weekDays, getTimePartsFromElapsedTime, zeroPad } from '../../utils/time';
 
-function groupByWeekDay(map, interval) {
-  const date = new Date(interval.startTime);
-  const weekDay = getWeekday(date);
-  if (!map[weekDay]) {
-    map[weekDay] = { total: 0, date: `${date.getDate()}/${date.getMonth() + 1}` };
-  }
-  map[weekDay].total += (interval.endTime - interval.startTime);
-  return map;
+import WeekStatsItem from './weekStatsItem.jsx';
+import {
+  getTimePartsFromElapsedTime,
+  zeroPad,
+  getTimeString,
+  getHours,
+  getDay,
+  getDate,
+  getWeekday,
+  weekDays
+} from '../../utils/time';
+
+function createWeek() {
+  const d = new Date();
+  return Array(7).fill(0)
+    .map((_, day) => {
+      d.setDate(d.getDate() - d.getDay() + day);
+      return {
+        weekday: getWeekday(d),
+        date: getDate(d)
+      };
+    })
+    .slice(1, 6);
 }
 
-const WeekStats = ({ intervals }) => {
-  const grouped = intervals
-    .reduce(groupByWeekDay, {});
+function groupByWeekDay(intervals) {
+  return intervals.reduce((hashMap, interval) => {
+    const date = new Date(interval.startTime);
+    const weekDay = getWeekday(date);
 
-  return (
-    <div className="week-stats">
-      <h3>{ 'Veckostatistik' }</h3>
-      <div className="flex-container">
-        { weekDays.slice(1, 6).map((day) => {
-            const oneDay = grouped[day] || { total: 0 };
-            const { hours, minutes } = getTimePartsFromElapsedTime(oneDay.total);
-            const totalTime = (hours + (minutes / 60)) * 10; // 10 hours = 100px;
-            const style = {
-              background: 'rgba(255, 255, 255, .5)',
-              height: `${totalTime}px`,
-              lineHeight: `${totalTime}px`
-            };
-            return (
-              <div className="flex-item center" key={ day } style={ { alignSelf: 'flex-end' } }>
-                { !!oneDay.total && <div style={ style }>{ `${hours}:${zeroPad(minutes)}` }</div> }
-                <p>{ `${day} ${oneDay.date || ''}` }</p>
-              </div>
-            );
-           }) }
-      </div>
+    if (!hashMap[weekDay]) {
+      hashMap[weekDay] = { total: 0 };
+    }
+    hashMap[weekDay].total += (interval.endTime - interval.startTime);
+
+    return hashMap;
+  }, {});
+}
+
+function mashUpWeekAndIntervals(intervals) {
+  const intervalHash = groupByWeekDay(intervals);
+  return createWeek().map((day) => ({
+    ...day,
+    total: 0,
+    ...intervalHash[day.weekday]
+  }));
+}
+
+const WeekStats = ({ intervals }) => (
+  <div className="week-stats">
+    <h3>{ 'Veckostatistik' }</h3>
+    <div className="flex-container flex--align-end">
+      {
+        mashUpWeekAndIntervals(intervals)
+          .map((day) =>
+            <WeekStatsItem key={day.weekday} { ...day } />)
+      }
     </div>
-  );
-};
+  </div>
+);
 
 WeekStats.propTypes = {
   intervals: propTypes.intervals.isRequired

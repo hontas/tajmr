@@ -53,18 +53,17 @@ export function intervalUpdateFailed(error) {
   };
 }
 
+export function removeInterval(id) {
+  return {
+    type: INTERVAL_REMOVE,
+    id
+  };
+}
 export function attemptRemove(id) {
   return (dispatch) => {
     dispatch(requestIntervalUpdate());
     firebaseApi.removeInterval(id)
       .then(() => dispatch(removeInterval(id)));
-  };
-}
-
-export function removeInterval(id) {
-  return {
-    type: INTERVAL_REMOVE,
-    id
   };
 }
 
@@ -89,7 +88,7 @@ export function fetchIntervalsForUser() {
     dispatch(requestIntervals);
 
     return firebaseApi.fetchIntervalsForUser()
-        .then((intervals) => dispatch(intervalsFetched(intervals)))
-        .catch((error) => dispatch(intervalsRequestFailed(error)));
+      .then((intervals) => dispatch(intervalsFetched(intervals)))
+      .catch((error) => dispatch(intervalsRequestFailed(error)));
   };
 }

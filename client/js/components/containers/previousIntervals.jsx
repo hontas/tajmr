@@ -19,8 +19,7 @@ const CurrentIntervals = React.createClass({
 
     return userSettings.displayPreviousIntervals ? (
         <div className="previous-intervals">
-          <h3>{ 'Tidigare' }</h3>
-          <IntervalStats intervals={ intervals } />
+          <h3 className="previous-intervals__title">{ 'Tidigare' }</h3>
           <IntervalList intervals={ intervals } onDelete={ this.onDelete } onUpdate={ this.onUpdate } />
         </div>
       ) : <div />;

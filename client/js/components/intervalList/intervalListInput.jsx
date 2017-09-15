@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import DatePicker from '../datepicker/index.jsx';
-import { getTimePartsFromTimestamp } from '../../utils/time';
+import { getTimeString } from '../../utils/time';
 
 function stateFromProps(props) {
   const isActive = !Boolean(props.timestamp);
-  const value = isActive ? 'active' : getTimeString(getTimePartsFromTimestamp(props.timestamp));
+  const value = isActive ? 'active' : getTimeString(props.timestamp);
   return { value, isActive, isValid: true };
 }
 
@@ -71,7 +71,6 @@ class IntervalListInput extends React.Component {
   }
 }
 
-const getTimeString = ({ hours, minutes }) => `${hours}:${minutes}`;
 const validateTimeString = (time) => {
   const [hours, minutes] = time.split(':')
     .map((v) => parseInt(v, 10));

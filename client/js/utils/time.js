@@ -1,7 +1,32 @@
-export const weekDays = ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'];
+export const weekDays = ['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag'];
+
+const local = 'sv-SE';
+const intl = {
+  durationOffset: 1000 * 60 * 60, // because date 0 = 01:00:00 1970
+  time: new Intl.DateTimeFormat(local, { hour: 'numeric', minute: 'numeric' }),
+  weekDay: new Intl.DateTimeFormat(local, { weekday: 'long' }),
+  date: new Intl.DateTimeFormat(local, { month: 'numeric', day: 'numeric' })
+};
+
+export function getTimeString(date, { isDuration } = {}) {
+  const timestamp = isDuration ? date - intl.durationOffset : date;
+  return intl.time.format(timestamp);
+}
+
+export function getWeekday(date) {
+  return intl.weekDay.format(date);
+}
+
+export function getDate(date) {
+  return intl.date.format(date);
+}
+
+export function getHours(timestamp) {
+  return timestamp / 1000 / 60 / 60;
+}
 
 export function zeroPad(num) {
-  return num < 10 ? '0' + num : num;
+  return num < 10 ? `0${num}` : num;
 }
 
 export function getTimePartsFromElapsedTime(timestamp) {
@@ -19,10 +44,6 @@ export function getTimePartsFromTimestamp(timestamp) {
   const seconds = zeroPad(date.getSeconds());
 
   return { hours, minutes, seconds };
-}
-
-export function getWeekday(date) {
-  return weekDays[date.getDay()];
 }
 
 export function startOfDay(date) {

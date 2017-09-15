@@ -1,28 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TimerMixin from 'react-timer-mixin';
-import { getTimePartsFromElapsedTime, zeroPad } from '../../utils/time';
+
+import { getTimePartsFromElapsedTime, zeroPad, getTimeString } from '../../utils/time';
 import notify from '../../utils/notification';
 
 const oneMinute = 1000 * 60;
 
-export default React.createClass({
-  propTypes: {
-    elapsed: PropTypes.number.isRequired,
-    from: PropTypes.number.isRequired
-  },
-
-  mixins: [TimerMixin],
-
+class DigitalClock extends React.Component {
   componentDidMount() {
-    this.setInterval(this.forceUpdate, oneMinute);
-  },
+    this.interval = setInterval(this.forceUpdate, oneMinute);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
 
   render() {
     const { from, elapsed } = this.props;
     const time = from ? Date.now() - from + elapsed : elapsed;
     const { hours, minutes } = getTimePartsFromElapsedTime(time);
-    const timestring = `${zeroPad(hours)}:${zeroPad(minutes)}`;
+    const timestring = getTimeString(time, { isDuration: true });
 
     if (from && hours && minutes === 0) {
       notify(`Nu har du jobbat i ${hours} timmar.`);
@@ -34,4 +31,11 @@ export default React.createClass({
       </div>
     );
   }
-});
+}
+
+DigitalClock.propTypes = {
+  elapsed: PropTypes.number.isRequired,
+  from: PropTypes.number.isRequired
+};
+
+export default DigitalClock;

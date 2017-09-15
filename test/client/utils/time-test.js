@@ -1,8 +1,12 @@
 import chai, { expect } from 'chai';
 import dirtyChai from 'dirty-chai';
-chai.use(dirtyChai);
 
-import { isSameWeek } from '../../../client/js/utils/time';
+import {
+  isSameWeek,
+  getWeekday
+} from '../../../client/js/utils/time';
+
+chai.use(dirtyChai);
 
 describe('time', () => {
   describe('#isCurrentWeek', () => {
@@ -13,9 +17,7 @@ describe('time', () => {
     });
 
     it('should throw when not called with Date instances', () => {
-      const invoke = (date) => {
-        return isSameWeek(date);
-      };
+      const invoke = (withDate) => isSameWeek(withDate);
       expect(invoke).to.throw('Must supply valid dates');
       expect(invoke.bind(null, new Date())).to.throw('Must supply valid dates');
     });
@@ -38,6 +40,12 @@ describe('time', () => {
 
     it('should handle weeks over months', () => {
       expect(isSameWeek(new Date('2016-04-03T07:00:00'), new Date('2016-03-28T07:00:00'))).to.be.true();
+    });
+  });
+
+  describe('#getWeekDay', () => {
+    it('should return localised weekday', () => { // as not supported by node? :(
+      expect(getWeekday(new Date('2016-04-04T07:00:00'))).to.equal('Mon');
     });
   });
 });

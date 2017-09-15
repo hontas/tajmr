@@ -5,6 +5,7 @@
   .version {
     color: #AAA;
     vertical-align: middle;
+    display: none;
   }
 
   .brand {
@@ -27,6 +28,12 @@
     width: 30px;
   }
 
+  .menu-link__text {
+    @media screen and (max-width: $screen-small) {
+      display: none;
+    }
+  }
+
   .pure-menu-link:focus {
     background-color: transparent;
   }
@@ -41,5 +48,11 @@
   float: right;
   a {
     color: $text-color-light;
+  }
+  .icon-cog {
+    transform: translateY(2px);
+    @media screen and (min-width: $screen-small) {
+      display: none;
+    }
   }
 }
