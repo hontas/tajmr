@@ -9,24 +9,21 @@ function sortBy(array, prop) {
     .slice()
     .sort((a, b) => {
       return b[prop] - a[prop];
-    })
-    .slice(0, 10);
+    });
 }
 
-const IntervalList = ({ intervals, onDelete, onUpdate }) => {
-  const children = sortBy(intervals, 'startTime')
-    .map((interval) => <IntervalListItem
-        key={ interval.id }
-        interval={ interval }
-        onDelete={ onDelete }
-        onUpdate={ onUpdate } />);
-
-  return (
-    <ul className="interval-list">
-      { children }
-    </ul>
-  );
-};
+const IntervalList = ({ intervals, onDelete, onUpdate }) => (
+  <ul className="interval-list">
+    {
+      sortBy(intervals, 'startTime')
+        .map((interval) => <IntervalListItem
+            key={ interval.id }
+            interval={ interval }
+            onDelete={ onDelete }
+            onUpdate={ onUpdate } />)
+    }
+  </ul>
+);
 
 IntervalList.propTypes = {
   intervals: propTypes.intervals.isRequired,

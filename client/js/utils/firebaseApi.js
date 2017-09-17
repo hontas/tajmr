@@ -97,6 +97,7 @@ const api = {
     api.intervals.on('child_changed', (snapshot) => {
       const interval = snapshot.val();
       const id = snapshot.key;
+      console.log('child_changed', interval, id);
       store.dispatch(intervalUpdated({ ...interval, id }));
     });
   }

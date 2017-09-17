@@ -14,26 +14,40 @@ class IntervalListItem extends React.Component {
   }
 
   render() {
-    const { interval } = this.props;
+    const { interval: { startTime, endTime, note, notWork } } = this.props;
     const { comment } = this.state;
-    const text = typeof comment !== 'undefined' ? comment : interval.note;
+    const text = typeof comment !== 'undefined' ? comment : note;
 
     return (
       <li className="interval-list-item">
-        <IntervalListInput timestamp={ interval.startTime } onUpdate={ this.updateProp('startTime') } />
-        <IntervalListInput timestamp={ interval.endTime } onUpdate={ this.updateProp('endTime') } />
+        <IntervalListInput timestamp={ startTime } onUpdate={ this.updateProp('startTime') } />
+        <IntervalListInput timestamp={ endTime } onUpdate={ this.updateProp('endTime') } />
 
-        <input className="interval-list-item-note"
+        <input className="interval-list-item__note"
           onChange={ this.onCommentChange }
           placeholder="Anteckning"
           value={ text }
           onBlur={ this.updateProp('note') } />
+
+        <input
+          className="interval-list-item__no-work"
+          type="checkbox"
+          checked={ notWork }
+          onChange={ this.onChecked('notWork') } />
 
         <Button className="delete" onClick={ this.remove }>
           <Trashcan size={15} />
         </Button>
       </li>
     );
+  }
+
+  onChecked = (prop) => ({ target: { checked } }) => {
+    const { interval, onUpdate } = this.props;
+    onUpdate({
+      ...interval,
+      [prop]: checked
+    });
   }
 
   updateProp = (prop) => ({ target: { value } }) => {

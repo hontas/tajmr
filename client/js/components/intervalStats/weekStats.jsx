@@ -28,14 +28,17 @@ function createWeek() {
 }
 
 function groupByWeekDay(intervals) {
-  return intervals.reduce((hashMap, interval) => {
-    const date = new Date(interval.startTime);
+  return intervals.reduce((hashMap, { startTime, endTime, notWork }) => {
+    const date = new Date(startTime);
     const weekDay = getWeekday(date);
 
     if (!hashMap[weekDay]) {
       hashMap[weekDay] = { total: 0 };
     }
-    hashMap[weekDay].total += (interval.endTime - interval.startTime);
+    if (notWork) {
+      hashMap[weekDay].notWork = true;
+    }
+    hashMap[weekDay].total += (endTime - startTime);
 
     return hashMap;
   }, {});

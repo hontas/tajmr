@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { getHours, getTimeString } from '../../utils/time.js';
 
-const WeekDayItem = ({ weekday, total, date }) => {
+const WeekDayItem = ({ weekday, total, date, notWork }) => {
   const barHeight = getHours(total) * 10; // 10 hours = 100px;
   const style = {
     height: `${barHeight}px`,
@@ -12,7 +12,7 @@ const WeekDayItem = ({ weekday, total, date }) => {
 
   return (
     <div className="week-stats-item">
-      <div className="week-stats-item__bar" style={ style }>
+      <div className={ `week-stats-item__bar ${notWork && 'week-stats-item__bar--not-work'}` } style={ style }>
         { !!total && getTimeString(total, { isDuration: true }) }
       </div>
       <p className="week-date">
