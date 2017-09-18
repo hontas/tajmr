@@ -56,7 +56,7 @@ function mashUpWeekAndIntervals(intervals) {
 }
 
 function sumTime(res, curr) {
-  return res + (curr.endTime - curr.startTime);
+  return res + (curr.endTime || Date.now() - curr.startTime);
 }
 
 const WeekStats = ({ intervals, userSettings }) => (

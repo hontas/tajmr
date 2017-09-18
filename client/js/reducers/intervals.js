@@ -15,6 +15,7 @@ import {
 } from '../actions/userActions';
 
 export default function intervals(state = {
+  updatedAt: 0,
   isFetching: false,
   isSaving: false,
   items: {}
@@ -22,14 +23,18 @@ export default function intervals(state = {
   switch (action.type) {
     case USER_LOGGED_IN:
     case USER_LOGGED_OUT:
-      return Object.assign({}, state, {
+      return {
+        ...state,
+        updatedAt: Date.now(),
         items: {}
-      });
+      };
 
     case INTERVALS_REQUEST:
-      return Object.assign({}, state, {
+      return {
+        ...state,
+        updatedAt: Date.now(),
         isFetching: true
-      });
+      };
 
     case INTERVALS_FETCHED: {
       const items = Object.keys(action.intervals)
@@ -40,48 +45,59 @@ export default function intervals(state = {
         }, {});
       return {
         ...state,
+        updatedAt: Date.now(),
         items
       };
     }
 
     case INTERVAL_ADD:
-      return Object.assign({}, state, {
+      return {
+        ...state,
+        updatedAt: Date.now(),
         isSaving: false,
         items: {
           ...state.items,
           [action.interval.id]: action.interval
         }
-      });
+      };
 
     case REQUEST_INTERVAL_UPDATE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
+        updatedAt: Date.now(),
         isSaving: true
-      });
+      };
 
     case INTERVAL_UPDATED:
     case INTERVAL_COMPLETE: {
-      return Object.assign({}, state, {
+      return {
+        ...state,
+        updatedAt: Date.now(),
         isSaving: false,
         items: {
           ...state.items,
           [action.interval.id]: action.interval
         }
-      });
+      };
     }
 
     case INTERVAL_UPDATE_FAILED:
-      return Object.assign({}, state, {
+      return {
+        ...state,
+        updatedAt: Date.now(),
         error: action.error,
         isSaving: false
-      });
+      };
 
     case INTERVAL_REMOVE: {
       const copy = { ...state.items };
       delete copy[action.id];
-      return Object.assign({}, state, {
+      return {
+        ...state,
+        updatedAt: Date.now(),
         isSaving: false,
         items: copy
-      });
+      };
     }
 
     default:

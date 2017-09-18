@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import PureUpdatedAtComponent from '../PureUpdatedAtComponent.jsx';
 import * as propTypes from '../../constants/propTypes';
 import DigitalClock from '../digitalClock/digitalClock.jsx';
 import WorkButton from '../button/workButton.jsx';
@@ -11,20 +12,23 @@ import WeekStats from '../intervalStats/weekStats.jsx';
 import { attemptUpdate, attemptRemove } from '../../actions/intervals';
 import { isToday, isCurrentWeek, getHours } from '../../utils/time';
 
-class CurrentIntervals extends React.Component {
+class CurrentIntervals extends PureUpdatedAtComponent {
   render() {
     const { intervals, activeInterval, weekIntervals, userSettings } = this.props;
-    const intervalSum = intervals
+    const activeAndCurrentIntervals = activeInterval ? [].concat(activeInterval, intervals) : intervals;
+    const hoursInWeek = userSettings.hoursInWeek || 40;
+    const intervalSum = activeAndCurrentIntervals
         .filter(isComplete)
         .map(getTimeInterval)
         .reduce(sum, 0);
-    const activeAndCurrentIntervals = activeInterval ? [].concat(activeInterval, intervals) : intervals;
-    const hoursInWeek = userSettings.hoursInWeek || 40;
+    const progressSum = activeAndCurrentIntervals
+        .map(getTimeInterval)
+        .reduce(sum, 0);
 
     return (
       <div className="current-intervals">
         <DigitalClock elapsed={ intervalSum } from={ activeInterval ? activeInterval.startTime : 0 } />
-        <ProgressBar progress={getHours(intervalSum)} max={ hoursInWeek / 5 } />
+        <ProgressBar progress={getHours(progressSum)} max={ hoursInWeek / 5 } />
         <WorkButton activeInterval={ !!activeInterval } onClick={ this.onClick } />
         <IntervalList intervals={ activeAndCurrentIntervals } onDelete={ this.onDelete } onUpdate={ this.onUpdate } />
         <WeekStats intervals={ weekIntervals } userSettings={userSettings} />
@@ -54,11 +58,12 @@ class CurrentIntervals extends React.Component {
   }
 }
 
-const getTimeInterval = ({ startTime, endTime }) => endTime - startTime;
+const getTimeInterval = ({ startTime, endTime }) => endTime || Date.now() - startTime;
 const isComplete = ({ endTime }) => endTime;
 const sum = (res, curr) => res + curr;
 
 CurrentIntervals.propTypes = {
+  ...CurrentIntervals.propTypes,
   activeInterval: propTypes.interval,
   dispatch: PropTypes.func.isRequired,
   intervals: propTypes.intervals.isRequired,
@@ -72,6 +77,7 @@ function mapStateToProps({ intervals, userSettings }) {
   }));
 
   return {
+    updatedAt: intervals.updatedAt,
     intervals: intervalList.filter(({ endTime }) => endTime).filter(({ startTime }) => isToday(new Date(startTime))),
     weekIntervals: intervalList.filter(({ startTime }) => isCurrentWeek(new Date(startTime))),
     activeInterval: intervalList.find((interval) => !interval.endTime),
