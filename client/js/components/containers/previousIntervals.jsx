@@ -31,7 +31,6 @@ const CurrentIntervals = React.createClass({
   },
 
   onUpdate(interval) {
-    console.log('onUpdate interval', interval);
     const { dispatch } = this.props;
     dispatch(attemptUpdate(interval));
   }

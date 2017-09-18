@@ -1,7 +1,7 @@
 {
-  "name": "tajmr",
-  "version": "0.5.3",
-  "description": "Record some time sometime",
+  "name": "Tajmr",
+  "version": "0.6.0",
+  "description": "Record time sometime",
   "main": "main.js",
   "engines": {
     "node": "8.x"
@@ -12,9 +12,12 @@
     "test": "mocha --recursive --compilers js:babel-register --reporter nyan",
     "tdd": "npm test -- --watch --watch-extensions jsx --no-exit",
     "start": "node --harmony server.js",
-    "copy": "cp client/sw.js public && cp client/favicon.ico public && cp -a client/assets public/assets",
+    "copy": "cp client/sw.js public && cp -a client/assets public/assets",
     "prebuild": "rm -rf public && mkdir public && npm run copy",
+    "prebuild:gh": "npm run prebuild",
     "build": "NODE_ENV=production webpack --optimize-minimize",
+    "build:gh": "GH_PAGES=true NODE_ENV=production webpack --optimize-minimize",
+    "deploy": "npm run build:gh && GIT_DEPLOY_DIR=public ./scripts/deploy.sh",
     "postversion": "git push --follow-tags",
     "watch": "nodemon --exec 'npm start' --ignore client/ --ignore public/"
   },
@@ -33,6 +36,9 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.3.0",
+    "html-webpack-plugin": "^2.30.1",
+    "jade-loader": "^0.8.0",
+    "lolex": "^2.1.2",
     "nodemon": "^1.12.0"
   },
   "dependencies": {

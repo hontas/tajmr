@@ -14,11 +14,11 @@ import {
   USER_LOGGED_OUT
 } from '../actions/userActions';
 
-export function intervals(state = {
-    isFetching: false,
-    isSaving: false,
-    items: {}
-  }, action) {
+export default function intervals(state = {
+  isFetching: false,
+  isSaving: false,
+  items: {}
+}, action) {
   switch (action.type) {
     case USER_LOGGED_IN:
     case USER_LOGGED_OUT:

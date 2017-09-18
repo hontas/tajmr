@@ -19,7 +19,7 @@ class CurrentIntervals extends React.Component {
         .map(getTimeInterval)
         .reduce(sum, 0);
     const activeAndCurrentIntervals = activeInterval ? [].concat(activeInterval, intervals) : intervals;
-    const hoursInWeek = userSettings.hoursInWeek || 40;;
+    const hoursInWeek = userSettings.hoursInWeek || 40;
 
     return (
       <div className="current-intervals">
@@ -38,7 +38,6 @@ class CurrentIntervals extends React.Component {
   }
 
   onUpdate = (interval) => {
-    console.log('onUpdate interval', interval);
     const { dispatch } = this.props;
     dispatch(attemptUpdate(interval));
   }

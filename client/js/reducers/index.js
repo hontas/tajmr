@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { intervals } from './intervals';
+import intervals from './intervals';
 import { user, userSettings } from './user';
 
 function version(state = null) {

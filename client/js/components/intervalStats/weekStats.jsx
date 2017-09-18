@@ -11,7 +11,8 @@ import {
   getDay,
   getDate,
   getWeekday,
-  weekDays
+  weekDays,
+  getWeek
 } from '../../utils/time';
 
 function createWeek() {
@@ -30,15 +31,16 @@ function createWeek() {
 function groupByWeekDay(intervals) {
   return intervals.reduce((hashMap, { startTime, endTime, notWork }) => {
     const date = new Date(startTime);
+    const dateString = getDate(date);
     const weekDay = getWeekday(date);
 
-    if (!hashMap[weekDay]) {
-      hashMap[weekDay] = { total: 0 };
+    if (!hashMap[dateString]) {
+      hashMap[dateString] = { total: 0, weekDay };
     }
     if (notWork) {
-      hashMap[weekDay].notWork = true;
+      hashMap[dateString].notWork = true;
     }
-    hashMap[weekDay].total += (endTime - startTime);
+    hashMap[dateString].total += (endTime - startTime);
 
     return hashMap;
   }, {});
@@ -49,7 +51,7 @@ function mashUpWeekAndIntervals(intervals) {
   return createWeek().map((day) => ({
     ...day,
     total: 0,
-    ...intervalHash[day.weekday]
+    ...intervalHash[day.date]
   }));
 }
 
@@ -59,7 +61,13 @@ function sumTime(res, curr) {
 
 const WeekStats = ({ intervals, userSettings }) => (
   <div className="week-stats">
-    <h3 className="week-stats__title">{ 'Veckostatistik' }</h3>
+    <h3 className="week-stats__title">
+      {
+        intervals.length ?
+          ` v.${getWeek(intervals[0].startTime)}` :
+          ` v.${getWeek(Date.now())}`
+      }
+    </h3>
     <div className="week-stats__bars flex-container flex--align-end">
       {
         mashUpWeekAndIntervals(intervals)

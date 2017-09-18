@@ -1,5 +1,8 @@
 export const weekDays = ['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag'];
 
+const oneDay = 1000 * 60 * 60 * 24;
+const oneWeek = 1000 * 60 * 60 * 24 * 7;
+
 const local = 'sv-SE';
 const intl = {
   durationOffset: 1000 * 60 * 60, // because date 0 = 01:00:00 1970
@@ -23,6 +26,18 @@ export function getDate(date) {
 
 export function getHours(timestamp) {
   return timestamp / 1000 / 60 / 60;
+}
+
+export function getWeek(timestamp) {
+  const date = new Date(timestamp);
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  // Set to nearest Thursday: current date + 4 - current day number
+  // Make Sunday's day number 7
+  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+  // Get first day of year
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  // Calculate full weeks to nearest Thursday
+  return Math.ceil((((d - yearStart) / oneDay) + 1) / 7);
 }
 
 export function zeroPad(num) {
@@ -72,22 +87,26 @@ export function isToday(date) {
 export function isSameWeek(date1, date2) {
   if (!(date1 instanceof Date && date2 instanceof Date)) throw Error('Must supply valid dates');
 
-  const dates = [new Date(date1), new Date(date2)].sort((a, b) => a.getTime() - b.getTime());
-  const oneWeek = 1000 * 60 * 60 * 24 * 7;
-  const timestampDiff = dates
-    .map((d) => d.getTime())
-    .reduce((sum, curr) => curr - sum);
+  const timestampDiff = Math.abs(date1 - date2);
 
   if (timestampDiff < oneWeek) {
     // less than 7 days apart
-    if (!dates[0].getDay() && dates[1].getDay()) {
+    const dates = [new Date(date1), new Date(date2)]
+      .map((d) => ({ day: d.getDay(), date: d.getDate(), timestamp: d.getTime() }))
+      .sort((a, b) => a.timestamp - b.timestamp);
+
+    if (!dates[0].day && dates[1].day) {
       return false;
     }
-    if (dates[0].getDay() && !dates[1].getDay()) {
+    if (dates[0].day && !dates[1].day) {
       // date[1] is next sunday
       return true;
     }
-    return dates[0].getDay() <= dates[1].getDay();
+    if (dates[0].day === dates[1].day) {
+      return dates[0].date === dates[1].date;
+    }
+
+    return dates[0].day <= dates[1].day;
   }
   return false;
 }

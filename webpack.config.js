@@ -1,12 +1,23 @@
 const path = require('path');
 const webpack = require('webpack');
 const config = require('exp-config');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const plugins = [];
+const pkg = require('./package.json');
+
+const plugins = [
+  new HtmlWebpackPlugin({
+    title: pkg.name,
+    template: 'template.jade',
+    hash: true
+  })
+];
+
 const entry = {
   app: [path.resolve(__dirname, 'client/js/app.js')],
   styles: path.resolve(__dirname, 'client/styles/index.js')
 };
+let publicPath = '/';
 
 if (config.useDevServer) {
   entry.app.push('webpack-hot-middleware/client?reload=true');
@@ -16,6 +27,10 @@ if (config.useDevServer) {
   );
 }
 
+if (process.env.GH_PAGES) {
+  publicPath = '/tajmr/';
+}
+
 module.exports = {
   target: 'web',
   devtool: 'cheap-eval-source-map',
@@ -23,13 +38,13 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: '[name].js',
-    publicPath: '/'
+    publicPath
   },
 
   module: {
     loaders: [{
       test: /\.jsx?$/,
-      exclude: /(node_modules|bower_components)/,
+      exclude: /(node_modules)/,
       loader: 'babel-loader'
     }, {
       test: /\.json$/,
@@ -40,6 +55,9 @@ module.exports = {
     }, {
       test: /\.css$/,
       loader: 'style-loader!css-loader'
+    }, {
+      test: /\.jade$/,
+      loader: 'jade-loader'
     }]
   },
   plugins,
