@@ -6,33 +6,29 @@ import PureUpdatedAtComponent from '../PureUpdatedAtComponent.jsx';
 import * as propTypes from '../../constants/propTypes';
 import DigitalClock from '../digitalClock/digitalClock.jsx';
 import WorkButton from '../button/workButton.jsx';
-import ProgressBar from '../ui-elements/progressBar.jsx';
+import ProgressBarTimeWrapper from '../ui-elements/ProgressBarTimeWrapper.jsx';
 import IntervalList from '../intervalList/intervalList.jsx';
-import WeekStats from '../intervalStats/weekStats.jsx';
+import { WeekStatsTimeWrapper } from '../intervalStats/weekStats.jsx';
 import { attemptUpdate, attemptRemove } from '../../actions/intervals';
 import { isToday, isCurrentWeek, getHours } from '../../utils/time';
 
 class CurrentIntervals extends PureUpdatedAtComponent {
   render() {
     const { intervals, activeInterval, weekIntervals, userSettings } = this.props;
-    const intervalSum = intervals
-        .filter(isComplete)
-        .map(getTimeInterval)
-        .reduce(sum, 0);
     const activeAndCurrentIntervals = activeInterval ? [].concat(activeInterval, intervals) : intervals;
     const hoursInWeek = userSettings.hoursInWeek || 40;
-    const progressSum = activeAndCurrentIntervals
-      .map((interval) => ({ ...interval, endTime: interval.endTime || Date.now() }))
+    const intervalSum = intervals
+      .filter(isComplete)
       .map(getTimeInterval)
       .reduce(sum, 0);
 
     return (
       <div className="current-intervals">
         <DigitalClock elapsed={ intervalSum } from={ activeInterval ? activeInterval.startTime : 0 } />
-        <ProgressBar progress={getHours(progressSum)} max={ hoursInWeek / 5 } />
+        <ProgressBarTimeWrapper intervals={activeAndCurrentIntervals} max={ hoursInWeek / 5 } />
         <WorkButton activeInterval={ !!activeInterval } onClick={ this.onClick } />
         <IntervalList intervals={ activeAndCurrentIntervals } onDelete={ this.onDelete } onUpdate={ this.onUpdate } />
-        <WeekStats intervals={ weekIntervals } userSettings={userSettings} />
+        <WeekStatsTimeWrapper intervals={ weekIntervals } userSettings={userSettings} />
       </div>
     );
   }

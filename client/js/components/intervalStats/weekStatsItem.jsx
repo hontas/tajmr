@@ -9,11 +9,15 @@ const WeekDayItem = ({ weekday, total, date, notWork }) => {
     height: `${barHeight}px`,
     lineHeight: `${barHeight}px`
   };
+  const baseClassName = 'week-stats-item';
+  const barClassName = notWork ? `${baseClassName}__bar ${baseClassName}__bar--not-work` : `${baseClassName}__bar`;
 
   return (
-    <div className="week-stats-item">
-      <div className={ `week-stats-item__bar ${notWork && 'week-stats-item__bar--not-work'}` } style={ style }>
-        { !!total && getTimeString(total, { isDuration: true }) }
+    <div className={ baseClassName }>
+      <div className={ barClassName } style={ style }>
+        { !!total &&
+          getTimeString(total, { isDuration: true })
+        }
       </div>
       <p className="week-date">
         { weekday } <br/>
