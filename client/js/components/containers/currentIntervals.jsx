@@ -15,15 +15,16 @@ import { isToday, isCurrentWeek, getHours } from '../../utils/time';
 class CurrentIntervals extends PureUpdatedAtComponent {
   render() {
     const { intervals, activeInterval, weekIntervals, userSettings } = this.props;
-    const activeAndCurrentIntervals = activeInterval ? [].concat(activeInterval, intervals) : intervals;
-    const hoursInWeek = userSettings.hoursInWeek || 40;
-    const intervalSum = activeAndCurrentIntervals
+    const intervalSum = intervals
         .filter(isComplete)
         .map(getTimeInterval)
         .reduce(sum, 0);
+    const activeAndCurrentIntervals = activeInterval ? [].concat(activeInterval, intervals) : intervals;
+    const hoursInWeek = userSettings.hoursInWeek || 40;
     const progressSum = activeAndCurrentIntervals
-        .map(getTimeInterval)
-        .reduce(sum, 0);
+      .map((interval) => ({ ...interval, endTime: interval.endTime || Date.now() }))
+      .map(getTimeInterval)
+      .reduce(sum, 0);
 
     return (
       <div className="current-intervals">
@@ -58,7 +59,7 @@ class CurrentIntervals extends PureUpdatedAtComponent {
   }
 }
 
-const getTimeInterval = ({ startTime, endTime }) => endTime || Date.now() - startTime;
+const getTimeInterval = ({ startTime, endTime }) => endTime - startTime;
 const isComplete = ({ endTime }) => endTime;
 const sum = (res, curr) => res + curr;
 
@@ -76,8 +77,10 @@ function mapStateToProps({ intervals, userSettings }) {
     id
   }));
 
+  const updatedAt = Math.max(intervals.updatedAt, userSettings.updatedAt);
+
   return {
-    updatedAt: intervals.updatedAt,
+    updatedAt,
     intervals: intervalList.filter(({ endTime }) => endTime).filter(({ startTime }) => isToday(new Date(startTime))),
     weekIntervals: intervalList.filter(({ startTime }) => isCurrentWeek(new Date(startTime))),
     activeInterval: intervalList.find((interval) => !interval.endTime),

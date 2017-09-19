@@ -8,12 +8,7 @@ import IntervalList from '../intervalList/intervalList.jsx';
 import IntervalStats from '../intervalStats/intervalStats.jsx';
 import { attemptUpdate, attemptRemove } from '../../actions/intervals';
 
-class CurrentIntervals extends PureUpdatedAtComponent {
-  componentWillReceiveProps(nextProps) {
-    console.log('nextProps.updatedAt', nextProps.updatedAt);
-    console.log('this.props.updatedAt', this.props.updatedAt);
-  }
-
+class PreviousIntervals extends PureUpdatedAtComponent {
   render() {
     const { intervals, userSettings } = this.props;
 
@@ -43,7 +38,7 @@ function isNotToday({ startTime }) {
   return date.getDate() !== today.getDate();
 }
 
-CurrentIntervals.propTypes = {
+PreviousIntervals.propTypes = {
   ...PureUpdatedAtComponent.propTypes,
   dispatch: PropTypes.func.isRequired,
   intervals: propTypes.intervals.isRequired,
@@ -56,8 +51,10 @@ function mapStateToProps({ intervals, userSettings }) {
     id
   }));
 
+  const updatedAt = Math.max(intervals.updatedAt, userSettings.updatedAt);
+
   return {
-    updatedAt: intervals.updatedAt,
+    updatedAt,
     userSettings,
     intervals: intervalList
       .filter(({ endTime }) => endTime) // is completed
@@ -65,4 +62,4 @@ function mapStateToProps({ intervals, userSettings }) {
   };
 }
 
-export default connect(mapStateToProps)(CurrentIntervals);
+export default connect(mapStateToProps)(PreviousIntervals);

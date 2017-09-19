@@ -16,6 +16,7 @@ export function user(state = null, action) {
 }
 
 const initialState = {
+  updatedAt: 0,
   displayNotifications: false,
   displayPreviousIntervals: false,
   displayName: '',
@@ -24,9 +25,16 @@ const initialState = {
 export function userSettings(state = initialState, action) {
   switch (action.type) {
     case USER_UPDATE_SETTINGS:
-      return { ...state, ...action.settings };
+      return {
+        ...state,
+        ...action.settings,
+        updatedAt: Date.now()
+      };
     case USER_LOGGED_OUT:
-      return initialState;
+      return {
+        ...initialState,
+        updatedAt: Date.now()
+      };
     default:
       return state;
   }

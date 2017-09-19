@@ -56,28 +56,34 @@ function mashUpWeekAndIntervals(intervals) {
 }
 
 function sumTime(res, curr) {
-  return res + (curr.endTime || Date.now() - curr.startTime);
+  return res + (curr.endTime - curr.startTime);
 }
 
-const WeekStats = ({ intervals, userSettings }) => (
-  <div className="week-stats">
-    <h3 className="week-stats__title">
-      {
-        intervals.length ?
-          ` v.${getWeek(intervals[0].startTime)}` :
-          ` v.${getWeek(Date.now())}`
-      }
-    </h3>
-    <div className="week-stats__bars flex-container flex--align-end">
-      {
-        mashUpWeekAndIntervals(intervals)
-          .map((day) =>
-            <WeekStatsItem key={day.weekday} { ...day } />)
-      }
+const WeekStats = ({ intervals, userSettings }) => {
+  const now = Date.now();
+  const progressSum = intervals
+    .map((interval) => ({ ...interval, endTime: interval.endTime || now }))
+    .reduce(sumTime, 0)
+  return (
+    <div className="week-stats">
+      <h3 className="week-stats__title">
+        {
+          intervals.length ?
+            ` v.${getWeek(intervals[0].startTime)}` :
+            ` v.${getWeek(Date.now())}`
+        }
+      </h3>
+      <div className="week-stats__bars flex-container flex--align-end">
+        {
+          mashUpWeekAndIntervals(intervals)
+            .map((day) =>
+              <WeekStatsItem key={day.weekday} { ...day } />)
+        }
+      </div>
+      <ProgressBar progress={getHours(progressSum)} max={ userSettings.hoursInWeek } />
     </div>
-    <ProgressBar progress={getHours(intervals.reduce(sumTime, 0))} max={ userSettings.hoursInWeek } />
-  </div>
-);
+  );
+};
 
 WeekStats.propTypes = {
   intervals: propTypes.intervals.isRequired,
