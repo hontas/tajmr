@@ -4,15 +4,17 @@ import PropTypes from 'prop-types';
 import { getTimePartsFromElapsedTime, zeroPad, getTimeString } from '../../utils/time';
 import notify from '../../utils/notification';
 
-const oneMinute = 1000 * 60;
+const thirtySeconds = 1000 * 30;
 
 class DigitalClock extends React.Component {
   componentDidMount() {
-    this.interval = setInterval(this.forceUpdate, oneMinute);
+    this.intervalId = setInterval(() => {
+      this.forceUpdate();
+    }, thirtySeconds);
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    clearInterval(this.intervalId);
   }
 
   render() {
