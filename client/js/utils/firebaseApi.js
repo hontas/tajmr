@@ -23,7 +23,8 @@ const auth = firebase.auth();
 auth.onAuthStateChanged((user) => {
   if (user) {
     store.dispatch(userLoggedIn(user));
-    database.ref('users/' + user.uid).once('value')
+    database.ref(`users/${user.uid}`)
+      .once('value')
       .then((settings) => store.dispatch(updateSettings(settings.val())));
 
     store.dispatch(fetchIntervalsForUser(user.uid));
@@ -50,7 +51,12 @@ const api = {
   createInterval(data) {
     const id = database.ref().child('intervals').push().key;
     const user = api.getCurrentUserId();
-    return api.updateInterval({ ...data, id, user, createdAt: Date.now() });
+    return api.updateInterval({
+      ...data,
+      id,
+      user,
+      createdAt: Date.now()
+    });
   },
 
   updateInterval({ id, ...interval }) {
@@ -76,7 +82,7 @@ const api = {
   },
 
   saveUserData(userId, data) {
-    return database.ref('users/' + userId).set(data);
+    return database.ref(`users/${userId}`).set(data);
   },
 
   init() {

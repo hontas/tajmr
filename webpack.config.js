@@ -14,7 +14,7 @@ const plugins = [
 ];
 
 const entry = {
-  app: [path.resolve(__dirname, 'client/js/app.js')],
+  app: [path.resolve(__dirname, 'client/js/app.jsx')],
   styles: path.resolve(__dirname, 'client/styles/index.js')
 };
 let publicPath = '/';

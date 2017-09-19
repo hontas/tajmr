@@ -1,4 +1,6 @@
 {
   "extends": ["airbnb", "../.eslintrc"],
-  "rules": {}
+  "env": {
+    "browser": true
+  },
 }

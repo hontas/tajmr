@@ -1,18 +1,16 @@
 function createErrorObject(response) {
-  return (err) => {
-    return Promise.reject(Object.assign(err, {
-        status: response.status,
-        statusText: response.statusText
-      }));
-  };
+  return (err) => Promise.reject(Object.assign(err, {
+    status: response.status,
+    statusText: response.statusText
+  }));
 }
 
 function ajax(url, method, data) {
   const options = {
-    method: method,
+    method,
     mode: 'cors',
     headers: {
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Content-Type': 'application/json'
     },
     credentials: 'omit'
@@ -32,20 +30,18 @@ function ajax(url, method, data) {
     .then((response) => {
       if (response.status !== 204) {
         return response.json();
-      } else {
-        return response;
       }
+
+      return response;
     })
     .catch((error) => {
       if (error.redirectUrl) {
         window.location.href = error.redirectUrl;
       }
 
-      if (error instanceof Error) {
-        error = { error: error.toString() };
-      }
-
-      return Promise.reject(error);
+      return Promise.reject(error instanceof Error ?
+        { error: error.toString() } :
+        error);
     });
 }
 
