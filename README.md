@@ -2,8 +2,11 @@ tajmr
 =====
 > Record time sometime [tajmr](https://tajmr.herokuapp.com/)
 
-Press play to start recording time. Then pause it. Add a note if you want.
-Serverless - uses firebase.io.
+1. Press play to start recording time.
+2. Then pause it.
+3. Add a note if you want.
+4. Get paid (tajmr won't help with this)
+
 ![Tajmr](tajmr.png)
 
 ## dev
