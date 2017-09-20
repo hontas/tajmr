@@ -1,5 +1,8 @@
+/* env serviceworker */
+/* eslint no-restricted-globals: [0] */
+
 const CACHE_NAME = 'tajmr-v2';
-let urlsToCache = [
+const urlsToCache = [
   '/',
   '/assets/manifest.json',
   '/assets/android-icon-36x36.png',
