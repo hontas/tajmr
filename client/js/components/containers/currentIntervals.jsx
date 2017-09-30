@@ -9,15 +9,24 @@ import WorkButton from '../button/workButton.jsx';
 import ProgressBarTimeWrapper from '../ui-elements/ProgressBarTimeWrapper.jsx';
 import IntervalList from '../intervalList/intervalList.jsx';
 import { WeekStatsTimeWrapper } from '../intervalStats/weekStats.jsx';
-import { attemptUpdate, attemptRemove } from '../../actions/intervals';
+import * as intervalActions from '../../actions/intervals';
 import { isToday, isCurrentWeek, getHours } from '../../utils/time';
 
 class CurrentIntervals extends PureUpdatedAtComponent {
   render() {
-    const { intervals, activeInterval, weekIntervals, userSettings } = this.props;
-    const activeAndCurrentIntervals = activeInterval ? [].concat(activeInterval, intervals) : intervals;
+    const {
+      intervals,
+      activeInterval,
+      todaysIntervals,
+      userSettings,
+      fetchIntervalsInWeek,
+      attemptUpdate,
+      attemptRemove,
+      timestamp
+    } = this.props;
+    const activeAndCurrentIntervals = activeInterval ? [].concat(activeInterval, todaysIntervals) : todaysIntervals;
     const hoursInWeek = userSettings.hoursInWeek || 40;
-    const intervalSum = intervals
+    const intervalSum = todaysIntervals
       .filter(isComplete)
       .map(getTimeInterval)
       .reduce(sum, 0);
@@ -28,30 +37,28 @@ class CurrentIntervals extends PureUpdatedAtComponent {
         <ProgressBarTimeWrapper intervals={activeAndCurrentIntervals} max={ hoursInWeek / 5 } />
         <WorkButton activeInterval={ !!activeInterval } onClick={ this.onClick } />
         <IntervalList intervals={ activeAndCurrentIntervals } onDelete={ this.onDelete } onUpdate={ this.onUpdate } />
-        <WeekStatsTimeWrapper intervals={ weekIntervals } userSettings={userSettings} />
+        <WeekStatsTimeWrapper
+          fetchIntervalsInWeek={ fetchIntervalsInWeek }
+          intervals={ intervals }
+          timestamp={ timestamp }
+          userSettings={userSettings} />
       </div>
     );
   }
 
-  onDelete = (id) => {
-    const { dispatch } = this.props;
-    dispatch(attemptRemove(id));
-  }
+  onDelete = (id) => this.props.attemptRemove(id)
 
-  onUpdate = (interval) => {
-    const { dispatch } = this.props;
-    dispatch(attemptUpdate(interval));
-  }
+  onUpdate = (interval) => this.props.attemptUpdate(interval)
 
   onClick = () => {
-    const { dispatch, activeInterval } = this.props;
+    const { activeInterval, attemptUpdate } = this.props;
 
     if (activeInterval) {
       const completeInterval = Object.assign({}, activeInterval, { endTime: Date.now() });
-      return dispatch(attemptUpdate(completeInterval));
+      return attemptUpdate(completeInterval);
     }
 
-    return dispatch(attemptUpdate({ startTime: Date.now() }));
+    return attemptUpdate({ startTime: Date.now() });
   }
 }
 
@@ -62,9 +69,12 @@ const sum = (res, curr) => res + curr;
 CurrentIntervals.propTypes = {
   ...CurrentIntervals.propTypes,
   activeInterval: propTypes.interval,
-  dispatch: PropTypes.func.isRequired,
   intervals: propTypes.intervals.isRequired,
-  weekIntervals: propTypes.intervals.isRequired
+  todaysIntervals: propTypes.intervals.isRequired,
+  attemptUpdate: PropTypes.func.isRequired,
+  attemptRemove: PropTypes.func.isRequired,
+  fetchIntervalsInWeek: PropTypes.func.isRequired,
+  timestamp: PropTypes.number.isRequired,
 }
 
 function mapStateToProps({ intervals, userSettings }) {
@@ -77,11 +87,12 @@ function mapStateToProps({ intervals, userSettings }) {
 
   return {
     updatedAt,
-    intervals: intervalList.filter(({ endTime }) => endTime).filter(({ startTime }) => isToday(new Date(startTime))),
-    weekIntervals: intervalList.filter(({ startTime }) => isCurrentWeek(new Date(startTime))),
+    timestamp: intervals.timestamp,
+    intervals: intervalList,
+    todaysIntervals: intervalList.filter(({ endTime }) => endTime).filter(({ startTime }) => isToday(new Date(startTime))),
     activeInterval: intervalList.find((interval) => !interval.endTime),
     userSettings
   };
 }
 
-export default connect(mapStateToProps)(CurrentIntervals);
+export default connect(mapStateToProps, intervalActions)(CurrentIntervals);

@@ -15,8 +15,9 @@ import {
 } from '../actions/userActions';
 
 export default function intervals(state = {
+  timestamp: Date.now(),
   updatedAt: 0,
-  isFetching: false,
+  isFetching: true,
   isSaving: false,
   items: {}
 }, action) {
@@ -45,6 +46,8 @@ export default function intervals(state = {
         }, {});
       return {
         ...state,
+        timestamp: action.timestamp,
+        isFetching: false,
         updatedAt: Date.now(),
         items
       };

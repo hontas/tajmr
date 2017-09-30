@@ -16,3 +16,5 @@ export const userSettings = PropTypes.shape({
   displayName: PropTypes.string,
   hoursInWeek: PropTypes.number.isRequired
 });
+
+export { default } from 'prop-types';

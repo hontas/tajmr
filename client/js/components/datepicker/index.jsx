@@ -13,6 +13,7 @@ const DatePicker = ({ className, date, onDayClick }) => (
     </div>
     { date &&
       <DayPicker
+        initialMonth={ new Date(date) }
         canChangeMonth={ false }
         className="date-picker__calendar"
         enableOutsideDays

@@ -8,18 +8,15 @@
   },
   "scripts": {
     "lint": "eslint --ignore-path .gitignore --ext .js,.jsx .",
-    "postinstall": "npm run build",
     "test": "mocha --recursive --compilers js:babel-register --reporter nyan",
     "tdd": "npm test -- --watch --watch-extensions jsx --no-exit",
-    "start": "node --harmony server.js",
     "copy": "cp client/sw.js public && cp -a client/assets public/assets",
     "prebuild": "rm -rf public && mkdir public && npm run copy",
-    "prebuild:gh": "npm run prebuild",
-    "build": "NODE_ENV=production webpack --optimize-minimize",
-    "build:gh": "GH_PAGES=true NODE_ENV=production webpack --optimize-minimize",
-    "deploy": "npm run build:gh && GIT_DEPLOY_DIR=public ./scripts/deploy.sh",
+    "build": "NODE_ENV=production webpack",
+    "deploy": "npm run build && GIT_DEPLOY_DIR=public ./scripts/deploy.sh",
     "postversion": "git push --follow-tags",
-    "watch": "nodemon --exec 'npm start' --ignore client/ --ignore public/"
+    "prewatch": "npm run prebuild",
+    "watch": "webpack-dev-server --watch"
   },
   "author": "Pontus Lundin <lundin.pontus@gmail.com> (https://github.com/hontas)",
   "repository": {
@@ -28,6 +25,8 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
     "chai": "^3.5.0",
     "dirty-chai": "^1.2.2",
     "eslint": "^4.6.1",
@@ -36,8 +35,14 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.3.0",
+    "extract-text-webpack-plugin": "^3.0.0",
     "lolex": "^2.1.2",
-    "nodemon": "^1.12.0"
+    "nodemon": "^1.12.0",
+    "script-ext-html-webpack-plugin": "^1.8.5",
+    "style-ext-html-webpack-plugin": "^3.4.1",
+    "uglify-es": "^3.1.2",
+    "uglifyjs-webpack-plugin3": "^1.0.0-beta",
+    "webpack-dev-server": "^2.9.1"
   },
   "dependencies": {
     "babel-cli": "^6.2.0",

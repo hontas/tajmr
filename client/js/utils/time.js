@@ -1,7 +1,6 @@
 export const weekDays = ['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag'];
-
-const oneDay = 1000 * 60 * 60 * 24;
-const oneWeek = 1000 * 60 * 60 * 24 * 7;
+export const oneDay = 1000 * 60 * 60 * 24;
+export const oneWeek = 1000 * 60 * 60 * 24 * 7;
 
 const local = 'sv-SE';
 const intl = {
@@ -11,7 +10,8 @@ const intl = {
   date: new Intl.DateTimeFormat(local, { month: 'numeric', day: 'numeric' })
 };
 
-export function getTimeString(date, { isDuration } = {}) {
+export function getTimeString(date, options = {}) {
+  const { isDuration } = options;
   const timestamp = isDuration ? date - intl.durationOffset : date;
   return intl.time.format(timestamp);
 }
@@ -29,6 +29,19 @@ export function getHours(timestamp) {
 }
 
 export function getWeek(timestamp) {
+  const weekStart = new Date(timestamp);
+  const dayOffset = weekStart.getDay() || 7;
+  weekStart.setDate((weekStart.getDate() - dayOffset) + 1); // because sunday is 0 which sucks
+  weekStart.setHours(0);
+  weekStart.setMinutes(0);
+  const weekEnd = +weekStart + (1000 * 60 * 60 * 24 * 5); // skip weekend
+  return {
+    startTime: +weekStart,
+    endTime: weekEnd
+  };
+}
+
+export function getWeekNumber(timestamp) {
   const date = new Date(timestamp);
   const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
   // Set to nearest Thursday: current date + 4 - current day number

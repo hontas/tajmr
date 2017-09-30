@@ -3,8 +3,9 @@ import 'firebase/auth';
 import 'firebase/database';
 
 import store from '../store';
-import { intervalAdded, intervalUpdated, fetchIntervalsForUser } from '../actions/intervals';
+import { intervalAdded, intervalUpdated, fetchIntervalsInWeek } from '../actions/intervals';
 import { userLoggedIn, userLoggedOut, updateSettings } from '../actions/userActions';
+import { getWeek } from './time';
 
 // Initialize Firebase
 const config = {
@@ -27,11 +28,22 @@ auth.onAuthStateChanged((user) => {
       .once('value')
       .then((settings) => store.dispatch(updateSettings(settings.val())));
 
-    store.dispatch(fetchIntervalsForUser(user.uid));
+    store.dispatch(fetchIntervalsInWeek());
   } else {
     store.dispatch(userLoggedOut());
   }
 });
+
+function filterByUser(intervals) {
+  const userId = auth.currentUser && auth.currentUser.uid;
+  return Object.keys(intervals)
+    .reduce((res, id) => {
+      if (intervals[id].user === userId) {
+        return { [id]: intervals[id], ...res };
+      }
+      return res;
+    }, {});
+}
 
 const api = {
   login(email, password) {
@@ -68,13 +80,15 @@ const api = {
     return database.ref(`intervals/${id}`).remove();
   },
 
-  fetchIntervalsForUser({ limit = 10 } = {}) {
+  fetchIntervalsInWeek(timestamp = Date.now()) {
+    const { startTime, endTime } = getWeek(timestamp);
     return api.intervals
-      .orderByChild('user')
-      .equalTo(auth.currentUser && auth.currentUser.uid)
-      .limitToLast(limit)
+      .orderByChild('startTime')
+      .startAt(startTime)
+      .endAt(endTime)
       .once('value')
-      .then((snapshot) => (snapshot.val()));
+      .then((snapshot) => (snapshot.val()))
+      .then(filterByUser);
   },
 
   getCurrentUserId() {

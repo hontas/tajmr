@@ -38,7 +38,11 @@ html(lang="sv")
         link(rel='apple-touch-startup-image', media='(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)', href='assets/icons/apple-touch-startup-image-1536x2008.png')
 
     body
-        div#root
+        #root
+            .application
+                .navbar.pure-menu.pure-menu-horizontal.pure-menu-fixed
+                    h1.brand.pure-menu-heading TajmR
+
 
         script(type="text/javascript").
             if ('serviceWorker' in navigator && false) {

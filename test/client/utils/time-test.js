@@ -5,6 +5,7 @@ import lolex from 'lolex';
 import {
   isSameWeek,
   getWeekday,
+  getWeekNumber,
   getWeek,
   isCurrentWeek
 } from '../../../client/js/utils/time';
@@ -52,16 +53,16 @@ describe('time', () => {
     });
   });
 
-  describe('#getWeek', () => {
+  describe('#getWeekNumber', () => {
     it('should return a number', () => {
-      expect(getWeek(new Date())).to.be.a('number');
+      expect(getWeekNumber(new Date())).to.be.a('number');
     });
 
     it('should return current week number', () => {
       const date1 = new Date(2017, 8, 17);
       const date2 = new Date(2017, 8, 18);
-      expect(getWeek(date1)).to.equal(37);
-      expect(getWeek(date2)).to.equal(38);
+      expect(getWeekNumber(date1)).to.equal(37);
+      expect(getWeekNumber(date2)).to.equal(38);
     });
   });
 
@@ -106,6 +107,42 @@ describe('time', () => {
       clock.setSystemTime(1505710969272); // monday 11 september
       const date1 = new Date(1505113211392); // monday 18 september
       expect(isCurrentWeek(date1), 'mon').to.be.false();
+    });
+  });
+
+  describe('#getWeek', () => {
+    const startDate = new Date('Sep 25, 2017'); // monday morning
+    const endDate = new Date('Sep 30, 2017'); // saturday morning
+    const middleOfWeek = new Date('Sep 27, 2017 14:53'); // wednesday afternoon
+    const endOfWeek = new Date('Oct 1, 2017 11:30'); // sunday morning
+
+    it('should return an object', () => {
+      expect(getWeek(0)).to.be.an('object');
+    });
+
+    it('should return two timestamps', () => {
+      expect(getWeek(0)).to.have.keys('startTime', 'endTime');
+    });
+
+    it('should return startTime and endTime for that week', () => {
+      expect(getWeek(+startDate)).to.have.eql({
+        startTime: +startDate,
+        endTime: +endDate
+      });
+    });
+
+    it('should calculate week from timestamp within week', () => {
+      expect(getWeek(+middleOfWeek)).to.have.eql({
+        startTime: +startDate,
+        endTime: +endDate
+      });
+    });
+
+    it('should calculate week from timestamp within weekend', () => {
+      expect(getWeek(+endOfWeek)).to.have.eql({
+        startTime: +startDate,
+        endTime: +endDate
+      });
     });
   });
 });

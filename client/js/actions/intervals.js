@@ -32,10 +32,11 @@ export function intervalUpdated(interval) {
   };
 }
 
-function intervalsFetched(intervals) {
+function intervalsFetched(intervals, timestamp) {
   return {
     type: INTERVALS_FETCHED,
-    intervals
+    intervals,
+    timestamp
   };
 }
 
@@ -83,12 +84,13 @@ export function attemptUpdate(interval) {
   };
 }
 
-export function fetchIntervalsForUser() {
+export function fetchIntervalsInWeek(timestamp = Date.now()) {
+  console.log('fetchIntervalsInWeek', new Date(timestamp));
   return (dispatch) => {
-    dispatch(requestIntervals);
+    dispatch(requestIntervals());
 
-    return firebaseApi.fetchIntervalsForUser()
-      .then((intervals) => dispatch(intervalsFetched(intervals)))
+    return firebaseApi.fetchIntervalsInWeek(timestamp)
+      .then((intervals) => dispatch(intervalsFetched(intervals, timestamp)))
       .catch((error) => dispatch(intervalsRequestFailed(error)));
   };
 }
