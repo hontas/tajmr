@@ -27,6 +27,7 @@ export default function intervals(state = {
       return {
         ...state,
         updatedAt: Date.now(),
+        isFetching: false,
         items: {}
       };
 
