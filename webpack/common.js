@@ -2,13 +2,15 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const StyleExtHtmlWebpackPlugin = require('style-ext-html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin3');
 const pkg = require('../package.json');
 
 const isProduction = process.env.NODE_ENV === 'production';
-console.log(isProduction ? 'PRODUCTION MODE' : 'DEV MODE');
 
 const entry = {
   app: [path.resolve(__dirname, '../client/js/app.js')]
@@ -27,21 +29,25 @@ const plugins = [
   new StyleExtHtmlWebpackPlugin(), // internalize styles
   new ScriptExtHtmlWebpackPlugin({
     defaultAttribute: 'async'
-  })
+  }),
+  new CaseSensitivePathsPlugin(),
+  new WatchMissingNodeModulesPlugin(path.resolve('node_modules')),
 ];
 
-if (!isProduction) {
+if (isProduction) {
+  plugins.push(new UglifyJSPlugin());
+} else {
   entry.app.push('webpack-hot-middleware/client?reload=true');
   plugins.push(
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.NamedModulesPlugin(),
+    new BundleAnalyzerPlugin()
   );
-} else {
-  plugins.push(new UglifyJSPlugin());
 }
 
 module.exports.config = {
-  devtool: !isProduction ? 'cheap-eval-source-map' : '',
+  devtool: !isProduction ? 'cheap-module-source-map' : '',
 
   entry,
 
