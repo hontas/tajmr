@@ -8,6 +8,7 @@ export const INTERVAL_REMOVE = 'INTERVAL_REMOVE';
 export const INTERVALS_REQUEST = 'INTERVALS_REQUEST';
 export const INTERVALS_REQUEST_FAILED = 'INTERVALS_REQUEST_FAILED';
 export const INTERVALS_FETCHED = 'INTERVALS_FETCHED';
+export const INTERVALS_UPDATE_TIMESTAMP = 'INTERVALS_UPDATE_TIMESTAMP';
 export const REQUEST_INTERVAL_UPDATE = 'REQUEST_INTERVAL_UPDATE';
 
 export function intervalAdded(interval) {
@@ -32,11 +33,10 @@ export function intervalUpdated(interval) {
   };
 }
 
-function intervalsFetched(intervals, timestamp) {
+function intervalsFetched(intervals) {
   return {
     type: INTERVALS_FETCHED,
-    intervals,
-    timestamp
+    intervals
   };
 }
 
@@ -44,6 +44,14 @@ function intervalsRequestFailed(error) {
   return {
     type: INTERVALS_REQUEST_FAILED,
     error
+  };
+}
+
+export function updateTimestamp(timestamp) {
+  console.log('updateTimestmp');
+  return {
+    type: INTERVALS_UPDATE_TIMESTAMP,
+    timestamp
   };
 }
 
@@ -60,6 +68,7 @@ export function removeInterval(id) {
     id
   };
 }
+
 export function attemptRemove(id) {
   return (dispatch) => {
     dispatch(requestIntervalUpdate());
@@ -84,13 +93,12 @@ export function attemptUpdate(interval) {
   };
 }
 
-export function fetchIntervalsInWeek(timestamp = Date.now()) {
-  console.log('fetchIntervalsInWeek', new Date(timestamp));
+export function fetchIntervalsForUser() {
   return (dispatch) => {
     dispatch(requestIntervals());
 
-    return firebaseApi.fetchIntervalsInWeek(timestamp)
-      .then((intervals) => dispatch(intervalsFetched(intervals, timestamp)))
+    return firebaseApi.fetchIntervalsForUser()
+      .then((intervals) => dispatch(intervalsFetched(intervals)))
       .catch((error) => dispatch(intervalsRequestFailed(error)));
   };
 }

@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "eslint --ignore-path .gitignore --ext .js,.jsx .",
     "test": "mocha --recursive --compilers js:babel-register --reporter nyan",
-    "tdd": "npm test -- --watch --watch-extensions jsx --no-exit",
+    "tdd": "npm test -- --watch --watch-extensions jsx --reporter min",
     "copy": "cp client/sw.js public && cp -a client/assets public/assets",
     "prebuild": "rm -rf public && mkdir public && npm run copy",
     "build": "NODE_ENV=production webpack",

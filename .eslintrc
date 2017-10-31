@@ -1,9 +1,31 @@
 {
-  "extends": "airbnb-base",
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true
+  },
   "rules": {
     "comma-dangle": 0,
     "arrow-parens": [2, "always"],
     "max-len": ["error", 120],
-    "import/no-extraneous-dependencies": ["error", {"optionalDependencies": false, "peerDependencies": false}]
+    "no-use-before-define": ["error", "nofunc"],
+    "import/extensions": [2, "always", { "js": "never" }],
+    "import/no-extraneous-dependencies": ["error", {"optionalDependencies": false, "peerDependencies": false}],
+    "object-curly-newline": 0,
+    "react/require-default-props": 0,
+    "react/sort-comp": [2, {
+      order: [
+        "static-methods",
+        "lifecycle",
+        "render",
+        "everything-else"
+      ]
+    }],
+    "jsx-a11y/label-has-for": [ 2, {
+        "components": [ "Label" ],
+        "required": {
+            "some": [ "nesting", "id" ]
+        }
+    }]
   }
 }

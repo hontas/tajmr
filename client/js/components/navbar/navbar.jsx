@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Wave } from 'better-react-spinkit';
-import classNames from 'classnames';
 import md5 from 'md5';
 
 import Cog from '../icons/Cog.jsx';
@@ -21,54 +20,61 @@ class Navbar extends React.Component {
 
   render() {
     const { user, isSaving, isFetching } = this.props;
-    const { showLoginMenu, showUserMenu } = this.state;
     const isLoading = isSaving || isFetching;
-    const photoURL = user && (user.photoURL  || `${garavatarUrl}/${md5(user.email)}`);
+    const photoURL = user && (user.photoURL || `${garavatarUrl}/${md5(user.email)}`);
 
     const menuClasses = 'pure-menu-item pure-menu-has-children pure-menu-allow-hover';
 
     return (
       <div className="navbar pure-menu pure-menu-horizontal pure-menu-fixed">
-        <h1 className="brand pure-menu-heading">{ 'TajmR' }</h1>
+        <h1 className="brand pure-menu-heading">TajmR</h1>
         <span className="version">{ `v${pkg.version}` }</span>
         { isLoading &&
-          <div style={ { color: 'gray', display: 'inline-block', marginLeft: '1em' } }>
+          <div style={{ color: 'gray', display: 'inline-block', marginLeft: '1em' }}>
             <Wave color="currentColor" className="spin-kit-spinner" />
-            <small style={ { verticalAlign: 'middle' } }>{ isFetching ? 'Laddar intervall...' : 'Sparar...' }</small>
+            <small style={{ verticalAlign: 'middle' }}>{ isFetching ? 'Laddar intervall...' : 'Sparar...' }</small>
           </div>
         }
 
         <ul className="navbar-menu pure-menu-list">
           { !user ?
-            <li className={ menuClasses }>
-              <a className="pure-menu-link" href="#" onClick={ preventDefault }>
-                { 'Logga in' }
-              </a>
-              <ul className="pure-menu-children">
-                  <li className="pure-menu-item">
-                    <Login />
-                  </li>
-              </ul>
-            </li>
-            :
-            <li className={ menuClasses }>
-              <a className="pure-menu-link" href="#" onClick={ preventDefault }>
-                <Cog size={ 16 } />
-                <span className="menu-link__text">{ 'Inställningar' }</span>
+            <li className={menuClasses}>
+              <a
+                className="pure-menu-link"
+                href="#"
+                onClick={preventDefault}
+              >
+                Logga in
               </a>
               <ul className="pure-menu-children">
                 <li className="pure-menu-item">
-                  <UserMenu { ...this.props }/>
+                  <Login />
                 </li>
               </ul>
             </li>
-          }
-          { user && <img alt="avatar" className="profile-image" src={ photoURL }/> }
+            :
+            <li className={menuClasses}>
+              <a
+                className="pure-menu-link"
+                href="#"
+                onClick={preventDefault}
+              >
+                <Cog size={16} />
+                <span className="menu-link__text">Inställningar</span>
+              </a>
+              <ul className="pure-menu-children">
+                <li className="pure-menu-item">
+                  <UserMenu {...this.props} />
+                </li>
+              </ul>
+            </li>
+         }
+          {user && <img alt="avatar" className="profile-image" src={photoURL} /> }
         </ul>
       </div>
     );
   }
-};
+}
 
 Navbar.propTypes = {
   dispatch: PropTypes.func.isRequired,

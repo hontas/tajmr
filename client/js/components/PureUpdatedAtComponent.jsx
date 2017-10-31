@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class PureUpdatedAtComponent extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     if (!this.props.updatedAt) return true;
 
     // console.log('this.props.updatedAt', this.props.updatedAt);

@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import DatePicker from '../datepicker/index.jsx';
+import DatePicker from '../datepicker/DatePicker.jsx';
 import { getTimeString } from '../../utils/time';
 
 function stateFromProps(props) {
-  const isActive = !Boolean(props.timestamp);
+  const isActive = !props.timestamp;
   const value = isActive ? 'active' : getTimeString(props.timestamp);
   return { value, isActive, isValid: true };
 }
@@ -26,23 +26,25 @@ class IntervalListInput extends React.Component {
     const { className, timestamp } = this.props;
     const { value, isActive, isValid } = this.state;
     const baseClassName = 'interval-list-input';
-    const variationClass = isValid ? '': `${baseClassName}--error`;
+    const variationClass = isValid ? '' : `${baseClassName}--error`;
 
     return (
-      <div className={ classNames(baseClassName, className, variationClass) }>
-        <DatePicker date={ timestamp } onDayClick={ this.handleDateChange } />
-        <input className={ `${baseClassName}__input` }
-          disabled={ isActive }
-          onBlur={ this.validateAndPush }
-          onChange={ this.handleChange }
-          value={ value } />
+      <div className={classNames(baseClassName, className, variationClass)}>
+        <DatePicker date={timestamp} onDayClick={this.handleDateChange} />
+        <input
+          className={`${baseClassName}__input`}
+          disabled={isActive}
+          onBlur={this.validateAndPush}
+          onChange={this.handleChange}
+          value={value}
+        />
       </div>
     );
   }
 
   validateAndPush = () => {
     const { value } = this.state;
-    const isValid = validateTimeString(this.state.value);
+    const isValid = validateTimeString(value);
     if (isValid) {
       const { timestamp, onUpdate } = this.props;
       const [hours, minutes] = value.split(':');
@@ -50,9 +52,10 @@ class IntervalListInput extends React.Component {
 
       date.setHours(hours);
       date.setMinutes(minutes);
-      onUpdate({ target: { value: date.getTime() }});
+      onUpdate({ target: { value: date.getTime() } });
     } else {
-      console.log('Wrong format %s - should be XX:XX where X is a positive integer', updated); // eslint-disable-line no-console
+      // eslint-disable-next no-console
+      console.log('Wrong format %s - should be XX:XX where X is a positive integer', value);
     }
     this.setState({ isValid });
   }
@@ -63,7 +66,7 @@ class IntervalListInput extends React.Component {
     const nextDate = new Date(value);
     currentDate.setDate(nextDate.getDate());
 
-    onUpdate({ target: { value: currentDate.getTime() }});
+    onUpdate({ target: { value: currentDate.getTime() } });
   }
 
   handleChange = ({ target: { value } }) => {
@@ -71,16 +74,21 @@ class IntervalListInput extends React.Component {
   }
 }
 
-const validateTimeString = (time) => {
+function validateTimeString(time) {
   const [hours, minutes] = time.split(':')
     .map((v) => parseInt(v, 10));
   return hours >= 0 && hours < 24 &&
     minutes >= 0 && minutes < 60 &&
     /^\d{2}:\d{2}$/.test(time);
+}
+
+IntervalListInput.defaultProps = {
+  className: ''
 };
 
 IntervalListInput.propTypes = {
-  timestamp: PropTypes.number,
+  className: PropTypes.string,
+  timestamp: PropTypes.number.isRequired,
   onUpdate: PropTypes.func.isRequired
 };
 

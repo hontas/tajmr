@@ -1,10 +1,11 @@
 export const weekDays = ['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag'];
-export const oneDay = 1000 * 60 * 60 * 24;
-export const oneWeek = 1000 * 60 * 60 * 24 * 7;
+export const oneHour = 1000 * 60 * 60;
+export const oneDay = oneHour * 24;
+export const oneWeek = oneDay * 7;
 
 const local = 'sv-SE';
 const intl = {
-  durationOffset: 1000 * 60 * 60, // because date 0 = 01:00:00 1970
+  durationOffset: oneHour, // because date 0 = 01:00:00 1970
   time: new Intl.DateTimeFormat(local, { hour: 'numeric', minute: 'numeric' }),
   weekDay: new Intl.DateTimeFormat(local, { weekday: 'long' }),
   date: new Intl.DateTimeFormat(local, { month: 'numeric', day: 'numeric' })
@@ -25,7 +26,7 @@ export function getDate(date) {
 }
 
 export function getHours(timestamp) {
-  return timestamp / 1000 / 60 / 60;
+  return timestamp / oneHour;
 }
 
 export function getWeek(timestamp) {
@@ -34,11 +35,44 @@ export function getWeek(timestamp) {
   weekStart.setDate((weekStart.getDate() - dayOffset) + 1); // because sunday is 0 which sucks
   weekStart.setHours(0);
   weekStart.setMinutes(0);
-  const weekEnd = +weekStart + (1000 * 60 * 60 * 24 * 5); // skip weekend
+  const weekEnd = +weekStart + (oneDay * 5); // skip weekend
   return {
     startTime: +weekStart,
     endTime: weekEnd
   };
+}
+
+export function getMonth(timestamp) {
+  const monthStart = new Date(timestamp);
+  monthStart.setDate(1);
+  monthStart.setHours(0);
+  monthStart.setMinutes(0);
+  const monthEnd = new Date(timestamp);
+  monthEnd.setHours(23);
+  monthEnd.setMinutes(59);
+  monthEnd.setMonth(monthEnd.getMonth() + 1);
+  monthEnd.setDate(0);
+  return {
+    startTime: +monthStart,
+    endTime: +monthEnd
+  };
+}
+
+export function getWorkDaysinMonth({ startTime, endTime }) {
+  const startDate = new Date(startTime);
+  const endDate = new Date(endTime);
+  const startDay = startDate.getDay();
+  const endDay = endDate.getDay();
+
+  if (startDay === 0) { startDate.setDate(startDate.getDate() + 1); }
+  if (startDay === 6) { startDate.setDate(startDate.getDate() + 2); }
+
+  if (endDay === 0) { endDate.setDate(endDate.getDate() - 2); }
+  if (endDay === 6) { endDate.setDate(endDate.getDate() - 1); }
+
+  const totalDays = endDate.getDate() - (startDate.getDate() + 1);
+  const holidays = Math.floor((totalDays + startDate.getDay()) / 7) * 2;
+  return totalDays - holidays;
 }
 
 export function getWeekNumber(timestamp) {

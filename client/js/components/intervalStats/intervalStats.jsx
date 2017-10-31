@@ -39,10 +39,13 @@ const IntervalStats = ({ intervals }) => {
     .map((date) => {
       const { hours, minutes } = getTimePartsFromElapsedTime(dateMap[date].interval);
       const timestring = `${zeroPad(hours)}:${zeroPad(minutes)}`;
-      return (<IntervalStatsItem
-          day={ dateMap[date].weekDay }
-          key={ date }
-          time={ timestring } />);
+      return (
+        <IntervalStatsItem
+          day={dateMap[date].weekDay}
+          key={date}
+          time={timestring}
+        />
+      );
     });
 
   return (

@@ -7,7 +7,9 @@ import {
   getWeekday,
   getWeekNumber,
   getWeek,
-  isCurrentWeek
+  getMonth,
+  isCurrentWeek,
+  getWorkDaysinMonth
 } from '../../../client/js/utils/time';
 
 chai.use(dirtyChai);
@@ -143,6 +145,56 @@ describe('time', () => {
         startTime: +startDate,
         endTime: +endDate
       });
+    });
+  });
+
+  describe('#getMonth', () => {
+    const startDate = new Date('Sep 1, 2017');
+    const endDate = new Date('Sep 30, 2017 23:59');
+    const middleOfMonth = new Date('Sep 27, 2017 14:53');
+    const endOfMonth = new Date('Sep 30, 2017 11:30');
+
+    it('should return an object', () => {
+      expect(getMonth(0)).to.be.an('object');
+    });
+
+    it('should return two timestamps', () => {
+      expect(getMonth(0)).to.have.keys('startTime', 'endTime');
+    });
+
+    it('should return startTime and endTime for that month', () => {
+      expect(getMonth(+startDate)).to.have.eql({
+        startTime: +startDate,
+        endTime: +endDate
+      });
+    });
+
+    it('should calculate month from timestamp within', () => {
+      expect(getMonth(+middleOfMonth)).to.have.eql({
+        startTime: +startDate,
+        endTime: +endDate
+      });
+    });
+
+    it('should calculate month from timestamp within', () => {
+      expect(getMonth(+endOfMonth)).to.have.eql({
+        startTime: +startDate,
+        endTime: +endDate
+      });
+    });
+  });
+
+  describe('#getWorkDaysinMonth', () => {
+    it('should calculate all working days in a month', () => {
+      const september = getMonth(+(new Date('Sep 5, 2017')));
+      const october = getMonth(+(new Date('Oct 1, 2017')));
+      const november = getMonth(+(new Date('Nov 1, 2017')));
+      const december = getMonth(+(new Date('Dec 1, 2017')));
+
+      expect(getWorkDaysinMonth(september), 'september').to.equal(21);
+      expect(getWorkDaysinMonth(october), 'october').to.equal(22);
+      expect(getWorkDaysinMonth(november), 'november').to.equal(22);
+      expect(getWorkDaysinMonth(december), 'december').to.equal(21);
     });
   });
 });

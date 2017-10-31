@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '../button/button.jsx';
 
-import * as propTypes from '../../constants/propTypes';
+import * as customPropTypes from '../../constants/propTypes';
 import { updateSettings } from '../../actions/userActions';
 import firebaseApi from '../../utils/firebaseApi';
 
@@ -15,7 +15,7 @@ class UserMenu extends React.Component {
   }
 
   render() {
-    const { userSettings, user } = this.props;
+    const { userSettings } = this.props;
     const { displayNotifications, displayPreviousIntervals, displayName } = userSettings;
     const { isSavingUserSettings } = this.state;
 
@@ -23,17 +23,39 @@ class UserMenu extends React.Component {
       <form className="pure-form pure-form-stacked user-menu">
         <fieldset>
           <legend>
-            <input autoCapitalize spellCheck="false" type="text" value={ displayName } onChange={ this.handleChange('displayName') } placeholder="display name" />
+            <input
+              autoCapitalize="sentences"
+              spellCheck="false"
+              type="text"
+              value={displayName}
+              onChange={this.handleChange('displayName')}
+              placeholder="display name"
+            />
           </legend>
-          <label className="pure-checkbox">{ 'Visa notifiering ' }
-            <input checked={ displayNotifications } onChange={ this.handleChange('displayNotifications') } style={ { float: 'right' } } type="checkbox" />
+          <label className="pure-checkbox">Visa notifiering
+            <input
+              checked={displayNotifications}
+              onChange={this.handleChange('displayNotifications')}
+              style={{ float: 'right' }}
+              type="checkbox"
+            />
           </label>
-          <label className="pure-checkbox">{ 'Visa tidigare ' }
-            <input checked={ displayPreviousIntervals } onChange={ this.handleChange('displayPreviousIntervals') } style={ { float: 'right' } } type="checkbox" />
+          <label className="pure-checkbox">{'Visa tidigare '}
+            <input
+              checked={displayPreviousIntervals}
+              onChange={this.handleChange('displayPreviousIntervals')}
+              style={{ float: 'right' }}
+              type="checkbox"
+            />
           </label>
         </fieldset>
-        <Button className="pure-button-primary" isLoading={ isSavingUserSettings } onClick={ this.saveUserSettings } text="Spara" />
-          <button className="pure-button" onClick={ firebaseApi.logout }>{ 'Logga ut' }</button>
+        <Button
+          className="pure-button-primary"
+          isLoading={isSavingUserSettings}
+          onClick={this.saveUserSettings}
+          text="Spara"
+        />
+        <button className="pure-button" onClick={firebaseApi.logout}>Logga ut</button>
       </form>
     );
   }
@@ -53,7 +75,7 @@ class UserMenu extends React.Component {
     this.setState({ isSavingUserSettings: true });
 
     firebaseApi.saveUserData(user.uid, userSettings)
-      .then((msg) => {
+      .then(() => {
         this.setState({ isSavingUserSettings: false });
       });
   }
@@ -64,7 +86,7 @@ UserMenu.propTypes = {
   user: PropTypes.shape({
     uid: PropTypes.string.isRequired
   }).isRequired,
-  userSettings: propTypes.userSettings.isRequired
+  userSettings: customPropTypes.userSettings.isRequired
 };
 
 export default UserMenu;

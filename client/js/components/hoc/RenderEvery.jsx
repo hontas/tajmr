@@ -1,5 +1,5 @@
 import React from 'react';
-import { getDisplayname } from './utils.js';
+import getDisplayName from './getDisplayName';
 
 export const thirtySeconds = 1000 * 30;
 
@@ -19,11 +19,11 @@ export default function renderEvery(interval) {
       }
 
       render() {
-        return <Component { ...this.props } />
+        return <Component {...this.props} />;
       }
     }
 
-    RenderEvery.getDisplayname = getDisplayname(Component);
+    RenderEvery.getDisplayName = getDisplayName(Component);
 
     return RenderEvery;
   };

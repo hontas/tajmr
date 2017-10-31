@@ -7,15 +7,21 @@ const Button = ({ className, text, isLoading, children, ...rest }) => {
   const classes = classNames('pure-button button', className);
 
   return (
-    <button { ...rest } className={ classes }>
-      { text ? text : null }
-      { children ? children : null }
+    <button {...rest} className={classes}>
+      { text }
+      { children }
 
       { isLoading &&
-        <FadingCircle className="spin-kit-spinner" color="currentColor" size={ 15 } />
+        <FadingCircle className="spin-kit-spinner" color="currentColor" size={15} />
       }
     </button>
   );
+};
+
+Button.defaultProps = {
+  text: null,
+  children: null,
+  isLoading: false
 };
 
 Button.propTypes = {

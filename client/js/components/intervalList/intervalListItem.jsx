@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import IntervalListInput from './intervalListInput.jsx';
-import * as types from '../../constants/propTypes';
+import * as customPropTypes from '../../constants/propTypes';
 import Trashcan from '../icons/Trashcan.jsx';
-import { getTimePartsFromTimestamp } from '../../utils/time';
 import Button from '../button/button.jsx';
 
 class IntervalListItem extends React.Component {
@@ -20,22 +19,25 @@ class IntervalListItem extends React.Component {
 
     return (
       <li className="interval-list-item">
-        <IntervalListInput timestamp={ startTime } onUpdate={ this.updateProp('startTime') } />
-        <IntervalListInput timestamp={ endTime } onUpdate={ this.updateProp('endTime') } />
+        <IntervalListInput timestamp={startTime} onUpdate={this.updateProp('startTime')} />
+        <IntervalListInput timestamp={endTime} onUpdate={this.updateProp('endTime')} />
 
-        <input className="interval-list-item__note"
-          onChange={ this.onCommentChange }
+        <input
+          className="interval-list-item__note"
+          onChange={this.onCommentChange}
           placeholder="Anteckning"
-          value={ text }
-          onBlur={ this.updateProp('note') } />
+          value={text}
+          onBlur={this.updateProp('note')}
+        />
 
         <input
           className="interval-list-item__no-work"
           type="checkbox"
-          checked={ notWork }
-          onChange={ this.onChecked('notWork') } />
+          checked={notWork}
+          onChange={this.onChecked('notWork')}
+        />
 
-        <Button className="delete" onClick={ this.remove }>
+        <Button className="delete" onClick={this.remove}>
           <Trashcan size={15} />
         </Button>
       </li>
@@ -69,7 +71,7 @@ class IntervalListItem extends React.Component {
 }
 
 IntervalListItem.propTypes = {
-  interval: types.interval.isRequired,
+  interval: customPropTypes.interval.isRequired,
   onDelete: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired
 };

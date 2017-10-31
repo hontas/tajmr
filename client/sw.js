@@ -17,9 +17,7 @@ const urlsToCache = [
 
 self.addEventListener('install', (event) => {
   event.waitUntil((async function aiife() {
-    console.log('open caches');
     const cache = await caches.open(CACHE_NAME);
-    console.log('cache open', cache);
     await cache.addAll(urlsToCache);
     self.skipWaiting();
   }()));

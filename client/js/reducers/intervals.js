@@ -6,6 +6,7 @@ import {
   INTERVAL_REMOVE,
   INTERVALS_REQUEST,
   INTERVALS_FETCHED,
+  INTERVALS_UPDATE_TIMESTAMP,
   REQUEST_INTERVAL_UPDATE
 } from '../actions/intervals';
 
@@ -31,6 +32,12 @@ export default function intervals(state = {
         items: {}
       };
 
+    case INTERVALS_UPDATE_TIMESTAMP:
+      return {
+        ...state,
+        timestamp: action.timestamp
+      };
+
     case INTERVALS_REQUEST:
       return {
         ...state,
@@ -47,7 +54,6 @@ export default function intervals(state = {
         }, {});
       return {
         ...state,
-        timestamp: action.timestamp,
         isFetching: false,
         updatedAt: Date.now(),
         items

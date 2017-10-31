@@ -7,43 +7,53 @@ import WeekStatsItem from './weekStatsItem.jsx';
 import Button from '../button/button.jsx';
 import {
   getHours,
-  getDay,
   getDate,
   getWeekday,
   getWeekNumber,
   oneWeek
 } from '../../utils/time';
 
-const WeekStats = ({ fetchIntervalsInWeek, intervals, timestamp, userSettings }) => {
-  const now = Date.now();
-  // get startTime from first entry in intervals with default value
-  const intervalSum = intervals
-    .map(({ startTime, endTime }) => (endTime || now) - startTime)
-    .reduce((res, curr) => res + curr, 0);
-  const lastWeek = () => fetchIntervalsInWeek(timestamp - oneWeek);
-  const nextWeek = () => fetchIntervalsInWeek(timestamp + oneWeek);
+class WeekStats extends React.PureComponent {
+  render() {
+    const { intervals, timestamp, userSettings } = this.props;
+    const now = Date.now();
+    // get startTime from first entry in intervals with default value
+    const intervalSum = intervals
+      .map(({ startTime, endTime }) => (endTime || now) - startTime)
+      .reduce((res, curr) => res + curr, 0);
 
-  return (
-    <div className="week-stats">
-      <h3 className="week-stats__title">
-        <Button onClick={lastWeek}>{'◀︎'}</Button>
-        {
-          intervals.length ?
-            ` v.${getWeekNumber(timestamp)} ` :
-            ` v.${getWeekNumber(now)} `
-        }
-        <Button onClick={nextWeek}>{'▶︎'}</Button>
-      </h3>
-      <div className="week-stats__bars flex-container flex--align-end">
-        {
-          mashUpWeekAndIntervals(intervals, timestamp)
-            .map((day) => <WeekStatsItem key={day.weekday} { ...day } />)
-        }
+    return (
+      <div className="week-stats">
+        <h3 className="week-stats__title">
+          <Button onClick={this.lastWeek}>◀︎</Button>
+          {
+            intervals.length ?
+              ` v.${getWeekNumber(timestamp)} ` :
+              ` v.${getWeekNumber(now)} `
+          }
+          <Button onClick={this.nextWeek}>▶︎</Button>
+        </h3>
+        <div className="week-stats__bars flex-container flex--align-end">
+          {
+            mashUpWeekAndIntervals(intervals, timestamp)
+              .map((day) => <WeekStatsItem key={day.weekday} {...day} />)
+          }
+        </div>
+        <ProgressBar progress={getHours(intervalSum)} max={userSettings.hoursInWeek} />
       </div>
-      <ProgressBar progress={getHours(intervalSum)} max={ userSettings.hoursInWeek } />
-    </div>
-  );
-};
+    );
+  }
+
+  lastWeek = () => {
+    const { fetchIntervalsInWeek, timestamp } = this.props;
+    fetchIntervalsInWeek(timestamp - oneWeek);
+  }
+
+  nextWeek = () => {
+    const { fetchIntervalsInWeek, timestamp } = this.props;
+    fetchIntervalsInWeek(timestamp + oneWeek);
+  }
+}
 
 WeekStats.propTypes = {
   fetchIntervalsInWeek: PropTypes.func.isRequired,
@@ -62,7 +72,7 @@ function createWeek(timestamp = Date.now()) {
   }
   return Array(7).fill(0)
     .map((_, day) => {
-      d.setDate(d.getDate() - d.getDay() + day);
+      d.setDate(d.getDate() - (d.getDay() + day));
       return {
         weekday: getWeekday(d),
         date: getDate(d)
@@ -96,8 +106,4 @@ function mashUpWeekAndIntervals(intervals, timestamp) {
     total: 0,
     ...intervalHash[day.date]
   }));
-}
-
-function sumTime(res, curr) {
-  return res + (curr.endTime - curr.startTime);
 }

@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import * as customPropTypes from '../../constants/propTypes';
 import ProgressBar from './progressBar.jsx';
 import RenderEvery, { thirtySeconds } from '../hoc/RenderEvery.jsx';
-import { getDisplayname } from '../hoc/utils.js';
+import getDisplayName from '../hoc/getDisplayName';
 import { getHours } from '../../utils/time';
 
 const ProgressBarTimeWrapper = ({ intervals, max }) => {
@@ -13,11 +14,11 @@ const ProgressBarTimeWrapper = ({ intervals, max }) => {
     .reduce((res, curr) => res + curr, 0);
 
   ProgressBarTimeWrapper.propTypes = {
-    intervals: PropTypes.array.isRequired,
+    intervals: customPropTypes.intervals.isRequired,
     max: PropTypes.number.isRequired
   };
 
-  ProgressBarTimeWrapper.displayName = getDisplayname(ProgressBar);
+  ProgressBarTimeWrapper.displayName = getDisplayName(ProgressBar);
 
   return <ProgressBar progress={getHours(intervalSum)} max={max} />;
 };

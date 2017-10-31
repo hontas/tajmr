@@ -2,22 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import PureUpdatedAtComponent from '../PureUpdatedAtComponent.jsx';
-import * as propTypes from '../../constants/propTypes';
+import * as customPropTypes from '../../constants/propTypes';
 import IntervalList from '../intervalList/intervalList.jsx';
-import IntervalStats from '../intervalStats/intervalStats.jsx';
 import { attemptUpdate, attemptRemove } from '../../actions/intervals';
 
-class PreviousIntervals extends PureUpdatedAtComponent {
+class PreviousIntervals extends React.PureComponent {
   render() {
     const { intervals, userSettings } = this.props;
 
-    return userSettings.displayPreviousIntervals ? (
-        <div className="previous-intervals">
-          <h3 className="previous-intervals__title">{ 'Tidigare' }</h3>
-          <IntervalList intervals={ intervals } onDelete={ this.onDelete } onUpdate={ this.onUpdate } />
-        </div>
-      ) : <div />;
+    if (!userSettings.displayPreviousIntervals) return null;
+
+    return (
+      <div className="previous-intervals">
+        <h3 className="previous-intervals__title">Tidigare</h3>
+        <IntervalList intervals={intervals} onDelete={this.onDelete} onUpdate={this.onUpdate} />
+      </div>
+    );
   }
 
   onDelete = (id) => {
@@ -39,11 +39,10 @@ function isNotToday({ startTime }) {
 }
 
 PreviousIntervals.propTypes = {
-  ...PureUpdatedAtComponent.propTypes,
   dispatch: PropTypes.func.isRequired,
-  intervals: propTypes.intervals.isRequired,
-  userSettings: propTypes.userSettings.isRequired
-}
+  intervals: customPropTypes.intervals.isRequired,
+  userSettings: customPropTypes.userSettings.isRequired
+};
 
 function mapStateToProps({ intervals, userSettings }) {
   const intervalList = Object.keys(intervals.items).map((id) => ({
@@ -51,10 +50,7 @@ function mapStateToProps({ intervals, userSettings }) {
     id
   }));
 
-  const updatedAt = Math.max(intervals.updatedAt, userSettings.updatedAt);
-
   return {
-    updatedAt,
     userSettings,
     intervals: intervalList
       .filter(({ endTime }) => endTime) // is completed

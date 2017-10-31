@@ -3,7 +3,11 @@ import 'firebase/auth';
 import 'firebase/database';
 
 import store from '../store';
-import { intervalAdded, intervalUpdated, fetchIntervalsInWeek } from '../actions/intervals';
+import {
+  intervalAdded,
+  intervalUpdated,
+  fetchIntervalsForUser
+} from '../actions/intervals';
 import { userLoggedIn, userLoggedOut, updateSettings } from '../actions/userActions';
 import { getWeek } from './time';
 
@@ -28,7 +32,7 @@ auth.onAuthStateChanged((user) => {
       .once('value')
       .then((settings) => store.dispatch(updateSettings(settings.val())));
 
-    store.dispatch(fetchIntervalsInWeek());
+    store.dispatch(fetchIntervalsForUser());
   } else {
     store.dispatch(userLoggedOut());
   }
@@ -87,7 +91,15 @@ const api = {
       .startAt(startTime)
       .endAt(endTime)
       .once('value')
-      .then((snapshot) => (snapshot.val()))
+      .then((snapshot) => snapshot.val())
+      .then(filterByUser);
+  },
+
+  fetchIntervalsForUser() {
+    return api.intervals
+      .orderByChild('startTime')
+      .once('value')
+      .then((snapshot) => snapshot.val())
       .then(filterByUser);
   },
 
