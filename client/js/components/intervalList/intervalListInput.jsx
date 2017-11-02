@@ -54,7 +54,7 @@ class IntervalListInput extends React.Component {
       date.setMinutes(minutes);
       onUpdate({ target: { value: date.getTime() } });
     } else {
-      // eslint-disable-next no-console
+      // eslint-disable-next-line no-console
       console.log('Wrong format %s - should be XX:XX where X is a positive integer', value);
     }
     this.setState({ isValid });

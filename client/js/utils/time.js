@@ -42,6 +42,21 @@ export function getWeek(timestamp) {
   };
 }
 
+export function createWorkWeek(timestamp = Date.now()) {
+  const d = new Date(timestamp);
+  const firstDate = d.getDate();
+  const firstDay = d.getDay();
+  d.setDate(firstDay ? firstDate - (firstDay - 1) : firstDate - 6);
+  const monday = d.getTime();
+
+  return weekDays
+    .slice(1, 6)
+    .map((weekday, delta) => ({
+      weekday,
+      date: getDate(new Date(monday + (oneDay * delta)))
+    }));
+}
+
 export function getMonth(timestamp) {
   const monthStart = new Date(timestamp);
   monthStart.setDate(1);
@@ -70,7 +85,7 @@ export function getWorkDaysinMonth({ startTime, endTime }) {
   if (endDay === 0) { endDate.setDate(endDate.getDate() - 2); }
   if (endDay === 6) { endDate.setDate(endDate.getDate() - 1); }
 
-  const totalDays = endDate.getDate() - (startDate.getDate() + 1);
+  const totalDays = endDate.getDate() - (startDate.getDate() - 1);
   const holidays = Math.floor((totalDays + startDate.getDay()) / 7) * 2;
   return totalDays - holidays;
 }

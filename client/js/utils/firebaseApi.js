@@ -52,12 +52,12 @@ function filterByUser(intervals) {
 const api = {
   login(email, password) {
     return auth.signInWithEmailAndPassword(email, password)
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err)); // eslint-disable-line no-console
   },
 
   logout() {
     return auth.signOut()
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err)); // eslint-disable-line no-console
   },
 
   ref: firebase,
@@ -118,7 +118,7 @@ const api = {
       .on('child_added', (snapshot) => {
         const interval = snapshot.val();
         const userId = auth.currentUser && auth.currentUser.uid;
-        console.log('child_added!!!!', interval);
+        console.log('child_added!!!!', interval); // eslint-disable-line no-console
 
         if (interval.user !== userId) return;
 
@@ -129,7 +129,7 @@ const api = {
     api.intervals.on('child_changed', (snapshot) => {
       const interval = snapshot.val();
       const id = snapshot.key;
-      console.log('child_changed', interval, id);
+      console.log('child_changed', interval, id); // eslint-disable-line no-console
       store.dispatch(intervalUpdated({ ...interval, id }));
     });
   }

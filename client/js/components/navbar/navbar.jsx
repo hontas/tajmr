@@ -10,7 +10,6 @@ import UserMenu from '../user/userMenu.jsx';
 import pkg from '../../../../package.json';
 
 const garavatarUrl = 'https://www.gravatar.com/avatar';
-const preventDefault = (evt) => evt.preventDefault();
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -39,13 +38,9 @@ class Navbar extends React.Component {
         <ul className="navbar-menu pure-menu-list">
           { !user ?
             <li className={menuClasses}>
-              <a
-                className="pure-menu-link"
-                href="#"
-                onClick={preventDefault}
-              >
+              <div className="pure-menu-link">
                 Logga in
-              </a>
+              </div>
               <ul className="pure-menu-children">
                 <li className="pure-menu-item">
                   <Login />
@@ -54,14 +49,10 @@ class Navbar extends React.Component {
             </li>
             :
             <li className={menuClasses}>
-              <a
-                className="pure-menu-link"
-                href="#"
-                onClick={preventDefault}
-              >
+              <div className="pure-menu-link">
                 <Cog size={16} />
                 <span className="menu-link__text">Inställningar</span>
-              </a>
+              </div>
               <ul className="pure-menu-children">
                 <li className="pure-menu-item">
                   <UserMenu {...this.props} />

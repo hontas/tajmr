@@ -8,6 +8,7 @@ import {
   getWeekNumber,
   getWeek,
   getMonth,
+  createWorkWeek,
   isCurrentWeek,
   getWorkDaysinMonth
 } from '../../../client/js/utils/time';
@@ -195,6 +196,21 @@ describe('time', () => {
       expect(getWorkDaysinMonth(october), 'october').to.equal(22);
       expect(getWorkDaysinMonth(november), 'november').to.equal(22);
       expect(getWorkDaysinMonth(december), 'december').to.equal(21);
+    });
+  });
+
+  describe('#createWorkWeek', () => {
+    it('should create an array representing a week', () => {
+      const v44 = +(new Date('Nov 2, 2017'));
+      const workWeek = createWorkWeek(v44);
+      expect(workWeek).to.be.an('array').with.length(5);
+      expect(workWeek).to.eql([
+        { date: '10-30', weekday: 'måndag' },
+        { date: '10-31', weekday: 'tisdag' },
+        { date: '11-01', weekday: 'onsdag' },
+        { date: '11-02', weekday: 'torsdag' },
+        { date: '11-03', weekday: 'fredag' }
+      ]);
     });
   });
 });

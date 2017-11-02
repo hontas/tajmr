@@ -46,7 +46,7 @@ class CurrentIntervals extends React.PureComponent {
         <DigitalClock elapsed={intervalSum} from={activeInterval ? activeInterval.startTime : 0} />
         <ProgressBarTimeWrapper intervals={activeAndCurrentIntervals} max={hoursInWeek / 5} />
         <WorkButton activeInterval={!!activeInterval} onClick={this.onClick} />
-        <IntervalList intervals={activeAndCurrentIntervals} onDelete={this.onDelete} onUpdate={ this.onUpdate } />
+        <IntervalList intervals={activeAndCurrentIntervals} onDelete={this.onDelete} onUpdate={this.onUpdate} />
         <WeekStatsTimeWrapper
           fetchIntervalsInWeek={this.updateTimestamp}
           intervals={weekIntervals}

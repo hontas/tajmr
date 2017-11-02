@@ -13,6 +13,7 @@
     "import/no-extraneous-dependencies": ["error", {"optionalDependencies": false, "peerDependencies": false}],
     "object-curly-newline": 0,
     "react/require-default-props": 0,
+    "react/no-typos": 0,
     "react/sort-comp": [2, {
       order: [
         "static-methods",

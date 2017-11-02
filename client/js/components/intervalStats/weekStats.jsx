@@ -10,6 +10,7 @@ import {
   getDate,
   getWeekday,
   getWeekNumber,
+  createWorkWeek,
   oneWeek
 } from '../../utils/time';
 
@@ -65,43 +66,30 @@ WeekStats.propTypes = {
 export const WeekStatsTimeWrapper = RenderEvery(thirtySeconds)(WeekStats);
 export default WeekStats;
 
-function createWeek(timestamp = Date.now()) {
-  const d = new Date(timestamp);
-  if (!d.getDay()) {
-    d.setDate(d.getDate() - 1);
-  }
-  return Array(7).fill(0)
-    .map((_, day) => {
-      d.setDate(d.getDate() - (d.getDay() + day));
-      return {
-        weekday: getWeekday(d),
-        date: getDate(d)
-      };
-    })
-    .slice(1, 6);
-}
-
 function groupByWeekDay(intervals) {
   return intervals.reduce((hashMap, { startTime, endTime, notWork }) => {
     const date = new Date(startTime);
     const dateString = getDate(date);
     const weekDay = getWeekday(date);
+    const current = hashMap[dateString] || {
+      total: 0,
+      weekDay
+    };
 
-    if (!hashMap[dateString]) {
-      hashMap[dateString] = { total: 0, weekDay };
-    }
-    if (notWork) {
-      hashMap[dateString].notWork = true;
-    }
-    hashMap[dateString].total += ((endTime || Date.now()) - startTime);
-
-    return hashMap;
+    return {
+      ...hashMap,
+      [dateString]: {
+        ...current,
+        notWork: notWork || current.notWork,
+        total: current.total + ((endTime || Date.now()) - startTime)
+      }
+    };
   }, {});
 }
 
 function mashUpWeekAndIntervals(intervals, timestamp) {
   const intervalHash = groupByWeekDay(intervals);
-  return createWeek(timestamp).map((day) => ({
+  return createWorkWeek(timestamp).map((day) => ({
     ...day,
     total: 0,
     ...intervalHash[day.date]

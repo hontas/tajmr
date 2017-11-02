@@ -48,7 +48,6 @@ function intervalsRequestFailed(error) {
 }
 
 export function updateTimestamp(timestamp) {
-  console.log('updateTimestmp');
   return {
     type: INTERVALS_UPDATE_TIMESTAMP,
     timestamp
