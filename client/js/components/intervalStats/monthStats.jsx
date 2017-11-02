@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as customPropTypes from '../../constants/propTypes';
+import ProgressBar from '../ui-elements/progressBar.jsx';
 import {
   oneHour,
   getMonth,
@@ -10,15 +11,17 @@ import { getIntervalSum } from '../../utils/intervals';
 
 const MonthStats = ({ hoursPerWeek, monthIntervals, timestamp }) => {
   const month = getMonth(timestamp);
-  const workedHoursInMonth = (getIntervalSum(monthIntervals) / oneHour).toFixed(2);
-  const workDaysInMonth = (hoursPerWeek / 5) * getWorkDaysinMonth(month);
-  const workDaysSoFar = (hoursPerWeek / 5) * getWorkDaysinMonth({ startTime: month.startTime, endTime: Date.now() });
+  const monthSoFar = { startTime: month.startTime, endTime: Date.now() };
+  const workedHoursInMonth = getIntervalSum(monthIntervals) / oneHour;
+  const totalWorkHoursInMonth = (hoursPerWeek / 5) * getWorkDaysinMonth(month);
+  const totalWorkHoursSoFar = (hoursPerWeek / 5) * getWorkDaysinMonth(monthSoFar);
 
   return (
     <div className="month-stats">
-      <p>Worked hours in month: { workedHoursInMonth }</p>
-      <p>Total hours in month: { workDaysInMonth }</p>
-      <p>Total hours so far: { workDaysSoFar } Delta: { workedHoursInMonth - workDaysSoFar }</p>
+      <h3 className="mont-stats__heading">Månad</h3>
+      <ProgressBar progress={workedHoursInMonth} max={totalWorkHoursInMonth} />
+      <h3 className="mont-stats__heading">Flex</h3>
+      <ProgressBar progress={workedHoursInMonth} max={totalWorkHoursSoFar} unit="h" inverted onlyDelta />
     </div>
   );
 };
