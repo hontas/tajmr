@@ -20,7 +20,7 @@
   },
   "pre-push": [
     "lint",
-    "test"
+    "test -- --reporter landing"
   ],
   "author": "Pontus Lundin <lundin.pontus@gmail.com> (https://github.com/hontas)",
   "repository": {
