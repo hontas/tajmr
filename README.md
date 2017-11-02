@@ -16,7 +16,6 @@ npm run watch
 
 ## deploy
 
-- Automat deploy to Heroku
 - Gh-pages deployable like:
 ```shell
 npm run deploy
