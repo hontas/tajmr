@@ -3,20 +3,31 @@ import PropTypes from 'prop-types';
 
 import { getHours, getTimeString } from '../../utils/time';
 
-const WeekDayItem = ({ weekday, total, date, notWork }) => {
+const getBarHeight = (total) => getHours(total) * 10;
+const getStyle = (barHeight) => ({
+  height: `${barHeight}px`,
+  lineHeight: `${barHeight}px`
+});
+
+const WeekDayItem = ({ weekday, total, date, intervals }) => {
   const barHeight = getHours(total) * 10; // 10 hours = 100px;
   const style = {
     height: `${barHeight}px`,
     lineHeight: `${barHeight}px`
   };
   const baseClassName = 'week-stats-item';
-  const barClassName = notWork ? `${baseClassName}__bar ${baseClassName}__bar--not-work` : `${baseClassName}__bar`;
+  const barClassName = `${baseClassName}__bar`;
 
   return (
     <div className={baseClassName}>
       <div className={barClassName} style={style}>
+        {intervals && intervals.map(({ notWork, timespan }) =>
+          <div className={notWork && 'not-work'} style={getStyle(getBarHeight(timespan))} />)
+        }
         { !!total &&
-          getTimeString(total, { isDuration: true })
+          <div className={`${baseClassName}__total`}>
+            { getTimeString(total, { isDuration: true }) }
+          </div>
         }
       </div>
       <p className="week-date">
@@ -36,7 +47,8 @@ WeekDayItem.propTypes = {
   weekday: PropTypes.string.isRequired,
   notWork: PropTypes.bool,
   total: PropTypes.number,
-  date: PropTypes.string.isRequired
+  date: PropTypes.string.isRequired,
+  intervals: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default WeekDayItem;

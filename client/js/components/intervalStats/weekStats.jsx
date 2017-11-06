@@ -71,9 +71,11 @@ function groupByWeekDay(intervals) {
     const date = new Date(startTime);
     const dateString = getDate(date);
     const weekDay = getWeekday(date);
+    const timespan = (endTime || Date.now()) - startTime;
     const current = hashMap[dateString] || {
       total: 0,
-      weekDay
+      weekDay,
+      intervals: []
     };
 
     return {
@@ -81,7 +83,11 @@ function groupByWeekDay(intervals) {
       [dateString]: {
         ...current,
         notWork: notWork || current.notWork,
-        total: current.total + ((endTime || Date.now()) - startTime)
+        total: current.total + timespan,
+        intervals: [
+          ...current.intervals,
+          { notWork, timespan }
+        ]
       }
     };
   }, {});
