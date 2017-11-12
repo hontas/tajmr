@@ -9,7 +9,7 @@ const getStyle = (barHeight) => ({
   lineHeight: `${barHeight}px`
 });
 
-const WeekDayItem = ({ weekday, total, date, intervals }) => {
+const WeekDayItem = ({ weekday, total, date, intervals = [] }) => {
   const barHeight = getHours(total) * 10; // 10 hours = 100px;
   const style = {
     height: `${barHeight}px`,
@@ -17,16 +17,24 @@ const WeekDayItem = ({ weekday, total, date, intervals }) => {
   };
   const baseClassName = 'week-stats-item';
   const barClassName = `${baseClassName}__bar`;
+  const normalWork = intervals
+    .filter(({ notWork }) => !notWork)
+    .reduce((res, { timespan }) => res + timespan, 0);
+  const otherThanWork = intervals
+    .filter(({ notWork }) => notWork)
+    .reduce((res, { timespan }) => res + timespan, 0);
 
   return (
     <div className={baseClassName}>
       <div className={barClassName} style={style}>
-        {intervals && intervals.map(({ notWork, timespan }) =>
-          <div className={notWork && 'not-work'} style={getStyle(getBarHeight(timespan))} />)
+        {!!normalWork &&
+          <div style={getStyle(getBarHeight(normalWork))}>
+            { getTimeString(normalWork, { isDuration: true }) }
+          </div>
         }
-        { !!total &&
-          <div className={`${baseClassName}__total`}>
-            { getTimeString(total, { isDuration: true }) }
+        {!!otherThanWork &&
+          <div className="not-work" style={getStyle(getBarHeight(otherThanWork))}>
+            { getTimeString(otherThanWork, { isDuration: true }) }
           </div>
         }
       </div>
