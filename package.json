@@ -7,6 +7,7 @@
     "node": "8.x"
   },
   "scripts": {
+    "dev": "next",
     "lint": "eslint --ignore-path .gitignore --ext .js,.jsx .",
     "test": "mocha --recursive --require babel-register --reporter landing",
     "tdd": "npm test -- --watch --watch-extensions jsx --reporter min",

@@ -1,7 +1,5 @@
-/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import State from '../state/State';
 
 import '../styles';
 import '../styles/critical.styl';
@@ -9,10 +7,8 @@ import firebaseApi from './utils/firebaseApi';
 import store from './store';
 import Application from './components/application/application.jsx';
 
-firebaseApi.init();
-ReactDOM.render(
-  <Provider store={store}>
+export default () => (
+  <State>
     <Application />
-  </Provider>,
-  document.getElementById('root')
+  </State>
 );

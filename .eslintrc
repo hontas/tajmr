@@ -12,6 +12,7 @@
     "import/extensions": [2, "always", { "js": "never" }],
     "import/no-extraneous-dependencies": ["error", {"optionalDependencies": false, "peerDependencies": false}],
     "object-curly-newline": 0,
+    "react/jsx-filename-extension": 0,
     "react/require-default-props": 0,
     "react/no-typos": 0,
     "react/sort-comp": [2, {
