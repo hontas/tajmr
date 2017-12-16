@@ -1,10 +1,12 @@
 .navbar {
   background: $primary-color-dark;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 0.5em;
 
   .version {
     color: #AAA;
-    vertical-align: middle;
     display: none;
   }
 
@@ -12,11 +14,21 @@
     color: $text-color-primary;
     font-size: 1.25em;
     line-height: 0.85em;
-    margin: 0 0.4em;
+    margin: 0;
+  }
+
+  .loading-text {
+    display: none;
+    @media screen and (min-width: $screen-small) {
+      display: initial;
+    }
   }
 
   .pure-menu-children {
-    left: -125%;
+    left: -212%;
+    @media screen and (min-width: $screen-small) {
+      left: -103%;
+    }
   }
 
   .profile-image {
@@ -29,8 +41,9 @@
   }
 
   .menu-link__text {
-    @media screen and (max-width: $screen-small) {
-      display: none;
+    display: none;
+    @media screen and (min-width: $screen-small) {
+      display: initial;
     }
   }
 
@@ -45,12 +58,14 @@
 }
 
 .navbar-menu {
-  float: right;
+  display: flex;
+  align-items: center;
+  margin-right: .5em;
   a {
     color: $text-color-light;
   }
   .icon-cog {
-    transform: translateY(2px);
+    transform: translateY(3px);
     @media screen and (min-width: $screen-small) {
       display: none;
     }

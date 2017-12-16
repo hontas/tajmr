@@ -28,10 +28,10 @@ class Navbar extends React.Component {
       <div className="navbar pure-menu pure-menu-horizontal pure-menu-fixed">
         <h1 className="brand pure-menu-heading">TajmR</h1>
         <span className="version">{ `v${pkg.version}` }</span>
-        { isLoading &&
+        {isLoading &&
           <div style={{ color: 'gray', display: 'inline-block', marginLeft: '1em' }}>
             <Wave color="currentColor" className="spin-kit-spinner" />
-            <small style={{ verticalAlign: 'middle' }}>{ isFetching ? 'Laddar intervall...' : 'Sparar...' }</small>
+            <small className="loading-text">{ isFetching ? 'Laddar intervall...' : 'Sparar...' }</small>
           </div>
         }
 
