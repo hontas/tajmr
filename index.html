@@ -488,21 +488,36 @@ a.animated:hover:after {
 }
 .navbar {
   background: #2d3e50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 0.5em;
 }
 .navbar .version {
   color: #aaa;
-  vertical-align: middle;
   display: none;
 }
 .navbar .brand {
   color: #fff;
   font-size: 1.25em;
   line-height: 0.85em;
-  margin: 0 0.4em;
+  margin: 0;
+}
+.navbar .loading-text {
+  display: none;
+}
+@media screen and (min-width: 480px) {
+  .navbar .loading-text {
+    display: initial;
+  }
 }
 .navbar .pure-menu-children {
-  left: -125%;
+  left: -212%;
+}
+@media screen and (min-width: 480px) {
+  .navbar .pure-menu-children {
+    left: -103%;
+  }
 }
 .navbar .profile-image {
   border-radius: 50%;
@@ -512,9 +527,12 @@ a.animated:hover:after {
   vertical-align: middle;
   width: 30px;
 }
-@media screen and (max-width: 480px) {
+.navbar .menu-link__text {
+  display: none;
+}
+@media screen and (min-width: 480px) {
   .navbar .menu-link__text {
-    display: none;
+    display: initial;
   }
 }
 .navbar .pure-menu-link:focus {
@@ -525,20 +543,22 @@ a.animated:hover:after {
   background-color: rgba(255,255,255,0.1);
 }
 .navbar-menu {
-  float: right;
+  display: flex;
+  align-items: center;
+  margin-right: 0.5em;
 }
 .navbar-menu a {
   color: #6fbef3;
 }
 .navbar-menu .icon-cog {
-  transform: translateY(2px);
+  transform: translateY(3px);
 }
 @media screen and (min-width: 480px) {
   .navbar-menu .icon-cog {
     display: none;
   }
 }
-</style><script type="text/javascript" src="/tajmr/app-legacy.e2b27d75bc049857f0be.js" async></script></head><body><div id="root"><div class="application"><div class="navbar pure-menu pure-menu-horizontal pure-menu-fixed"><h1 class="brand pure-menu-heading">TajmR</h1></div></div></div><script type="text/javascript">if ('serviceWorker' in navigator && false) {
+</style><script type="text/javascript" src="/tajmr/app-legacy.12f9b8d22f558eaa5c10.js" async></script></head><body><div id="root"><div class="application"><div class="navbar pure-menu pure-menu-horizontal pure-menu-fixed"><h1 class="brand pure-menu-heading">TajmR</h1></div></div></div><script type="text/javascript">if ('serviceWorker' in navigator && false) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js')
       .then((registration) => {
