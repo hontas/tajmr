@@ -77,7 +77,8 @@ const api = {
 
   updateInterval({ id, ...interval }) {
     return database.ref(`intervals/${id}`)
-      .set({ ...interval, updatedAt: Date.now() });
+      .set({ ...interval, updatedAt: Date.now() })
+      .then(() => ({ ...interval, id }));
   },
 
   removeInterval(id) {

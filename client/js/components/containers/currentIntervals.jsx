@@ -8,8 +8,10 @@ import WorkButton from '../button/workButton.jsx';
 import ProgressBarTimeWrapper from '../ui-elements/ProgressBarTimeWrapper.jsx';
 import IntervalList from '../intervalList/intervalList.jsx';
 import MonthStats from '../intervalStats/monthStats.jsx';
+import Button from '../button/button.jsx';
 import { WeekStatsTimeWrapper } from '../intervalStats/weekStats.jsx';
 import * as intervalActions from '../../actions/intervals';
+import AddOneInterval from '../intervalList/addOneInterval.jsx';
 import {
   getIntervalSum,
   isActive,
@@ -22,6 +24,10 @@ import {
 } from '../../utils/time';
 
 class CurrentIntervals extends React.PureComponent {
+  state = {
+    displayAddForm: false
+  };
+
   render() {
     const {
       intervals,
@@ -33,6 +39,7 @@ class CurrentIntervals extends React.PureComponent {
 
     const activeAndCurrentIntervals = activeInterval ? [].concat(activeInterval, todaysIntervals) : todaysIntervals;
     const hoursInWeek = userSettings.hoursInWeek || 40;
+    const hoursInDay = hoursInWeek / 5;
     const intervalSum = getIntervalSum(todaysIntervals);
     const week = getWeek(timestamp);
     const month = getMonth(timestamp);
@@ -45,7 +52,15 @@ class CurrentIntervals extends React.PureComponent {
       <div className="current-intervals">
         <DigitalClock elapsed={intervalSum} from={activeInterval ? activeInterval.startTime : 0} />
         <ProgressBarTimeWrapper intervals={activeAndCurrentIntervals} max={hoursInWeek / 5} />
-        <WorkButton activeInterval={!!activeInterval} onClick={this.onClick} />
+        <div className="action-buttons" style={{ display: 'flex' }}>
+          <WorkButton activeInterval={!!activeInterval} onClick={this.onClick} />
+          <Button className="current-intervals__prev-work-btn" type="primary" onClick={this.onAddPrevClick}>
+            Efterregga
+          </Button>
+        </div>
+        {this.state.displayAddForm &&
+          <AddOneInterval onAdd={this.onAddOneInterval} fullDay={hoursInDay} />
+        }
         <IntervalList intervals={activeAndCurrentIntervals} onDelete={this.onDelete} onUpdate={this.onUpdate} />
         <WeekStatsTimeWrapper
           fetchIntervalsInWeek={this.updateTimestamp}
@@ -82,6 +97,18 @@ class CurrentIntervals extends React.PureComponent {
 
     return attemptUpdate({ startTime: Date.now() });
   }
+
+  onAddPrevClick = () => this.setState({ displayAddForm: true });
+
+  onAddOneInterval = (interval) => {
+    const { attemptUpdate, intervalAdded } = this.props;
+    attemptUpdate(interval)
+      .then((saveInterval) => {
+        this.setState({ displayAddForm: false });
+        intervalAdded(saveInterval);
+      });
+    // 👆 must do manual add cause child_added only register startDate > Date.now()
+  };
 }
 
 CurrentIntervals.propTypes = {

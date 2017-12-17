@@ -2,10 +2,6 @@
   "name": "Tajmr",
   "version": "0.6.0",
   "description": "Record time sometime",
-  "main": "main.js",
-  "engines": {
-    "node": "8.x"
-  },
   "scripts": {
     "lint": "eslint --ignore-path .gitignore --ext .js,.jsx .",
     "test": "mocha --recursive --require babel-register --reporter landing",
@@ -78,8 +74,5 @@
     "webpack-bundle-analyzer": "^2.9.1",
     "webpack-dev-server": "^2.9.4",
     "webpack-hot-middleware": "^2.20.0"
-  },
-  "dependencies": {
-    "next": "^4.1.4"
   }
 }

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { FadingCircle } from 'better-react-spinkit';
 
-const Button = ({ className, text, isLoading, children, ...rest }) => {
-  const classes = classNames('pure-button button', className);
+const Button = ({ className, text, isLoading, children, type = 'default', ...rest }) => {
+  const classes = classNames('pure-button button', `button--${type}`, className);
 
   return (
     <button {...rest} className={classes}>
@@ -29,6 +29,7 @@ Button.propTypes = {
   isLoading: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
   text: PropTypes.string,
+  type: PropTypes.oneOf(['default', 'primary']),
   children: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element,

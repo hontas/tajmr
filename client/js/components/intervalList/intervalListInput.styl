@@ -4,24 +4,43 @@
   border-width: 0;
   margin-left: .5em;
   flex: 1;
+}
 
-  &__input {
-    flex: 1;
-    color: #333;
-    font-size: 1em;
-    padding: 0.5em;
-    width: 100%;
+.interval-list-input__input {
+  flex: 1;
+  order: 1;
+  color: #333;
+  font-size: 1em;
+  padding: 0.5em;
+  width: 100%;
 
-    &[disabled] {
-      background: whitesmoke;
-      color: darkgray;
-      cursor: not-allowed;
+  &[disabled] {
+    background: whitesmoke;
+    color: darkgray;
+    cursor: not-allowed;
+  }
+  &:focus ~ .interval-list-input__date .date-picker__calendar {
+    display: block;
+    color: red;
+  }
+}
+
+.interval-list-input__date {
+  padding-right: 0;
+  @media screen and (min-width: $screen-small) {
+    padding-right: .5em;
+  }
+
+  .date-picker__icon {
+    display: none;
+    @media screen and (min-width: $screen-small) {
+      display: block;
     }
   }
+}
 
-  &--error {
-    background: red;
-    border-color: darkred;
-    color: darkred;
-  }
+.interval-list-input--error {
+  background: red;
+  border-color: darkred;
+  color: darkred;
 }

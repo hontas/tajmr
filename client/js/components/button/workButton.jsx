@@ -7,7 +7,7 @@ const WorkButton = ({ activeInterval, onClick }) => {
   const buttonText = activeInterval ? 'Ta en fika ▐▐' : 'Börja debitera ▶';
 
   return (
-    <Button className="work-button" onClick={onClick} text={buttonText} />
+    <Button type="primary" className="work-button" onClick={onClick} text={buttonText} />
   );
 };
 

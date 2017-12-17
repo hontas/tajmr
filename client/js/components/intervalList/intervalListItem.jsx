@@ -7,10 +7,7 @@ import Trashcan from '../icons/Trashcan.jsx';
 import Button from '../button/button.jsx';
 
 class IntervalListItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+  state = {};
 
   render() {
     const { interval: { startTime, endTime, note, notWork } } = this.props;

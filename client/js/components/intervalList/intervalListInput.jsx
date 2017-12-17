@@ -30,13 +30,17 @@ class IntervalListInput extends React.Component {
 
     return (
       <div className={classNames(baseClassName, className, variationClass)}>
-        <DatePicker date={timestamp} onDayClick={this.handleDateChange} />
         <input
           className={`${baseClassName}__input`}
           disabled={isActive}
           onBlur={this.validateAndPush}
           onChange={this.handleChange}
           value={value}
+        />
+        <DatePicker
+          className={`${baseClassName}__date`}
+          date={timestamp}
+          onDayClick={this.handleDateChange}
         />
       </div>
     );
