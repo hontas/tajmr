@@ -1,3 +1,4 @@
+export const months = ['januari', 'februari', 'mars', 'april', 'maj', 'juni', 'juli', 'augusti', 'september', 'oktober', 'november', 'december']; // eslint-disable-line max-len
 export const weekDays = ['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag'];
 export const oneHour = 1000 * 60 * 60;
 export const oneDay = oneHour * 24;

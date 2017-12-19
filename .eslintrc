@@ -7,6 +7,7 @@
   "rules": {
     "comma-dangle": 0,
     "arrow-parens": [2, "always"],
+    "arrow-body-style": 1,
     "max-len": ["error", 120],
     "no-use-before-define": ["error", "nofunc"],
     "import/extensions": [2, "always", { "js": "never" }],

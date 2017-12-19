@@ -18,9 +18,9 @@ const MonthStats = ({ hoursPerWeek, monthIntervals, timestamp }) => {
 
   return (
     <div className="month-stats">
-      <h3 className="mont-stats__heading">Månad</h3>
+      <h3 className="month-stats__heading">Månad</h3>
       <ProgressBar progress={workedHoursInMonth} max={totalWorkHoursInMonth} />
-      <h3 className="mont-stats__heading">Flex</h3>
+      <h3 className="month-stats__heading">Flex</h3>
       <ProgressBar progress={workedHoursInMonth} max={totalWorkHoursSoFar} unit="h" inverted onlyDelta />
     </div>
   );

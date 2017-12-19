@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import MonthReport from '../monthReport/MonthReport.jsx';
 import * as customTypes from '../../constants/propTypes';
 import DigitalClock from '../digitalClock/digitalClock.jsx';
 import WorkButton from '../button/workButton.jsx';
@@ -74,6 +75,9 @@ class CurrentIntervals extends React.PureComponent {
             monthIntervals={monthIntervals}
             hoursPerWeek={userSettings.hoursInWeek}
           />
+        }
+        {userSettings.displayMonthReport &&
+          <MonthReport intervals={intervals} />
         }
       </div>
     );

@@ -16,7 +16,7 @@ class UserMenu extends React.Component {
 
   render() {
     const { userSettings } = this.props;
-    const { displayNotifications, displayPreviousIntervals, displayName } = userSettings;
+    const { displayMonthReport, displayNotifications, displayPreviousIntervals, displayName } = userSettings;
     const { isSavingUserSettings } = this.state;
 
     return (
@@ -44,6 +44,14 @@ class UserMenu extends React.Component {
             <input
               checked={displayPreviousIntervals}
               onChange={this.handleChange('displayPreviousIntervals')}
+              style={{ float: 'right' }}
+              type="checkbox"
+            />
+          </label>
+          <label className="pure-checkbox">{'Visa månadsrapport'}
+            <input
+              checked={displayMonthReport}
+              onChange={this.handleChange('displayMonthReport')}
               style={{ float: 'right' }}
               type="checkbox"
             />

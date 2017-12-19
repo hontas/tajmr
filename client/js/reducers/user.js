@@ -17,6 +17,7 @@ export function user(state = null, action) {
 
 const initialState = {
   updatedAt: 0,
+  displayMonthReport: false,
   displayNotifications: false,
   displayPreviousIntervals: false,
   displayName: '',
