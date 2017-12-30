@@ -20,7 +20,11 @@ class AutoComplete extends PureComponent {
     } = this.props;
 
     return (
-      <div className={classNames('AutoComplete', className)} onKeyDown={this.onKeyDown}>
+      <div
+        className={classNames('AutoComplete', className)}
+        onKeyDown={this.onKeyDown}
+        role="presentation"
+      >
         <label className="AutoComplete__label">
           { label }
           <input
@@ -32,7 +36,7 @@ class AutoComplete extends PureComponent {
             onChange={this.onChange}
           />
         </label>
-        <ul className="AutoComplete__suggestions" ref={(node) => this.suggestionsList = node}>
+        <ul className="AutoComplete__suggestions" ref={(node) => { this.suggestionsList = node; }}>
           {!!suggestions.length &&
             suggestions.map((note) => (
               <li key={note} className="AutoComplete__suggestion">
