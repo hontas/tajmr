@@ -35,7 +35,8 @@ class CurrentIntervals extends React.PureComponent {
       activeInterval,
       todaysIntervals,
       userSettings,
-      timestamp
+      timestamp,
+      notes
     } = this.props;
 
     const activeAndCurrentIntervals = activeInterval ? [].concat(activeInterval, todaysIntervals) : todaysIntervals;
@@ -60,9 +61,18 @@ class CurrentIntervals extends React.PureComponent {
           </Button>
         </div>
         {this.state.displayAddForm &&
-          <AddOneInterval onAdd={this.onAddOneInterval} fullDay={hoursInDay} />
+          <AddOneInterval
+            onAdd={this.onAddOneInterval}
+            fullDay={hoursInDay}
+            notes={notes}
+          />
         }
-        <IntervalList intervals={activeAndCurrentIntervals} onDelete={this.onDelete} onUpdate={this.onUpdate} />
+        <IntervalList
+          intervals={activeAndCurrentIntervals}
+          onDelete={this.onDelete}
+          onUpdate={this.onUpdate}
+          notes={notes}
+        />
         <WeekStatsTimeWrapper
           fetchIntervalsInWeek={this.updateTimestamp}
           intervals={weekIntervals}
@@ -124,6 +134,7 @@ CurrentIntervals.propTypes = {
   attemptRemove: PropTypes.func.isRequired,
   updateTimestamp: PropTypes.func.isRequired,
   timestamp: PropTypes.number.isRequired,
+  notes: PropTypes.arrayOf(PropTypes.string)
 };
 
 CurrentIntervals.defaultProps = {
@@ -131,17 +142,24 @@ CurrentIntervals.defaultProps = {
 };
 
 function mapStateToProps({ intervals, userSettings }) {
-  const intervalList = Object.keys(intervals.items).map((id) => ({
-    ...intervals.items[id],
-    id
-  }));
+  const notes = [];
+  const intervalList = Object.keys(intervals.items).map((id) => {
+    if (intervals.items[id].note) {
+      notes.push(intervals.items[id].note);
+    }
+    return {
+      ...intervals.items[id],
+      id
+    };
+  });
 
   return {
     timestamp: intervals.timestamp,
     intervals: intervalList,
     todaysIntervals: intervalList.filter(isComplete).filter(({ startTime }) => isToday(new Date(startTime))),
     activeInterval: intervalList.find(isActive),
-    userSettings
+    userSettings,
+    notes: [...new Set(notes)]
   };
 }
 

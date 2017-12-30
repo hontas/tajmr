@@ -28,6 +28,7 @@ class AddOneInterval extends React.PureComponent {
           interval={this.state.interval}
           onUpdate={this.onUpdate}
           onDelete={onDelete}
+          notes={this.props.notes}
         />
         <button
           className="pure-button button button--default add-one-interval__btn"
@@ -65,7 +66,8 @@ AddOneInterval.defaultProps = {
 
 AddOneInterval.propTypes = {
   onAdd: PropTypes.func,
-  fullDay: PropTypes.number.isRequired
+  fullDay: PropTypes.number.isRequired,
+  notes: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default AddOneInterval;

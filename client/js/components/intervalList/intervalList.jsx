@@ -10,7 +10,7 @@ function sortBy(array, prop) {
     .sort((a, b) => b[prop] - a[prop]);
 }
 
-const IntervalList = ({ intervals, onDelete, onUpdate }) => (
+const IntervalList = ({ intervals, onDelete, onUpdate, notes = [] }) => (
   <ul className="interval-list">
     {
       sortBy(intervals, 'startTime')
@@ -20,6 +20,7 @@ const IntervalList = ({ intervals, onDelete, onUpdate }) => (
             interval={interval}
             onDelete={onDelete}
             onUpdate={onUpdate}
+            notes={notes}
           />
         ))
     }
@@ -29,7 +30,8 @@ const IntervalList = ({ intervals, onDelete, onUpdate }) => (
 IntervalList.propTypes = {
   intervals: customPropTypes.intervals.isRequired,
   onDelete: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func.isRequired
+  onUpdate: PropTypes.func.isRequired,
+  notes: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default IntervalList;

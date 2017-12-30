@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 export const interval = PropTypes.shape({
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   startTime: PropTypes.number.isRequired,
   endTime: PropTypes.number,
   user: PropTypes.string,

@@ -5,32 +5,32 @@ import IntervalListInput from './intervalListInput.jsx';
 import * as customPropTypes from '../../constants/propTypes';
 import Trashcan from '../icons/Trashcan.jsx';
 import Button from '../button/button.jsx';
+import AutoComplete from '../autoComplete/AutoComplete.jsx';
 
 class IntervalListItem extends React.Component {
-  state = {};
-
   render() {
-    const { interval: { startTime, endTime, note, notWork } } = this.props;
-    const { comment } = this.state;
-    const text = typeof comment !== 'undefined' ? comment : note;
+    const {
+      notes,
+      interval: { startTime, endTime, note, notWork }
+    } = this.props;
 
     return (
       <li className="interval-list-item">
         <IntervalListInput timestamp={startTime} onUpdate={this.updateProp('startTime')} />
         <IntervalListInput timestamp={endTime} onUpdate={this.updateProp('endTime')} />
 
-        <input
+        <AutoComplete
           className="interval-list-item__note"
-          onChange={this.onCommentChange}
           placeholder="Anteckning"
-          value={text}
-          onBlur={this.updateProp('note')}
+          onChange={this.updateProp('note')}
+          value={note}
+          notes={notes}
         />
 
         <input
           className="interval-list-item__no-work"
           type="checkbox"
-          checked={notWork}
+          checked={notWork || false}
           onChange={this.onChecked('notWork')}
         />
 
@@ -61,16 +61,13 @@ class IntervalListItem extends React.Component {
     const { onDelete, interval } = this.props;
     onDelete(interval.id);
   }
-
-  onCommentChange = ({ target }) => {
-    this.setState({ comment: target.value });
-  }
 }
 
 IntervalListItem.propTypes = {
   interval: customPropTypes.interval.isRequired,
   onDelete: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func.isRequired
+  onUpdate: PropTypes.func.isRequired,
+  notes: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default IntervalListItem;
