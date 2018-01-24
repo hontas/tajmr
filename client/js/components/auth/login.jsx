@@ -4,7 +4,7 @@ import firebaseApi from '../../utils/firebaseApi';
 const Login = () => (
   <form className="auth-form" onSubmit={handleSubmit}>
     <input name="username" type="email" />
-    <input name="password" type="password" />
+    <input name="password" type="password" autoComplete="current-password" />
     <button className="pure-button" type="submit">Logga in</button>
   </form>
 );

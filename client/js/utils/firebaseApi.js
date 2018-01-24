@@ -2,7 +2,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 
-import store from '../store';
+import { store } from '../app';
 import {
   intervalAdded,
   intervalUpdated,

@@ -12,10 +12,7 @@ import pkg from '../../../../package.json';
 const garavatarUrl = 'https://www.gravatar.com/avatar';
 
 class Navbar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+  state = {};
 
   render() {
     const { user, isSaving, isFetching } = this.props;

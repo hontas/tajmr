@@ -5,7 +5,6 @@ import reducers from '../reducers';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // eslint-disable-line
 const composed = composeEnhancers(applyMiddleware(thunkMiddleware));
 
-const initialState = {};
-const store = createStore(reducers, initialState, composed);
-
-export default store;
+export default function (initialState = {}) {
+  return createStore(reducers, initialState, composed);
+}
