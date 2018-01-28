@@ -70,8 +70,8 @@ class MonthReport extends Component {
     this.setState({ referenceDate: newRefDate });
   };
 
-  getGroupedIntervalsBy = (key) => {
-    return this.getMonthIntervals()
+  getGroupedIntervalsBy = (key) =>
+    this.getMonthIntervals()
       .reduce((res, curr) => {
         let keyToBe = curr[key] ? curr[key] : 'undefined';
         if (curr.notWork) keyToBe = `notWork:${keyToBe}`;
@@ -79,7 +79,6 @@ class MonthReport extends Component {
         res[keyToBe] += (curr.endTime - curr.startTime);
         return res;
       }, {});
-  };
 
   getMonthIntervals = () => {
     const { startTime, endTime } = getMonth(this.state.referenceDate);
