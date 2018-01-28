@@ -48,9 +48,12 @@ class IntervalListInput extends React.Component {
 
   validateAndPush = () => {
     const { value } = this.state;
+    const { timestamp, onUpdate } = this.props;
     const isValid = validateTimeString(value);
+    const hasChanged = value !== getTimeString(timestamp);
+
+    if (!hasChanged) return;
     if (isValid) {
-      const { timestamp, onUpdate } = this.props;
       const [hours, minutes] = value.split(':');
       const date = new Date(timestamp);
 

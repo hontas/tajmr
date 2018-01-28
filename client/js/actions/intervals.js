@@ -33,7 +33,7 @@ export function intervalUpdated(interval) {
   };
 }
 
-function intervalsFetched(intervals) {
+export function intervalsFetched(intervals) {
   return {
     type: INTERVALS_FETCHED,
     intervals

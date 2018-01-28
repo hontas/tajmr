@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import * as customPropTypes from '../../constants/propTypes';
 import IntervalList from '../intervalList/intervalList.jsx';
 import { attemptUpdate, attemptRemove } from '../../actions/intervals';
+import { startOfDay } from '../../utils/time';
+import { isComplete } from '../../utils/intervals';
 
 class PreviousIntervals extends React.PureComponent {
   render() {
@@ -31,29 +33,22 @@ class PreviousIntervals extends React.PureComponent {
   }
 }
 
-function isNotToday({ startTime }) {
-  const today = new Date();
-  const date = new Date(startTime);
-
-  return date.getDate() !== today.getDate();
-}
-
 PreviousIntervals.propTypes = {
   dispatch: PropTypes.func.isRequired,
   intervals: customPropTypes.intervals.isRequired,
   userSettings: customPropTypes.userSettings.isRequired
 };
 
-function mapStateToProps({ intervals, userSettings }) {
-  const intervalList = Object.keys(intervals.items).map((id) => ({
-    ...intervals.items[id],
-    id
-  }));
+const today = +startOfDay(Date.now());
+function isNotToday({ endTime }) {
+  return endTime < today;
+}
 
+function mapStateToProps({ intervals: { items }, userSettings }) {
   return {
     userSettings,
-    intervals: intervalList
-      .filter(({ endTime }) => endTime) // is completed
+    intervals: items
+      .filter(isComplete)
       .filter(isNotToday)
   };
 }

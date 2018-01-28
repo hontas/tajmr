@@ -15,13 +15,15 @@ import {
   USER_LOGGED_OUT
 } from '../actions/userActions';
 
-export default function intervals(state = {
+const initialState = {
   timestamp: Date.now(),
   updatedAt: 0,
   isFetching: true,
   isSaving: false,
-  items: {}
-}, action) {
+  items: []
+};
+
+export default function intervals(state = initialState, action) {
   switch (action.type) {
     case USER_LOGGED_IN:
     case USER_LOGGED_OUT:
@@ -29,7 +31,7 @@ export default function intervals(state = {
         ...state,
         updatedAt: Date.now(),
         isFetching: false,
-        items: {}
+        items: []
       };
 
     case INTERVALS_UPDATE_TIMESTAMP:
@@ -46,30 +48,14 @@ export default function intervals(state = {
       };
 
     case INTERVALS_FETCHED: {
-      const items = Object.keys(action.intervals)
-        .map((id) => ({ ...action.intervals[id], id }))
-        .reduce((res, curr) => {
-          res[curr.id] = curr;
-          return res;
-        }, {});
       return {
         ...state,
         isFetching: false,
         updatedAt: Date.now(),
-        items
+        items: Object.keys(action.intervals)
+          .map((id) => ({ ...action.intervals[id], id }))
       };
     }
-
-    case INTERVAL_ADD:
-      return {
-        ...state,
-        updatedAt: Date.now(),
-        isSaving: false,
-        items: {
-          ...state.items,
-          [action.interval.id]: action.interval
-        }
-      };
 
     case REQUEST_INTERVAL_UPDATE:
       return {
@@ -78,16 +64,26 @@ export default function intervals(state = {
         isSaving: true
       };
 
-    case INTERVAL_UPDATED:
-    case INTERVAL_COMPLETE: {
+    case INTERVAL_ADD:
       return {
         ...state,
         updatedAt: Date.now(),
         isSaving: false,
-        items: {
+        items: [
           ...state.items,
-          [action.interval.id]: action.interval
-        }
+          action.interval
+        ]
+      };
+
+    case INTERVAL_UPDATED:
+    case INTERVAL_COMPLETE: {
+      const items = state.items.filter(({ id }) => action.interval.id !== id);
+      items.push(action.interval);
+      return {
+        ...state,
+        updatedAt: Date.now(),
+        isSaving: false,
+        items
       };
     }
 
@@ -100,13 +96,11 @@ export default function intervals(state = {
       };
 
     case INTERVAL_REMOVE: {
-      const copy = { ...state.items };
-      delete copy[action.id];
       return {
         ...state,
         updatedAt: Date.now(),
         isSaving: false,
-        items: copy
+        items: state.items.filter(({ id }) => action.id !== id)
       };
     }
 

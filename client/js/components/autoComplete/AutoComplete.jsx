@@ -89,8 +89,8 @@ class AutoComplete extends PureComponent {
     this.props.onChange({ target: { value: query } });
   };
 
-  onChange = (evt) => {
-    const query = evt.target.value;
+  onChange = ({ target }) => {
+    const query = target.value;
     const suggestions = this.props.notes.filter((note) => note.toLowerCase().startsWith(query.toLowerCase()));
     this.setState({
       query,
@@ -98,10 +98,11 @@ class AutoComplete extends PureComponent {
     });
   };
 
-  onBlur = (evt) => {
+  onBlur = ({ target }) => {
+    const { value } = target;
     // don't blur if tabbed to selection list
-    if (this.suggestionsList.hasChildNodes(evt.target)) return;
-    const { value } = evt.target;
+    if (this.suggestionsList.hasChildNodes(target)) return;
+    if (value === this.props.value) return;
     this.timeoutId = setTimeout(() => {
       this.props.onChange({ target: { value } });
       this.timeoutId = null;

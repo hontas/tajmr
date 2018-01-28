@@ -19,9 +19,9 @@ import {
   isComplete
 } from '../../utils/intervals';
 import {
-  isToday,
   getWeek,
-  getMonth
+  getMonth,
+  startOfDay
 } from '../../utils/time';
 
 class CurrentIntervals extends React.PureComponent {
@@ -141,25 +141,23 @@ CurrentIntervals.defaultProps = {
   activeInterval: null
 };
 
-function mapStateToProps({ intervals, userSettings }) {
-  const notes = [];
-  const intervalList = Object.keys(intervals.items).map((id) => {
-    if (intervals.items[id].note) {
-      notes.push(intervals.items[id].note);
-    }
-    return {
-      ...intervals.items[id],
-      id
-    };
-  });
+const today = +startOfDay(Date.now());
+function isToday({ startTime }) {
+  return startTime > today;
+}
+
+function mapStateToProps({ intervals: { items, timestamp }, userSettings }) {
+  const notes = items
+    .map((item) => item.note)
+    .filter((note) => note);
 
   return {
-    timestamp: intervals.timestamp,
-    intervals: intervalList,
-    todaysIntervals: intervalList.filter(isComplete).filter(({ startTime }) => isToday(new Date(startTime))),
-    activeInterval: intervalList.find(isActive),
+    timestamp,
+    intervals: items,
+    todaysIntervals: items.filter(isToday).filter(isComplete),
+    activeInterval: items.find(isActive),
     userSettings,
-    notes: [...new Set(notes)]
+    notes
   };
 }
 

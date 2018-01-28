@@ -1,0 +1,2860 @@
+{
+  "intervals": {
+    "-L-AYC2MNSsehnsdK5Ez": {
+      "createdAt": 1512022266153,
+      "endTime": 1512039615180,
+      "startTime": 1512022266149,
+      "updatedAt": 1512039615199,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-L-8JCpTBdV8Wj70m2OM": {
+      "createdAt": 1511984782788,
+      "endTime": 1511988365314,
+      "note": "houdini",
+      "startTime": 1511984782785,
+      "updatedAt": 1513715885676,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-L-6dOMzUaPT-ZVyE8bf": {
+      "createdAt": 1511956780624,
+      "endTime": 1511969231520,
+      "startTime": 1511956780610,
+      "updatedAt": 1511969231522,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-L-5oNUzu_A2ocM0y7H7": {
+      "createdAt": 1511942883417,
+      "endTime": 1511950239937,
+      "note": "",
+      "startTime": 1511942883409,
+      "updatedAt": 1511956844363,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-L-1ib2lqvtjThhmQCLm": {
+      "createdAt": 1511874261286,
+      "endTime": 1511886601725,
+      "note": "",
+      "startTime": 1511870661264,
+      "updatedAt": 1511969144558,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-L-0c_5UYzaWxfpNJKJ3": {
+      "createdAt": 1511855903216,
+      "endTime": 1511863922759,
+      "startTime": 1511855903188,
+      "updatedAt": 1511863922782,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kzx7HOYSgisn3W19CI5": {
+      "createdAt": 1511780329064,
+      "endTime": 1511792243751,
+      "startTime": 1511780329050,
+      "updatedAt": 1511792243763,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kzw72W5sYrsudjaHpIW": {
+      "createdAt": 1511763490960,
+      "endTime": 1511778149007,
+      "startTime": 1511763490956,
+      "updatedAt": 1511778149022,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KzfM-25_hqDFhnulzCl": {
+      "createdAt": 1511481977515,
+      "endTime": 1511438419984,
+      "note": "mobtimer",
+      "startTime": 1511427617512,
+      "updatedAt": 1511482037214,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kz_wty9TdN6UgKPjqBl": {
+      "createdAt": 1511391469542,
+      "endTime": 1511370951403,
+      "note": "Julkalender",
+      "startTime": 1511362849525,
+      "updatedAt": 1511391509595,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KzYcCNOLZ6fQjBZIpTy": {
+      "createdAt": 1511352489736,
+      "endTime": 1511356820167,
+      "note": "vobba",
+      "startTime": 1511352489733,
+      "updatedAt": 1511356820176,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KzXlGY5mAUqUOIVrOiq": {
+      "createdAt": 1511338088857,
+      "endTime": 1511343711228,
+      "startTime": 1511338088843,
+      "updatedAt": 1511343711231,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KzTULSUAZmtRaFCPI4z": {
+      "createdAt": 1511266281400,
+      "endTime": 1511274736123,
+      "note": "",
+      "startTime": 1511266221398,
+      "updatedAt": 1511274736127,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KzSarJ93ob8O8abeFZv": {
+      "createdAt": 1511251473780,
+      "endTime": 1511259680699,
+      "note": "",
+      "startTime": 1511251473776,
+      "updatedAt": 1511266308849,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KzN0nsmz-XB68XpKGT-": {
+      "createdAt": 1511157874331,
+      "endTime": 1511176964411,
+      "startTime": 1511157874327,
+      "updatedAt": 1511176964419,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kz8liRzmWBKhpPL4zQm": {
+      "createdAt": 1510918776608,
+      "endTime": 1510932032608,
+      "note": "",
+      "startTime": 1510918776593,
+      "updatedAt": 1511158798612,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kz7wpZzmcJRcKLplluE": {
+      "createdAt": 1510904912297,
+      "endTime": 1510917123103,
+      "startTime": 1510904912289,
+      "updatedAt": 1510917123122,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kz3_NjN5Mtjc2HAv9rb": {
+      "createdAt": 1510831655913,
+      "endTime": 1510841518645,
+      "note": "",
+      "startTime": 1510831655907,
+      "updatedAt": 1510851145073,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kz2TptQyyuvIQzqTAHv": {
+      "createdAt": 1510813163241,
+      "endTime": 1510830324682,
+      "note": "",
+      "startTime": 1510813163233,
+      "updatedAt": 1510831655865,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KyyGpgfKrsqeH9TKaj_": {
+      "createdAt": 1510725868392,
+      "endTime": 1510752952378,
+      "startTime": 1510725868384,
+      "updatedAt": 1510752952383,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KywJsmRiiK7QPQW1-ED": {
+      "createdAt": 1510693104049,
+      "endTime": 1510700199955,
+      "note": "SimpleDateInput",
+      "startTime": 1510693104045,
+      "updatedAt": 1510700226028,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KyuJ0FdHTVJ8VBbPsdm": {
+      "createdAt": 1510659331357,
+      "endTime": 1510672682023,
+      "startTime": 1510659331336,
+      "updatedAt": 1510672682042,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KytYJCLdafOlx8MD1Xz": {
+      "createdAt": 1510646563704,
+      "endTime": 1510656712584,
+      "startTime": 1510646563699,
+      "updatedAt": 1510656712618,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KypGhQ1BJ-KSVZ8t8DU": {
+      "createdAt": 1510574839547,
+      "endTime": 1510582243848,
+      "note": "",
+      "startTime": 1510573819537,
+      "updatedAt": 1510582243864,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KynxlompvhHPcB4RttB": {
+      "createdAt": 1510552837486,
+      "endTime": 1510567232311,
+      "startTime": 1510552837469,
+      "updatedAt": 1510573307015,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KygxwEnCYbm3zo6R1vK": {
+      "createdAt": 1510435437104,
+      "endTime": 1510241048573,
+      "notWork": true,
+      "note": "øredev",
+      "startTime": 1510218057101,
+      "updatedAt": 1510435469215,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KygxitRXQ4Bg3cAihpK": {
+      "createdAt": 1510435382424,
+      "endTime": 1510327460547,
+      "notWork": true,
+      "note": "øredev",
+      "startTime": 1510304402420,
+      "updatedAt": 1510435429451,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KyfgZARC0WZ2rrcnjAf": {
+      "createdAt": 1510414105272,
+      "endTime": 1510232446185,
+      "startTime": 1510218025270,
+      "updatedAt": 1510414154004,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KyR2QGC6NaTCfq_Nz59": {
+      "createdAt": 1510151667797,
+      "endTime": 1510164054410,
+      "note": "Tågjobb",
+      "startTime": 1510151667793,
+      "updatedAt": 1510166617151,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KyQuaQ5-Hronq5n_c4o": {
+      "createdAt": 1510149351414,
+      "endTime": 1510149352130,
+      "note": "Prepiad",
+      "startTime": 1510138551407,
+      "updatedAt": 1510166625396,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KyPVf0xm_2CLIE6XXMz": {
+      "createdAt": 1510125781067,
+      "endTime": 1510136373369,
+      "note": "Prepaid",
+      "startTime": 1510121701064,
+      "updatedAt": 1510166631407,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KyNWS9kfkFNK4I8WRvO": {
+      "createdAt": 1510092428575,
+      "endTime": 1510097771614,
+      "startTime": 1510092428571,
+      "updatedAt": 1510097771617,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KyLgABitKa9bF9EqjTU": {
+      "createdAt": 1510061682417,
+      "endTime": 1510067812611,
+      "note": "vobba",
+      "startTime": 1510061682412,
+      "updatedAt": 1510067817674,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KyKhD4kayd9Y17qNaMk": {
+      "createdAt": 1510045179147,
+      "endTime": 1510051765782,
+      "note": "Vobba",
+      "startTime": 1510045179144,
+      "updatedAt": 1510051765786,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KyHgqhZGsu1hBxkKZ-h": {
+      "createdAt": 1509994752895,
+      "endTime": 1510002972109,
+      "startTime": 1509994752891,
+      "updatedAt": 1510002972111,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KyHgiTpWrNhYldbWHeq": {
+      "createdAt": 1509994719185,
+      "endTime": 1509981882022,
+      "notWork": true,
+      "note": "VAB",
+      "startTime": 1509958839180,
+      "updatedAt": 1509994741899,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Ky-p7mMK62LNpMdYcVi": {
+      "createdAt": 1509694934951,
+      "endTime": 1509720315147,
+      "startTime": 1509694934946,
+      "updatedAt": 1509720315151,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KxyaOGO1bIIPGV41ZoK": {
+      "createdAt": 1509657515181,
+      "endTime": 1509636277082,
+      "notWork": true,
+      "note": "VAB",
+      "startTime": 1509613235174,
+      "updatedAt": 1509658988651,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KxrHlQn5m4esvIu_v7b": {
+      "createdAt": 1509534930570,
+      "endTime": 1509547661545,
+      "startTime": 1509534930566,
+      "updatedAt": 1509547661546,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kxq9xYJcJm1Eba-yW3D": {
+      "createdAt": 1509516106027,
+      "endTime": 1509533231797,
+      "startTime": 1509516106024,
+      "updatedAt": 1509533231799,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KxmGS1Mwo1q35D22UvC": {
+      "createdAt": 1509450698881,
+      "endTime": 1509462931226,
+      "startTime": 1509450698874,
+      "updatedAt": 1509462931226,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KxlUgVIkzx-qXZnOvvl": {
+      "createdAt": 1509437655141,
+      "endTime": 1509446832352,
+      "note": "",
+      "startTime": 1509437655132,
+      "updatedAt": 1509449600417,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kxgy2P1YT0ZCDVKkREr": {
+      "createdAt": 1509361727003,
+      "endTime": 1509372912537,
+      "startTime": 1509361727001,
+      "updatedAt": 1509461282660,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kxfu-e_nyD2oIjwTYTT": {
+      "createdAt": 1509343890161,
+      "endTime": 1509359789439,
+      "startTime": 1509343890157,
+      "updatedAt": 1509359789440,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KxSYYtsEpnI0Wqr_C_m": {
+      "createdAt": 1509103124197,
+      "endTime": 1509113416041,
+      "startTime": 1509103124187,
+      "updatedAt": 1509113416042,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KxREr7_OlOUKd6KGzEs": {
+      "createdAt": 1509081182842,
+      "endTime": 1509098451518,
+      "note": "",
+      "startTime": 1509081182836,
+      "updatedAt": 1509103137412,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KxOvnPOQj5gf9TxWId7": {
+      "createdAt": 1509042376243,
+      "endTime": 1509050564535,
+      "startTime": 1509042376241,
+      "updatedAt": 1509050564536,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KxMVBossvkwV9EmqMjY": {
+      "createdAt": 1509001579909,
+      "endTime": 1509023677225,
+      "startTime": 1509001579902,
+      "updatedAt": 1509023677226,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KxJrZH-r0rw19wp1sYu": {
+      "createdAt": 1508957375982,
+      "endTime": 1508964236596,
+      "startTime": 1508957375981,
+      "updatedAt": 1508964236596,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KxI0NnFzq67LrRUMrC8": {
+      "createdAt": 1508926393591,
+      "endTime": 1508937545197,
+      "startTime": 1508926393587,
+      "updatedAt": 1508937545199,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KxHNVHsfHRaYXVfjsyr": {
+      "createdAt": 1508915676382,
+      "endTime": 1508924428376,
+      "note": "",
+      "startTime": 1508914836378,
+      "updatedAt": 1508924428378,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kx8Oi2-razvpi8oalKF": {
+      "createdAt": 1508764999967,
+      "endTime": 1508765001571,
+      "startTime": 1508752459949,
+      "updatedAt": 1508765026972,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kx6ZyI30Jgr7-eWCAhL": {
+      "createdAt": 1508734395638,
+      "endTime": 1508750684148,
+      "startTime": 1508734395630,
+      "updatedAt": 1508750684149,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KwtTWhJF8AJOsXXzd5r": {
+      "createdAt": 1508497824746,
+      "endTime": 1508505326164,
+      "note": "",
+      "startTime": 1508497824742,
+      "updatedAt": 1508507435647,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KwsX7oyaOINY1EOnuea": {
+      "createdAt": 1508481994486,
+      "endTime": 1508493607358,
+      "startTime": 1508481994481,
+      "updatedAt": 1508493607359,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kwob6tsf2RBahNhPn5D": {
+      "createdAt": 1508416193662,
+      "endTime": 1508419036436,
+      "note": "",
+      "startTime": 1508409593652,
+      "updatedAt": 1508419036440,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kwo64N62_guysZy3Ixv": {
+      "createdAt": 1508407793213,
+      "endTime": 1508407794710,
+      "startTime": 1508395553210,
+      "updatedAt": 1508407807386,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KwjjFfHItZQQWNAIQhi": {
+      "createdAt": 1508334439218,
+      "endTime": 1508332521516,
+      "note": "",
+      "startTime": 1508321539208,
+      "updatedAt": 1508334469596,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kwhwvf2ptLs-WyvWGWV": {
+      "createdAt": 1508304468771,
+      "endTime": 1508319767019,
+      "startTime": 1508304468766,
+      "updatedAt": 1508319767021,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kwd4UlABy8KX070naD5": {
+      "createdAt": 1508222828838,
+      "endTime": 1508251937517,
+      "startTime": 1508222828832,
+      "updatedAt": 1508251937520,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KwKN0uUtsngI--DSqU0": {
+      "createdAt": 1507892141919,
+      "endTime": 1507900556272,
+      "startTime": 1507892141898,
+      "updatedAt": 1507900556274,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KwKCWXjTBYcj9f9Bvpz": {
+      "createdAt": 1507889387867,
+      "endTime": 1507889388560,
+      "startTime": 1507878587863,
+      "updatedAt": 1507891393876,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KwFV_wcBm07pBbYKqaY": {
+      "createdAt": 1507810500480,
+      "endTime": 1507810500916,
+      "startTime": 1507803300469,
+      "updatedAt": 1507810510536,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KwDvT36w-mi_m_R3nj9": {
+      "createdAt": 1507783991636,
+      "endTime": 1507802230950,
+      "startTime": 1507783991631,
+      "updatedAt": 1507802230953,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KwA0_ym1C9N3BUm_I4R": {
+      "createdAt": 1507718488172,
+      "endTime": 1507732458307,
+      "startTime": 1507718488164,
+      "updatedAt": 1507732458310,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kw9AZwu3oRTOOO15GSU": {
+      "createdAt": 1507704328066,
+      "endTime": 1507716309277,
+      "startTime": 1507704328035,
+      "updatedAt": 1507716309282,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kw4uMWWkQtadROpz0ik": {
+      "createdAt": 1507632707803,
+      "endTime": 1507642256858,
+      "startTime": 1507632707801,
+      "updatedAt": 1507642256859,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kw4cHrmvk48KeVnbfFa": {
+      "createdAt": 1507627970126,
+      "endTime": 1507627982150,
+      "note": "",
+      "startTime": 1507618850121,
+      "updatedAt": 1507627982150,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kw-ax2FHYd-mLO8CAq_": {
+      "createdAt": 1507543732468,
+      "endTime": 1507554383979,
+      "startTime": 1507543732464,
+      "updatedAt": 1507554383982,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kw-1vI2_fN0PXyf3zVV": {
+      "createdAt": 1507534228663,
+      "endTime": 1507541682694,
+      "startTime": 1507534228663,
+      "updatedAt": 1507541682698,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kvm1mTJAlFsAl5b4nIz": {
+      "createdAt": 1507299372335,
+      "endTime": 1507299372499,
+      "startTime": 1507299372325,
+      "updatedAt": 1507299372509,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KvkWJyBG_BhTWOhGsIi": {
+      "createdAt": 1507273823502,
+      "endTime": 1507299368808,
+      "startTime": 1507273823499,
+      "updatedAt": 1507299368813,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KvfNdc4DgOnDSmuM7GW": {
+      "createdAt": 1507187662641,
+      "endTime": 1507209656007,
+      "note": "",
+      "startTime": 1507187122638,
+      "updatedAt": 1507209656010,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KvauYyolDU7PVg5gEQU": {
+      "createdAt": 1507112666196,
+      "endTime": 1507130772980,
+      "startTime": 1507112666194,
+      "updatedAt": 1507130772983,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KvaDGUdjepxioo1-Csc": {
+      "createdAt": 1507101056106,
+      "endTime": 1507109427460,
+      "startTime": 1507101056084,
+      "updatedAt": 1507109427462,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KvWh_kluoO3dv4bDlMs": {
+      "createdAt": 1507025379397,
+      "endTime": 1507036893343,
+      "note": "",
+      "startTime": 1507025379389,
+      "updatedAt": 1507038700820,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KvW1-g087WyopI0WDFw": {
+      "createdAt": 1507013954377,
+      "endTime": 1507023937174,
+      "startTime": 1507013954373,
+      "updatedAt": 1507023937180,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KvSX_qcIa-4ogtFhgDu": {
+      "createdAt": 1506955387224,
+      "endTime": 1506954608527,
+      "note": "",
+      "startTime": 1506939007223,
+      "updatedAt": 1506955452245,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KvQUhVKaJVzAyC2l6i0": {
+      "createdAt": 1506921077587,
+      "endTime": 1506937051634,
+      "startTime": 1506921077584,
+      "updatedAt": 1506937051638,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KvCggJUVoy08b-DocOE": {
+      "createdAt": 1506689597236,
+      "endTime": 1506692512022,
+      "note": "",
+      "startTime": 1506681917236,
+      "updatedAt": 1506933561988,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KvCgcj5uZFLARA5vXVC": {
+      "createdAt": 1506689582555,
+      "endTime": 1506679443012,
+      "note": "",
+      "startTime": 1506668462555,
+      "updatedAt": 1506689597173,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kv70UXzAXps5pSO9JHd": {
+      "createdAt": 1506594388240,
+      "endTime": 1506604452260,
+      "startTime": 1506594388236,
+      "updatedAt": 1506604452264,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kv6K-3D0e8-uG_YExUD": {
+      "createdAt": 1506582697076,
+      "endTime": 1506590785814,
+      "note": "",
+      "startTime": 1506582697075,
+      "updatedAt": 1506594420769,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kv2LAWBm0mgH_HTd4ON": {
+      "createdAt": 1506515910745,
+      "endTime": 1506515911318,
+      "startTime": 1506506430743,
+      "updatedAt": 1506515920352,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kv0dm53j6d3Mywcs8jD": {
+      "createdAt": 1506487485869,
+      "endTime": 1506505006617,
+      "startTime": 1506487485868,
+      "updatedAt": 1506505006621,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kuz0iwElPVoOHDbqnWp": {
+      "createdAt": 1506443441767,
+      "endTime": 1506451317200,
+      "startTime": 1506443441766,
+      "updatedAt": 1506451317201,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KuyQiM4VrGKCx745MLd": {
+      "createdAt": 1506433468427,
+      "endTime": 1506435011721,
+      "note": "",
+      "startTime": 1506433468425,
+      "updatedAt": 1506443441681,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kuxz1bX4J29tkAdP8Zv": {
+      "createdAt": 1506425958723,
+      "endTime": 1506428639648,
+      "startTime": 1506425958722,
+      "updatedAt": 1506428639649,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kux69Y0JqpS3GMat9bX": {
+      "createdAt": 1506411301930,
+      "endTime": 1506416708566,
+      "startTime": 1506411301927,
+      "updatedAt": 1506416708568,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KusVLyXJkEr5ARApzDO": {
+      "createdAt": 1506334044172,
+      "endTime": 1506349417449,
+      "startTime": 1506334044165,
+      "updatedAt": 1506349417453,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KurV1MCFBJhvy4PrB7z": {
+      "createdAt": 1506317182518,
+      "endTime": 1506333053468,
+      "startTime": 1506317182506,
+      "updatedAt": 1506333053482,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kubx-BgBIgjKg1h84cB": {
+      "createdAt": 1506056324813,
+      "endTime": 1506077151018,
+      "note": "",
+      "startTime": 1506056324812,
+      "updatedAt": 1506078993869,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KuYv2cZYGwbyeVP-JaP": {
+      "createdAt": 1505988721243,
+      "endTime": 1505999897163,
+      "startTime": 1505988721215,
+      "updatedAt": 1505999897186,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KuYBc3Ah8KZh8o_0JyA": {
+      "createdAt": 1505976549717,
+      "endTime": 1505987460213,
+      "startTime": 1505976549706,
+      "updatedAt": 1505987460218,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KuTxX89yHLJtWg5D1kV": {
+      "createdAt": 1505905484556,
+      "endTime": 1505910532595,
+      "note": "",
+      "startTime": 1505902244527,
+      "updatedAt": 1505910893151,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KuSe0QaSkaLZtgdkYpv": {
+      "createdAt": 1505883590957,
+      "endTime": 1505900246902,
+      "startTime": 1505883590956,
+      "updatedAt": 1505900246911,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KuOYvNp4mX6nWJY1fpv": {
+      "createdAt": 1505814884896,
+      "endTime": 1505827847691,
+      "startTime": 1505814884896,
+      "updatedAt": 1505827847692,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KuNxYZpSC12NlK_9tUY": {
+      "createdAt": 1505804826007,
+      "endTime": 1505813571565,
+      "startTime": 1505804826003,
+      "updatedAt": 1505813571566,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KuJWGIgM9jX3yhdkvYX": {
+      "createdAt": 1505730303346,
+      "endTime": 1505742175757,
+      "startTime": 1505730303332,
+      "updatedAt": 1505742175760,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KuIWTAPqeYIERRh3rPT": {
+      "createdAt": 1505713578709,
+      "endTime": 1505727719081,
+      "note": "",
+      "startTime": 1505712618708,
+      "updatedAt": 1505727719084,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Ku6m-byB_NHesJVH94f": {
+      "createdAt": 1505516587743,
+      "endTime": 1505395450031,
+      "notWork": true,
+      "note": "",
+      "startTime": 1505372407743,
+      "updatedAt": 1506811013076,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Ku45tdhiWhImPznAKiU": {
+      "createdAt": 1505471727576,
+      "endTime": 1505480412535,
+      "notWork": false,
+      "note": "",
+      "startTime": 1505471427576,
+      "updatedAt": 1506812853524,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Ku2zckQTxvQ1eeTCEwJ": {
+      "createdAt": 1505453046227,
+      "endTime": 1505469627065,
+      "notWork": false,
+      "note": "",
+      "startTime": 1505452506226,
+      "updatedAt": 1505655276375,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KtuwoF5Kd1k9owT8Jh6": {
+      "createdAt": 1505301314568,
+      "endTime": 1505304014589,
+      "note": "",
+      "startTime": 1505300414568,
+      "updatedAt": 1505338348184,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KttoQbo_D1lPVmSR_pJ": {
+      "createdAt": 1505282339272,
+      "endTime": 1505294657951,
+      "note": "",
+      "startTime": 1505280059271,
+      "updatedAt": 1505294657952,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KtsB8zL_Dh4oTOgJ3sA": {
+      "createdAt": 1505255006395,
+      "endTime": 1505228127675,
+      "note": "tisdag em",
+      "startTime": 1505212826392,
+      "updatedAt": 1505278704343,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KtsA03OqXa_pptQkV2V": {
+      "createdAt": 1505254707733,
+      "endTime": 1505208625166,
+      "note": "tisdag fm",
+      "startTime": 1505198727730,
+      "updatedAt": 1505278819894,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KtkvvyDztBT7KmmTT8v": {
+      "createdAt": 1505133311392,
+      "endTime": 1505133058443,
+      "note": "måndag",
+      "startTime": 1505113211392,
+      "updatedAt": 1505514110136,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KtL4nvqI4kfDJz_irnh": {
+      "createdAt": 1504682917752,
+      "endTime": 1504687099727,
+      "note": "",
+      "startTime": 1504675537752,
+      "updatedAt": 1505003971998,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KtGY8ngxoXtdCvJTiUQ": {
+      "createdAt": 1504606709312,
+      "endTime": 1504612843320,
+      "note": "",
+      "startTime": 1504606529312,
+      "updatedAt": 1505003488463,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KtFXvO6EtDTIizDC3Sa": {
+      "createdAt": 1504589884954,
+      "endTime": 1504604727672,
+      "note": "",
+      "startTime": 1504589404954,
+      "updatedAt": 1505004718918,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KtBVKkcqrIelAuuTqst": {
+      "createdAt": 1504522099736,
+      "endTime": 1504536244904,
+      "note": "",
+      "startTime": 1504519219736,
+      "updatedAt": 1505003318001,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KtAq91i1Rdl6A4n8Sqa": {
+      "createdAt": 1504511041775,
+      "endTime": 1504517438732,
+      "note": "",
+      "startTime": 1504511041775,
+      "updatedAt": 1505004552067,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Kt4ABiKRIbO-z1tVo-t": {
+      "createdAt": 1504399117283,
+      "endTime": 1504399119231,
+      "note": "",
+      "startTime": 1504399117283,
+      "updatedAt": 1505003574070,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KsxKPqeWw0fVHOTMlQU": {
+      "createdAt": 1504267578866,
+      "endTime": 1504278024489,
+      "note": "",
+      "startTime": 1504261818866,
+      "updatedAt": 1504278024490,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KswPjO9Utd9T1lD1_mp": {
+      "createdAt": 1504252196502,
+      "endTime": 1504259646248,
+      "note": "",
+      "startTime": 1504251056502,
+      "updatedAt": 1505004645334,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-Ksqr0_X1nKqtHKfErps": {
+      "createdAt": 1504158946487,
+      "endTime": 1504216844702,
+      "note": "",
+      "startTime": 1504158346487,
+      "updatedAt": 1504250772728,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KanktQpLAIaIXfsIbr4": {
+      "createdAt": 1484779657076,
+      "endTime": 1504158943262,
+      "startTime": 1484779657076,
+      "updatedAt": 1504158943262,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KZ22EAUjonidVw_sJmh": {
+      "createdAt": 1481814897412,
+      "endTime": 1481814897908,
+      "note": "",
+      "startTime": 1481801457412,
+      "updatedAt": 1481814918521,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KZ22DY35VdIhribKm7Y": {
+      "createdAt": 1481814894825,
+      "endTime": 1481797856760,
+      "note": "",
+      "startTime": 1481784654825,
+      "updatedAt": 1481814914441,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KYxJ9lwokIpd6Z5xdBh": {
+      "createdAt": 1481718672556,
+      "endTime": 1481730174663,
+      "note": "",
+      "startTime": 1481712012556,
+      "updatedAt": 1481730174663,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KYw1MUM6yBseN5_2hsx": {
+      "createdAt": 1481697228878,
+      "endTime": 1481710512397,
+      "note": "",
+      "startTime": 1481697228878,
+      "updatedAt": 1481718677399,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KYrxZNQRd56Q-3RG1HM": {
+      "createdAt": 1481628862031,
+      "endTime": 1481644784337,
+      "note": "",
+      "startTime": 1481625622031,
+      "updatedAt": 1481644784341,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KYr5EyIAfF7uXoP3jdM": {
+      "createdAt": 1481614363787,
+      "endTime": 1481623821696,
+      "note": "",
+      "startTime": 1481614363787,
+      "updatedAt": 1481628872320,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KYnZbQhIxfMbWJRE__D": {
+      "createdAt": 1481555211753,
+      "endTime": 1481558926267,
+      "startTime": 1481555211753,
+      "updatedAt": 1481558926269,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KYmchzFpuGFxi3nVFez": {
+      "createdAt": 1481539510292,
+      "endTime": 1481553051585,
+      "note": "",
+      "startTime": 1481539510292,
+      "updatedAt": 1481555218000,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KYlmuRrygUDWQMa_NYf": {
+      "createdAt": 1481525405562,
+      "endTime": 1481537410100,
+      "note": "",
+      "startTime": 1481525105562,
+      "updatedAt": 1481539517623,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KYU7yj2vPDhQezxYF9z": {
+      "createdAt": 1481212423173,
+      "endTime": 1481212423500,
+      "note": "",
+      "startTime": 1481196043173,
+      "updatedAt": 1481212431296,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KYU7wk0hBzxhHyB7Xo7": {
+      "createdAt": 1481212415041,
+      "endTime": 1481193642813,
+      "note": "",
+      "startTime": 1481180435041,
+      "updatedAt": 1481212427980,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KYP0sWrBsoM13pJyWfX": {
+      "createdAt": 1481126677418,
+      "endTime": 1481126677650,
+      "note": "",
+      "startTime": 1481112037418,
+      "updatedAt": 1481126689048,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KYN7qvXl8jODYuyeKJU": {
+      "createdAt": 1481094950814,
+      "endTime": 1481108736536,
+      "note": "",
+      "startTime": 1481093150814,
+      "updatedAt": 1481126684915,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KYIosaMsHXqaJEsMWRj": {
+      "createdAt": 1481022605917,
+      "endTime": 1481034354021,
+      "startTime": 1481022605917,
+      "updatedAt": 1481034354023,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KYHql49k6CyHT8k1sLd": {
+      "createdAt": 1481006322188,
+      "endTime": 1481019905739,
+      "note": "",
+      "startTime": 1481006142188,
+      "updatedAt": 1481022611951,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KYEGR2P_Unx_GNOVcrG": {
+      "createdAt": 1480946204925,
+      "endTime": 1480953843137,
+      "note": "",
+      "startTime": 1480938644925,
+      "updatedAt": 1480953843138,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KYEGQp9qsazznHXd17A": {
+      "createdAt": 1480946204012,
+      "endTime": 1480935044493,
+      "note": "",
+      "startTime": 1480920344012,
+      "updatedAt": 1480946217029,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KXuKxxdz4viX_UzYTKU": {
+      "createdAt": 1480595070624,
+      "endTime": 1480609285752,
+      "note": "",
+      "startTime": 1480594830624,
+      "updatedAt": 1480609285752,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KXt6qgth96h8ayebYjD": {
+      "createdAt": 1480574593898,
+      "endTime": 1480588230458,
+      "note": "",
+      "startTime": 1480574593898,
+      "updatedAt": 1480595077231,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KXpvctKL6Ex3aSWIF_D": {
+      "createdAt": 1480521060018,
+      "endTime": 1480521060555,
+      "note": "",
+      "startTime": 1480505400018,
+      "updatedAt": 1480521069473,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KXnxn5dhQhjFVOcAUST": {
+      "createdAt": 1480488071655,
+      "endTime": 1480500659228,
+      "note": "",
+      "startTime": 1480488071655,
+      "updatedAt": 1480521065011,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KXk2yVO7pCFkv_d9v-u": {
+      "createdAt": 1480422581796,
+      "endTime": 1480433753417,
+      "startTime": 1480422581796,
+      "updatedAt": 1480433753418,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KXk2wvUpoNWeP760eiZ": {
+      "createdAt": 1480422575338,
+      "endTime": 1480414841284,
+      "note": "",
+      "startTime": 1480400135338,
+      "updatedAt": 1480422590210,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KWlxGotP-uv6VCZ28hA": {
+      "createdAt": 1479380639733,
+      "endTime": 1479391448706,
+      "note": "",
+      "startTime": 1479380459733,
+      "updatedAt": 1479391448708,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KWl-4zIwPVoYwHRGu2C": {
+      "createdAt": 1479364599835,
+      "endTime": 1479379257787,
+      "note": "",
+      "startTime": 1479364599835,
+      "updatedAt": 1479380644049,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KWhgIFnH_eAMVrp212d": {
+      "createdAt": 1479309079762,
+      "endTime": 1479309080268,
+      "note": "",
+      "startTime": 1479294679762,
+      "updatedAt": 1479309112582,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KWhgHRo0QR4l97v5l7V": {
+      "createdAt": 1479309076434,
+      "endTime": 1479309018323,
+      "note": "",
+      "startTime": 1479297616434,
+      "updatedAt": 1479309148402,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KWbYCyScZk7gEBwOTid": {
+      "createdAt": 1479206035454,
+      "endTime": 1479222419779,
+      "startTime": 1479206035454,
+      "updatedAt": 1479222419780,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KWaewmMmfQwZAFsHT40": {
+      "createdAt": 1479191284483,
+      "endTime": 1479204645290,
+      "startTime": 1479191284483,
+      "updatedAt": 1479204645291,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KWXmk90cpX6Y-yNvaPs": {
+      "createdAt": 1479126221630,
+      "endTime": 1479135919833,
+      "startTime": 1479126221630,
+      "updatedAt": 1479135919833,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KWWakDifTN2ESpOCpN7": {
+      "createdAt": 1479106316705,
+      "endTime": 1479118868164,
+      "note": "",
+      "startTime": 1479105056705,
+      "updatedAt": 1479118868166,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KWDkpQtjJt6RXY2QAtq": {
+      "createdAt": 1478790174672,
+      "endTime": 1478790174931,
+      "note": "",
+      "startTime": 1478773854672,
+      "updatedAt": 1478790185570,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KWC-DufutPeZ0o4GhFi": {
+      "createdAt": 1478760656621,
+      "endTime": 1478772653968,
+      "note": "",
+      "startTime": 1478760656621,
+      "updatedAt": 1478790179264,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KW7t6j_dgo7xRJF6JDK": {
+      "createdAt": 1478691683382,
+      "endTime": 1478707283529,
+      "note": "",
+      "startTime": 1478691023382,
+      "updatedAt": 1478707283529,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KW71gVQ3q4lXD15wQp0": {
+      "createdAt": 1478677419826,
+      "endTime": 1478686522977,
+      "note": "",
+      "startTime": 1478676639826,
+      "updatedAt": 1478691689454,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KW3Vjk0q0X0HgOxbF5I": {
+      "createdAt": 1478618184815,
+      "endTime": 1478618185131,
+      "note": "",
+      "startTime": 1478601324815,
+      "updatedAt": 1478618200443,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KW1g4rs-BNszf9FqCTT": {
+      "createdAt": 1478587604658,
+      "endTime": 1478600124525,
+      "note": "",
+      "startTime": 1478587604658,
+      "updatedAt": 1478618191540,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KVykf1TjeWU4b8c89h8": {
+      "createdAt": 1478521696527,
+      "endTime": 1478532434025,
+      "note": "",
+      "startTime": 1478520616527,
+      "updatedAt": 1478532434030,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KVxZKLsl5Gxq6s7NhaD": {
+      "createdAt": 1478501684731,
+      "endTime": 1478514616354,
+      "note": "",
+      "startTime": 1478501684731,
+      "updatedAt": 1478521701947,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KVeHOdCT4O-EA1dlDR7": {
+      "createdAt": 1478178217036,
+      "endTime": 1478185713147,
+      "startTime": 1478178217036,
+      "updatedAt": 1478185713148,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KVd3tVEqclemc_HWQVt": {
+      "createdAt": 1478157903621,
+      "endTime": 1478174251155,
+      "note": "",
+      "startTime": 1478154603621,
+      "updatedAt": 1478174251157,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KVZeFUKZVJ7nnGgk3zM": {
+      "createdAt": 1478083807257,
+      "endTime": 1478098871317,
+      "note": "",
+      "startTime": 1478082907257,
+      "updatedAt": 1478098871319,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KVYoq-KVpeCLSnCmNTV": {
+      "createdAt": 1478069805145,
+      "endTime": 1478081406675,
+      "note": "",
+      "startTime": 1478069445145,
+      "updatedAt": 1478083826679,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KVURc0IpM55vdmlSooS": {
+      "createdAt": 1477996347523,
+      "endTime": 1478013550776,
+      "startTime": 1477996347523,
+      "updatedAt": 1478013550782,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KVTYq73l5r32GP-_ogV": {
+      "createdAt": 1477981466026,
+      "endTime": 1477995364852,
+      "note": "",
+      "startTime": 1477981226026,
+      "updatedAt": 1477995364856,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KVPPnCOZwXf3LVhPEJ1": {
+      "createdAt": 1477911983291,
+      "endTime": 1477927219035,
+      "note": "",
+      "startTime": 1477911623291,
+      "updatedAt": 1477927219054,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KVOP89BgRM8kbBG3ZF5": {
+      "createdAt": 1477895049500,
+      "endTime": 1477908528728,
+      "startTime": 1477895049500,
+      "updatedAt": 1477908528729,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KV4VPrMuXwusOiBbRTC": {
+      "createdAt": 1477561135183,
+      "endTime": 1477574794166,
+      "note": "",
+      "startTime": 1477560655183,
+      "updatedAt": 1477574794167,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KV3iHn8Yue2dU4Gt_mM": {
+      "createdAt": 1477547994877,
+      "endTime": 1477559295630,
+      "startTime": 1477547994877,
+      "updatedAt": 1477559295632,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KV-cY-4tN5RHlEceRce": {
+      "createdAt": 1477479379393,
+      "endTime": 1477488604206,
+      "note": "",
+      "startTime": 1477477819393,
+      "updatedAt": 1477488604207,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KV-CjgKqTaHtO0K-oes": {
+      "createdAt": 1477472357154,
+      "endTime": 1477473363035,
+      "note": "",
+      "startTime": 1477463417154,
+      "updatedAt": 1477473363042,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KUvmBZYC3-mDhcOuRRg": {
+      "createdAt": 1477398022521,
+      "endTime": 1477402804367,
+      "note": "",
+      "startTime": 1477398022521,
+      "updatedAt": 1477425333009,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KUuMPMMHoerSILZzVag": {
+      "createdAt": 1477374224054,
+      "endTime": 1477385422097,
+      "note": "",
+      "startTime": 1477374044054,
+      "updatedAt": 1477398032607,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KUq4TlfsU5KW42hYsne": {
+      "createdAt": 1477302427031,
+      "endTime": 1477325224006,
+      "note": "",
+      "startTime": 1477302007031,
+      "updatedAt": 1477325224009,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KUprxHKtYxaGKiyFYdd": {
+      "createdAt": 1477298881984,
+      "endTime": 1477301106801,
+      "note": "",
+      "startTime": 1477295281984,
+      "updatedAt": 1477302431793,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KUWSdOqhu1cGxveZjQ0": {
+      "createdAt": 1476956427958,
+      "endTime": 1476969988041,
+      "startTime": 1476956427958,
+      "updatedAt": 1476969988046,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KUWScvznDvV8quiQrpd": {
+      "createdAt": 1476956426046,
+      "endTime": 1476955227412,
+      "note": "",
+      "startTime": 1476943226046,
+      "updatedAt": 1476956436980,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KUROiUEDeoA7cRSQi-Q": {
+      "createdAt": 1476871514171,
+      "endTime": 1476885673668,
+      "startTime": 1476871514171,
+      "updatedAt": 1476885673677,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KUQSMbJP3co9Nd-Gb4h": {
+      "createdAt": 1476855694096,
+      "endTime": 1476869891379,
+      "startTime": 1476855694096,
+      "updatedAt": 1476869891379,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KUMOaPBC85KC9uxZmEJ": {
+      "createdAt": 1476787594959,
+      "endTime": 1476805742228,
+      "startTime": 1476787594959,
+      "updatedAt": 1476805742235,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KULMZo4R6vjDBKeqbU3": {
+      "createdAt": 1476770289323,
+      "endTime": 1476782116655,
+      "note": "",
+      "startTime": 1476770109323,
+      "updatedAt": 1476782116655,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KUHDOp9WbPh39fKiRZe": {
+      "createdAt": 1476700773786,
+      "endTime": 1476718014583,
+      "note": "",
+      "startTime": 1476700233786,
+      "updatedAt": 1476718014589,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KUGDO-qFgzey123PCRc": {
+      "createdAt": 1476683993219,
+      "endTime": 1476696033591,
+      "note": "",
+      "startTime": 1476683993219,
+      "updatedAt": 1476709840580,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KTxpscWCuVQ0jW_l6cE": {
+      "createdAt": 1476358802352,
+      "endTime": 1476369935719,
+      "note": "",
+      "startTime": 1476351002352,
+      "updatedAt": 1476369935719,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KTxps-McBzLvX5nKV9R": {
+      "createdAt": 1476358799777,
+      "endTime": 1476349202071,
+      "note": "",
+      "startTime": 1476338459777,
+      "updatedAt": 1476358825372,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KTsnQYpPw57ZxisyghL": {
+      "createdAt": 1476274272615,
+      "endTime": 1476285675509,
+      "note": "",
+      "startTime": 1476270012615,
+      "updatedAt": 1476285675514,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KTrXbMHXb0QGqNElJon": {
+      "createdAt": 1476253087308,
+      "endTime": 1476264612473,
+      "note": "",
+      "startTime": 1476252607308,
+      "updatedAt": 1476274277575,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KTnmOBuFoZSCneDoH8-": {
+      "createdAt": 1476190114694,
+      "endTime": 1476201090651,
+      "note": "",
+      "startTime": 1476183034694,
+      "updatedAt": 1476201090652,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KTmNhE4xFgnwOtQvC19": {
+      "createdAt": 1476166603804,
+      "endTime": 1476180034503,
+      "note": "",
+      "startTime": 1476166603804,
+      "updatedAt": 1476190120809,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KThEg1Hq-RxrIFFgeOM": {
+      "createdAt": 1476080368305,
+      "endTime": 1476111104255,
+      "startTime": 1476080368305,
+      "updatedAt": 1476111104257,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KTOo-lrFPejJEtfvNg1": {
+      "createdAt": 1475754331334,
+      "endTime": 1475754332931,
+      "note": "",
+      "startTime": 1475751031334,
+      "updatedAt": 1475754342051,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KTN_calFyie2H_gQJgi": {
+      "createdAt": 1475733788443,
+      "endTime": 1475745630333,
+      "note": "",
+      "startTime": 1475733608443,
+      "updatedAt": 1475754337514,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KTJTS9ZgRdkeAGd-mFI": {
+      "createdAt": 1475664794345,
+      "endTime": 1475679676335,
+      "note": "",
+      "startTime": 1475663414345,
+      "updatedAt": 1475679676337,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KTIMMG2S7-S1gMe8mRs": {
+      "createdAt": 1475646160625,
+      "endTime": 1475659814171,
+      "note": "",
+      "startTime": 1475646040625,
+      "updatedAt": 1475664800105,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KTEDohsON-lVGGtH76N": {
+      "createdAt": 1475576810480,
+      "endTime": 1475595288027,
+      "startTime": 1475576810480,
+      "updatedAt": 1475595288030,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KTDJLLVYjjS2EvtCIo4": {
+      "createdAt": 1475561483673,
+      "endTime": 1475573115073,
+      "startTime": 1475561483673,
+      "updatedAt": 1475573115075,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KT9vgC75Ksbu4zhUEEG": {
+      "createdAt": 1475504685988,
+      "endTime": 1475508109129,
+      "note": "",
+      "startTime": 1475504445988,
+      "updatedAt": 1475508109131,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KT8sDLyOjx01RaNaFPZ": {
+      "createdAt": 1475487016835,
+      "endTime": 1475499377160,
+      "startTime": 1475487016835,
+      "updatedAt": 1475499377163,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KT883CFutJ2vNILOUo6": {
+      "createdAt": 1475474654484,
+      "endTime": 1475485216508,
+      "note": "",
+      "startTime": 1475472614484,
+      "updatedAt": 1475487020924,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KSqCNLWg8R98Z6NfGnA": {
+      "createdAt": 1475157003909,
+      "endTime": 1475161542858,
+      "note": "",
+      "startTime": 1475150403909,
+      "updatedAt": 1475161542861,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KSoQmg-7lTLSLunG57G": {
+      "createdAt": 1475127227363,
+      "endTime": 1475146203270,
+      "note": "",
+      "startTime": 1475127047363,
+      "updatedAt": 1475157010500,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KS_s6AtmWjV_LmliE8w": {
+      "createdAt": 1474882990907,
+      "endTime": 1474898450056,
+      "note": "",
+      "startTime": 1474882810907,
+      "updatedAt": 1474898450059,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KSZyanRL-ozUof1Jkjj": {
+      "createdAt": 1474867917104,
+      "endTime": 1474880946062,
+      "note": "",
+      "startTime": 1474867857104,
+      "updatedAt": 1474880946066,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KSGImo1TB7iwyOA2Ph8": {
+      "createdAt": 1474537925988,
+      "endTime": 1474552844020,
+      "startTime": 1474537925988,
+      "updatedAt": 1474552844023,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KSFHLgclHIVA1pwn1u7": {
+      "createdAt": 1474520771454,
+      "endTime": 1474535753883,
+      "startTime": 1474520771454,
+      "updatedAt": 1474535753888,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KSBM9TqSbgIIkt-6jV7": {
+      "createdAt": 1474454923265,
+      "endTime": 1474468704469,
+      "note": "",
+      "startTime": 1474454743265,
+      "updatedAt": 1474468704470,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KSA4bxgl60gvfi956db": {
+      "createdAt": 1474433551110,
+      "endTime": 1474451897652,
+      "startTime": 1474433551110,
+      "updatedAt": 1474451897660,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KS6msADN-XsUttysNJA": {
+      "createdAt": 1474378302227,
+      "endTime": 1474381245462,
+      "note": "",
+      "startTime": 1474365642227,
+      "updatedAt": 1474381245465,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KS6mrwFETySe-zEO8ND": {
+      "createdAt": 1474378301268,
+      "endTime": 1474363241776,
+      "note": "",
+      "startTime": 1474354241268,
+      "updatedAt": 1474378350446,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KS0ucXfvI5vEiKe3q7B": {
+      "createdAt": 1474279677254,
+      "endTime": 1474295733090,
+      "note": "",
+      "startTime": 1474279257254,
+      "updatedAt": 1474295733093,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KS-tXGlACsIewPUflOA": {
+      "createdAt": 1474262612235,
+      "endTime": 1474276857010,
+      "note": "",
+      "startTime": 1474262612235,
+      "updatedAt": 1474279683732,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KRhH-zX4Ss_RlJdgDpl": {
+      "createdAt": 1473933480004,
+      "endTime": 1473950004382,
+      "startTime": 1473933480004,
+      "updatedAt": 1473950004383,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KRgJUtVUbi206kJG31J": {
+      "createdAt": 1473917353770,
+      "endTime": 1473930876642,
+      "note": "",
+      "startTime": 1473917113770,
+      "updatedAt": 1473930876645,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KRd0ivA2UjDcnzEDHCY": {
+      "createdAt": 1473862102107,
+      "endTime": 1473862103297,
+      "note": "",
+      "startTime": 1473850822107,
+      "updatedAt": 1473862115597,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KRbA1m4qOroE-d7Paqx": {
+      "createdAt": 1473830989073,
+      "endTime": 1473845421361,
+      "note": "",
+      "startTime": 1473830749073,
+      "updatedAt": 1473862110966,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KRYPPkgYgrGZfyni_G5": {
+      "createdAt": 1473767910583,
+      "endTime": 1473779497007,
+      "note": "",
+      "startTime": 1473764430583,
+      "updatedAt": 1473779497009,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KRXnBcj2S7nedWspwXk": {
+      "createdAt": 1473757632433,
+      "endTime": 1473757642467,
+      "note": "",
+      "startTime": 1473748212433,
+      "updatedAt": 1473757642467,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KRTw0rnp4QaNsJImdJi": {
+      "createdAt": 1473692835406,
+      "endTime": 1473692849421,
+      "note": "",
+      "startTime": 1473677295406,
+      "updatedAt": 1473692849421,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KRSfsUn3KpuMYlgfHIc": {
+      "createdAt": 1473671853164,
+      "endTime": 1473673716370,
+      "note": "",
+      "startTime": 1473660933164,
+      "updatedAt": 1473673716373,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KR3RnQt6LXBSQzK095R": {
+      "createdAt": 1473248443013,
+      "endTime": 1473259159322,
+      "startTime": 1473248443013,
+      "updatedAt": 1473259159324,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KR2EDVmC24wZAIfDzAh": {
+      "createdAt": 1473228109780,
+      "endTime": 1473242281430,
+      "startTime": 1473228109780,
+      "updatedAt": 1473242281431,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KQz-cgRKUdutx7Dzt8a": {
+      "createdAt": 1473157172432,
+      "endTime": 1473172663991,
+      "note": "",
+      "startTime": 1473156032432,
+      "updatedAt": 1473172663994,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KQyBv7-UhYdNacwOsJO": {
+      "createdAt": 1473143619937,
+      "endTime": 1473153758544,
+      "note": "",
+      "startTime": 1473142839937,
+      "updatedAt": 1473153758545,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KQufZHL6sGPyKhEPpGn": {
+      "createdAt": 1473084540141,
+      "endTime": 1473084550105,
+      "note": "",
+      "startTime": 1473067800141,
+      "updatedAt": 1473084550106,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KQstvbMbnwjkOfEAqoW": {
+      "createdAt": 1473054766188,
+      "endTime": 1473066540384,
+      "note": "",
+      "startTime": 1473054646188,
+      "updatedAt": 1473066540386,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KQ_6A8rfqpF2Sv4wm3F": {
+      "createdAt": 1472722678465,
+      "endTime": 1472741003199,
+      "startTime": 1472722678465,
+      "updatedAt": 1472741003202,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KQZIWy2dhfcEvnxiA2I": {
+      "createdAt": 1472709141761,
+      "endTime": 1472721358274,
+      "note": "",
+      "startTime": 1472709021761,
+      "updatedAt": 1472722681534,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KQVEekmBOXbnwolU69Y": {
+      "createdAt": 1472641019440,
+      "endTime": 1472652638159,
+      "note": "",
+      "startTime": 1472640659440,
+      "updatedAt": 1472652638160,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KQU6K377pHRWtVyX6Ns": {
+      "createdAt": 1472622057640,
+      "endTime": 1472634359121,
+      "note": "",
+      "startTime": 1472621757640,
+      "updatedAt": 1472641025433,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KQPuwu3YXtvpQ-bQp4w": {
+      "createdAt": 1472551702349,
+      "endTime": 1472571005081,
+      "startTime": 1472551702349,
+      "updatedAt": 1472571005082,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KQP0WWcj0XYZKRmTXAr": {
+      "createdAt": 1472536647883,
+      "endTime": 1472549902151,
+      "note": "",
+      "startTime": 1472536527883,
+      "updatedAt": 1472551707715,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KQLN9nieZ3VmiNNZ9km": {
+      "createdAt": 1472475475286,
+      "endTime": 1472482944149,
+      "note": "",
+      "startTime": 1472467255286,
+      "updatedAt": 1472482944152,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KQJtG2Y2a4hGFsa6kNu": {
+      "createdAt": 1472450622529,
+      "endTime": 1472461914861,
+      "note": "",
+      "startTime": 1472450442529,
+      "updatedAt": 1472475480210,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KQ0Bg9asrFPJ6CYlId_": {
+      "createdAt": 1472120144661,
+      "endTime": 1472134911294,
+      "note": "",
+      "startTime": 1472119244661,
+      "updatedAt": 1472134911298,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KQ-Nf60FyM0XRIwmH0h": {
+      "createdAt": 1472106511958,
+      "endTime": 1472115644325,
+      "note": "",
+      "startTime": 1472106031958,
+      "updatedAt": 1472120153847,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KPwv1dNucr58bOXeLF-": {
+      "createdAt": 1472048409189,
+      "endTime": 1472048409672,
+      "note": "",
+      "startTime": 1472031009189,
+      "updatedAt": 1472048415835,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KPv58d8napSewZsP8Ht": {
+      "createdAt": 1472017767071,
+      "endTime": 1472029538239,
+      "note": "",
+      "startTime": 1472017227071,
+      "updatedAt": 1472029538251,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KProcx2OwZos-IMVLrV": {
+      "createdAt": 1471962845109,
+      "endTime": 1471962845849,
+      "note": "",
+      "startTime": 1471948445109,
+      "updatedAt": 1471962850321,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KPpsS29avShU1AcrNeQ": {
+      "createdAt": 1471930290446,
+      "endTime": 1471945992209,
+      "note": "",
+      "startTime": 1471929630446,
+      "updatedAt": 1471945992209,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KPlgk9jX6_LlZOYAIff": {
+      "createdAt": 1471860114163,
+      "endTime": 1471890985333,
+      "note": "",
+      "startTime": 1471860114163,
+      "updatedAt": 1471890985334,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KPl69_x_8aAVv4AEdbj": {
+      "createdAt": 1471850278590,
+      "endTime": 1471857353601,
+      "note": "",
+      "startTime": 1471849258590,
+      "updatedAt": 1471860123323,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KPS30dq6_5yRYXt-zA4": {
+      "createdAt": 1471513893555,
+      "endTime": 1471528263836,
+      "note": "",
+      "startTime": 1471513833555,
+      "updatedAt": 1471528263837,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KPR5n44Dc6PbC4rSNQS": {
+      "createdAt": 1471497846624,
+      "endTime": 1471512033185,
+      "note": "",
+      "startTime": 1471497606624,
+      "updatedAt": 1471513898383,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KPMtvG_FlucZM9rxtYm": {
+      "createdAt": 1471427359911,
+      "endTime": 1471443044792,
+      "note": "",
+      "startTime": 1471427119911,
+      "updatedAt": 1471443044793,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KPM1PaeJQRcSQu_meqG": {
+      "createdAt": 1471412808172,
+      "endTime": 1471425319460,
+      "note": "",
+      "startTime": 1471412448172,
+      "updatedAt": 1471427364714,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KPHnb9kL4ACt4MPdkR7": {
+      "createdAt": 1471341818607,
+      "endTime": 1471356737362,
+      "note": "",
+      "startTime": 1471341638607,
+      "updatedAt": 1471356737365,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KPH2lnl9SJb8-NwYsZ2": {
+      "createdAt": 1471329279280,
+      "endTime": 1471338938248,
+      "note": "",
+      "startTime": 1471328679280,
+      "updatedAt": 1471341823321,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KPCtkIp-S7O4EmW80Rb": {
+      "createdAt": 1471259542866,
+      "endTime": 1471271824922,
+      "note": "",
+      "startTime": 1471255222866,
+      "updatedAt": 1471271824923,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KPBi5_hHapuFZMqhXiC": {
+      "createdAt": 1471239727645,
+      "endTime": 1471252098390,
+      "note": "",
+      "startTime": 1471239007645,
+      "updatedAt": 1471252098392,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KOt7vfCQJxVzfXmhMG2": {
+      "createdAt": 1470911201028,
+      "endTime": 1470925057550,
+      "startTime": 1470911201028,
+      "updatedAt": 1470925057550,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KOs7eHm551B58ef9glD": {
+      "createdAt": 1470894356957,
+      "endTime": 1470907554403,
+      "note": "",
+      "startTime": 1470894056957,
+      "updatedAt": 1470907554407,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KOonnQyJnrBKpMPSg7B": {
+      "createdAt": 1470838555820,
+      "endTime": 1470838555989,
+      "note": "",
+      "startTime": 1470823255820,
+      "updatedAt": 1470838573239,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KOmxOw22ouuTsbKo5Ex": {
+      "createdAt": 1470807518385,
+      "endTime": 1470820555246,
+      "note": "",
+      "startTime": 1470807518385,
+      "updatedAt": 1470838568330,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KOioRYH5itRvm06090X": {
+      "createdAt": 1470738062482,
+      "endTime": 1470754987739,
+      "note": "",
+      "startTime": 1470737162482,
+      "updatedAt": 1470754987740,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KOhyTjvlaiDyOLMSHzN": {
+      "createdAt": 1470723915708,
+      "endTime": 1470734808236,
+      "note": "",
+      "startTime": 1470723615708,
+      "updatedAt": 1470734808237,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KOdcmYBrBKl16nZwtxy": {
+      "createdAt": 1470651363190,
+      "endTime": 1470666932355,
+      "startTime": 1470651363190,
+      "updatedAt": 1470666932356,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KOckAspCU4VvdLEh5uE": {
+      "createdAt": 1470636524766,
+      "endTime": 1470649654400,
+      "note": "",
+      "startTime": 1470635144766,
+      "updatedAt": 1470649654400,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KLUxUg5z6qy9bKth1ct": {
+      "createdAt": 1467267545051,
+      "endTime": 1467362905637,
+      "note": "",
+      "startTime": 1467266405051,
+      "updatedAt": 1467362905638,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KLQWWU_Azmws2xKPx6I": {
+      "createdAt": 1467193109144,
+      "endTime": 1467201569590,
+      "startTime": 1467193109144,
+      "updatedAt": 1467201569592,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KLPkYcBWPOIEaSppIiR": {
+      "createdAt": 1467180272828,
+      "endTime": 1467191264087,
+      "note": "",
+      "startTime": 1467180032828,
+      "updatedAt": 1467191264088,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KLMT-yFeo568Ip0Heij": {
+      "createdAt": 1467125075918,
+      "endTime": 1467125081722,
+      "note": "",
+      "startTime": 1467123335918,
+      "updatedAt": 1467125081722,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KLLMjbRUcgAIDjTHfhL": {
+      "createdAt": 1467106657646,
+      "endTime": 1467123308108,
+      "startTime": 1467106657646,
+      "updatedAt": 1467123308110,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KLKnba5Fz1PngErT4-V": {
+      "createdAt": 1467097187608,
+      "endTime": 1467105337423,
+      "note": "",
+      "startTime": 1467097187608,
+      "updatedAt": 1467106662146,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KLH36sARetGFZN4ghGh": {
+      "createdAt": 1467034402377,
+      "endTime": 1467040724531,
+      "note": "",
+      "startTime": 1467020422377,
+      "updatedAt": 1467040724533,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KLFWJXLfTTKT2r6JrsE": {
+      "createdAt": 1467008532360,
+      "endTime": 1467018915804,
+      "note": "",
+      "startTime": 1467008112360,
+      "updatedAt": 1467018915804,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KKxfviTkdaVlqaxadDO": {
+      "createdAt": 1466692516795,
+      "endTime": 1466692517379,
+      "note": "",
+      "startTime": 1466663416795,
+      "updatedAt": 1466692523331,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KKqh8oGopQUYfJZtn0o": {
+      "createdAt": 1466575396180,
+      "endTime": 1466611661614,
+      "note": "",
+      "startTime": 1466571616180,
+      "updatedAt": 1466611661614,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KKmwwFK7l1J1OJnjqnt": {
+      "createdAt": 1466512426675,
+      "endTime": 1466512427316,
+      "startTime": 1466512426675,
+      "updatedAt": 1466512427316,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KKlgi2HNjxBeUkEUT-1": {
+      "createdAt": 1466491400801,
+      "endTime": 1466512426009,
+      "note": "",
+      "startTime": 1466491220801,
+      "updatedAt": 1466512426017,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KKi7zbuuOANd3zZJrd6": {
+      "createdAt": 1466431700397,
+      "endTime": 1466435181971,
+      "note": "",
+      "startTime": 1466422220397,
+      "updatedAt": 1466435181973,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KKgOkuRlnLtZlDngF7l": {
+      "createdAt": 1466402562118,
+      "endTime": 1466418618919,
+      "note": "",
+      "startTime": 1466402442118,
+      "updatedAt": 1466431706603,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KKNtVXpUzoIM-kVQwiD": {
+      "createdAt": 1466075319344,
+      "endTime": 1466091091562,
+      "note": "",
+      "startTime": 1466075139344,
+      "updatedAt": 1466091091563,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KKNg0IUKBeQHn_61PT-": {
+      "createdAt": 1466071786705,
+      "endTime": 1466071787502,
+      "note": "",
+      "startTime": 1466056846705,
+      "updatedAt": 1466071793638,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KKInWBHLPdKJ33uNPTP": {
+      "createdAt": 1465989865985,
+      "endTime": 1465997753550,
+      "note": "",
+      "startTime": 1465988425985,
+      "updatedAt": 1465997753553,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KKHaOr2gQVaoHGJboyH": {
+      "createdAt": 1465969650866,
+      "endTime": 1465983025783,
+      "note": "",
+      "startTime": 1465969230866,
+      "updatedAt": 1465989874834,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KKENEDj0rmjDuUT_Py-": {
+      "createdAt": 1465915601938,
+      "endTime": 1465920346542,
+      "note": "",
+      "startTime": 1465898441938,
+      "updatedAt": 1465920346544,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KKCUwxoo8H5vRbzTerH": {
+      "createdAt": 1465884069805,
+      "endTime": 1465894841590,
+      "note": "",
+      "startTime": 1465884009805,
+      "updatedAt": 1465915607417,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KK8ElrPW-gfyGpU1JXs": {
+      "createdAt": 1465812720650,
+      "endTime": 1465831076455,
+      "note": "",
+      "startTime": 1465811700650,
+      "updatedAt": 1465831076463,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KK7kIecvNJIBW5kOEjV": {
+      "createdAt": 1465804493570,
+      "endTime": 1465809300330,
+      "note": "",
+      "startTime": 1465800053570,
+      "updatedAt": 1465812725450,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KJp_qqH-fGOdoigZ8lg": {
+      "createdAt": 1465482964436,
+      "endTime": 1465486847323,
+      "note": "",
+      "startTime": 1465465564436,
+      "updatedAt": 1465486847324,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KJoTElO8d7CbsV1AoUi": {
+      "createdAt": 1465464195450,
+      "endTime": 1465464196854,
+      "note": "",
+      "startTime": 1465456515450,
+      "updatedAt": 1465464201614,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KJkL3nsbMfl7Nrg80Ru": {
+      "createdAt": 1465394945905,
+      "endTime": 1465394946276,
+      "note": "",
+      "startTime": 1465378205905,
+      "updatedAt": 1465394950856,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KJkL0km-N2jnTclIH7X": {
+      "createdAt": 1465394933418,
+      "endTime": 1465376454452,
+      "note": "",
+      "startTime": 1465363853418,
+      "updatedAt": 1465394944731,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KJg_KwOhej77T42AfHw": {
+      "createdAt": 1465331836006,
+      "endTime": 1465311616897,
+      "note": "",
+      "startTime": 1465294216006,
+      "updatedAt": 1465331857186,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KJdNDzc3bY260z6mhMR": {
+      "createdAt": 1465278076787,
+      "endTime": 1465292447958,
+      "note": "",
+      "startTime": 1465278016787,
+      "updatedAt": 1465331848849,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KJAw_gpdfWAYan0aMZq": {
+      "createdAt": 1464784279974,
+      "endTime": 1464784280683,
+      "note": "",
+      "startTime": 1464779719974,
+      "updatedAt": 1464784294547,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KJ9OYvxqFMOtuaXEeYT": {
+      "createdAt": 1464758320493,
+      "endTime": 1464773477580,
+      "note": "",
+      "startTime": 1464758320493,
+      "updatedAt": 1464784284267,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KJ78pA9Bt04wjbJXIB3": {
+      "createdAt": 1464720642772,
+      "endTime": 1464736669489,
+      "startTime": 1464720642772,
+      "updatedAt": 1464736669490,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KJ6v990btm_ItyJbT4R": {
+      "createdAt": 1464716796554,
+      "endTime": 1464719811248,
+      "startTime": 1464716796554,
+      "updatedAt": 1464719811248,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KJ5BE1q7tDNbMBrA9eo": {
+      "createdAt": 1464687718645,
+      "endTime": 1464703589318,
+      "startTime": 1464687718645,
+      "updatedAt": 1464703589323,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KJ537NL4RoKZKCaQpvl": {
+      "createdAt": 1464685594197,
+      "endTime": 1464685594941,
+      "note": "",
+      "startTime": 1464674434197,
+      "updatedAt": 1464685601638,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KJ2CboWxqPVD9PirlHp": {
+      "createdAt": 1464637752728,
+      "endTime": 1464644597286,
+      "startTime": 1464637752728,
+      "updatedAt": 1464644597286,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KJ058lJkf6MU3cT3tgV": {
+      "createdAt": 1464602237926,
+      "endTime": 1464613204261,
+      "note": "",
+      "startTime": 1464602237926,
+      "updatedAt": 1464636310218,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KJ058DUNiWMEwBkJDmy": {
+      "createdAt": 1464602235695,
+      "endTime": 1464598817184,
+      "note": "",
+      "startTime": 1464595215695,
+      "updatedAt": 1464602251856,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KIhE9_AFGsKwrNIAwES": {
+      "createdAt": 1464269056400,
+      "endTime": 1464273026705,
+      "note": "",
+      "startTime": 1464255616400,
+      "updatedAt": 1464269073581,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KIfZqNA51U6lTofs3IX": {
+      "createdAt": 1464241186644,
+      "endTime": 1464253815929,
+      "note": "",
+      "startTime": 1464240646644,
+      "updatedAt": 1464269061544,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KIcGYjG8m2tTTVsmfiq": {
+      "createdAt": 1464185797684,
+      "endTime": 1464185798123,
+      "note": "",
+      "startTime": 1464169237684,
+      "updatedAt": 1464185813734,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KIcGXnKgHwqNwp5ClvS": {
+      "createdAt": 1464185793847,
+      "endTime": 1464167434207,
+      "note": "",
+      "startTime": 1464153633847,
+      "updatedAt": 1464185807107,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KI8AjgOOICoYmjcQczA": {
+      "createdAt": 1463664179977,
+      "endTime": 1464069356060,
+      "note": "",
+      "startTime": 1463653859977,
+      "updatedAt": 1464069356061,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KI8Aj2PB0D054yYkFry": {
+      "createdAt": 1463664177347,
+      "endTime": 1463652059527,
+      "note": "",
+      "startTime": 1463635857347,
+      "updatedAt": 1463664189761,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KI3NoB48dxB8UjiReMS": {
+      "createdAt": 1463583720265,
+      "endTime": 1463583720660,
+      "note": "",
+      "startTime": 1463569320265,
+      "updatedAt": 1463583729565,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KI1Sg0OXl10peRIEVcp": {
+      "createdAt": 1463551443098,
+      "endTime": 1463563859232,
+      "note": "",
+      "startTime": 1463549403098,
+      "updatedAt": 1463583726729,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KHyBHKgczwv3m-LUiUu": {
+      "createdAt": 1463479772593,
+      "endTime": 1463497277983,
+      "startTime": 1463479772593,
+      "updatedAt": 1463497277983,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KHxCgxhH2FPr9Lczkm3": {
+      "createdAt": 1463463369289,
+      "endTime": 1463477432413,
+      "note": "",
+      "startTime": 1463463009289,
+      "updatedAt": 1463479777106,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KHteC-nuvXFTvMQkRgq": {
+      "createdAt": 1463403728832,
+      "endTime": 1463404906183,
+      "note": "",
+      "startTime": 1463393408832,
+      "updatedAt": 1463404906183,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KHte5hk-gsqrfQPcT5s": {
+      "createdAt": 1463403703036,
+      "endTime": 1463390444655,
+      "note": "",
+      "startTime": 1463376643036,
+      "updatedAt": 1463403715970,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KH_QV2FFqig0U2eKW7o": {
+      "createdAt": 1463064330498,
+      "endTime": 1463064331510,
+      "note": "",
+      "startTime": 1463047650498,
+      "updatedAt": 1463064341654,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KHYSb7Eui4eCI-p-KJj": {
+      "createdAt": 1463031329389,
+      "endTime": 1463045851909,
+      "note": "",
+      "startTime": 1463031029389,
+      "updatedAt": 1463045851909,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KHUE8CsureuG6-h9ttQ": {
+      "createdAt": 1462960430375,
+      "endTime": 1462971754462,
+      "note": "",
+      "startTime": 1462960430375,
+      "updatedAt": 1462971754464,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KHTKhwJafdHAmUMRfP4": {
+      "createdAt": 1462945376449,
+      "endTime": 1462958449907,
+      "note": "",
+      "startTime": 1462944656449,
+      "updatedAt": 1462960440331,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KHOL5l2OSO2fjNzThXC": {
+      "createdAt": 1462861589635,
+      "endTime": 1462888604587,
+      "note": "",
+      "startTime": 1462861229635,
+      "updatedAt": 1462888604587,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KHJ01vlowpAuMerG72J": {
+      "createdAt": 1462772182833,
+      "endTime": 1462802415795,
+      "note": "",
+      "startTime": 1462770622833,
+      "updatedAt": 1462804999087,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KGuMf7JQzghrATb-Pzj": {
+      "createdAt": 1462341910838,
+      "endTime": 1462370401282,
+      "note": "",
+      "startTime": 1462340410838,
+      "updatedAt": 1462375811787,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KGpF6kNAmKsvDhs4BZq": {
+      "createdAt": 1462256043593,
+      "endTime": 1462284963582,
+      "note": "",
+      "startTime": 1462255203593,
+      "updatedAt": 1462284963588,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KGkxZONUJx_wl4ZX0XZ": {
+      "createdAt": 1462184068761,
+      "endTime": 1462199427392,
+      "note": "",
+      "startTime": 1462181428761,
+      "updatedAt": 1462199245455,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KGjyhU5p17YwWp4uSvB": {
+      "createdAt": 1462167603378,
+      "endTime": 1462179628380,
+      "note": "",
+      "startTime": 1462167603378,
+      "updatedAt": 1462184076309,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KGSXwWeww5WNT9kQloy": {
+      "createdAt": 1461858321970,
+      "endTime": 1461859342995,
+      "note": "",
+      "startTime": 1461843021970,
+      "updatedAt": 1461859342995,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KGSXwCoxag6z8hUbrEu": {
+      "createdAt": 1461858320699,
+      "endTime": 1461836721565,
+      "note": "",
+      "startTime": 1461823220699,
+      "updatedAt": 1461858330332,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KGN7f_dVj2dKt810yYJ": {
+      "createdAt": 1461767551249,
+      "endTime": 1461767551519,
+      "note": "",
+      "startTime": 1461753151249,
+      "updatedAt": 1461767558448,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KGLPsAnUSq7s74bJF3h": {
+      "createdAt": 1461738767155,
+      "endTime": 1461749549415,
+      "note": "",
+      "startTime": 1461736847155,
+      "updatedAt": 1461767563078,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KGGzNBFML5mKAYzy1-k": {
+      "createdAt": 1461664449363,
+      "endTime": 1461680339698,
+      "note": "",
+      "startTime": 1461664209363,
+      "updatedAt": 1461680339699,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KGG6lEPe_d1Ix78caAO": {
+      "createdAt": 1461649871903,
+      "endTime": 1461662418701,
+      "note": "",
+      "startTime": 1461649811903,
+      "updatedAt": 1461664457307,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KGCoJDj_SrUQ1Tst6VF": {
+      "createdAt": 1461594440741,
+      "endTime": 1461595391230,
+      "note": "",
+      "startTime": 1461577820741,
+      "updatedAt": 1461595391231,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KGB0AiVsi4CzcnREXC2": {
+      "createdAt": 1461564259291,
+      "endTime": 1461576037962,
+      "note": "",
+      "startTime": 1461563419291,
+      "updatedAt": 1461576037962,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KG2MZEL2vEgEKVBq9Ai": {
+      "createdAt": 1461419131961,
+      "endTime": 1461419133443,
+      "startTime": 1461419131961,
+      "updatedAt": 1461419133444,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KFnM13yUgxvOjn8G9wy": {
+      "createdAt": 1461150556547,
+      "endTime": 1461249394551,
+      "note": "",
+      "startTime": 1461149416547,
+      "updatedAt": 1461249394552,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KFmsVybdmaxeLCOSJQ9": {
+      "createdAt": 1461142557769,
+      "endTime": 1461144616176,
+      "note": "",
+      "startTime": 1461132057769,
+      "updatedAt": 1461150561661,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KFh-qQSCgwdJC8yz-Gw": {
+      "createdAt": 1461044079882,
+      "endTime": 1461069131943,
+      "note": "",
+      "startTime": 1461043839882,
+      "updatedAt": 1461069131944,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KFbxSZQ3LNVfH2yeQ6J": {
+      "createdAt": 1460959304041,
+      "endTime": 1460988571538,
+      "note": "",
+      "startTime": 1460957444041,
+      "updatedAt": 1460988571539,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KFJE24ZkdQ2z5GC2stc": {
+      "createdAt": 1460628369825,
+      "endTime": 1460639060367,
+      "startTime": 1460628369825,
+      "updatedAt": 1460639060368,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KFI7o4jqvN16MpUQCZ2": {
+      "createdAt": 1460609960307,
+      "endTime": 1460626209332,
+      "note": "",
+      "startTime": 1460609960307,
+      "updatedAt": 1460628375068,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KFFGD0Ut7TLbQyewVCd": {
+      "createdAt": 1460561830063,
+      "endTime": 1460561830377,
+      "note": "",
+      "startTime": 1460540710063,
+      "updatedAt": 1460561848261,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KFD7bzQu1KgsTLzieAj": {
+      "createdAt": 1460526025586,
+      "endTime": 1460538008791,
+      "note": "",
+      "startTime": 1460526025586,
+      "updatedAt": 1460561842627,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KF9aroS9zHv39xu3ZFM": {
+      "createdAt": 1460466842987,
+      "endTime": 1460466903404,
+      "note": "",
+      "startTime": 1460457002987,
+      "updatedAt": 1460466858151,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KF7v7nlNalwb24z-S4k": {
+      "createdAt": 1460438601381,
+      "endTime": 1460454058151,
+      "note": "",
+      "startTime": 1460438421381,
+      "updatedAt": 1460466849529,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KF3e8y7oIOe4Sz4IQ7x": {
+      "createdAt": 1460367040442,
+      "endTime": 1460385769881,
+      "note": "",
+      "startTime": 1460368840442,
+      "updatedAt": 1460385769882,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KF3e8X0uQ6baNU3uWic": {
+      "createdAt": 1460367038642,
+      "endTime": 1460367039655,
+      "note": "",
+      "startTime": 1460352638642,
+      "updatedAt": 1460367045515,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KEm_Ge-4ugTOVw8zoh1": {
+      "createdAt": 1460063771310,
+      "endTime": 1460034011532,
+      "note": "",
+      "startTime": 1460025611310,
+      "updatedAt": 1460063786189,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KEm_C3ePpH7F2nNswHo": {
+      "createdAt": 1460063752535,
+      "endTime": 1460020852997,
+      "note": "",
+      "startTime": 1460007052535,
+      "updatedAt": 1460063769889,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KEfEy_CBWM58sQ7ftfH": {
+      "createdAt": 1459940747660,
+      "endTime": 1459956121930,
+      "note": "",
+      "startTime": 1459940447660,
+      "updatedAt": 1459956121931,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KEe4Kr-z8GxN9AVvmkH": {
+      "createdAt": 1459921182207,
+      "endTime": 1459935047213,
+      "note": "",
+      "startTime": 1459920342207,
+      "updatedAt": 1459940754433,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KEa9_Ceq81tQnQo_jqN": {
+      "createdAt": 1459855447203,
+      "endTime": 1459893638237,
+      "note": "",
+      "startTime": 1459852207203,
+      "updatedAt": 1459921208293,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KEZwNwsu2jIkgdFSVko": {
+      "createdAt": 1459834949500,
+      "endTime": 1459847968916,
+      "startTime": 1459834949500,
+      "updatedAt": 1459847968916,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KEVzjvPBwLQc1-N-H13": {
+      "createdAt": 1459768721180,
+      "endTime": 1459780143161,
+      "note": "",
+      "startTime": 1459762241180,
+      "updatedAt": 1459780143161,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KEUj1c6Qei-xzmIqs7U": {
+      "createdAt": 1459747564129,
+      "endTime": 1459760440652,
+      "note": "",
+      "startTime": 1459747564129,
+      "updatedAt": 1459768728038,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KEQffSTW-9uTl2OiTh2": {
+      "createdAt": 1459679573992,
+      "endTime": 1459679580737,
+      "startTime": 1459679573992,
+      "updatedAt": 1459679580740,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KEPgXQdzcZaYULHuQ25": {
+      "createdAt": 1459663021869,
+      "endTime": 1459666622797,
+      "note": "",
+      "startTime": 1459663021869,
+      "updatedAt": 1459663681577,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KELOlF0IECDh2SUZYj4": {
+      "createdAt": 1459590993015,
+      "endTime": 1459635722853,
+      "startTime": 1459590993015,
+      "updatedAt": 1459635722857,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KELOh5_m1lx0wdyJinn": {
+      "createdAt": 1459590976026,
+      "endTime": 1459590991259,
+      "note": "måndag fm",
+      "startTime": 1459590976026,
+      "updatedAt": 1459590991263,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KEAD7J_M4S7IyEWgj5G": {
+      "createdAt": 1459403392360,
+      "endTime": 1459590923285,
+      "startTime": 1459403392360,
+      "updatedAt": 1459590923289,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KE-sykX9zlvZx26xNQk": {
+      "createdAt": 1459230076016,
+      "endTime": 1459403391422,
+      "startTime": 1459230076016,
+      "updatedAt": 1459403391423,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KDS7DESLHRuMZTwo7-3": {
+      "createdAt": 1458630093500,
+      "endTime": 1458641374059,
+      "note": "",
+      "startTime": 1458629073500,
+      "updatedAt": 1458630105980,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KD3IFOULUsXoP0hkIXR": {
+      "createdAt": 1458213553854,
+      "endTime": 1458542653793,
+      "startTime": 1458213553854,
+      "updatedAt": 1458542653794,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KD3DJRcirKYBJx-iGq9": {
+      "createdAt": 1458212259697,
+      "endTime": 1458212268428,
+      "note": "",
+      "startTime": 1458198039697,
+      "updatedAt": 1458212279876,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KCzvzE0McDu8d-J8408": {
+      "createdAt": 1458140345331,
+      "endTime": 1458140346466,
+      "note": "",
+      "startTime": 1458109805331,
+      "updatedAt": 1458140353620,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KCugmJ2mecpvZS8y4bM": {
+      "createdAt": 1458052474209,
+      "endTime": 1458063237743,
+      "startTime": 1458052474209,
+      "updatedAt": 1458063237743,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KCszh83j445hRXT4IYb": {
+      "createdAt": 1458023879315,
+      "endTime": 1458048872948,
+      "note": "",
+      "startTime": 1458023879315,
+      "updatedAt": 1458052483929,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KCpEt7YolfPsgyTTAJG": {
+      "createdAt": 1457961013908,
+      "endTime": 1457969723549,
+      "note": "",
+      "startTime": 1457952013908,
+      "updatedAt": 1457969723549,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KCnqI3Urlsq3is3DdeK": {
+      "createdAt": 1457937527175,
+      "endTime": 1457950212619,
+      "note": "",
+      "startTime": 1457937527175,
+      "updatedAt": 1457961020149,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KCUEBGSmYyBV1E2tyKg": {
+      "createdAt": 1457591731381,
+      "endTime": 1457629439350,
+      "startTime": 1457591731381,
+      "updatedAt": 1457629439351,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KCP3YF27KmguGl9fu6W": {
+      "createdAt": 1457505055806,
+      "endTime": 1457519715166,
+      "startTime": 1457505055806,
+      "updatedAt": 1457519715167,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KCLjw4APlU89OW3VzXU": {
+      "createdAt": 1457449320858,
+      "endTime": 1457449412237,
+      "note": "",
+      "startTime": 1457436000858,
+      "updatedAt": 1457449412237,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KCJyYBbSGHVfgahrZuk": {
+      "createdAt": 1457419598272,
+      "endTime": 1457434435268,
+      "note": "",
+      "startTime": 1457418998272,
+      "updatedAt": 1457434435270,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KCEmUzYWVvSYR8bh7Gs": {
+      "createdAt": 1457332551738,
+      "endTime": 1457346702671,
+      "note": "",
+      "startTime": 1457332551738,
+      "updatedAt": 1457365367416,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KBwWQ3Ev2S3iraMhPK3": {
+      "createdAt": 1457009308094,
+      "endTime": 1457023644626,
+      "startTime": 1457009308094,
+      "updatedAt": 1457023644628,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KBvE2Ixkww0PTHVQPnb": {
+      "createdAt": 1456987717248,
+      "endTime": 1457002270776,
+      "note": "",
+      "startTime": 1456987717248,
+      "updatedAt": 1457017257258,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KBlkTR5HAwnLGMjevdC": {
+      "createdAt": 1456828704615,
+      "endTime": 1456844412916,
+      "note": "",
+      "startTime": 1456828824615,
+      "updatedAt": 1456844412917,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KBksAN3jl-mIb-MVXrC": {
+      "createdAt": 1456813946455,
+      "endTime": 1456827064041,
+      "note": "",
+      "startTime": 1456813826455,
+      "updatedAt": 1456827064044,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KAdpFd1Q7AaPcjqbS6z": {
+      "createdAt": 1455621999259,
+      "endTime": 1456813938238,
+      "startTime": 1455621999259,
+      "updatedAt": 1456813938241,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KAdAHgGveB_FgNq0sYZ": {
+      "createdAt": 1455610997728,
+      "endTime": 1455626778171,
+      "note": "Onsdag",
+      "startTime": 1455603797728,
+      "updatedAt": 1455611064894,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KAdAHG4qoMj08u1WHxX": {
+      "createdAt": 1455610995987,
+      "endTime": 1455439196575,
+      "note": "Tisdag",
+      "startTime": 1455407395987,
+      "updatedAt": 1455611029636,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    },
+    "-KAdAAJZn1TAGTvfYgRc": {
+      "createdAt": 1455610967512,
+      "endTime": 1455536179760,
+      "note": "Måndag",
+      "startTime": 1455502447512,
+      "updatedAt": 1455611014745,
+      "user": "dec89c41-2dce-4c2f-8451-d739b23d9598"
+    }
+  }
+}

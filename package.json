@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "eslint --ignore-path .gitignore --ext .js,.jsx .",
     "test": "jest --notify",
-    "tdd": "npm test -- --watch",
+    "tdd": "npm run test -- --watch",
     "copy": "cp client/sw.js public && cp -a client/assets public/assets",
     "prebuild": "rm -rf public && mkdir public && npm run copy",
     "build": "NODE_ENV=production webpack",
@@ -51,6 +51,7 @@
     "case-sensitive-paths-webpack-plugin": "^2.1.1",
     "css-loader": "^0.28.7",
     "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.11.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",

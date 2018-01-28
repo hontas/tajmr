@@ -10,7 +10,7 @@ import createStore from './store';
 import Application from './components/application/application.jsx';
 
 export const store = createStore(); // eslint-disable-line
-
+firebaseApi.subscribe((action) => store.dispatch(action));
 firebaseApi.init();
 ReactDOM.render(
   <Provider store={store}>

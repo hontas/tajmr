@@ -2,7 +2,6 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 
-import { store } from '../app';
 import {
   intervalAdded,
   intervalUpdated,
@@ -21,35 +20,19 @@ const config = {
   messagingSenderId: '784102119013'
 };
 firebase.initializeApp(config);
-
 const database = firebase.database();
 const auth = firebase.auth();
 
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    store.dispatch(userLoggedIn(user));
-    database.ref(`users/${user.uid}`)
-      .once('value')
-      .then((settings) => store.dispatch(updateSettings(settings.val())));
-
-    store.dispatch(fetchIntervalsForUser());
-  } else {
-    store.dispatch(userLoggedOut());
-  }
-});
-
-function filterByUser(intervals) {
-  const userId = auth.currentUser && auth.currentUser.uid;
-  return Object.keys(intervals)
-    .reduce((res, id) => {
-      if (intervals[id].user === userId) {
-        return { [id]: intervals[id], ...res };
-      }
-      return res;
-    }, {});
-}
-
+const subscribers = [];
 const api = {
+  subscribe(fn) {
+    subscribers.push(fn);
+  },
+
+  emit(action) {
+    subscribers.forEach((fn) => fn(action));
+  },
+
   login(email, password) {
     return auth.signInWithEmailAndPassword(email, password)
       .catch((err) => console.error(err)); // eslint-disable-line no-console
@@ -124,16 +107,40 @@ const api = {
         if (interval.user !== userId) return;
 
         const id = snapshot.key;
-        store.dispatch(intervalAdded({ ...interval, id }));
+        api.emit(intervalAdded({ ...interval, id }));
       });
 
     api.intervals.on('child_changed', (snapshot) => {
       const interval = snapshot.val();
       const id = snapshot.key;
       console.log('child_changed', interval, id); // eslint-disable-line no-console
-      store.dispatch(intervalUpdated({ ...interval, id }));
+      api.emit(intervalUpdated({ ...interval, id }));
     });
   }
 };
+
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    api.emit(userLoggedIn(user));
+    database.ref(`users/${user.uid}`)
+      .once('value')
+      .then((settings) => api.emit(updateSettings(settings.val())));
+
+    api.emit(fetchIntervalsForUser());
+  } else {
+    api.emit(userLoggedOut());
+  }
+});
+
+function filterByUser(intervals) {
+  const userId = auth.currentUser && auth.currentUser.uid;
+  return Object.keys(intervals)
+    .reduce((res, id) => {
+      if (intervals[id].user === userId) {
+        return { [id]: intervals[id], ...res };
+      }
+      return res;
+    }, {});
+}
 
 export default api;
