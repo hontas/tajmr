@@ -9,7 +9,6 @@ $block = '.date-picker';
   }
 
   &__calendar {
-    display: none;
     font-size: smaller;
     left: 0;
     padding-top: .6em;
@@ -24,11 +23,11 @@ $block = '.date-picker';
   }
 
   &:focus {
-    color: $text-color-light;
     outline: none;
-    {$block}__calendar {
-      display: block;
-    }
+  }
+
+  &--show-picker {
+    color: $text-color-light;
   }
 
   &--disabled {

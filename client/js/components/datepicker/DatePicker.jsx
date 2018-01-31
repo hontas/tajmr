@@ -7,23 +7,27 @@ import classNames from 'classnames';
 import Calendar from '../icons/Calendar.jsx';
 
 class DatePicker extends React.Component {
-  state = { isHovered: false };
+  state = { showDateInput: false };
 
   render() {
     const { className, date, onDayClick } = this.props;
-    const { isHovered } = this.state;
+    const { showDateInput } = this.state;
     return (
       <div
-        className={classNames('date-picker', className, { 'date-picker--disabled': !date })}
-        onFocus={this.onMouseOver}
-        onBlur={this.onMouseOut}
+        className={classNames('date-picker', className, {
+          'date-picker--disabled': !date,
+          'date-picker--show-picker': showDateInput
+        })}
+        ref={(node) => { this.datePicker = node; }}
+        onClick={this.toggleDateInput}
+        onKeyDown={this.toggleDateInput}
         role="button"
         tabIndex="-1"
       >
         <div className="date-picker__icon">
           <Calendar />
         </div>
-        { isHovered && date &&
+        { date && showDateInput &&
           <DayPicker
             initialMonth={new Date(date)}
             canChangeMonth={false}
@@ -38,8 +42,21 @@ class DatePicker extends React.Component {
     );
   }
 
-  onMouseOver = () => this.setState({ isHovered: true });
-  onMouseOut = () => this.setState({ isHovered: false });
+  toggleDateInput = (evt) => {
+    evt.preventDefault();
+    const { showDateInput } = this.state;
+    this.setState({ showDateInput: !showDateInput });
+
+    if (!showDateInput) {
+      const clickHandler = ({ target }) => {
+        if (!this.datePicker.contains(target)) {
+          this.toggleDateInput({ preventDefault() {} });
+        }
+        document.removeEventListener('click', clickHandler);
+      };
+      document.addEventListener('click', clickHandler, false);
+    }
+  };
 }
 
 DatePicker.defaultProps = {
