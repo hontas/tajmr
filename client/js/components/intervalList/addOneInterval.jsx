@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import IntervalListItem from './intervalListItem.jsx';
 import Save from '../icons/Save.jsx';
+import Button from '../button/button.jsx';
 
 class AddOneInterval extends React.PureComponent {
   constructor(props) {
@@ -25,17 +26,26 @@ class AddOneInterval extends React.PureComponent {
         onSubmit={this.onAdd}
       >
         <IntervalListItem
+          className="add-one-interval__interval-list-item"
           interval={this.state.interval}
           onUpdate={this.onUpdate}
           onDelete={onDelete}
           notes={this.props.notes}
         />
-        <button
-          className="pure-button button button--default add-one-interval__btn"
-          onClick={this.onAdd}
+        <Button
+          type="submit"
+          theme="primary"
+          className="add-one-interval__btn"
         >
           <Save size={17} />
-        </button>
+        </Button>
+        <Button
+          theme="secondary"
+          className="add-one-interval__btn"
+          onClick={this.props.onCancel}
+        >
+          ✖
+        </Button>
       </form>
     );
   }
@@ -44,6 +54,10 @@ class AddOneInterval extends React.PureComponent {
     evt.preventDefault();
     this.props.onAdd(this.state.interval);
   }
+
+  onCancel = () => {
+
+  };
 
   onUpdate = (interval) => {
     this.setState({ interval });
@@ -60,12 +74,9 @@ function getTimestampFromHMS(hours, minutes = 0, seconds = 0) {
   return date.getTime();
 }
 
-AddOneInterval.defaultProps = {
-  onAdd() {}
-};
-
 AddOneInterval.propTypes = {
-  onAdd: PropTypes.func,
+  onAdd: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
   fullDay: PropTypes.number.isRequired,
   notes: PropTypes.arrayOf(PropTypes.string)
 };

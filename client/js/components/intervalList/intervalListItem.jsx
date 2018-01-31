@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import IntervalListInput from './intervalListInput.jsx';
 import * as customPropTypes from '../../constants/propTypes';
@@ -11,11 +12,12 @@ class IntervalListItem extends React.Component {
   render() {
     const {
       notes,
+      className,
       interval: { startTime, endTime, note, notWork }
     } = this.props;
 
     return (
-      <li className="interval-list-item">
+      <li className={classNames('interval-list-item', className)}>
         <IntervalListInput timestamp={startTime} onUpdate={this.updateProp('startTime')} />
         <IntervalListInput timestamp={endTime} onUpdate={this.updateProp('endTime')} />
 
@@ -34,7 +36,7 @@ class IntervalListItem extends React.Component {
           onChange={this.onChecked('notWork')}
         />
 
-        <Button className="delete" onClick={this.remove}>
+        <Button className="delete" theme="danger" onClick={this.remove}>
           <Trashcan size={15} />
         </Button>
       </li>
@@ -67,7 +69,8 @@ IntervalListItem.propTypes = {
   interval: customPropTypes.interval.isRequired,
   onDelete: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
-  notes: PropTypes.arrayOf(PropTypes.string)
+  notes: PropTypes.arrayOf(PropTypes.string),
+  className: PropTypes.string
 };
 
 export default IntervalListItem;

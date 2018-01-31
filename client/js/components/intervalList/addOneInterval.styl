@@ -1,20 +1,24 @@
 .add-one-interval {
   margin-top: 1em;
-  position: relative;
-  .interval-list-item button.delete {
-    visibility: hidden;
-    pointer-events: none;
-  }
+  padding-right: .5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
+.add-one-interval__interval-list-item {
+  flex: 2;
+  button.delete {
+    display: none;
+  }
 }
 
 .add-one-interval__btn {
-  background-color: $primary-color-dark;
-  color: #fff;
   font-size: 1em;
   padding: 0.5em;
-  position: absolute;
-  top: 0;
-  right: .5em;
   width: 40px;
+  height: 40px;
+  &:last-child {
+    margin-left: .5em;
+  }
 }

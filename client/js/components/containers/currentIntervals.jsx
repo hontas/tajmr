@@ -56,13 +56,14 @@ class CurrentIntervals extends React.PureComponent {
         <ProgressBarTimeWrapper intervals={activeAndCurrentIntervals} max={hoursInWeek / 5} />
         <div className="action-buttons" style={{ display: 'flex' }}>
           <WorkButton activeInterval={!!activeInterval} onClick={this.onClick} />
-          <Button className="current-intervals__prev-work-btn" type="primary" onClick={this.onAddPrevClick}>
+          <Button className="current-intervals__prev-work-btn" theme="primary" onClick={this.onAddPrevClick}>
             Efterregga
           </Button>
         </div>
         {this.state.displayAddForm &&
           <AddOneInterval
             onAdd={this.onAddOneInterval}
+            onCancel={this.onCancelPrevClick}
             fullDay={hoursInDay}
             notes={notes}
           />
@@ -114,6 +115,8 @@ class CurrentIntervals extends React.PureComponent {
 
   onAddPrevClick = () => this.setState({ displayAddForm: true });
 
+  onCancelPrevClick = () => this.setState({ displayAddForm: false });
+
   onAddOneInterval = (interval) => {
     const { attemptUpdate, intervalAdded } = this.props;
     attemptUpdate(interval)
@@ -148,7 +151,7 @@ function isToday({ startTime }) {
 
 function mapStateToProps({ intervals: { items, timestamp }, userSettings }) {
   const notes = items
-    .map((item) => item.note)
+    .map(({ note }) => (note ? note.toLowerCase() : note))
     .filter((note) => note);
 
   return {
@@ -157,7 +160,7 @@ function mapStateToProps({ intervals: { items, timestamp }, userSettings }) {
     todaysIntervals: items.filter(isToday).filter(isComplete),
     activeInterval: items.find(isActive),
     userSettings,
-    notes
+    notes: [...new Set(notes)]
   };
 }
 
