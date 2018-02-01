@@ -11,14 +11,19 @@ import {
 } from '../../utils/time';
 
 class MonthReport extends Component {
-  state = { referenceDate: new Date() };
+  state = {
+    referenceDate: new Date(),
+    filterOut: []
+  };
 
   render() {
-    const { referenceDate } = this.state;
+    const { referenceDate, filterOut } = this.state;
     const { className } = this.props;
     const intervals = this.getGroupedIntervalsBy('note');
-    const totalMinusNotWork = Object.keys(intervals)
-      .filter((note) => !note.startsWith('notWork'))
+    const categories = Object.keys(intervals);
+    const filteredCategories = categories
+      .filter((cat) => !filterOut.includes(cat));
+    const totalMinusNotWork = filteredCategories
       .reduce((res, curr) => res + intervals[curr], 0);
 
     return (
@@ -29,8 +34,21 @@ class MonthReport extends Component {
           {`${months[referenceDate.getMonth()]} ${referenceDate.getFullYear()}`}
           <Button onClick={this.nextMonth}>▶︎</Button>
         </h3>
+        <div className="MonthReport__filters">
+          {categories.map((cat) => (
+            <Button
+              className={classNames('MonthReport__filter', {
+                'MonthReport__filter--active': filteredCategories.includes(cat)
+              })}
+              key={cat}
+              onClick={() => this.toggleFilter(cat)}
+            >
+              {cat}
+            </Button>))
+          }
+        </div>
         <ul className="MonthReport__list">
-          {Object.keys(intervals)
+          {filteredCategories
             .map((note) => (
               <li
                 key={note}
@@ -55,6 +73,14 @@ class MonthReport extends Component {
       </div>
     );
   }
+
+  toggleFilter = (cat) => {
+    const filterOut = this.state.filterOut.includes(cat) ?
+      this.state.filterOut.filter((c) => c !== cat) :
+      [...this.state.filterOut, cat];
+
+    this.setState({ filterOut });
+  };
 
   lastMonth = () => {
     const { referenceDate } = this.state;
