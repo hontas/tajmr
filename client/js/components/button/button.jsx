@@ -30,7 +30,7 @@ Button.propTypes = {
   onClick: PropTypes.func.isRequired,
   text: PropTypes.string,
   type: PropTypes.oneOf(['button', 'submit']),
-  theme: PropTypes.oneOf(['default', 'primary', 'secondary', 'danger']),
+  theme: PropTypes.oneOf(['default', 'primary', 'secondary', 'danger', 'link']),
   children: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element,

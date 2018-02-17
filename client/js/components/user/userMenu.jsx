@@ -1,38 +1,34 @@
+import md5 from 'md5';
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import Button from '../button/button.jsx';
 
 import * as customPropTypes from '../../constants/propTypes';
 import { updateSettings } from '../../actions/userActions';
 import firebaseApi from '../../utils/firebaseApi';
 
+const garavatarUrl = 'https://www.gravatar.com/avatar';
+
 class UserMenu extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isSavingUserSettings: false
-    };
-  }
+  state = {
+    isSavingUserSettings: false
+  };
 
   render() {
-    const { userSettings } = this.props;
-    const { displayMonthReport, displayNotifications, displayPreviousIntervals, displayName } = userSettings;
+    const { userSettings, user, className } = this.props;
+    const { displayMonthReport, displayNotifications, displayPreviousIntervals } = userSettings;
     const { isSavingUserSettings } = this.state;
+    const photoURL = user && (user.photoURL || `${garavatarUrl}/${md5(user.email)}`);
 
     return (
-      <form className="pure-form pure-form-stacked user-menu">
-        <fieldset>
-          <legend>
-            <input
-              autoCapitalize="sentences"
-              spellCheck="false"
-              type="text"
-              value={displayName}
-              onChange={this.handleChange('displayName')}
-              placeholder="display name"
-            />
-          </legend>
-          <label className="pure-checkbox">Visa notifiering
+      <form className={classNames('pure-form pure-form-stacked user-menu', className)}>
+        <div className="user-menu__row">
+          <img alt="avatar" className="profile-image" src={photoURL} />
+          <button className="user-menu__log-out pure-menu-link" onClick={firebaseApi.logout}>Logga ut</button>
+        </div>
+        <fieldset className="user-menu__fieldset">
+          <label className="user-menu__label">Visa notifiering
             <input
               checked={displayNotifications}
               onChange={this.handleChange('displayNotifications')}
@@ -40,7 +36,7 @@ class UserMenu extends React.Component {
               type="checkbox"
             />
           </label>
-          <label className="pure-checkbox">{'Visa tidigare '}
+          <label className="user-menu__label">{'Visa tidigare '}
             <input
               checked={displayPreviousIntervals}
               onChange={this.handleChange('displayPreviousIntervals')}
@@ -48,7 +44,7 @@ class UserMenu extends React.Component {
               type="checkbox"
             />
           </label>
-          <label className="pure-checkbox">{'Visa månadsrapport'}
+          <label className="user-menu__label">{'Visa månadsrapport'}
             <input
               checked={displayMonthReport}
               onChange={this.handleChange('displayMonthReport')}
@@ -63,7 +59,6 @@ class UserMenu extends React.Component {
           onClick={this.saveUserSettings}
           text="Spara"
         />
-        <button className="pure-button" onClick={firebaseApi.logout}>Logga ut</button>
       </form>
     );
   }
@@ -90,10 +85,11 @@ class UserMenu extends React.Component {
 }
 
 UserMenu.propTypes = {
+  className: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
   user: PropTypes.shape({
     uid: PropTypes.string.isRequired
-  }).isRequired,
+  }),
   userSettings: customPropTypes.userSettings.isRequired
 };
 

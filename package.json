@@ -28,6 +28,7 @@
     "better-react-spinkit": "^2.0.4",
     "classnames": "^2.2.5",
     "firebase": "^4.9.0",
+    "promise.prototype.finally": "^3.1.0",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-day-picker": "^7.0.7",

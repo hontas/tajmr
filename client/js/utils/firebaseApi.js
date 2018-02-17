@@ -8,6 +8,7 @@ import {
   fetchIntervalsForUser
 } from '../actions/intervals';
 import { userLoggedIn, userLoggedOut, updateSettings } from '../actions/userActions';
+import { initialized } from '../reducers/app';
 import { getWeek } from './time';
 
 // Initialize Firebase
@@ -34,13 +35,15 @@ const api = {
   },
 
   login(email, password) {
-    return auth.signInWithEmailAndPassword(email, password)
-      .catch((err) => console.error(err)); // eslint-disable-line no-console
+    return Promise.resolve(auth.signInWithEmailAndPassword(email, password))
+  },
+
+  sendPasswordResetEmail(email) {
+    return Promise.resolve(auth.sendPasswordResetEmail(email));
   },
 
   logout() {
-    return auth.signOut()
-      .catch((err) => console.error(err)); // eslint-disable-line no-console
+    return Promise.resolve(auth.signOut());
   },
 
   ref: firebase,
@@ -120,6 +123,7 @@ const api = {
 };
 
 auth.onAuthStateChanged((user) => {
+  api.emit(initialized());
   if (user) {
     api.emit(userLoggedIn(user));
     database.ref(`users/${user.uid}`)
