@@ -35,7 +35,7 @@ const api = {
   },
 
   login(email, password) {
-    return Promise.resolve(auth.signInWithEmailAndPassword(email, password))
+    return Promise.resolve(auth.signInWithEmailAndPassword(email, password));
   },
 
   sendPasswordResetEmail(email) {
