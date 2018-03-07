@@ -67,7 +67,7 @@ export const WeekStatsTimeWrapper = RenderEvery(thirtySeconds)(WeekStats);
 export default WeekStats;
 
 function groupByWeekDay(intervals) {
-  return intervals.reduce((hashMap, { startTime, endTime, notWork }) => {
+  return intervals.reduce((hashMap, { startTime, endTime, notWork, note }) => {
     const date = new Date(startTime);
     const dateString = getDate(date);
     const weekDay = getWeekday(date);
@@ -86,7 +86,7 @@ function groupByWeekDay(intervals) {
         total: current.total + timespan,
         intervals: [
           ...current.intervals,
-          { notWork, timespan }
+          { notWork, timespan, note }
         ]
       }
     };

@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import { getHours, getTimeString } from '../../utils/time';
 
+const getDuration = (timestamp) => getTimeString(timestamp, { isDuration: true });
 const getBarHeight = (total) => getHours(total) * 10;
 const getStyle = (barHeight) => ({
   height: `${barHeight}px`,
@@ -12,30 +14,31 @@ const getStyle = (barHeight) => ({
 const WeekDayItem = ({ weekday, total, date, intervals = [] }) => {
   const barHeight = getHours(total) * 10; // 10 hours = 100px;
   const style = {
-    height: `${barHeight}px`,
-    lineHeight: `${barHeight}px`
+    height: `${barHeight}px`
   };
   const baseClassName = 'week-stats-item';
   const barClassName = `${baseClassName}__bar`;
-  const normalWork = intervals
-    .filter(({ notWork }) => !notWork)
+  const totalTime = intervals
     .reduce((res, { timespan }) => res + timespan, 0);
-  const otherThanWork = intervals
-    .filter(({ notWork }) => notWork)
-    .reduce((res, { timespan }) => res + timespan, 0);
+
+  console.log('intervals', intervals);
 
   return (
     <div className={baseClassName}>
-      <div className={barClassName} style={style}>
-        {!!normalWork &&
-          <div style={getStyle(getBarHeight(normalWork))}>
-            { getTimeString(normalWork, { isDuration: true }) }
-          </div>
+      <div className={barClassName} style={style} tabIndex="-1">
+        {intervals
+          .map(({ timespan, note, notWork }) => (
+            <div className={classNames(`${barClassName}__item`, { 'not-work': notWork })} key={timespan}>
+              <p className={`${barClassName}__info`}>
+                { `${getDuration(timespan)} ${note}` }
+              </p>
+            </div>
+          ))
         }
-        {!!otherThanWork &&
-          <div className="not-work" style={getStyle(getBarHeight(otherThanWork))}>
-            { getTimeString(otherThanWork, { isDuration: true }) }
-          </div>
+        {totalTime > 0 &&
+          <p className={`${barClassName}__total`} style={{ lineHeight: `${barHeight}px` }}>
+            { getDuration(totalTime) }
+          </p>
         }
       </div>
       <p className="week-date">
