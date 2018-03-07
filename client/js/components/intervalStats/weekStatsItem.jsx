@@ -5,11 +5,6 @@ import classNames from 'classnames';
 import { getHours, getTimeString } from '../../utils/time';
 
 const getDuration = (timestamp) => getTimeString(timestamp, { isDuration: true });
-const getBarHeight = (total) => getHours(total) * 10;
-const getStyle = (barHeight) => ({
-  height: `${barHeight}px`,
-  lineHeight: `${barHeight}px`
-});
 
 const WeekDayItem = ({ weekday, total, date, intervals = [] }) => {
   const barHeight = getHours(total) * 10; // 10 hours = 100px;
@@ -20,8 +15,6 @@ const WeekDayItem = ({ weekday, total, date, intervals = [] }) => {
   const barClassName = `${baseClassName}__bar`;
   const totalTime = intervals
     .reduce((res, { timespan }) => res + timespan, 0);
-
-  console.log('intervals', intervals);
 
   return (
     <div className={baseClassName}>
