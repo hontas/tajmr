@@ -90,8 +90,8 @@ class AutoComplete extends PureComponent {
   };
 
   onChange = ({ target }) => {
-    const query = target.value;
-    const suggestions = this.props.notes.filter((note) => note.toLowerCase().startsWith(query.toLowerCase()));
+    const query = target.value.toLowerCase();
+    const suggestions = this.props.notes.filter((note) => note.toLowerCase().startsWith(query));
     this.setState({
       query,
       suggestions: query ? suggestions : []
@@ -99,7 +99,7 @@ class AutoComplete extends PureComponent {
   };
 
   onBlur = ({ target }) => {
-    const { value } = target;
+    const value = target.value.toLowerCase();
     // don't blur if tabbed to selection list
     if (this.suggestionsList.hasChildNodes(target)) return;
     if (value === this.props.value) return;

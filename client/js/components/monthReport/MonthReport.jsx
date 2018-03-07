@@ -10,6 +10,8 @@ import {
   months
 } from '../../utils/time';
 
+const isNotWork = 'notwork';
+
 class MonthReport extends Component {
   state = {
     referenceDate: new Date(),
@@ -20,7 +22,7 @@ class MonthReport extends Component {
     const { referenceDate, filterOut } = this.state;
     const { className } = this.props;
     const intervals = this.getGroupedIntervalsBy('note');
-    const categories = Object.keys(intervals);
+    const categories = Object.keys(intervals).map((cat) => cat.toLowerCase());
     const filteredCategories = categories
       .filter((cat) => !filterOut.includes(cat));
     const totalMinusNotWork = filteredCategories
@@ -53,7 +55,7 @@ class MonthReport extends Component {
               <li
                 key={note}
                 className={classNames('MonthReport__list-item', {
-                  'not-work': note.startsWith('notWork')
+                  'not-work': note.startsWith(isNotWork)
                 })}
               >
                 <p className="MonthReport__list-item__title">{note}</p>
@@ -64,7 +66,7 @@ class MonthReport extends Component {
             ))
           }
           <li className="MonthReport__list-item">
-            <p className="MonthReport__list-item__title">TOTAL (work):</p>
+            <p className="MonthReport__list-item__title">TOTAL:</p>
             <p className="MonthReport__list-item__value">
               {`${getHours(totalMinusNotWork).toFixed(1)}h`}
             </p>
@@ -99,8 +101,8 @@ class MonthReport extends Component {
   getGroupedIntervalsBy = (key) =>
     this.getMonthIntervals()
       .reduce((res, curr) => {
-        let keyToBe = curr[key] ? curr[key] : 'undefined';
-        if (curr.notWork) keyToBe = `notWork:${keyToBe}`;
+        let keyToBe = curr[key] ? curr[key].toLowerCase() : '-';
+        if (curr.notWork) keyToBe = `${isNotWork}:${keyToBe}`;
         if (!res[keyToBe]) res[keyToBe] = 0;
         res[keyToBe] += (curr.endTime - curr.startTime);
         return res;
