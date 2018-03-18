@@ -94,6 +94,12 @@ const api = {
     return auth.currentUser && auth.currentUser.uid;
   },
 
+  updateUserPassword(oldPass, newPass) {
+    const credential = firebase.auth.EmailAuthProvider.credential(auth.currentUser.email, oldPass);
+    return auth.currentUser.reauthenticateWithCredential(credential)
+      .then(() => auth.currentUser.updatePassword(newPass));
+  },
+
   saveUserData(userId, data) {
     return database.ref(`users/${userId}`).set(data);
   },

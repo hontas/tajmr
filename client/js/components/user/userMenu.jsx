@@ -12,17 +12,20 @@ const garavatarUrl = 'https://www.gravatar.com/avatar';
 
 class UserMenu extends React.Component {
   state = {
-    isSavingUserSettings: false
+    isSavingUserSettings: false,
+    isSavingUserPassword: false,
+    updatePasswordError: null,
+    updatePasswordSuccess: false
   };
 
   render() {
     const { userSettings, user, className } = this.props;
     const { displayMonthReport, displayNotifications, displayPreviousIntervals, hoursInWeek } = userSettings;
-    const { isSavingUserSettings } = this.state;
+    const { isSavingUserSettings, isSavingUserPassword, updatePasswordError, updatePasswordSuccess } = this.state;
     const photoURL = user && (user.photoURL || `${garavatarUrl}/${md5(user.email)}`);
 
     return (
-      <form className={classNames('pure-form pure-form-stacked user-menu', className)}>
+      <form className={classNames('pure-form pure-form-stacked user-menu', className)} onSubmit={this.preventDefault}>
         <div className="user-menu__row">
           <img alt="avatar" className="profile-image" src={photoURL} />
           <button className="user-menu__log-out pure-menu-link" onClick={firebaseApi.logout}>Logga ut</button>
@@ -67,8 +70,67 @@ class UserMenu extends React.Component {
           onClick={this.saveUserSettings}
           text="Spara"
         />
+        <fieldset className="user-menu__fieldset">
+          {updatePasswordError &&
+            <p style={{ whiteSpace: 'normal' }}>
+              {updatePasswordError}
+            </p>
+          }
+          <div className="user-menu__change-pass pure-button-group">
+            <input
+              onKeyDown={this.preventDefault}
+              autoComplete="old-password"
+              className="user-menu__change-pass__input"
+              ref={(node) => { this.oldPass = node; }}
+              type="password"
+              placeHolder="Nuvarande lösenord"
+            />
+            <input
+              onKeyDown={this.preventDefault}
+              autoComplete="new-password"
+              className="user-menu__change-pass__input"
+              ref={(node) => { this.newPass = node; }}
+              type="password"
+              placeHolder="Nytt lösenord"
+            />
+            <Button
+              theme={updatePasswordSuccess ? 'success' : 'default'}
+              className="user-menu__change-pass__btn pure-button-primary"
+              isLoading={isSavingUserPassword}
+              onClick={this.updateUserPassword}
+              text={updatePasswordSuccess ? '👍' : 'Ändra'}
+            />
+          </div>
+        </fieldset>
       </form>
     );
+  }
+
+  preventDefault = (evt) => {
+    if (evt.type === 'keydown' && evt.key !== 'Enter') return;
+    evt.preventDefault();
+  }
+
+  updateUserPassword = (evt) => {
+    evt.preventDefault();
+    const oldPass = this.oldPass.value;
+    const newPass = this.newPass.value;
+    this.setState({ isSavingUserPassword: true });
+
+    const handleResponse = ({ message }) => this.setState({
+      isSavingUserPassword: false,
+      updatePasswordError: message,
+      updatePasswordSuccess: !message
+    });
+
+    firebaseApi.updateUserPassword(oldPass, newPass)
+      .then(() => {
+        handleResponse({ message: '' });
+        setTimeout(() => this.setState({ updatePasswordSuccess: false }), 2000);
+        this.oldPass.value = '';
+        this.newPass.value = '';
+      })
+      .catch(handleResponse);
   }
 
   handleChange(prop, transform = (x) => x) {
