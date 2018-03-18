@@ -17,7 +17,7 @@ class UserMenu extends React.Component {
 
   render() {
     const { userSettings, user, className } = this.props;
-    const { displayMonthReport, displayNotifications, displayPreviousIntervals } = userSettings;
+    const { displayMonthReport, displayNotifications, displayPreviousIntervals, hoursInWeek } = userSettings;
     const { isSavingUserSettings } = this.state;
     const photoURL = user && (user.photoURL || `${garavatarUrl}/${md5(user.email)}`);
 
@@ -52,6 +52,14 @@ class UserMenu extends React.Component {
               type="checkbox"
             />
           </label>
+          <label className="user-menu__label">{'Full arbetsvecka (h)'}
+            <input
+              value={hoursInWeek}
+              onChange={this.handleChange('hoursInWeek', Number)}
+              style={{ float: 'right' }}
+              type="number"
+            />
+          </label>
         </fieldset>
         <Button
           className="pure-button-primary"
@@ -63,11 +71,11 @@ class UserMenu extends React.Component {
     );
   }
 
-  handleChange(prop) {
+  handleChange(prop, transform = (x) => x) {
     const { dispatch } = this.props;
 
     return ({ target }) => {
-      const value = target.type === 'checkbox' ? target.checked : target.value;
+      const value = target.type === 'checkbox' ? target.checked : transform(target.value);
       dispatch(updateSettings({ [prop]: value }));
     };
   }
