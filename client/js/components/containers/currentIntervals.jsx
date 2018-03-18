@@ -21,7 +21,7 @@ import {
 import {
   getWeek,
   getMonth,
-  startOfDay
+  getDayRange
 } from '../../utils/time';
 
 class CurrentIntervals extends React.PureComponent {
@@ -144,9 +144,11 @@ CurrentIntervals.defaultProps = {
   activeInterval: null
 };
 
-const today = +startOfDay(Date.now());
-function isToday({ startTime }) {
-  return startTime > today;
+const todayRange = getDayRange(Date.now());
+function isToday({ startTime, endTime }) {
+  const startedToday = startTime > todayRange.startTime;
+  const endedToday = endTime > todayRange.startTime && endTime < todayRange.endTime;
+  return startedToday || endedToday;
 }
 
 function mapStateToProps({ intervals: { items, timestamp }, userSettings }) {

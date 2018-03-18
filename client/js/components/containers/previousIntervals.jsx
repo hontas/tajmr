@@ -6,7 +6,7 @@ import * as customPropTypes from '../../constants/propTypes';
 import IntervalList from '../intervalList/intervalList.jsx';
 import Button from '../button/button.jsx';
 import { attemptUpdate, attemptRemove } from '../../actions/intervals';
-import { getWeek, getMonth } from '../../utils/time';
+import { getWeek, getMonth, startOfDay } from '../../utils/time';
 import { isComplete } from '../../utils/intervals';
 
 const limits = {
@@ -52,7 +52,8 @@ class PreviousIntervals extends React.Component {
   getIntervals = () => {
     const intervals = this.props.intervals
       .filter(isComplete)
-      .filter(hasEnded);
+
+      .filter(endedBeforeToday);
     switch (this.state.limit) {
       case limits.ALL:
         return intervals;
@@ -81,8 +82,9 @@ PreviousIntervals.propTypes = {
 };
 
 const now = Date.now();
-function hasEnded({ endTime }) {
-  return endTime < now;
+const today = startOfDay(now);
+function endedBeforeToday({ endTime }) {
+  return endTime < today;
 }
 
 const week = getWeek(now);

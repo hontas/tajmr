@@ -4,11 +4,14 @@ import {
   isSameWeek,
   getWeekday,
   getWeekNumber,
+  getDayRange,
   getWeek,
   getMonth,
   createWorkWeek,
   isCurrentWeek,
-  getWorkDaysinMonth
+  getWorkDaysinMonth,
+  startOfDay,
+  endOfDay
 } from './time';
 
 describe('time', () => {
@@ -106,6 +109,61 @@ describe('time', () => {
       clock.setSystemTime(1505710969272); // monday 11 september
       const date1 = new Date(1505113211392); // monday 18 september
       expect(isCurrentWeek(date1)).toBe(false);
+    });
+  });
+
+  describe('#startOfDay', () => {
+    it('should return a date', () => {
+      expect(startOfDay()).toBeInstanceOf(Date);
+    });
+
+    it('should have hours, minutes, seconds set to 0', () => {
+      const date = startOfDay('2018-03-14');
+      expect(date.getFullYear()).toBe(2018);
+      expect(date.getMonth()).toBe(2); // 0-based
+      expect(date.getDate()).toBe(14);
+      expect(date.getHours()).toBe(0);
+      expect(date.getMinutes()).toBe(0);
+      expect(date.getSeconds()).toBe(0);
+    });
+  });
+
+  describe('#endOfDay', () => {
+    it('should return a date', () => {
+      expect(endOfDay()).toBeInstanceOf(Date);
+    });
+
+    it('should have hours, minutes, seconds set to 0', () => {
+      const date = endOfDay('2018-03-14');
+      expect(date.getFullYear()).toBe(2018);
+      expect(date.getMonth()).toBe(2); // 0-based
+      expect(date.getDate()).toBe(14);
+      expect(date.getHours()).toBe(23);
+      expect(date.getMinutes()).toBe(59);
+      expect(date.getSeconds()).toBe(59);
+    });
+  });
+
+  describe('#getDayRange', () => {
+    const dateString = '2018-03-18';
+    const startDate = new Date(dateString);
+
+    test('should return an object', () => {
+      expect(typeof getDayRange()).toBe('object');
+    });
+
+    test('should return two timestamps', () => {
+      expect(getDayRange()).toEqual({
+        startTime: expect.any(Number),
+        endTime: expect.any(Number)
+      });
+    });
+
+    test('should return startTime and endTime for that day', () => {
+      expect(getDayRange(+startDate)).toEqual({
+        startTime: +startOfDay(dateString),
+        endTime: +endOfDay(dateString)
+      });
     });
   });
 

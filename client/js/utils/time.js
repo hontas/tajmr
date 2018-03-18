@@ -30,6 +30,13 @@ export function getHours(timestamp) {
   return timestamp / oneHour;
 }
 
+export function getDayRange(timestamp) {
+  return {
+    startTime: +startOfDay(timestamp),
+    endTime: +endOfDay(timestamp)
+  };
+}
+
 export function getWeek(timestamp) {
   const weekStart = new Date(timestamp);
   const dayOffset = weekStart.getDay() || 7;
@@ -125,10 +132,18 @@ export function getTimePartsFromTimestamp(timestamp) {
 }
 
 export function startOfDay(date) {
-  const newDate = new Date(date);
+  const newDate = new Date(date || Date.now());
   newDate.setHours(0);
   newDate.setMinutes(0);
   newDate.setSeconds(0);
+  return newDate;
+}
+
+export function endOfDay(date) {
+  const newDate = new Date(date || Date.now());
+  newDate.setHours(23);
+  newDate.setMinutes(59);
+  newDate.setSeconds(59);
   return newDate;
 }
 
