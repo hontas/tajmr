@@ -10,21 +10,23 @@ import { getWeek, getMonth, startOfDay } from '../../utils/time';
 import { isComplete } from '../../utils/intervals';
 
 const limits = {
+  ZERO: 0,
   WEEK: 1,
   MONTH: 2,
   ALL: 3
 };
 
 class PreviousIntervals extends React.Component {
-  state = {
-    limit: limits.WEEK
-  };
-
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.userSettings.displayPreviousIntervals && nextProps.userSettings.displayPreviousIntervals) {
-      this.setState({ limit: limits.WEEK });
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (!prevState.limit && nextProps.userSettings.displayPreviousIntervals) {
+      return { limit: limits.WEEK };
     }
+    return null;
   }
+
+  state = {
+    limit: limits.ZERO
+  };
 
   render() {
     const { userSettings } = this.props;
