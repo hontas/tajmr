@@ -72,7 +72,6 @@ const config = {
     new HtmlWebpackPlugin({
       title: pkg.name,
       template: 'template.jade',
-      inject: 'head', // needed for StyleExtHtmlWebpackPlugin
       minimize: false
     }),
     new MiniCssExtractTextPlugin('styles.css'),

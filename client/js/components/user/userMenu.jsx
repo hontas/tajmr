@@ -83,7 +83,7 @@ class UserMenu extends React.Component {
               className="user-menu__change-pass__input"
               ref={(node) => { this.oldPass = node; }}
               type="password"
-              placeHolder="Nuvarande lösenord"
+              placeholder="Nuvarande lösenord"
             />
             <input
               onKeyDown={this.preventDefault}
@@ -91,7 +91,7 @@ class UserMenu extends React.Component {
               className="user-menu__change-pass__input"
               ref={(node) => { this.newPass = node; }}
               type="password"
-              placeHolder="Nytt lösenord"
+              placeholder="Nytt lösenord"
             />
             <Button
               theme={updatePasswordSuccess ? 'success' : 'default'}
