@@ -61,7 +61,7 @@ export function intervalUpdateFailed(error) {
   };
 }
 
-export function removeInterval(id) {
+export function intervalRemoved(id) {
   return {
     type: INTERVAL_REMOVE,
     id
@@ -72,7 +72,7 @@ export function attemptRemove(id) {
   return (dispatch) => {
     dispatch(requestIntervalUpdate());
     firebaseApi.removeInterval(id)
-      .then(() => dispatch(removeInterval(id)));
+      .then(() => dispatch(intervalRemoved(id)));
   };
 }
 

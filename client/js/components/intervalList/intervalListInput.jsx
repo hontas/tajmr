@@ -95,7 +95,7 @@ IntervalListInput.defaultProps = {
 
 IntervalListInput.propTypes = {
   className: PropTypes.string,
-  timestamp: PropTypes.number.isRequired,
+  timestamp: PropTypes.number,
   onUpdate: PropTypes.func.isRequired
 };
 

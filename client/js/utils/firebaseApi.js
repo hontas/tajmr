@@ -4,6 +4,7 @@ import 'firebase/database';
 
 import {
   intervalAdded,
+  intervalRemoved,
   intervalUpdated,
   fetchIntervalsForUser
 } from '../actions/intervals';
@@ -124,6 +125,12 @@ const api = {
       const id = snapshot.key;
       console.log('child_changed', interval, id); // eslint-disable-line no-console
       api.emit(intervalUpdated({ ...interval, id }));
+    });
+
+    api.intervals.on('child_removed', (snapshot) => {
+      const id = snapshot.key;
+      console.log('child_removed', id); // eslint-disable-line no-console
+      api.emit(intervalRemoved(id));
     });
   }
 };
