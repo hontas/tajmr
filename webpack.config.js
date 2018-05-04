@@ -2,11 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const StyleExtHtmlWebpackPlugin = require('style-ext-html-webpack-plugin');
+const MiniCssExtractTextPlugin = require('mini-css-extract-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin3');
 const pkg = require('./package.json');
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -15,11 +12,17 @@ const paths = {
   public: path.resolve(__dirname, './public')
 };
 
+if (!isProduction) {
+  process.traceDeprecation = true;
+}
+
 const config = {
+  mode: isProduction ? 'production' : 'development',
+
   devtool: isProduction ? '' : 'cheap-module-source-map',
 
   entry: {
-    app: [paths.entry]
+    app: paths.entry
   },
 
   output: {
@@ -29,7 +32,8 @@ const config = {
   },
 
   devServer: {
-    contentBase: paths.public
+    contentBase: paths.public,
+    hot: true
   },
 
   module: {
@@ -42,12 +46,11 @@ const config = {
       {
         test: /\.styl$/,
         include: /critical/,
-        use: ExtractTextPlugin.extract({
-          use: [
-            { loader: 'css-loader' },
-            { loader: 'stylus-loader' }
-          ]
-        })
+        use: [
+          (isProduction ? MiniCssExtractTextPlugin.loader : { loader: 'style-loader' }),
+          { loader: 'css-loader' },
+          { loader: 'stylus-loader' }
+        ]
       },
       {
         test: /\.styl$/,
@@ -59,10 +62,6 @@ const config = {
         loader: 'style-loader!css-loader'
       },
       {
-        test: /\.json$/,
-        loader: 'json-loader'
-      },
-      {
         test: /\.jade$/,
         loader: 'jade-loader'
       }
@@ -70,17 +69,13 @@ const config = {
   },
 
   plugins: [
-    new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development'
-    }),
     new HtmlWebpackPlugin({
       title: pkg.name,
       template: 'template.jade',
       inject: 'head', // needed for StyleExtHtmlWebpackPlugin
       minimize: false
     }),
-    new ExtractTextPlugin('styles.css'),
-    new StyleExtHtmlWebpackPlugin(), // internalize styles
+    new MiniCssExtractTextPlugin('styles.css'),
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: 'async'
     })
@@ -96,19 +91,12 @@ const config = {
 };
 
 if (isProduction) {
-  config.plugins.push(
-    new UglifyJSPlugin(),
-    new CompressionPlugin({ test: /\.js/ })
-  );
+  config.plugins.push(new CompressionPlugin({ test: /\.(js|css)/ }));
 } else {
-  config.entry.app.push('webpack-hot-middleware/client?reload=true');
   config.plugins.push(
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.NamedModulesPlugin(),
-    new BundleAnalyzerPlugin()
+    new webpack.HotModuleReplacementPlugin()
   );
 }
 
 module.exports = config;
-
