@@ -12,12 +12,10 @@ import Login from '../auth/login.jsx';
 class Application extends React.Component {
   render() {
     return (
-      <React.StrictMode>
-        <div className="application">
-          <Navbar />
-          {this.renderBody()}
-        </div>
-      </React.StrictMode>
+      <div className="application">
+        <Navbar />
+        {this.renderBody()}
+      </div>
     );
   }
 

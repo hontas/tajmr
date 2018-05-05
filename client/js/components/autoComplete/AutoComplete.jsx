@@ -1,8 +1,8 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-class AutoComplete extends PureComponent {
+class AutoComplete extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -4,7 +4,7 @@ import IntervalListItem from './intervalListItem.jsx';
 import Save from '../icons/Save.jsx';
 import Button from '../button/button.jsx';
 
-class AddOneInterval extends React.PureComponent {
+class AddOneInterval extends React.Component {
   constructor(props) {
     super(props);
     const startHour = 9;

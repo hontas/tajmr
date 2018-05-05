@@ -24,7 +24,7 @@ import {
   getDayRange
 } from '../../utils/time';
 
-class CurrentIntervals extends React.PureComponent {
+class CurrentIntervals extends React.Component {
   state = {
     displayAddForm: false
   };

@@ -14,7 +14,7 @@ import {
   oneWeek
 } from '../../utils/time';
 
-class WeekStats extends React.PureComponent {
+class WeekStats extends React.Component {
   render() {
     const { intervals, timestamp, userSettings } = this.props;
     const now = Date.now();
