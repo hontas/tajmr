@@ -1,3 +1,216 @@
+/* DayPicker styles */
+
+.DayPicker {
+  display: inline-block;
+}
+
+.DayPicker-wrapper {
+  position: relative;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  padding-bottom: 1rem;
+  flex-direction: row;
+}
+
+.DayPicker-Months {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.DayPicker-Month {
+  display: table;
+  border-collapse: collapse;
+  border-spacing: 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  margin: 0 1rem;
+  margin-top: 1rem;
+}
+
+.DayPicker-NavBar {
+}
+
+.DayPicker-NavButton {
+  position: absolute;
+  cursor: pointer;
+  top: 1rem;
+  right: 1.5rem;
+  margin-top: 2px;
+  color: #8b9898;
+  width: 1.25rem;
+  height: 1.25rem;
+  display: inline-block;
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.DayPicker-NavButton:hover {
+  opacity: 0.8;
+}
+
+.DayPicker-NavButton--prev {
+  margin-right: 1.5rem;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAwCAYAAAB5R9gVAAAABGdBTUEAALGPC/xhBQAAAVVJREFUWAnN2G0KgjAYwPHpGfRkaZeqvgQaK+hY3SUHrk1YzNLay/OiEFp92I+/Mp2F2Mh2lLISWnflFjzH263RQjzMZ19wgs73ez0o1WmtW+dgA01VxrE3p6l2GLsnBy1VYQOtVSEH/atCCgqpQgKKqYIOiq2CBkqtggLKqQIKgqgCBjpJ2Y5CdJ+zrT9A7HHSTA1dxUdHgzCqJIEwq0SDsKsEg6iqBIEoq/wEcVRZBXFV+QJxV5mBtlDFB5VjYTaGZ2sf4R9PM7U9ZU+lLuaetPP/5Die3ToO1+u+MKtHs06qODB2zBnI/jBd4MPQm1VkY79Tb18gB+C62FdBFsZR6yeIo1YQiLJWMIiqVjQIu1YSCLNWFgijVjYIuhYYCKoWKAiiFgoopxYaKLUWOii2FgkophYp6F3r42W5A9s9OcgNvva8xQaysKXlFytoqdYmQH6tF3toSUo0INq9AAAAAElFTkSuQmCC');
+}
+
+.DayPicker-NavButton--next {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAwCAYAAAB5R9gVAAAABGdBTUEAALGPC/xhBQAAAXRJREFUWAnN119ugjAcwPHWzJ1gnmxzB/BBE0n24m4xfNkTaOL7wOtsl3AXMMb+Vjaa1BG00N8fSEibPpAP3xAKKs2yjzTPH9RAjhEo9WzPr/Vm8zgE0+gXATAxxuxtqeJ9t5tIwv5AtQAApsfT6TPdbp+kUBcgVwvO51KqVhMkXKsVJFXrOkigVhCIs1Y4iKlWZxB1rX4gwlpRIIpa8SDkWmggrFq4IIRaJKCYWnSgnrXIQV1r8YD+1Vrn+bReagysIFfLABRt31v8oBu1xEBttfRbltmfjgEcWh9snUS2kNdBK6WN1vrOWxObWsz+fjxevsxmB1GQDfINWiev83nhaoiB/CoOU438oPrhXS0WpQ9xc1ZQWxWHqUYe0I0qrKCQKjygDlXIQV2r0IF6ViEBxVTBBSFUQQNhVYkHIVeJAtkNsbQ7c1LtzP6FsObhb2rCKv7NBIGoq4SDmKoEgTirXAcJVGkFSVVpgoSrXICGUMUH/QBZNSUy5XWUhwAAAABJRU5ErkJggg==');
+}
+
+.DayPicker-NavButton--interactionDisabled {
+  display: none;
+}
+
+.DayPicker-Caption {
+  padding: 0 0.5rem;
+  display: table-caption;
+  text-align: left;
+  margin-bottom: 0.5rem;
+}
+
+.DayPicker-Caption > div {
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+.DayPicker-Weekdays {
+  margin-top: 1rem;
+  display: table-header-group;
+}
+
+.DayPicker-WeekdaysRow {
+  display: table-row;
+}
+
+.DayPicker-Weekday {
+  display: table-cell;
+  padding: 0.5rem;
+  font-size: 0.875em;
+  text-align: center;
+  color: #8b9898;
+}
+
+.DayPicker-Weekday abbr[title] {
+  border-bottom: none;
+  text-decoration: none;
+}
+
+.DayPicker-Body {
+  display: table-row-group;
+}
+
+.DayPicker-Week {
+  display: table-row;
+}
+
+.DayPicker-Day {
+  display: table-cell;
+  padding: 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  vertical-align: middle;
+  outline: none;
+}
+
+.DayPicker-WeekNumber {
+  display: table-cell;
+  padding: 0.5rem;
+  text-align: right;
+  vertical-align: middle;
+  min-width: 1rem;
+  font-size: 0.75em;
+  cursor: pointer;
+  color: #8b9898;
+  border-right: 1px solid #eaecec;
+}
+
+.DayPicker--interactionDisabled .DayPicker-Day {
+  cursor: default;
+}
+
+.DayPicker-Footer {
+  padding-top: 0.5rem;
+}
+
+.DayPicker-TodayButton {
+  border: none;
+  background-image: none;
+  background-color: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  color: #4a90e2;
+  font-size: 0.875em;
+}
+
+/* Default modifiers */
+
+.DayPicker-Day--today {
+  color: #d0021b;
+  font-weight: 700;
+}
+
+.DayPicker-Day--outside {
+  cursor: default;
+  color: #8b9898;
+}
+
+.DayPicker-Day--disabled {
+  color: #dce0e0;
+  cursor: default;
+  /* background-color: #eff1f1; */
+}
+
+/* Example modifiers */
+
+.DayPicker-Day--sunday {
+  background-color: #f7f8f8;
+}
+
+.DayPicker-Day--sunday:not(.DayPicker-Day--today) {
+  color: #dce0e0;
+}
+
+.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+  position: relative;
+  color: #f0f8ff;
+  background-color: #4a90e2;
+  border-radius: 100%;
+}
+
+.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside):hover {
+  background-color: #51a0fa;
+}
+
+.DayPicker:not(.DayPicker--interactionDisabled)
+  .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
+  background-color: #f0f8ff;
+  border-radius: 50%;
+}
+
+/* DayPickerInput */
+
+.DayPickerInput {
+  display: inline-block;
+}
+
+.DayPickerInput-OverlayWrapper {
+  position: relative;
+}
+
+.DayPickerInput-Overlay {
+  left: 0;
+  z-index: 1;
+  position: absolute;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
 /**
@@ -482,6 +695,49 @@ a.animated:hover {
 a.animated:hover:after {
   transform: scaleX(1);
 }
+.center {
+  text-align: center;
+}
+.pull-right {
+  float: right;
+}
+.pull-left {
+  float: left;
+}
+.spin-kit-spinner {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 0.5em;
+}
+.list-menu {
+  background: #fff;
+  border: 1px solid #d3d3d3;
+  border-radius: 4px;
+  position: absolute;
+  width: 200px;
+  top: 33px;
+  right: 0;
+  list-style: none;
+  padding-left: 0;
+}
+.list-menu li {
+  border-bottom: 1px solid #eee;
+  margin: 0 5px;
+}
+.list-menu li > a,
+.list-menu li > label {
+  display: block;
+  padding: 0.5em;
+}
+.flex-container {
+  display: flex;
+}
+.flex--align-end {
+  align-items: flex-end;
+}
+.flex-item {
+  flex: 1;
+}
 .application {
   display: flex;
   flex-direction: column;
@@ -493,6 +749,451 @@ a.animated:hover:after {
   justify-content: center;
   align-items: center;
   height: 100vh;
+}
+.login {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login__error {
+  color: #f5f5f5;
+}
+.auth-form {
+  color: #333;
+  padding: 0.5em;
+  width: 250px;
+}
+.auth-form input {
+  border: 1px solid #d3d3d3;
+  border-radius: 4px;
+  display: block;
+  margin-bottom: 0.5em;
+  padding: 0.5em;
+  width: 100%;
+}
+.auth-form .pure-button {
+  display: block;
+  width: 100%;
+}
+.AutoComplete {
+  position: relative;
+}
+.AutoComplete__label {
+  display: block;
+}
+.AutoComplete__input {
+  display: block;
+  font-size: 1em;
+  padding: 0.5em;
+  width: 100%;
+}
+.AutoComplete__suggestions {
+  background-color: #fff;
+  box-shadow: 0px 13px 25px rgba(0,0,0,0.25);
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0;
+  position: absolute;
+  top: 2em;
+  left: 0;
+  min-width: 100%;
+  z-index: 10;
+}
+.AutoComplete__suggestion__btn {
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  display: block;
+  font-size: 1em;
+  padding: 0.5em;
+  text-align: left;
+  min-width: 100%;
+}
+.button {
+  transition: background 0.3s;
+}
+.button--primary {
+  background: #2d3e50;
+  color: #6fbef3;
+}
+.button--secondary {
+  background: #555;
+  color: #d3d3d3;
+}
+.button--danger {
+  background: #5a2929;
+  color: #d3d3d3;
+}
+.button--success {
+  background: #7df36f;
+  color: #6fbef3;
+}
+.button--link {
+  background: transparent;
+  color: #6fbef3;
+  text-shadow: 0 0 1px #2d3e50;
+}
+.work-button {
+  border-radius: 0;
+  display: block;
+  font-size: 1.5em;
+  width: 100%;
+}
+@media screen and (min-width: 1024px) {
+  .current-intervals {
+    margin-bottom: 3em;
+    padding-bottom: 1.5em;
+  }
+}
+.current-intervals__prev-work-btn {
+  border-radius: 0;
+  border-left: 1px solid #1f8dd6;
+}
+.previous-intervals {
+  padding-bottom: 4em;
+}
+.previous-intervals__title {
+  background: #2d3e50;
+  color: #fff;
+  padding: 0.5em;
+}
+.previous-intervals__show-more {
+  display: block;
+  margin: 0 0.5em 0.5em;
+  width: calc(100% - 1em);
+}
+.date-picker {
+  padding-right: 0.5em;
+  position: relative;
+}
+.date-picker__icon {
+  padding-top: 3px;
+}
+.date-picker__calendar {
+  font-size: smaller;
+  left: 0;
+  padding-top: 0.6em;
+  position: absolute;
+  top: 2.6em;
+  z-index: 10;
+}
+.date-picker__calendar .DayPicker-wrapper {
+  background: #fff;
+  color: #333;
+}
+.date-picker:focus {
+  outline: none;
+}
+.date-picker--show-picker {
+  color: #6fbef3;
+}
+.date-picker--disabled {
+  color: #add8e6;
+}
+.digital-clock {
+  font-weight: 500;
+  margin: 2em 0 1em;
+  margin-top: 5em;
+  text-align: center;
+}
+.digital-clock time {
+  font-size: 12vw;
+  display: block;
+  line-height: 10vw;
+  margin: 0 auto;
+}
+.footer {
+  background-color: #2d3e50;
+  color: #f5f5f5;
+  padding: 1em;
+}
+.footer [role="img"] {
+  color: #bd5a5a;
+}
+@media screen and (min-width: 1024px) {
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}
+.hamburger,
+.hamburger:before,
+.hamburger:after {
+  background-color: currentColor;
+  width: 100%;
+  height: 0.2em;
+  transition: transform 0.2s;
+}
+.hamburger {
+  position: relative;
+  display: block;
+}
+.hamburger:before,
+.hamburger:after {
+  position: absolute;
+  left: 0;
+  margin-top: -0.6em;
+  content: " ";
+}
+.hamburger:after {
+  margin-top: 0.6em;
+}
+.hamburger--active {
+  transform: rotate(-45deg);
+}
+.hamburger--active:before {
+  margin-top: 0;
+}
+.hamburger--active:after {
+  transform: rotate(90deg);
+  margin-top: 0;
+}
+.svg-icon {
+  fill: currentColor;
+}
+.add-one-interval {
+  margin-top: 1em;
+  padding-right: 0.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.add-one-interval__interval-list-item {
+  flex: 2;
+}
+.add-one-interval__interval-list-item button.delete {
+  display: none;
+}
+.add-one-interval__btn {
+  font-size: 1em;
+  padding: 0.5em;
+  width: 40px;
+  height: 40px;
+}
+.add-one-interval__btn:last-child {
+  margin-left: 0.5em;
+}
+.interval-list {
+  list-style: none;
+  padding-left: 0;
+}
+.interval-list input {
+  padding: 0.5em 0.25em;
+}
+@media screen and (min-width: 480px) {
+  .interval-list input {
+    padding: 0.5em;
+  }
+}
+.interval-list-input {
+  display: flex;
+  color: #fff;
+  border-width: 0;
+  margin-left: 0.5em;
+  flex: 1;
+}
+.interval-list-input__input {
+  flex: 1;
+  order: 1;
+  color: #333;
+  font-size: 1em;
+  padding: 0.5em;
+  width: 100%;
+}
+.interval-list-input__input[disabled] {
+  background: #f5f5f5;
+  color: #a9a9a9;
+  cursor: not-allowed;
+}
+.interval-list-input__input:focus ~ .interval-list-input__date .date-picker__calendar {
+  display: block;
+  color: #f00;
+}
+.interval-list-input__date {
+  padding-right: 0;
+}
+@media screen and (min-width: 480px) {
+  .interval-list-input__date {
+    padding-right: 0.5em;
+  }
+}
+.interval-list-input__date .date-picker__icon {
+  display: none;
+}
+@media screen and (min-width: 480px) {
+  .interval-list-input__date .date-picker__icon {
+    display: block;
+  }
+}
+.interval-list-input--error {
+  background: #f00;
+  border-color: #8b0000;
+  color: #8b0000;
+}
+.interval-list-item {
+  display: flex;
+  margin-bottom: 0.5em;
+}
+.interval-list-item .button {
+  display: inline-block;
+  font-size: 1em;
+  margin: 0 0.5em;
+  width: auto;
+  color: #fff;
+}
+.interval-list-item .delete {
+  flex-basis: 40px;
+  margin-left: 0;
+  padding: 0.5em;
+}
+.interval-list-item__note {
+  color: #333;
+  font-size: 1em;
+  flex: 1;
+  margin: 0 0.5em;
+}
+.interval-list-item__note[disabled] {
+  background: #f5f5f5;
+  color: #a9a9a9;
+  cursor: not-allowed;
+}
+.interval-list-item__no-work {
+  margin: 0.75em 0.5em 0 0;
+}
+.interval-stats {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  width: 100%;
+}
+.interval-stats .interval-stats-item {
+  flex: 1;
+  padding: 0.5em;
+}
+.month-stats__heading {
+  margin: 1em 0.5em;
+}
+.week-stats {
+  min-height: 180px;
+}
+.week-stats__bars,
+.week-stats__title {
+  margin: 1em 0.5em;
+}
+.week-stats__title {
+  font-weight: 500;
+  text-align: center;
+}
+.week-stats__title .button {
+  color: #fff;
+  background-color: transparent;
+}
+.week-stats-item {
+  flex: 1;
+  margin-right: 1px;
+  text-align: center;
+}
+.week-stats-item:last-child {
+  margin-right: 0;
+}
+.week-stats-item__bar {
+  background: #6fbef3;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: height 400ms;
+}
+.week-stats-item__bar .not-work {
+  background: #bd5a5a;
+}
+.week-stats-item__bar__item {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.week-stats-item__bar__info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  font-size: smaller;
+  opacity: 0;
+  margin: 0;
+  transition: opacity 400ms;
+}
+.week-stats-item__bar__total {
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: opacity 400ms;
+}
+.week-stats-item__bar:focus .week-stats-item__bar__info {
+  opacity: 1;
+}
+.week-stats-item__bar:focus .week-stats-item__bar__total {
+  opacity: 0;
+}
+.week-stats-item__total {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+.MonthReport {
+  padding: 0 0.5em;
+}
+.MonthReport__title {
+  margin-bottom: 0;
+  text-align: center;
+}
+.MonthReport__subtitle {
+  margin: 0 0 0.5em;
+  text-align: center;
+}
+.MonthReport__subtitle .button {
+  background-color: transparent;
+  color: #fff;
+}
+.MonthReport__filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 0.75em;
+}
+.MonthReport__filter {
+  background-color: rgba(45,62,80,0.25);
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 0.25em;
+}
+.MonthReport__filter--active {
+  background-color: rgba(45,62,80,0.75);
+  color: rgba(255,255,255,0.9);
+}
+.MonthReport__list {
+  list-style-type: none;
+  padding-left: 0;
+}
+.MonthReport__list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5em;
+}
+.MonthReport__list-item:first-child,
+.MonthReport__list-item:last-child {
+  border-top: 1px solid rgba(255,255,255,0.75);
+}
+.MonthReport__list-item.not-work {
+  background-color: rgba(189,90,90,0.75);
+}
+.MonthReport__list-item__title,
+.MonthReport__list-item__value {
+  margin: 0.5em 0;
 }
 .navbar {
   background: #2d3e50;
@@ -538,5 +1239,163 @@ a.animated:hover:after {
 }
 .navbar__user-menu--active {
   right: 0;
+}
+.progress-bar {
+  box-shadow: inset 1px 1px 5px rgba(0,0,0,0.1);
+  color: rgba(255,255,255,0.25);
+  display: flex;
+  margin: 1em 0.5em;
+  position: relative;
+  transition: margin 300ms;
+}
+.progress-bar:hover {
+  color: #fff;
+}
+@media screen and (min-width: 480px) {
+  .progress-bar {
+    margin: 1.5em 1em;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .progress-bar {
+    margin: 2em 0;
+  }
+}
+.progress-bar__text,
+.progress-bar__rest,
+.progress-bar__progress {
+  line-height: 2em;
+  font-size: 0.75em;
+  font-weight: 100;
+  flex: 1;
+  height: 2em;
+  transition: flex-basis 500ms;
+  text-align: center;
+}
+.progress-bar__progress {
+  background-color: #6fbef3;
+  box-shadow: inset 1px 1px 2px rgba(255,255,255,0.25);
+}
+.progress-bar__rest {
+  background-color: rgba(45,62,80,0.25);
+}
+.progress-bar__text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.progress-bar__text:hover {
+  transform: scale(1.8);
+}
+.progress-bar__overtime {
+  background-color: #bd5a5a;
+  border-left: 1px solid rgba(90,41,41,0.75);
+}
+.progress-bar--inverted .progress-bar__rest {
+  background-color: #bd5a5a;
+  border-left: 1px solid rgba(90,41,41,0.75);
+}
+.progress-bar--inverted .progress-bar__overtime {
+  background-color: #7df36f;
+  border-left: 1px solid rgba(47,95,42,0.75);
+}
+.progress-bar--only-delta .progress-bar__text__progress {
+  display: none;
+}
+.user-menu {
+  background-color: rgba(45,62,80,0.9);
+  color: #f5f5f5;
+  padding: 1em 2em;
+}
+.user-menu input:not([type=checkbox]) {
+  color: #333;
+}
+.user-menu input[type=number] {
+  text-align: right;
+}
+.user-menu .user-menu__fieldset {
+  margin-top: 0.5em;
+}
+.user-menu .pure-menu-link {
+  color: #f5f5f5;
+}
+.user-menu .pure-button {
+  display: block;
+  width: 100%;
+}
+.user-menu .pure-button-primary {
+  margin-bottom: 0.5em;
+}
+.user-menu .profile-image {
+  border-radius: 50%;
+  margin-left: 0.5em;
+  position: relative;
+  top: 3px;
+  vertical-align: middle;
+  width: 50px;
+}
+.user-menu__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.user-menu__label {
+  display: flex !important;
+  align-items: center;
+  padding: 0.25em 0;
+  justify-content: space-between;
+}
+.user-menu__log-out {
+  border: none;
+  background-color: transparent;
+}
+.user-menu__change-pass {
+  display: flex;
+  margin-top: 2em;
+}
+.user-menu__change-pass .user-menu__change-pass__input {
+  margin: 0 !important;
+  border-radius: 2px 0 0 2px !important;
+  width: 100%;
+  flex: 2;
+}
+.user-menu__change-pass .user-menu__change-pass__btn {
+  margin: 0;
+  border-radius: 0 2px 2px 0;
+  flex: 1;
+}
+
+.hamburger,
+.hamburger:before,
+.hamburger:after {
+  background-color: currentColor;
+  width: 100%;
+  height: 0.2em;
+  transition: transform 0.2s;
+}
+.hamburger {
+  position: relative;
+  display: block;
+}
+.hamburger:before,
+.hamburger:after {
+  position: absolute;
+  left: 0;
+  margin-top: -0.6em;
+  content: " ";
+}
+.hamburger:after {
+  margin-top: 0.6em;
+}
+.hamburger--active {
+  transform: rotate(-45deg);
+}
+.hamburger--active:before {
+  margin-top: 0;
+}
+.hamburger--active:after {
+  transform: rotate(90deg);
+  margin-top: 0;
 }
 
