@@ -8,19 +8,18 @@ import { getTimeString } from '../../utils/time';
 function stateFromProps(props) {
   const isActive = !props.timestamp;
   const value = isActive ? 'active' : getTimeString(props.timestamp);
-  return { value, isActive, isValid: true };
+  return { value, isActive, isValid: true, timestamp: props.timestamp };
 }
 
 class IntervalListInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = stateFromProps(props);
+  static getDerivedStateFromProps(nextProps, lastState) {
+    if (nextProps.timestamp !== lastState.timestamp) {
+      return stateFromProps(nextProps);
+    }
+    return null;
   }
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.timestamp === this.props.timestamp) return;
-    this.setState(stateFromProps(newProps));
-  }
+  state = stateFromProps(this.props);
 
   render() {
     const { className, timestamp } = this.props;
