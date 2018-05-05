@@ -16,6 +16,11 @@ if (!isProduction) {
   process.traceDeprecation = true;
 }
 
+const cssLoader = [
+  (isProduction ? MiniCssExtractTextPlugin.loader : { loader: 'style-loader' }),
+  { loader: 'css-loader' }
+];
+
 const config = {
   mode: isProduction ? 'production' : 'development',
 
@@ -44,22 +49,15 @@ const config = {
         loader: 'babel-loader'
       },
       {
+        test: /\.css$/,
+        use: cssLoader
+      },
+      {
         test: /\.styl$/,
-        include: /critical/,
         use: [
-          (isProduction ? MiniCssExtractTextPlugin.loader : { loader: 'style-loader' }),
-          { loader: 'css-loader' },
+          ...cssLoader,
           { loader: 'stylus-loader' }
         ]
-      },
-      {
-        test: /\.styl$/,
-        exclude: /critical/,
-        loader: 'style-loader!css-loader!stylus-loader'
-      },
-      {
-        test: /\.css$/,
-        loader: 'style-loader!css-loader'
       },
       {
         test: /\.jade$/,
