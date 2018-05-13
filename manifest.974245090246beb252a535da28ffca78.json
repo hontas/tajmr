@@ -1,0 +1,22 @@
+{
+  "icons": [
+    {
+      "src": "/tajmr/icons/ios/icon_512x512.77f615991f23e7524e722951c6fae5ab.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/tajmr/icons/ios/icon_144x144.45c9694f67cfad01eff8482c44426988.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ],
+  "name": "Tajmr",
+  "short_name": "Tajmr",
+  "orientation": "any",
+  "display": "standalone",
+  "start_url": "/?homescreen=1",
+  "description": "Record time sometime",
+  "theme_color": "#1f8dd6",
+  "background_color": "#1f8dd6"
+}
