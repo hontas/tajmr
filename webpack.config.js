@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
-const CompressionPlugin = require('compression-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const MiniCssExtractTextPlugin = require('mini-css-extract-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
@@ -129,7 +128,6 @@ const config = {
       inline: /registerServiceWorker/
     })
   ],
-
   stats: {
     children: false
   },
@@ -140,13 +138,14 @@ const config = {
 };
 
 if (isProduction) {
-  config.plugins.push(
-    new SWPrecacheWebpackPlugin({
-      cacheId: 'tajmr',
-      filename: 'service-worker.js',
-    }),
-    new CompressionPlugin({ test: /\.(js|css)/ })
-  );
+  config.plugins.push(new SWPrecacheWebpackPlugin({
+    cacheId: 'tajmr',
+    filename: 'service-worker.js',
+    staticFileGlobsIgnorePatterns: [
+      /\.map$/,
+      /\.cache$/,
+    ],
+  }));
 } else {
   config.plugins.push(
     new webpack.NamedModulesPlugin(),
