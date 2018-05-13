@@ -12,7 +12,7 @@ function spawnNotification(body, icon, title) {
 module.exports = (message) => {
   Notification.requestPermission((permission) => {
     if (permission === 'granted') {
-      const notification = spawnNotification(message, 'assets/apple-icon.png', 'tajmr');
+      const notification = spawnNotification(message, 'icons/apple-touch-icon.png', 'tajmr');
       setTimeout(() => {
         notification.close();
       }, fiveSeconds);

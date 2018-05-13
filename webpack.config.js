@@ -1,15 +1,25 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 const CompressionPlugin = require('compression-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const MiniCssExtractTextPlugin = require('mini-css-extract-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const pkg = require('./package.json');
 
 const isProduction = process.env.NODE_ENV === 'production';
+const publicPath = isProduction ? '/tajmr/' : '/';
+const themeColor = '#1f8dd6';
 const paths = {
-  entry: path.resolve(__dirname, './client/js/app.js'),
-  public: path.resolve(__dirname, './public')
+  html: path.resolve(__dirname, 'client/index.html'),
+  entry: path.resolve(__dirname, 'client/js/app.js'),
+  regSW: path.resolve(__dirname, 'client/js/register-sw.js'),
+  public: path.resolve(__dirname, 'public'),
+  icon: path.resolve(__dirname, 'client/resources/apple-touch-icon.png')
 };
 
 if (!isProduction) {
@@ -27,13 +37,14 @@ const config = {
   devtool: isProduction ? '' : 'cheap-module-source-map',
 
   entry: {
-    app: paths.entry
+    app: paths.entry,
+    registerServiceWorker: paths.regSW
   },
 
   output: {
     path: paths.public,
-    filename: '[name].[hash].js',
-    publicPath: isProduction ? '/tajmr/' : '/'
+    filename: isProduction ? '[name].[hash].js' : '[name].js',
+    publicPath
   },
 
   devServer: {
@@ -59,22 +70,63 @@ const config = {
           { loader: 'stylus-loader' }
         ]
       },
-      {
-        test: /\.jade$/,
-        loader: 'jade-loader'
-      }
+    ]
+  },
+
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true // set to true if you want JS source maps
+      }),
+      new OptimizeCSSAssetsPlugin({})
     ]
   },
 
   plugins: [
     new HtmlWebpackPlugin({
       title: pkg.name,
-      template: 'template.jade',
+      template: paths.html,
+      meta: {
+        description: pkg.description,
+        'application-name': pkg.name,
+        'msapplication-TileImage': `${publicPath}icons/apple-touch-icon-144x144.png`,
+        'msapplication-TileColor': themeColor,
+      },
       minimize: false
     }),
-    new MiniCssExtractTextPlugin('styles.css'),
+    new WebpackPwaManifest({
+      name: pkg.name,
+      description: pkg.description,
+      orientation: 'any',
+      start_url: '/?homescreen=1',
+      theme_color: themeColor,
+      background_color: themeColor,
+      icons: [{
+        src: paths.icon,
+        sizes: [144, 512],
+        destination: path.join('icons', 'ios'),
+        ios: true
+      }]
+    }),
+    new FaviconsWebpackPlugin({
+      logo: paths.icon,
+      title: pkg.name,
+      prefix: 'icons/',
+      background: themeColor,
+      icons: {
+        android: false,
+        appleStartup: false,
+        firefox: false
+      }
+    }),
+    new MiniCssExtractTextPlugin({
+      filename: isProduction ? 'styles.[hash].css' : 'styles.css'
+    }),
     new ScriptExtHtmlWebpackPlugin({
-      defaultAttribute: 'async'
+      defaultAttribute: 'async',
+      inline: /registerServiceWorker/
     })
   ],
 
@@ -88,7 +140,13 @@ const config = {
 };
 
 if (isProduction) {
-  config.plugins.push(new CompressionPlugin({ test: /\.(js|css)/ }));
+  config.plugins.push(
+    new SWPrecacheWebpackPlugin({
+      cacheId: 'tajmr',
+      filename: 'service-worker.js',
+    }),
+    new CompressionPlugin({ test: /\.(js|css)/ })
+  );
 } else {
   config.plugins.push(
     new webpack.NamedModulesPlugin(),

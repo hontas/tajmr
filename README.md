@@ -1,6 +1,6 @@
 tajmr
 =====
-> Record time sometime [tajmr](https://tajmr.herokuapp.com/)
+> Record time sometime [tajmr](https://hontas.github.io/tajmr/)
 
 1. Press play to start recording time.
 2. Then pause it.
@@ -11,11 +11,10 @@ tajmr
 
 ## dev
 ```shell
-npm run watch
+npm run dev
 ```
 
 ## deploy
-
 - Gh-pages deployable like:
 ```shell
 npm run deploy
