@@ -26,7 +26,7 @@ if (!isProduction) {
 }
 
 const cssLoader = [
-  (isProduction ? MiniCssExtractTextPlugin.loader : { loader: 'style-loader' }),
+  { loader: 'style-loader' },
   { loader: 'css-loader' }
 ];
 
@@ -64,11 +64,21 @@ const config = {
       },
       {
         test: /\.styl$/,
+        include: /critical/,
+        use: [
+          (isProduction ? MiniCssExtractTextPlugin.loader : { loader: 'style-loader' }),
+          { loader: 'css-loader' },
+          { loader: 'stylus-loader' }
+        ]
+      },
+      {
+        test: /\.styl$/,
+        exclude: /critical/,
         use: [
           ...cssLoader,
           { loader: 'stylus-loader' }
         ]
-      },
+      }
     ]
   },
 
@@ -121,7 +131,7 @@ const config = {
       }
     }),
     new MiniCssExtractTextPlugin({
-      filename: isProduction ? 'styles.[hash].css' : 'styles.css'
+      filename: isProduction ? '[name].[hash].css' : '[name].css'
     }),
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: 'async',

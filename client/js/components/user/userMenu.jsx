@@ -77,22 +77,26 @@ class UserMenu extends React.Component {
             </p>
           }
           <div className="user-menu__change-pass pure-button-group">
-            <input
-              onKeyDown={this.preventDefault}
-              autoComplete="old-password"
-              className="user-menu__change-pass__input"
-              ref={(node) => { this.oldPass = node; }}
-              type="password"
-              placeholder="Nuvarande lösenord"
-            />
-            <input
-              onKeyDown={this.preventDefault}
-              autoComplete="new-password"
-              className="user-menu__change-pass__input"
-              ref={(node) => { this.newPass = node; }}
-              type="password"
-              placeholder="Nytt lösenord"
-            />
+            <label>
+              <input
+                onKeyDown={this.preventDefault}
+                autoComplete="old-password"
+                className="user-menu__change-pass__input"
+                ref={(node) => { this.oldPass = node; }}
+                type="password"
+                placeholder="Nuvarande lösenord"
+              />
+            </label>
+            <label>
+              <input
+                onKeyDown={this.preventDefault}
+                autoComplete="new-password"
+                className="user-menu__change-pass__input"
+                ref={(node) => { this.newPass = node; }}
+                type="password"
+                placeholder="Nytt lösenord"
+              />
+            </label>
             <Button
               theme={updatePasswordSuccess ? 'success' : 'default'}
               className="user-menu__change-pass__btn pure-button-primary"

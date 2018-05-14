@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import promiseFinally from 'promise.prototype.finally';
 
 import '../styles';
+import '../styles/critical.styl';
 import firebaseApi from './utils/firebaseApi';
 import createStore from './store';
 import Application from './components/application/application.jsx';
