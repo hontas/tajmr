@@ -19,11 +19,16 @@ class Login extends React.Component {
               {message}
             </p>
           }
-          <label>
-            <input type="email" autoComplete="username" ref={(node) => { this.username = node; }} />
+          <label htmlFor="username">
+            <input type="email" autoComplete="username" ref={(node) => { this.username = node; }} id="username" />
           </label>
-          <label>
-            <input type="password" autoComplete="current-password" ref={(node) => { this.passwd = node; }} />
+          <label htmlFor="secretword">
+            <input
+              type="password"
+              autoComplete="current-password"
+              ref={(node) => { this.passwd = node; }}
+              id="secretword"
+            />
           </label>
           <Button type="submit" onClick={this.handleSubmit} isLoading={isLoading} theme="primary">
             Logga in

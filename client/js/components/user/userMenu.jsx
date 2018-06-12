@@ -77,7 +77,7 @@ class UserMenu extends React.Component {
             </p>
           }
           <div className="user-menu__change-pass pure-button-group">
-            <label>
+            <label htmlFor="oldPassword">
               <input
                 onKeyDown={this.preventDefault}
                 autoComplete="old-password"
@@ -85,9 +85,10 @@ class UserMenu extends React.Component {
                 ref={(node) => { this.oldPass = node; }}
                 type="password"
                 placeholder="Nuvarande lösenord"
+                id="oldPassword"
               />
             </label>
-            <label>
+            <label htmlFor="newPassword">
               <input
                 onKeyDown={this.preventDefault}
                 autoComplete="new-password"
@@ -95,6 +96,7 @@ class UserMenu extends React.Component {
                 ref={(node) => { this.newPass = node; }}
                 type="password"
                 placeholder="Nytt lösenord"
+                id="newPassword"
               />
             </label>
             <Button
