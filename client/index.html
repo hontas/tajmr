@@ -15,5 +15,16 @@
         </div>
       </div>
     </div>
+    <script>
+window.addEventListener('beforeinstallprompt', (event) => {
+  console.log('beforeinstallprompt', event);
+  // Prevent Chrome <= 67 from automatically showing the prompt
+  event.preventDefault();
+  // Stash the event so it can be triggered later.
+  setTimeout(() => {
+    event.prompt();
+  }, 1000 * 60 * 20)
+});
+    </script>
   </body>
 </html>

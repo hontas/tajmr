@@ -114,7 +114,7 @@ const config = {
       background_color: themeColor,
       icons: [{
         src: paths.icon,
-        sizes: [144, 512],
+        sizes: [192, 512],
         destination: path.join('icons', 'ios'),
         ios: true
       }]
