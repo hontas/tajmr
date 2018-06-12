@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import promiseFinally from 'promise.prototype.finally';
 
-import '../styles';
 import '../styles/critical.styl';
+import '../styles';
 import firebaseApi from './utils/firebaseApi';
 import createStore from './store';
 import Application from './components/application/application.jsx';
