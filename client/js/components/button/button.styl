@@ -1,5 +1,9 @@
 .button {
   transition: background .3s;
+  .spin-kit-spinner {
+    margin: 0;
+    float: right;
+  }
 }
 
 .button--primary {
@@ -20,6 +24,10 @@
 }
 .button--link {
   background: transparent;
-  color: $text-color-light;
-  text-shadow: 0 0 1px $primary-color-dark;
+  color: $primary-color-dark;
+  &:focus,
+  &:hover {
+    background: transparent;
+    text-decoration: underline;
+  }
 }

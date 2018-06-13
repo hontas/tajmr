@@ -4,12 +4,13 @@ import Button from '../button/button.jsx';
 
 class Login extends React.Component {
   state = {
-    isLoading: false,
+    isLoggingIn: false,
+    isResetting: false,
     message: ''
   };
 
   render() {
-    const { isLoading, message } = this.state;
+    const { isLoggingIn, isResetting, message } = this.state;
     return (
       <div className="login">
         <form className="auth-form" onSubmit={this.handleSubmit}>
@@ -30,10 +31,12 @@ class Login extends React.Component {
               id="secretword"
             />
           </label>
-          <Button type="submit" onClick={this.handleSubmit} isLoading={isLoading} theme="primary">
-            Logga in
+          <Button type="submit" onClick={this.handleSubmit} isLoading={isLoggingIn} theme="primary">
+            Log in
           </Button>
-          <Button theme="link" onClick={this.resetPassword}>Forgot password</Button>
+          <Button onClick={this.resetPassword} isLoading={isResetting} theme="link">
+            Forgot password
+          </Button>
         </form>
       </div>
     );
@@ -41,20 +44,22 @@ class Login extends React.Component {
 
   handleSubmit = (evt) => {
     evt.preventDefault();
-    this.setState({ isLoading: true });
+    this.setState({ isLoggingIn: true });
     firebaseApi.login(this.username.value, this.passwd.value)
-      .then(this.onLoaded, this.onLoaded);
+      .then(this.onLoaded, this.onLoaded)
+      .finally(() => this.setState({ isLoggingIn: false }));
   }
 
   resetPassword = (evt) => {
     evt.preventDefault();
-    this.setState({ isLoading: true });
+    this.setState({ isResetting: true });
     firebaseApi.sendPasswordResetEmail(this.username.value)
-      .then(this.onLoaded, this.onLoaded);
+      .then(this.onLoaded, this.onLoaded)
+      .finally(() => this.setState({ isResetting: false }));
   }
 
   onLoaded = ({ message = '' } = {}) => {
-    this.setState({ isLoading: false, message });
+    this.setState({ message });
   };
 }
 
