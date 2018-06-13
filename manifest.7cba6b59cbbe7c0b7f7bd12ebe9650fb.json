@@ -15,7 +15,7 @@
   "short_name": "Tajmr",
   "orientation": "any",
   "display": "standalone",
-  "start_url": "/tajmr/?homescreen=1",
+  "start_url": "/tajmr/",
   "description": "Record time sometime",
   "theme_color": "#1f8dd6",
   "background_color": "#1f8dd6"
