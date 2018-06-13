@@ -68,7 +68,7 @@ class UserMenu extends React.Component {
           className="pure-button-primary"
           isLoading={isSavingUserSettings}
           onClick={this.saveUserSettings}
-          text="Spara"
+          text="Spara inställningar"
         />
         <fieldset className="user-menu__fieldset">
           {updatePasswordError &&
