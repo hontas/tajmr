@@ -28,10 +28,11 @@ class UserMenu extends React.Component {
       <form className={classNames('pure-form pure-form-stacked user-menu', className)} onSubmit={this.preventDefault}>
         <div className="user-menu__row">
           <img alt="avatar" className="profile-image" src={photoURL} />
-          <button className="user-menu__log-out pure-menu-link" onClick={firebaseApi.logout}>Logga ut</button>
+          <Button className="user-menu__log-out" theme="link" onClick={firebaseApi.logout}>Logga ut</Button>
         </div>
         <fieldset className="user-menu__fieldset">
-          <label className="user-menu__label">Visa notifiering
+          <label className="user-menu__label">
+            Visa notifiering
             <input
               checked={displayNotifications}
               onChange={this.handleChange('displayNotifications')}
@@ -39,7 +40,8 @@ class UserMenu extends React.Component {
               type="checkbox"
             />
           </label>
-          <label className="user-menu__label">{'Visa tidigare '}
+          <label className="user-menu__label">
+            Visa tidigare intervall
             <input
               checked={displayPreviousIntervals}
               onChange={this.handleChange('displayPreviousIntervals')}
@@ -47,7 +49,8 @@ class UserMenu extends React.Component {
               type="checkbox"
             />
           </label>
-          <label className="user-menu__label">{'Visa månadsrapport'}
+          <label className="user-menu__label">
+            Visa månadsrapport
             <input
               checked={displayMonthReport}
               onChange={this.handleChange('displayMonthReport')}
@@ -55,7 +58,8 @@ class UserMenu extends React.Component {
               type="checkbox"
             />
           </label>
-          <label className="user-menu__label">{'Full arbetsvecka (h)'}
+          <label className="user-menu__label">
+            Full arbetsvecka (h)
             <input
               value={hoursInWeek}
               onChange={this.handleChange('hoursInWeek', Number)}

@@ -37,12 +37,14 @@ class Navbar extends React.Component {
             <Hamburger active={showUserMenu} />
           </Button>
         }
-        <UserMenu
-          {...this.props}
-          className={classNames('navbar__user-menu', {
-            'navbar__user-menu--active': showUserMenu
-          })}
-        />
+        {user &&
+          <UserMenu
+            {...this.props}
+            className={classNames('navbar__user-menu', {
+              'navbar__user-menu--active': showUserMenu
+            })}
+          />
+        }
 
       </div>
     );
