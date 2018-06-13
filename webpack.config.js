@@ -109,7 +109,7 @@ const config = {
       name: pkg.name,
       description: pkg.description,
       orientation: 'any',
-      start_url: '/?homescreen=1',
+      start_url: '/tajmr/?homescreen=1',
       theme_color: themeColor,
       background_color: themeColor,
       icons: [{
