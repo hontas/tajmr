@@ -6,6 +6,13 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="mobile-web-app-capable" content="yes">
+    <link rel="canonical" href="https://hontas.github.io/tajmr/">
+    <script>
+      // redirect to https
+      if (window.location.host == "hontas.github.io" && window.location.protocol != "https:") {
+        window.location.protocol = "https:"
+      }
+    </script>
   </head>
   <body>
     <div id="root">
@@ -16,21 +23,16 @@
       </div>
     </div>
     <script>
-// redirect to https
-if (window.location.host == "hontas.github.io" && window.location.protocol != "https:") {
-  window.location.protocol = "https:"
-}
-
-// test, add to homescreen prompt
-window.addEventListener('beforeinstallprompt', (event) => {
-  console.log('beforeinstallprompt', event);
-  // Prevent Chrome <= 67 from automatically showing the prompt
-  event.preventDefault();
-  // Stash the event so it can be triggered later.
-  setTimeout(() => {
-    event.prompt();
-  }, 1000 * 60 * 20)
-});
+      // test, add to homescreen prompt
+      window.addEventListener('beforeinstallprompt', (event) => {
+        console.log('beforeinstallprompt', event);
+        // Prevent Chrome <= 67 from automatically showing the prompt
+        event.preventDefault();
+        // Stash the event so it can be triggered later.
+        setTimeout(() => {
+          event.prompt();
+        }, 1000 * 60 * 20)
+      });
     </script>
   </body>
 </html>
