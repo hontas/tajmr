@@ -9,6 +9,7 @@ import Hamburger from '../icons/Hamburger.jsx';
 import UserMenu from '../user/userMenu.jsx';
 import pkg from '../../../../package.json';
 
+const { BUILD_TIME } = process.env;
 class Navbar extends React.Component {
   state = { showUserMenu: false };
 
@@ -20,7 +21,7 @@ class Navbar extends React.Component {
     return (
       <div className="navbar pure-menu pure-menu-horizontal pure-menu-fixed">
         <h1 className="brand pure-menu-heading">TajmR</h1>
-        <span className="version">{ `v${pkg.version}` }</span>
+        <span className="version">{`v${pkg.version}`} <small>{` ${BUILD_TIME}`}</small></span>
         {isLoading &&
           <div style={{ color: 'gray', display: 'inline-block', marginLeft: '1em' }}>
             <Wave color="currentColor" className="spin-kit-spinner" />

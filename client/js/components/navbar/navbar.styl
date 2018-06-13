@@ -15,6 +15,11 @@
     font-size: 1.25em;
     line-height: 0.85em;
     margin: 0;
+
+    &:focus ~ .version,
+    &:hover ~ .version {
+      display: initial;
+    }
   }
 
   .loading-text {

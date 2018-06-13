@@ -109,7 +109,7 @@ const config = {
       name: pkg.name,
       description: pkg.description,
       orientation: 'any',
-      start_url: '/tajmr/?homescreen=1',
+      start_url: '/tajmr/',
       theme_color: themeColor,
       background_color: themeColor,
       icons: [{
@@ -136,6 +136,9 @@ const config = {
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: 'async',
       inline: /registerServiceWorker/
+    }),
+    new webpack.DefinePlugin({
+      'process.env.BUILD_TIME': JSON.stringify(new Date().toLocaleString())
     })
   ],
   stats: {
