@@ -266,11 +266,11 @@ describe('time', () => {
       expect(Array.isArray(workWeek)).toBe(true);
       expect(workWeek).toHaveLength(5);
       expect(workWeek).toEqual([
-        { date: '10-30', weekday: 'måndag' },
-        { date: '10-31', weekday: 'tisdag' },
-        { date: '11-01', weekday: 'onsdag' },
-        { date: '11-02', weekday: 'torsdag' },
-        { date: '11-03', weekday: 'fredag' }
+        { date: '10/30', weekday: 'måndag' },
+        { date: '10/31', weekday: 'tisdag' },
+        { date: '11/1', weekday: 'onsdag' },
+        { date: '11/2', weekday: 'torsdag' },
+        { date: '11/3', weekday: 'fredag' }
       ]);
     });
   });

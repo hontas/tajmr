@@ -7,8 +7,8 @@ export const oneWeek = oneDay * 7;
 const local = 'sv-SE';
 const intl = {
   durationOffset: oneHour, // because date 0 = 01:00:00 1970
-  time: new Intl.DateTimeFormat(local, { hour: 'numeric', minute: 'numeric' }),
-  weekDay: new Intl.DateTimeFormat(local, { weekday: 'long' }),
+  time: new Intl.DateTimeFormat(local, { hour: '2-digit', minute: '2-digit' }),
+  weekDay: new Intl.DateTimeFormat(local, { weekday: 'short' }),
   date: new Intl.DateTimeFormat(local, { month: 'numeric', day: 'numeric' })
 };
 
