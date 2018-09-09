@@ -11,8 +11,8 @@
       "type": "image/png"
     }
   ],
-  "name": "Tajmr",
-  "short_name": "Tajmr",
+  "name": "tajmr",
+  "short_name": "tajmr",
   "orientation": "any",
   "display": "standalone",
   "start_url": "/tajmr/",

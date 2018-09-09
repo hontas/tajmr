@@ -37,7 +37,7 @@
 /* eslint-disable indent, no-unused-vars, no-multiple-empty-lines, max-nested-callbacks, space-before-function-paren, quotes, comma-spacing */
 'use strict';
 
-var precacheConfig = [["/tajmr/app.99cfc76a1528597efb56.css","fdea7aa04d5b5d86e5909d8deab0f3e3"],["/tajmr/app.99cfc76a1528597efb56.js","f1da71f7a90deef1f8146c5750863a62"],["/tajmr/icons/apple-touch-icon-114x114.png","8d86326183f1de99022a3bb1e406b507"],["/tajmr/icons/apple-touch-icon-120x120.png","e4d81c387feb9b7ab34e53c35c23fa44"],["/tajmr/icons/apple-touch-icon-144x144.png","366c4b20828f504c35db3050694d8f77"],["/tajmr/icons/apple-touch-icon-152x152.png","5121c2c6d98249c8c7244f870b7eb719"],["/tajmr/icons/apple-touch-icon-167x167.png","4f1d4315247e83e94c27086eeb800b58"],["/tajmr/icons/apple-touch-icon-180x180.png","9015c74f066f18a54704ae09fc133158"],["/tajmr/icons/apple-touch-icon-57x57.png","a59e61bf34ceb669c593d05f82aaad31"],["/tajmr/icons/apple-touch-icon-60x60.png","0dffdd00ced5259d98d2b33827430d3b"],["/tajmr/icons/apple-touch-icon-72x72.png","67568467f99bb14b9278d74e2386d6f8"],["/tajmr/icons/apple-touch-icon-76x76.png","d5100b5c1b261fbd12b6422299e1ab38"],["/tajmr/icons/apple-touch-icon-precomposed.png","9015c74f066f18a54704ae09fc133158"],["/tajmr/icons/apple-touch-icon.png","9015c74f066f18a54704ae09fc133158"],["/tajmr/icons/favicon-16x16.png","e7b6cd93c3e92017e9fac09d0454cde1"],["/tajmr/icons/favicon-32x32.png","7efed7b04d0e1c33334926b7cd7af847"],["/tajmr/icons/favicon.ico","48f2aa0502a20d23aa13a3eea8027b7b"],["/tajmr/icons/ios/icon_192x192.4c24ac87220b2d66249889b8c40c1fe6.png","4c24ac87220b2d66249889b8c40c1fe6"],["/tajmr/icons/ios/icon_512x512.77f615991f23e7524e722951c6fae5ab.png","77f615991f23e7524e722951c6fae5ab"],["/tajmr/index.html","0b8f71785103d790f7ba6e39aacc912a"],["/tajmr/manifest.7cba6b59cbbe7c0b7f7bd12ebe9650fb.json","7cba6b59cbbe7c0b7f7bd12ebe9650fb"]];
+var precacheConfig = [["/tajmr/app.344411433cb06f3e0a47.css","fdea7aa04d5b5d86e5909d8deab0f3e3"],["/tajmr/app.344411433cb06f3e0a47.js","bee84be4cef9d796e78063f754f1796e"],["/tajmr/icons/apple-touch-icon-114x114.png","8d86326183f1de99022a3bb1e406b507"],["/tajmr/icons/apple-touch-icon-120x120.png","e4d81c387feb9b7ab34e53c35c23fa44"],["/tajmr/icons/apple-touch-icon-144x144.png","366c4b20828f504c35db3050694d8f77"],["/tajmr/icons/apple-touch-icon-152x152.png","5121c2c6d98249c8c7244f870b7eb719"],["/tajmr/icons/apple-touch-icon-167x167.png","4f1d4315247e83e94c27086eeb800b58"],["/tajmr/icons/apple-touch-icon-180x180.png","9015c74f066f18a54704ae09fc133158"],["/tajmr/icons/apple-touch-icon-57x57.png","a59e61bf34ceb669c593d05f82aaad31"],["/tajmr/icons/apple-touch-icon-60x60.png","0dffdd00ced5259d98d2b33827430d3b"],["/tajmr/icons/apple-touch-icon-72x72.png","67568467f99bb14b9278d74e2386d6f8"],["/tajmr/icons/apple-touch-icon-76x76.png","d5100b5c1b261fbd12b6422299e1ab38"],["/tajmr/icons/apple-touch-icon-precomposed.png","9015c74f066f18a54704ae09fc133158"],["/tajmr/icons/apple-touch-icon.png","9015c74f066f18a54704ae09fc133158"],["/tajmr/icons/favicon-16x16.png","e7b6cd93c3e92017e9fac09d0454cde1"],["/tajmr/icons/favicon-32x32.png","7efed7b04d0e1c33334926b7cd7af847"],["/tajmr/icons/favicon.ico","48f2aa0502a20d23aa13a3eea8027b7b"],["/tajmr/icons/ios/icon_192x192.4c24ac87220b2d66249889b8c40c1fe6.png","4c24ac87220b2d66249889b8c40c1fe6"],["/tajmr/icons/ios/icon_512x512.77f615991f23e7524e722951c6fae5ab.png","77f615991f23e7524e722951c6fae5ab"],["/tajmr/index.html","7fab1350e12a3881c22035232ef60908"],["/tajmr/manifest.f44f6478f0daf9286b68e60fd834e9a1.json","f44f6478f0daf9286b68e60fd834e9a1"]];
 var cacheName = 'sw-precache-v3-tajmr-' + (self.registration ? self.registration.scope : '');
 
 
@@ -45,7 +45,7 @@ var ignoreUrlParametersMatching = [/^utm_/];
 
 
 
-var addDirectoryIndex = function (originalUrl, index) {
+var addDirectoryIndex = function(originalUrl, index) {
     var url = new URL(originalUrl);
     if (url.pathname.slice(-1) === '/') {
       url.pathname += index;
@@ -53,7 +53,7 @@ var addDirectoryIndex = function (originalUrl, index) {
     return url.toString();
   };
 
-var cleanResponse = function (originalResponse) {
+var cleanResponse = function(originalResponse) {
     // If this is not a redirected response, then we don't have to do anything.
     if (!originalResponse.redirected) {
       return Promise.resolve(originalResponse);
@@ -75,7 +75,7 @@ var cleanResponse = function (originalResponse) {
     });
   };
 
-var createCacheKey = function (originalUrl, paramName, paramValue,
+var createCacheKey = function(originalUrl, paramName, paramValue,
                            dontCacheBustUrlsMatching) {
     // Create a new URL object to avoid modifying originalUrl.
     var url = new URL(originalUrl);
@@ -91,7 +91,7 @@ var createCacheKey = function (originalUrl, paramName, paramValue,
     return url.toString();
   };
 
-var isPathWhitelisted = function (whitelist, absoluteUrlString) {
+var isPathWhitelisted = function(whitelist, absoluteUrlString) {
     // If the whitelist is empty, then consider all URLs to be whitelisted.
     if (whitelist.length === 0) {
       return true;
@@ -104,7 +104,7 @@ var isPathWhitelisted = function (whitelist, absoluteUrlString) {
     });
   };
 
-var stripIgnoredUrlParameters = function (originalUrl,
+var stripIgnoredUrlParameters = function(originalUrl,
     ignoreUrlParametersMatching) {
     var url = new URL(originalUrl);
     // Remove the hash; see https://github.com/GoogleChrome/sw-precache/issues/290
