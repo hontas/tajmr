@@ -71,6 +71,7 @@ class IntervalListInput extends React.Component {
     const currentDate = new Date(timestamp);
     const nextDate = new Date(value);
     currentDate.setDate(nextDate.getDate());
+    currentDate.setMonth(nextDate.getMonth());
 
     onUpdate({ target: { value: currentDate.getTime() } });
   }

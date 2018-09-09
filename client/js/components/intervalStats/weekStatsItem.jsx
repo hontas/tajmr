@@ -43,13 +43,11 @@ const WeekDayItem = ({ weekday, total, date, intervals = [] }) => {
 };
 
 WeekDayItem.defaultProps = {
-  total: 0,
-  notWork: false
+  total: 0
 };
 
 WeekDayItem.propTypes = {
   weekday: PropTypes.string.isRequired,
-  notWork: PropTypes.bool,
   total: PropTypes.number,
   date: PropTypes.string.isRequired,
   intervals: PropTypes.arrayOf(PropTypes.object)

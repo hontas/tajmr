@@ -35,6 +35,7 @@ class AddOneInterval extends React.Component {
         <Button
           type="submit"
           theme="primary"
+          onClick={this.onAdd}
           className="add-one-interval__btn"
         >
           <Save size={17} />

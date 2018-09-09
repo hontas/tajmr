@@ -30,9 +30,8 @@ class DatePicker extends React.Component {
         { date && showDateInput &&
           <DayPicker
             initialMonth={new Date(date)}
-            canChangeMonth={false}
             className="date-picker__calendar"
-            enableOutsideDays
+            showOutsideDays
             firstDayOfWeek={1}
             selectedDays={new Date(date)}
             onDayClick={onDayClick}
