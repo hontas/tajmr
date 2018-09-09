@@ -19,18 +19,14 @@ class DatePicker extends React.Component {
           'date-picker--show-picker': showDateInput
         })}
         ref={(node) => { this.datePicker = node; }}
-        onClick={this.toggleDateInput}
-        onKeyDown={this.toggleDateInput}
-        role="button"
-        tabIndex="-1"
       >
-        <div className="date-picker__icon">
+        <button type="button" className="date-picker__calendar-btn" onClick={this.toggleDateInput}>
           <Calendar />
-        </div>
+        </button>
         { date && showDateInput &&
           <DayPicker
-            initialMonth={new Date(date)}
             className="date-picker__calendar"
+            initialMonth={new Date(date)}
             showOutsideDays
             firstDayOfWeek={1}
             selectedDays={new Date(date)}
@@ -46,14 +42,18 @@ class DatePicker extends React.Component {
     const { showDateInput } = this.state;
     this.setState({ showDateInput: !showDateInput });
 
-    if (!showDateInput) {
+    if (!showDateInput && !this.handleOutsideClick) {
       const clickHandler = ({ target }) => {
         if (!this.datePicker.contains(target)) {
-          this.toggleDateInput({ preventDefault() {} });
+          this.setState({ showDateInput: false });
+          document.removeEventListener('click', clickHandler);
         }
-        document.removeEventListener('click', clickHandler);
       };
+      this.handleOutsideClick = clickHandler;
       document.addEventListener('click', clickHandler, false);
+    } else {
+      document.removeEventListener('click', this.handleOutsideClick);
+      this.handleOutsideClick = null;
     }
   };
 }
