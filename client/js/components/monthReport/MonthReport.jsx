@@ -104,7 +104,7 @@ class MonthReport extends Component {
         let keyToBe = curr[key] ? curr[key].toLowerCase() : '-';
         if (curr.notWork) keyToBe = `${isNotWork}:${keyToBe}`;
         if (!res[keyToBe]) res[keyToBe] = 0;
-        res[keyToBe] += (curr.endTime - curr.startTime);
+        res[keyToBe] += ((curr.endTime || Date.now()) - curr.startTime);
         return res;
       }, {});
 
