@@ -1,7 +1,7 @@
 {
-  "presets": [["env", { "browserlist": "last 2 Chrome versions, safari 11" }], "react"],
+  "presets": [["@babel/env", { "targets": { "safari": "12" } }], "@babel/react"],
   "plugins": [
-    "transform-object-rest-spread",
-    "transform-class-properties"
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-proposal-class-properties"
   ]
 }
