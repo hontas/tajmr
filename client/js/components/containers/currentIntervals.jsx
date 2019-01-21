@@ -13,16 +13,8 @@ import Button from '../button/button.jsx';
 import { WeekStatsTimeWrapper } from '../intervalStats/weekStats.jsx';
 import * as intervalActions from '../../actions/intervals';
 import AddOneInterval from '../intervalList/addOneInterval.jsx';
-import {
-  getIntervalSum,
-  isActive,
-  isComplete
-} from '../../utils/intervals';
-import {
-  getWeek,
-  getMonth,
-  getDayRange
-} from '../../utils/time';
+import { getIntervalSum, isActive, isComplete } from '../../utils/intervals';
+import { getWeek, getMonth, getDayRange } from '../../utils/time';
 
 class CurrentIntervals extends React.Component {
   state = {
@@ -38,17 +30,22 @@ class CurrentIntervals extends React.Component {
       timestamp,
       notes
     } = this.props;
+    const { displayAddForm } = this.state;
 
-    const activeAndCurrentIntervals = activeInterval ? [].concat(activeInterval, todaysIntervals) : todaysIntervals;
+    const activeAndCurrentIntervals = activeInterval
+      ? [].concat(activeInterval, todaysIntervals)
+      : todaysIntervals;
     const hoursInWeek = userSettings.hoursInWeek || 40;
     const hoursInDay = hoursInWeek / 5;
     const intervalSum = getIntervalSum(todaysIntervals);
     const week = getWeek(timestamp);
     const month = getMonth(timestamp);
-    const weekIntervals = intervals.filter(({ startTime }) =>
-      startTime > week.startTime && startTime < week.endTime);
-    const monthIntervals = intervals.filter(({ startTime }) =>
-      startTime > month.startTime && startTime < month.endTime);
+    const weekIntervals = intervals.filter(
+      ({ startTime }) => startTime > week.startTime && startTime < week.endTime
+    );
+    const monthIntervals = intervals.filter(
+      ({ startTime }) => startTime > month.startTime && startTime < month.endTime
+    );
 
     return (
       <div className="current-intervals">
@@ -56,18 +53,22 @@ class CurrentIntervals extends React.Component {
         <ProgressBarTimeWrapper intervals={activeAndCurrentIntervals} max={hoursInWeek / 5} />
         <div className="action-buttons" style={{ display: 'flex' }}>
           <WorkButton activeInterval={!!activeInterval} onClick={this.onClick} />
-          <Button className="current-intervals__prev-work-btn" theme="primary" onClick={this.onAddPrevClick}>
+          <Button
+            className="current-intervals__prev-work-btn"
+            theme="primary"
+            onClick={this.onAddPrevClick}
+          >
             Efterregga
           </Button>
         </div>
-        {this.state.displayAddForm &&
+        {displayAddForm && (
           <AddOneInterval
             onAdd={this.onAddOneInterval}
             onCancel={this.onCancelPrevClick}
             fullDay={hoursInDay}
             notes={notes}
           />
-        }
+        )}
         <IntervalList
           intervals={activeAndCurrentIntervals}
           onDelete={this.onDelete}
@@ -80,27 +81,25 @@ class CurrentIntervals extends React.Component {
           timestamp={timestamp}
           userSettings={userSettings}
         />
-        {intervals.length > 0 &&
+        {intervals.length > 0 && (
           <MonthStats
             timestamp={timestamp}
             monthIntervals={monthIntervals}
             hoursPerWeek={userSettings.hoursInWeek}
           />
-        }
-        {userSettings.displayMonthReport &&
-          <MonthReport intervals={intervals} />
-        }
+        )}
+        {userSettings.displayMonthReport && <MonthReport intervals={intervals} />}
       </div>
     );
   }
 
   updateTimestamp = (timestamp) => {
     this.props.updateTimestamp(timestamp);
-  }
+  };
 
-  onDelete = (id) => this.props.attemptRemove(id)
+  onDelete = (id) => this.props.attemptRemove(id);
 
-  onUpdate = (interval) => this.props.attemptUpdate(interval)
+  onUpdate = (interval) => this.props.attemptUpdate(interval);
 
   onClick = () => {
     const { activeInterval, attemptUpdate } = this.props;
@@ -111,7 +110,7 @@ class CurrentIntervals extends React.Component {
     }
 
     return attemptUpdate({ startTime: Date.now() });
-  }
+  };
 
   onAddPrevClick = () => this.setState({ displayAddForm: true });
 
@@ -119,11 +118,10 @@ class CurrentIntervals extends React.Component {
 
   onAddOneInterval = (interval) => {
     const { attemptUpdate, intervalAdded } = this.props;
-    attemptUpdate(interval)
-      .then((saveInterval) => {
-        this.setState({ displayAddForm: false });
-        intervalAdded(saveInterval);
-      });
+    attemptUpdate(interval).then((saveInterval) => {
+      this.setState({ displayAddForm: false });
+      intervalAdded(saveInterval);
+    });
     // 👆 must do manual add cause child_added only register startDate > Date.now()
   };
 }
@@ -152,9 +150,7 @@ function isToday({ startTime, endTime }) {
 }
 
 function mapStateToProps({ intervals: { items, timestamp }, userSettings }) {
-  const notes = items
-    .map(({ note }) => (note ? note.toLowerCase() : note))
-    .filter((note) => note);
+  const notes = items.map(({ note }) => (note ? note.toLowerCase() : note)).filter((note) => note);
 
   return {
     timestamp,
@@ -166,4 +162,7 @@ function mapStateToProps({ intervals: { items, timestamp }, userSettings }) {
   };
 }
 
-export default connect(mapStateToProps, intervalActions)(CurrentIntervals);
+export default connect(
+  mapStateToProps,
+  intervalActions
+)(CurrentIntervals);

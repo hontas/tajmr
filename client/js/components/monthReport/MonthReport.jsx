@@ -4,11 +4,7 @@ import classNames from 'classnames';
 
 import Button from '../button/button.jsx';
 import * as customTypes from '../../constants/propTypes';
-import {
-  getMonth,
-  getHours,
-  months
-} from '../../utils/time';
+import { getMonth, getHours, months } from '../../utils/time';
 
 const isNotWork = 'notwork';
 
@@ -23,10 +19,8 @@ class MonthReport extends Component {
     const { className } = this.props;
     const intervals = this.getGroupedIntervalsBy('note');
     const categories = Object.keys(intervals).map((cat) => cat.toLowerCase());
-    const filteredCategories = categories
-      .filter((cat) => !filterOut.includes(cat));
-    const totalMinusNotWork = filteredCategories
-      .reduce((res, curr) => res + intervals[curr], 0);
+    const filteredCategories = categories.filter((cat) => !filterOut.includes(cat));
+    const totalMinusNotWork = filteredCategories.reduce((res, curr) => res + intervals[curr], 0);
 
     return (
       <div className={classNames('MonthReport', className)}>
@@ -46,25 +40,23 @@ class MonthReport extends Component {
               onClick={() => this.toggleFilter(cat)}
             >
               {cat}
-            </Button>))
-          }
+            </Button>
+          ))}
         </div>
         <ul className="MonthReport__list">
-          {filteredCategories
-            .map((note) => (
-              <li
-                key={note}
-                className={classNames('MonthReport__list-item', {
-                  'not-work': note.startsWith(isNotWork)
-                })}
-              >
-                <p className="MonthReport__list-item__title">{note}</p>
-                <p className="MonthReport__list-item__value">
-                  {`${getHours(intervals[note]).toFixed(1)}h`}
-                </p>
-              </li>
-            ))
-          }
+          {filteredCategories.map((note) => (
+            <li
+              key={note}
+              className={classNames('MonthReport__list-item', {
+                'not-work': note.startsWith(isNotWork)
+              })}
+            >
+              <p className="MonthReport__list-item__title">{note}</p>
+              <p className="MonthReport__list-item__value">
+                {`${getHours(intervals[note]).toFixed(1)}h`}
+              </p>
+            </li>
+          ))}
           <li className="MonthReport__list-item">
             <p className="MonthReport__list-item__title">TOTAL:</p>
             <p className="MonthReport__list-item__value">
@@ -77,11 +69,11 @@ class MonthReport extends Component {
   }
 
   toggleFilter = (cat) => {
-    const filterOut = this.state.filterOut.includes(cat) ?
-      this.state.filterOut.filter((c) => c !== cat) :
-      [...this.state.filterOut, cat];
-
-    this.setState({ filterOut });
+    if (this.state.filterOut.includes(cat)) {
+      this.setState((state) => ({ filterOut: state.filterOut.filter((c) => c !== cat) }));
+    } else {
+      this.setState((state) => ({ filterOut: [...state.filterOut, cat] }));
+    }
   };
 
   lastMonth = () => {
@@ -99,25 +91,25 @@ class MonthReport extends Component {
   };
 
   getGroupedIntervalsBy = (key) =>
-    this.getMonthIntervals()
-      .reduce((res, curr) => {
-        let keyToBe = curr[key] ? curr[key].toLowerCase() : '-';
-        if (curr.notWork) keyToBe = `${isNotWork}:${keyToBe}`;
-        if (!res[keyToBe]) res[keyToBe] = 0;
-        res[keyToBe] += ((curr.endTime || Date.now()) - curr.startTime);
-        return res;
-      }, {});
+    this.getMonthIntervals().reduce((res, curr) => {
+      let keyToBe = curr[key] ? curr[key].toLowerCase() : '-';
+      if (curr.notWork) keyToBe = `${isNotWork}:${keyToBe}`;
+      if (!res[keyToBe]) res[keyToBe] = 0;
+      res[keyToBe] += (curr.endTime || Date.now()) - curr.startTime;
+      return res;
+    }, {});
 
   getMonthIntervals = () => {
     const { startTime, endTime } = getMonth(this.state.referenceDate);
-    return this.props.intervals
-      .filter((interval) => interval.startTime > startTime && interval.startTime <= endTime);
+    return this.props.intervals.filter(
+      (interval) => interval.startTime > startTime && interval.startTime <= endTime
+    );
   };
 }
 
 MonthReport.propTypes = {
   className: PropTypes.string,
-  intervals: customTypes.intervals.isRequired,
+  intervals: customTypes.intervals.isRequired
 };
 
 export default MonthReport;

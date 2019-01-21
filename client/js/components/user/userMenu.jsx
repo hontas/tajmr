@@ -20,15 +20,30 @@ class UserMenu extends React.Component {
 
   render() {
     const { userSettings, user, className } = this.props;
-    const { displayMonthReport, displayNotifications, displayPreviousIntervals, hoursInWeek } = userSettings;
-    const { isSavingUserSettings, isSavingUserPassword, updatePasswordError, updatePasswordSuccess } = this.state;
+    const {
+      displayMonthReport,
+      displayNotifications,
+      displayPreviousIntervals,
+      hoursInWeek
+    } = userSettings;
+    const {
+      isSavingUserSettings,
+      isSavingUserPassword,
+      updatePasswordError,
+      updatePasswordSuccess
+    } = this.state;
     const photoURL = user && (user.photoURL || `${garavatarUrl}/${md5(user.email)}`);
 
     return (
-      <form className={classNames('pure-form pure-form-stacked user-menu', className)} onSubmit={this.preventDefault}>
+      <form
+        className={classNames('pure-form pure-form-stacked user-menu', className)}
+        onSubmit={this.preventDefault}
+      >
         <div className="user-menu__row">
           <img alt="avatar" className="profile-image" src={photoURL} />
-          <Button className="user-menu__log-out" theme="link" onClick={firebaseApi.logout}>Logga ut</Button>
+          <Button className="user-menu__log-out" theme="link" onClick={firebaseApi.logout}>
+            Logga ut
+          </Button>
         </div>
         <fieldset className="user-menu__fieldset">
           <label className="user-menu__label">
@@ -75,18 +90,16 @@ class UserMenu extends React.Component {
           text="Spara inställningar"
         />
         <fieldset className="user-menu__fieldset">
-          {updatePasswordError &&
-            <p style={{ whiteSpace: 'normal' }}>
-              {updatePasswordError}
-            </p>
-          }
+          {updatePasswordError && <p style={{ whiteSpace: 'normal' }}>{updatePasswordError}</p>}
           <div className="user-menu__change-pass pure-button-group">
             <label htmlFor="oldPassword">
               <input
                 onKeyDown={this.preventDefault}
                 autoComplete="old-password"
                 className="user-menu__change-pass__input"
-                ref={(node) => { this.oldPass = node; }}
+                ref={(node) => {
+                  this.oldPass = node;
+                }}
                 type="password"
                 placeholder="Nuvarande lösenord"
                 id="oldPassword"
@@ -97,7 +110,9 @@ class UserMenu extends React.Component {
                 onKeyDown={this.preventDefault}
                 autoComplete="new-password"
                 className="user-menu__change-pass__input"
-                ref={(node) => { this.newPass = node; }}
+                ref={(node) => {
+                  this.newPass = node;
+                }}
                 type="password"
                 placeholder="Nytt lösenord"
                 id="newPassword"
@@ -119,7 +134,7 @@ class UserMenu extends React.Component {
   preventDefault = (evt) => {
     if (evt.type === 'keydown' && evt.key !== 'Enter') return;
     evt.preventDefault();
-  }
+  };
 
   updateUserPassword = (evt) => {
     evt.preventDefault();
@@ -127,13 +142,15 @@ class UserMenu extends React.Component {
     const newPass = this.newPass.value;
     this.setState({ isSavingUserPassword: true });
 
-    const handleResponse = ({ message }) => this.setState({
-      isSavingUserPassword: false,
-      updatePasswordError: message,
-      updatePasswordSuccess: !message
-    });
+    const handleResponse = ({ message }) =>
+      this.setState({
+        isSavingUserPassword: false,
+        updatePasswordError: message,
+        updatePasswordSuccess: !message
+      });
 
-    firebaseApi.updateUserPassword(oldPass, newPass)
+    firebaseApi
+      .updateUserPassword(oldPass, newPass)
       .then(() => {
         handleResponse({ message: '' });
         setTimeout(() => this.setState({ updatePasswordSuccess: false }), 2000);
@@ -141,7 +158,7 @@ class UserMenu extends React.Component {
         this.newPass.value = '';
       })
       .catch(handleResponse);
-  }
+  };
 
   handleChange(prop, transform = (x) => x) {
     const { dispatch } = this.props;
@@ -157,11 +174,10 @@ class UserMenu extends React.Component {
     const { user, userSettings } = this.props;
     this.setState({ isSavingUserSettings: true });
 
-    firebaseApi.saveUserData(user.uid, userSettings)
-      .then(() => {
-        this.setState({ isSavingUserSettings: false });
-      });
-  }
+    firebaseApi.saveUserData(user.uid, userSettings).then(() => {
+      this.setState({ isSavingUserSettings: false });
+    });
+  };
 }
 
 UserMenu.propTypes = {

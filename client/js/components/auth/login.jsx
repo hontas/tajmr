@@ -14,20 +14,29 @@ class Login extends React.Component {
     return (
       <div className="login">
         <form className="auth-form" onSubmit={this.handleSubmit}>
-          {message &&
+          {message && (
             <p className="login__error">
               <span role="img">⚠</span>
               {message}
             </p>
-          }
+          )}
           <label htmlFor="username">
-            <input type="email" autoComplete="username" ref={(node) => { this.username = node; }} id="username" />
+            <input
+              type="email"
+              autoComplete="username"
+              ref={(node) => {
+                this.username = node;
+              }}
+              id="username"
+            />
           </label>
           <label htmlFor="secretword">
             <input
               type="password"
               autoComplete="current-password"
-              ref={(node) => { this.passwd = node; }}
+              ref={(node) => {
+                this.passwd = node;
+              }}
               id="secretword"
             />
           </label>
@@ -45,18 +54,20 @@ class Login extends React.Component {
   handleSubmit = (evt) => {
     evt.preventDefault();
     this.setState({ isLoggingIn: true });
-    firebaseApi.login(this.username.value, this.passwd.value)
+    firebaseApi
+      .login(this.username.value, this.passwd.value)
       .then(this.onLoaded, this.onLoaded)
       .finally(() => this.setState({ isLoggingIn: false }));
-  }
+  };
 
   resetPassword = (evt) => {
     evt.preventDefault();
     this.setState({ isResetting: true });
-    firebaseApi.sendPasswordResetEmail(this.username.value)
+    firebaseApi
+      .sendPasswordResetEmail(this.username.value)
       .then(this.onLoaded, this.onLoaded)
       .finally(() => this.setState({ isResetting: false }));
-  }
+  };
 
   onLoaded = ({ message = '' } = {}) => {
     this.setState({ message });

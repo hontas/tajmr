@@ -13,11 +13,7 @@ class AutoComplete extends React.Component {
 
   render() {
     const { query, suggestions } = this.state;
-    const {
-      className,
-      label = '',
-      placeholder = ''
-    } = this.props;
+    const { className, label = '', placeholder = '' } = this.props;
 
     return (
       <div
@@ -26,7 +22,7 @@ class AutoComplete extends React.Component {
         role="presentation"
       >
         <label className="AutoComplete__label">
-          { label }
+          {label}
           <input
             type="text"
             value={query}
@@ -36,7 +32,12 @@ class AutoComplete extends React.Component {
             onChange={this.onChange}
           />
         </label>
-        <ul className="AutoComplete__suggestions" ref={(node) => { this.suggestionsList = node; }}>
+        <ul
+          className="AutoComplete__suggestions"
+          ref={(node) => {
+            this.suggestionsList = node;
+          }}
+        >
           {!!suggestions.length &&
             suggestions.map((note) => (
               <li key={note} className="AutoComplete__suggestion">
@@ -48,8 +49,7 @@ class AutoComplete extends React.Component {
                   {note}
                 </button>
               </li>
-            ))
-          }
+            ))}
         </ul>
       </div>
     );
@@ -107,7 +107,7 @@ class AutoComplete extends React.Component {
       this.props.onChange({ target: { value } });
       this.timeoutId = null;
     }, 1);
-  }
+  };
 }
 
 AutoComplete.defaultProps = {
