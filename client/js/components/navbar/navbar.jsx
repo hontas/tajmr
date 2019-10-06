@@ -21,31 +21,32 @@ class Navbar extends React.Component {
     return (
       <div className="navbar pure-menu pure-menu-horizontal pure-menu-fixed">
         <h1 className="brand pure-menu-heading">TajmR</h1>
-        <span className="version">{`v${pkg.version}`} <small>{` ${BUILD_TIME}`}</small></span>
-        {isLoading &&
+        <span className="version">
+          {`v${pkg.version}`}
+          <small>{` ${BUILD_TIME}`}</small>
+        </span>
+        {isLoading && (
           <div style={{ color: 'gray', display: 'inline-block', marginLeft: '1em' }}>
             <Wave color="currentColor" className="spin-kit-spinner" />
-            <small className="loading-text">{ isFetching ? 'Laddar intervall...' : 'Sparar...' }</small>
+            <small className="loading-text">
+              {isFetching ? 'Laddar intervall...' : 'Sparar...'}
+            </small>
           </div>
-        }
+        )}
 
-        {user &&
-          <Button
-            className="navbar__menu-btn"
-            onClick={this.toggleUserMenu}
-          >
+        {user && (
+          <Button className="navbar__menu-btn" onClick={this.toggleUserMenu}>
             <Hamburger active={showUserMenu} />
           </Button>
-        }
-        {user &&
+        )}
+        {user && (
           <UserMenu
             {...this.props}
             className={classNames('navbar__user-menu', {
               'navbar__user-menu--active': showUserMenu
             })}
           />
-        }
-
+        )}
       </div>
     );
   }

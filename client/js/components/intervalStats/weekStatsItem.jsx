@@ -13,30 +13,29 @@ const WeekDayItem = ({ weekday, total, date, intervals = [] }) => {
   };
   const baseClassName = 'week-stats-item';
   const barClassName = `${baseClassName}__bar`;
-  const totalTime = intervals
-    .reduce((res, { timespan }) => res + timespan, 0);
+  const totalTime = intervals.reduce((res, { timespan }) => res + timespan, 0);
 
   return (
     <div className={baseClassName}>
       <div className={barClassName} style={style} tabIndex="-1">
-        {intervals
-          .map(({ timespan, note, notWork }) => (
-            <div className={classNames(`${barClassName}__item`, { 'not-work': notWork })} key={timespan}>
-              <p className={`${barClassName}__info`}>
-                { `${getDuration(timespan)} ${note}` }
-              </p>
-            </div>
-          ))
-        }
-        {totalTime > 0 &&
+        {intervals.map(({ timespan, note, notWork }) => (
+          <div
+            className={classNames(`${barClassName}__item`, { 'not-work': notWork })}
+            key={timespan}
+          >
+            <p className={`${barClassName}__info`}>{`${getDuration(timespan)} ${note}`}</p>
+          </div>
+        ))}
+        {totalTime > 0 && (
           <p className={`${barClassName}__total`} style={{ lineHeight: `${barHeight}px` }}>
-            { getDuration(totalTime) }
+            {getDuration(totalTime)}
           </p>
-        }
+        )}
       </div>
       <p className="week-date">
-        { weekday } <br />
-        { date }
+        <span>{weekday}</span>
+        <br />
+        <span>{date}</span>
       </p>
     </div>
   );

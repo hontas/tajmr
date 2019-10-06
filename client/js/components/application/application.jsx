@@ -28,13 +28,15 @@ class Application extends React.Component {
         </div>
       );
     }
-    return user ?
-      <React.Fragment>
+    return user ? (
+      <>
         <CurrentIntervals />
         <PreviousIntervals />
         <Footer />
-      </React.Fragment> :
-      <Login />;
+      </>
+    ) : (
+      <Login />
+    );
   };
 }
 

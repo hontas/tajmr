@@ -40,9 +40,11 @@ class PreviousIntervals extends React.Component {
       <div className="previous-intervals">
         <h3 className="previous-intervals__title">Tidigare</h3>
         <IntervalList intervals={intervals} onDelete={this.onDelete} onUpdate={this.onUpdate} />
-        {showMore &&
-          <Button className="previous-intervals__show-more" onClick={this.showMore} theme="primary">Visa fler</Button>
-        }
+        {showMore && (
+          <Button className="previous-intervals__show-more" onClick={this.showMore} theme="primary">
+            Visa fler
+          </Button>
+        )}
       </div>
     );
   }
@@ -69,12 +71,12 @@ class PreviousIntervals extends React.Component {
   onDelete = (id) => {
     const { dispatch } = this.props;
     dispatch(attemptRemove(id));
-  }
+  };
 
   onUpdate = (interval) => {
     const { dispatch } = this.props;
     dispatch(attemptUpdate(interval));
-  }
+  };
 }
 
 PreviousIntervals.propTypes = {

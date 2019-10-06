@@ -4,7 +4,8 @@ import getDisplayName from './getDisplayName';
 export const thirtySeconds = 1000 * 30;
 
 export default function renderEvery(interval) {
-  if (!interval || typeof interval !== 'number') throw Error('Argument for render interval must be number');
+  if (!interval || typeof interval !== 'number')
+    throw Error('Argument for render interval must be number');
 
   return (Component) => {
     class RenderEvery extends React.Component {

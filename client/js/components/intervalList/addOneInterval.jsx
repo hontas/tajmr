@@ -20,17 +20,17 @@ class AddOneInterval extends React.Component {
   }
 
   render() {
+    const { interval } = this.state;
+    const { notes, onCancel } = this.props;
+
     return (
-      <form
-        className="add-one-interval"
-        onSubmit={this.onAdd}
-      >
+      <form className="add-one-interval" onSubmit={this.onAdd}>
         <IntervalListItem
           className="add-one-interval__interval-list-item"
-          interval={this.state.interval}
+          interval={interval}
           onUpdate={this.onUpdate}
           onDelete={onDelete}
-          notes={this.props.notes}
+          notes={notes}
         />
         <Button
           type="submit"
@@ -40,11 +40,7 @@ class AddOneInterval extends React.Component {
         >
           <Save size={17} />
         </Button>
-        <Button
-          theme="secondary"
-          className="add-one-interval__btn"
-          onClick={this.props.onCancel}
-        >
+        <Button theme="secondary" className="add-one-interval__btn" onClick={onCancel}>
           ✖
         </Button>
       </form>
@@ -54,15 +50,13 @@ class AddOneInterval extends React.Component {
   onAdd = (evt) => {
     evt.preventDefault();
     this.props.onAdd(this.state.interval);
-  }
-
-  onCancel = () => {
-
   };
+
+  onCancel = () => {};
 
   onUpdate = (interval) => {
     this.setState({ interval });
-  }
+  };
 }
 
 function onDelete() {}

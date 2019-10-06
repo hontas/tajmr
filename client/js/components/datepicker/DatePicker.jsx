@@ -18,12 +18,14 @@ class DatePicker extends React.Component {
           'date-picker--disabled': !date,
           'date-picker--show-picker': showDateInput
         })}
-        ref={(node) => { this.datePicker = node; }}
+        ref={(node) => {
+          this.datePicker = node;
+        }}
       >
         <button type="button" className="date-picker__calendar-btn" onClick={this.toggleDateInput}>
           <Calendar />
         </button>
-        { date && showDateInput &&
+        {date && showDateInput && (
           <DayPicker
             className="date-picker__calendar"
             initialMonth={new Date(date)}
@@ -32,7 +34,7 @@ class DatePicker extends React.Component {
             selectedDays={new Date(date)}
             onDayClick={onDayClick}
           />
-        }
+        )}
       </div>
     );
   }

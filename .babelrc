@@ -1,7 +1,0 @@
-{
-  "presets": [["env", { "browserlist": "last 2 Chrome versions, safari 11" }], "react"],
-  "plugins": [
-    "transform-object-rest-spread",
-    "transform-class-properties"
-  ]
-}

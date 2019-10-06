@@ -1,8 +1,11 @@
 function createErrorObject(response) {
-  return (err) => Promise.reject(Object.assign(err, {
-    status: response.status,
-    statusText: response.statusText
-  }));
+  return (err) =>
+    Promise.reject(
+      Object.assign(err, {
+        status: response.status,
+        statusText: response.statusText
+      })
+    );
 }
 
 function ajax(url, method, data) {
@@ -39,9 +42,8 @@ function ajax(url, method, data) {
         window.location.href = error.redirectUrl;
       }
 
-      return Promise.reject(error instanceof Error ?
-        { error: error.toString() } :
-        error);
+      const err = error instanceof Error ? { error: error.toString() } : error;
+      return Promise.reject(err);
     });
 }
 
