@@ -2,14 +2,6 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 
-import {
-  intervalAdded,
-  intervalRemoved,
-  intervalUpdated,
-  fetchIntervalsForUser
-} from '../actions/intervals';
-import { userLoggedIn, userLoggedOut, updateSettings } from '../actions/userActions';
-import { initialized } from '../reducers/app';
 import { getWeek } from './time';
 
 // Initialize Firebase
@@ -27,6 +19,8 @@ const auth = firebase.auth();
 
 const subscribers = [];
 const api = {
+  auth,
+
   subscribe(fn) {
     subscribers.push(fn);
   },
@@ -52,7 +46,10 @@ const api = {
   intervals: database.ref().child('intervals'),
 
   createInterval(data) {
-    const id = database.ref().child('intervals').push().key;
+    const id = database
+      .ref()
+      .child('intervals')
+      .push().key;
     const user = api.getCurrentUserId();
     return api.updateInterval({
       ...data,
@@ -63,7 +60,8 @@ const api = {
   },
 
   updateInterval({ id, ...interval }) {
-    return database.ref(`intervals/${id}`)
+    return database
+      .ref(`intervals/${id}`)
       .set({ ...interval, updatedAt: Date.now() })
       .then(() => ({ ...interval, id }));
   },
@@ -95,9 +93,14 @@ const api = {
     return auth.currentUser && auth.currentUser.uid;
   },
 
+  getUserSettings(user) {
+    return database.ref(`users/${user.uid}`).once('value');
+  },
+
   updateUserPassword(oldPass, newPass) {
     const credential = firebase.auth.EmailAuthProvider.credential(auth.currentUser.email, oldPass);
-    return auth.currentUser.reauthenticateWithCredential(credential)
+    return auth.currentUser
+      .reauthenticateWithCredential(credential)
       .then(() => auth.currentUser.updatePassword(newPass));
   },
 
@@ -105,7 +108,7 @@ const api = {
     return database.ref(`users/${userId}`).set(data);
   },
 
-  init() {
+  init({ intervalAdded, intervalRemoved, intervalUpdated }) {
     api.intervals
       .orderByChild('startTime')
       .startAt(Date.now())
@@ -135,29 +138,14 @@ const api = {
   }
 };
 
-auth.onAuthStateChanged((user) => {
-  api.emit(initialized());
-  if (user) {
-    api.emit(userLoggedIn(user));
-    database.ref(`users/${user.uid}`)
-      .once('value')
-      .then((settings) => api.emit(updateSettings(settings.val())));
-
-    api.emit(fetchIntervalsForUser());
-  } else {
-    api.emit(userLoggedOut());
-  }
-});
-
 function filterByUser(intervals) {
   const userId = auth.currentUser && auth.currentUser.uid;
-  return Object.keys(intervals)
-    .reduce((res, id) => {
-      if (intervals[id].user === userId) {
-        return { [id]: intervals[id], ...res };
-      }
-      return res;
-    }, {});
+  return Object.keys(intervals).reduce((res, id) => {
+    if (intervals[id].user === userId) {
+      return { [id]: intervals[id], ...res };
+    }
+    return res;
+  }, {});
 }
 
 export default api;

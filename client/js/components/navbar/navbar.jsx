@@ -19,7 +19,7 @@ class Navbar extends React.Component {
     const isLoading = isSaving || isFetching;
 
     return (
-      <div className="navbar pure-menu pure-menu-horizontal pure-menu-fixed">
+      <nav className="navbar pure-menu pure-menu-horizontal pure-menu-fixed">
         <h1 className="brand pure-menu-heading">TajmR</h1>
         <span className="version">
           {`v${pkg.version}`}
@@ -47,7 +47,7 @@ class Navbar extends React.Component {
             })}
           />
         )}
-      </div>
+      </nav>
     );
   }
 

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as customPropTypes from '../../constants/propTypes';
 import IntervalList from '../intervalList/intervalList.jsx';
 import Button from '../button/button.jsx';
-import { attemptUpdate, attemptRemove } from '../../actions/intervals';
+import { attemptUpdate, attemptRemove } from '../../redux/intervals';
 import { getWeek, getMonth, startOfDay } from '../../utils/time';
 import { isComplete } from '../../utils/intervals';
 

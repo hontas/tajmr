@@ -14,7 +14,8 @@ class Application extends React.Component {
     return (
       <div className="application">
         <Navbar />
-        {this.renderBody()}
+        <main className="main">{this.renderBody()}</main>
+        <Footer />
       </div>
     );
   }
@@ -32,7 +33,6 @@ class Application extends React.Component {
       <>
         <CurrentIntervals />
         <PreviousIntervals />
-        <Footer />
       </>
     ) : (
       <Login />

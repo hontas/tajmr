@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import intervals from './intervals';
-import { user, userSettings } from './user';
+import user from './user';
+import userSettings from './userSettings';
 import app from './app';
 
 function version(state = null) {

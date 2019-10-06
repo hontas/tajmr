@@ -11,7 +11,7 @@ import IntervalList from '../intervalList/intervalList.jsx';
 import MonthStats from '../intervalStats/monthStats.jsx';
 import Button from '../button/button.jsx';
 import { WeekStatsTimeWrapper } from '../intervalStats/weekStats.jsx';
-import * as intervalActions from '../../actions/intervals';
+import * as intervalActions from '../../redux/intervals';
 import AddOneInterval from '../intervalList/addOneInterval.jsx';
 import { getIntervalSum, isActive, isComplete } from '../../utils/intervals';
 import { getWeek, getMonth, getDayRange } from '../../utils/time';

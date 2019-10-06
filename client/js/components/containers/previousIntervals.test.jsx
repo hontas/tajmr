@@ -2,10 +2,10 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 
-import createStore from '../../store';
+import createStore from '../../redux/createStore';
 import PreviousIntervals from './previousIntervals.jsx';
-import { intervalsFetched } from '../../actions/intervals';
-import { updateSettings } from '../../actions/userActions';
+import { intervalsFetched } from '../../redux/intervals';
+import { updateSettings } from '../../redux/userSettings';
 
 const { intervals } = require('../../../../test/test-data.json');
 
@@ -28,6 +28,10 @@ describe('PreviousIntervals', () => {
   });
 
   test('should render', () => {
-    mount(<Provider store={store}><PreviousIntervals /></Provider>);
+    mount(
+      <Provider store={store}>
+        <PreviousIntervals />
+      </Provider>
+    );
   });
 });

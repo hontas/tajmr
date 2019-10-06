@@ -1,77 +1,58 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import firebaseApi from '../../utils/firebaseApi';
 import Button from '../button/button.jsx';
 
-class Login extends React.Component {
-  state = {
-    isLoggingIn: false,
-    isResetting: false,
-    message: ''
-  };
+const Login = () => {
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
+  const [message, setMessage] = useState('');
+  const emailInput = useRef(null);
+  const passwordInput = useRef(null);
 
-  render() {
-    const { isLoggingIn, isResetting, message } = this.state;
-    return (
-      <div className="login">
-        <form className="auth-form" onSubmit={this.handleSubmit}>
-          {message && (
-            <p className="login__error">
-              <span role="img">⚠</span>
-              {message}
-            </p>
-          )}
-          <label htmlFor="username">
-            <input
-              type="email"
-              autoComplete="username"
-              ref={(node) => {
-                this.username = node;
-              }}
-              id="username"
-            />
-          </label>
-          <label htmlFor="secretword">
-            <input
-              type="password"
-              autoComplete="current-password"
-              ref={(node) => {
-                this.passwd = node;
-              }}
-              id="secretword"
-            />
-          </label>
-          <Button type="submit" onClick={this.handleSubmit} isLoading={isLoggingIn} theme="primary">
-            Log in
-          </Button>
-          <Button onClick={this.resetPassword} isLoading={isResetting} theme="link">
-            Forgot password
-          </Button>
-        </form>
-      </div>
-    );
-  }
+  const resetMessage = () => setMessage('');
 
-  handleSubmit = (evt) => {
+  const handleSubmit = (evt) => {
     evt.preventDefault();
-    this.setState({ isLoggingIn: true });
+    setIsLoggingIn(false);
     firebaseApi
-      .login(this.username.value, this.passwd.value)
-      .then(this.onLoaded, this.onLoaded)
-      .finally(() => this.setState({ isLoggingIn: false }));
+      .login(emailInput.current.value, passwordInput.current.value)
+      .then(resetMessage, resetMessage)
+      .finally(() => setIsLoggingIn(false));
   };
 
-  resetPassword = (evt) => {
+  const forgotPassword = (evt) => {
     evt.preventDefault();
-    this.setState({ isResetting: true });
+    setIsResetting(true);
     firebaseApi
-      .sendPasswordResetEmail(this.username.value)
-      .then(this.onLoaded, this.onLoaded)
-      .finally(() => this.setState({ isResetting: false }));
+      .sendPasswordResetEmail(emailInput.current.value)
+      .then(resetMessage, resetMessage)
+      .finally(() => setIsResetting(false));
   };
 
-  onLoaded = ({ message = '' } = {}) => {
-    this.setState({ message });
-  };
-}
+  return (
+    <div className="login">
+      <form className="auth-form" onSubmit={handleSubmit}>
+        {message && (
+          <p className="login__error">
+            <span role="img">⚠</span>
+            {message}
+          </p>
+        )}
+        <label aria-label="email">
+          <input type="email" autoComplete="email" ref={emailInput} />
+        </label>
+        <label aria-label="password">
+          <input type="password" autoComplete="password" ref={passwordInput} />
+        </label>
+        <Button type="submit" onClick={handleSubmit} isLoading={isLoggingIn} theme="primary">
+          Log in
+        </Button>
+        <Button onClick={forgotPassword} isLoading={isResetting} theme="link">
+          Forgot password
+        </Button>
+      </form>
+    </div>
+  );
+};
 
 export default Login;

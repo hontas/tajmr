@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import Button from '../button/button.jsx';
 
 import * as customPropTypes from '../../constants/propTypes';
-import { updateSettings } from '../../actions/userActions';
+import { updateSettings } from '../../redux/userSettings';
 import firebaseApi from '../../utils/firebaseApi';
 
 const garavatarUrl = 'https://www.gravatar.com/avatar';
