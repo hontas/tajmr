@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const MiniCssExtractTextPlugin = require('mini-css-extract-plugin');
@@ -25,10 +25,7 @@ if (!isProduction) {
   process.traceDeprecation = true;
 }
 
-const cssLoader = [
-  { loader: 'style-loader' },
-  { loader: 'css-loader' }
-];
+const cssLoader = [{ loader: 'style-loader' }, { loader: 'css-loader' }];
 
 const config = {
   mode: isProduction ? 'production' : 'development',
@@ -66,7 +63,7 @@ const config = {
         test: /\.styl$/,
         include: /critical/,
         use: [
-          (isProduction ? MiniCssExtractTextPlugin.loader : { loader: 'style-loader' }),
+          isProduction ? MiniCssExtractTextPlugin.loader : { loader: 'style-loader' },
           { loader: 'css-loader' },
           { loader: 'stylus-loader' }
         ]
@@ -74,20 +71,17 @@ const config = {
       {
         test: /\.styl$/,
         exclude: /critical/,
-        use: [
-          ...cssLoader,
-          { loader: 'stylus-loader' }
-        ]
+        use: [...cssLoader, { loader: 'stylus-loader' }]
       }
     ]
   },
 
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({
+      new TerserPlugin({
         cache: true,
         parallel: true,
-        sourceMap: true // set to true if you want JS source maps
+        sourceMap: true
       }),
       new OptimizeCSSAssetsPlugin({})
     ]
@@ -101,7 +95,7 @@ const config = {
         description: pkg.description,
         'application-name': pkg.name,
         'msapplication-TileImage': `${publicPath}icons/apple-touch-icon-144x144.png`,
-        'msapplication-TileColor': themeColor,
+        'msapplication-TileColor': themeColor
       },
       minimize: false
     }),
@@ -112,12 +106,14 @@ const config = {
       start_url: '/tajmr/',
       theme_color: themeColor,
       background_color: themeColor,
-      icons: [{
-        src: paths.icon,
-        sizes: [192, 512],
-        destination: path.join('icons', 'ios'),
-        ios: true
-      }]
+      icons: [
+        {
+          src: paths.icon,
+          sizes: [192, 512],
+          destination: path.join('icons', 'ios'),
+          ios: true
+        }
+      ]
     }),
     new FaviconsWebpackPlugin({
       logo: paths.icon,
@@ -151,19 +147,15 @@ const config = {
 };
 
 if (isProduction) {
-  config.plugins.push(new SWPrecacheWebpackPlugin({
-    cacheId: 'tajmr',
-    filename: 'service-worker.js',
-    staticFileGlobsIgnorePatterns: [
-      /\.map$/,
-      /\.cache$/,
-    ],
-  }));
-} else {
   config.plugins.push(
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new SWPrecacheWebpackPlugin({
+      cacheId: 'tajmr',
+      filename: 'service-worker.js',
+      staticFileGlobsIgnorePatterns: [/\.map$/, /\.cache$/]
+    })
   );
+} else {
+  config.plugins.push(new webpack.NamedModulesPlugin(), new webpack.HotModuleReplacementPlugin());
 }
 
 module.exports = config;

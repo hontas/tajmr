@@ -69,12 +69,11 @@ class MonthReport extends Component {
   }
 
   toggleFilter = (cat) => {
-    const { filterOut } = this.state;
-    const filteredOut = filterOut.includes(cat)
-      ? filterOut.filter((c) => c !== cat)
-      : [...filterOut, cat];
-
-    this.setState({ filterOut: filteredOut });
+    if (this.state.filterOut.includes(cat)) {
+      this.setState((state) => ({ filterOut: state.filterOut.filter((c) => c !== cat) }));
+    } else {
+      this.setState((state) => ({ filterOut: [...state.filterOut, cat] }));
+    }
   };
 
   lastMonth = () => {
@@ -96,7 +95,7 @@ class MonthReport extends Component {
       let keyToBe = curr[key] ? curr[key].toLowerCase() : '-';
       if (curr.notWork) keyToBe = `${isNotWork}:${keyToBe}`;
       if (!res[keyToBe]) res[keyToBe] = 0;
-      res[keyToBe] += curr.endTime - curr.startTime;
+      res[keyToBe] += (curr.endTime || Date.now()) - curr.startTime;
       return res;
     }, {});
 

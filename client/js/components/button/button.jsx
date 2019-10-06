@@ -18,7 +18,6 @@ const Button = ({
     <button {...rest} className={classes} type={type}>
       {text}
       {children}
-
       {isLoading && <FadingCircle className="spin-kit-spinner" color="currentColor" size={15} />}
     </button>
   );

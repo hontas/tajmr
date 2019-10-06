@@ -27,18 +27,13 @@ class WeekStats extends React.Component {
       <div className="week-stats">
         <h3 className="week-stats__title">
           <Button onClick={this.lastWeek}>◀︎</Button>
-          {
-            intervals.length ?
-              ` v.${getWeekNumber(timestamp)} ` :
-              ` v.${getWeekNumber(now)} `
-          }
+          {intervals.length ? ` v.${getWeekNumber(timestamp)} ` : ` v.${getWeekNumber(now)} `}
           <Button onClick={this.nextWeek}>▶︎</Button>
         </h3>
         <div className="week-stats__bars flex-container flex--align-end">
-          {
-            mashUpWeekAndIntervals(intervals, timestamp)
-              .map((day) => <WeekStatsItem key={day.weekday} {...day} />)
-          }
+          {mashUpWeekAndIntervals(intervals, timestamp).map((day) => (
+            <WeekStatsItem key={day.weekday} {...day} />
+          ))}
         </div>
         <ProgressBar progress={getHours(intervalSum)} max={userSettings.hoursInWeek} />
       </div>
@@ -48,12 +43,12 @@ class WeekStats extends React.Component {
   lastWeek = () => {
     const { fetchIntervalsInWeek, timestamp } = this.props;
     fetchIntervalsInWeek(timestamp - oneWeek);
-  }
+  };
 
   nextWeek = () => {
     const { fetchIntervalsInWeek, timestamp } = this.props;
     fetchIntervalsInWeek(timestamp + oneWeek);
-  }
+  };
 }
 
 WeekStats.propTypes = {
@@ -84,10 +79,7 @@ function groupByWeekDay(intervals) {
         ...current,
         notWork: notWork || current.notWork,
         total: current.total + timespan,
-        intervals: [
-          ...current.intervals,
-          { notWork, timespan, note }
-        ]
+        intervals: [...current.intervals, { notWork, timespan, note }]
       }
     };
   }, {});

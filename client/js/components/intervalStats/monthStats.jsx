@@ -2,11 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as customPropTypes from '../../constants/propTypes';
 import ProgressBar from '../ui-elements/progressBar.jsx';
-import {
-  oneHour,
-  getMonth,
-  getWorkDaysinMonth
-} from '../../utils/time';
+import { oneHour, getMonth, getWorkDaysinMonth } from '../../utils/time';
 import { getIntervalSum } from '../../utils/intervals';
 
 const MonthStats = ({ hoursPerWeek, monthIntervals, timestamp }) => {
@@ -21,7 +17,7 @@ const MonthStats = ({ hoursPerWeek, monthIntervals, timestamp }) => {
       <h3 className="month-stats__heading">Månad</h3>
       <ProgressBar progress={workedHoursInMonth} max={totalWorkHoursInMonth} />
       <h3 className="month-stats__heading">Flex</h3>
-      <ProgressBar progress={workedHoursInMonth} max={totalWorkHoursSoFar} unit="h" inverted onlyDelta />
+      <ProgressBar progress={workedHoursInMonth} max={totalWorkHoursSoFar} unit="h" onlyDelta />
     </div>
   );
 };
