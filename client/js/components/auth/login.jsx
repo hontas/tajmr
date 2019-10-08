@@ -31,7 +31,7 @@ const Login = () => {
 
   return (
     <div className="login">
-      <form className="auth-form" onSubmit={handleSubmit}>
+      <form className="auth-form" onSubmit={handleSubmit} data-testid="login-form">
         {message && (
           <p className="login__error">
             <span role="img">⚠</span>

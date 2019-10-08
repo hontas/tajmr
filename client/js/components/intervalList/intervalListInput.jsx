@@ -22,7 +22,7 @@ class IntervalListInput extends React.Component {
   state = stateFromProps(this.props);
 
   render() {
-    const { className, timestamp } = this.props;
+    const { className, timestamp, titlePrefix } = this.props;
     const { value, isActive, isValid } = this.state;
     const baseClassName = 'interval-list-input';
     const variationClass = isValid ? '' : `${baseClassName}--error`;
@@ -30,6 +30,7 @@ class IntervalListInput extends React.Component {
     return (
       <div className={classNames(baseClassName, className, variationClass)}>
         <input
+          title={`${titlePrefix} time`}
           className={`${baseClassName}__input`}
           disabled={isActive}
           onBlur={this.validateAndPush}
@@ -37,6 +38,7 @@ class IntervalListInput extends React.Component {
           value={value}
         />
         <DatePicker
+          buttonTitle={`${titlePrefix} date`}
           className={`${baseClassName}__date`}
           date={timestamp}
           onDayClick={this.handleDateChange}
@@ -64,7 +66,7 @@ class IntervalListInput extends React.Component {
       console.log('Wrong format %s - should be XX:XX where X is a positive integer', value);
     }
     this.setState({ isValid });
-  }
+  };
 
   handleDateChange = (value) => {
     const { timestamp, onUpdate } = this.props;
@@ -74,19 +76,16 @@ class IntervalListInput extends React.Component {
     currentDate.setMonth(nextDate.getMonth());
 
     onUpdate({ target: { value: currentDate.getTime() } });
-  }
+  };
 
   handleChange = ({ target: { value } }) => {
     this.setState({ value });
-  }
+  };
 }
 
 function validateTimeString(time) {
-  const [hours, minutes] = time.split(':')
-    .map((v) => parseInt(v, 10));
-  return hours >= 0 && hours < 24 &&
-    minutes >= 0 && minutes < 60 &&
-    /^\d{2}:\d{2}$/.test(time);
+  const [hours, minutes] = time.split(':').map((v) => parseInt(v, 10));
+  return hours >= 0 && hours < 24 && minutes >= 0 && minutes < 60 && /^\d{2}:\d{2}$/.test(time);
 }
 
 IntervalListInput.defaultProps = {
@@ -95,6 +94,7 @@ IntervalListInput.defaultProps = {
 
 IntervalListInput.propTypes = {
   className: PropTypes.string,
+  titlePrefix: PropTypes.string,
   timestamp: PropTypes.number,
   onUpdate: PropTypes.func.isRequired
 };

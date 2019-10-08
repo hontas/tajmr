@@ -3,11 +3,17 @@ import PropTypes from 'prop-types';
 
 import Button from './button.jsx';
 
-const WorkButton = ({ activeInterval, onClick }) => {
+const WorkButton = ({ activeInterval, onClick, ...props }) => {
   const buttonText = activeInterval ? 'Ta en fika ▐▐' : 'Börja debitera ▶';
 
   return (
-    <Button theme="primary" className="work-button" onClick={onClick} text={buttonText} />
+    <Button
+      {...props}
+      theme="primary"
+      className="work-button"
+      onClick={onClick}
+      text={buttonText}
+    />
   );
 };
 

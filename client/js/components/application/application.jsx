@@ -24,7 +24,7 @@ class Application extends React.Component {
     const { initialized, user } = this.props;
     if (!initialized) {
       return (
-        <div className="application__init">
+        <div className="application__init" data-testid="app-init">
           <Wave color="rgba(255,255,255,.75)" size={50} />
         </div>
       );

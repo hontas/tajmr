@@ -35,7 +35,11 @@ class Navbar extends React.Component {
         )}
 
         {user && (
-          <Button className="navbar__menu-btn" onClick={this.toggleUserMenu}>
+          <Button
+            className="navbar__menu-btn"
+            data-testid="user-menu-toggle"
+            onClick={this.toggleUserMenu}
+          >
             <Hamburger active={showUserMenu} />
           </Button>
         )}

@@ -52,7 +52,11 @@ class CurrentIntervals extends React.Component {
         <DigitalClock elapsed={intervalSum} from={activeInterval ? activeInterval.startTime : 0} />
         <ProgressBarTimeWrapper intervals={activeAndCurrentIntervals} max={hoursInWeek / 5} />
         <div className="action-buttons" style={{ display: 'flex' }}>
-          <WorkButton activeInterval={!!activeInterval} onClick={this.onClick} />
+          <WorkButton
+            data-testid="work-button"
+            activeInterval={!!activeInterval}
+            onClick={this.onClick}
+          />
           <Button
             className="current-intervals__prev-work-btn"
             theme="primary"

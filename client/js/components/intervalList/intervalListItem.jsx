@@ -18,8 +18,16 @@ class IntervalListItem extends React.Component {
 
     return (
       <li className={classNames('interval-list-item', className)}>
-        <IntervalListInput timestamp={startTime} onUpdate={this.updateProp('startTime')} />
-        <IntervalListInput timestamp={endTime} onUpdate={this.updateProp('endTime')} />
+        <IntervalListInput
+          titlePrefix="from"
+          timestamp={startTime}
+          onUpdate={this.updateProp('startTime')}
+        />
+        <IntervalListInput
+          titlePrefix="end"
+          timestamp={endTime}
+          onUpdate={this.updateProp('endTime')}
+        />
 
         <AutoComplete
           className="interval-list-item__note"
@@ -32,11 +40,12 @@ class IntervalListItem extends React.Component {
         <input
           className="interval-list-item__no-work"
           type="checkbox"
+          title="not work"
           checked={notWork || false}
           onChange={this.onChecked('notWork')}
         />
 
-        <Button className="delete" theme="danger" onClick={this.remove}>
+        <Button className="delete" theme="danger" title="remove" onClick={this.remove}>
           <Trashcan size={15} />
         </Button>
       </li>
@@ -49,7 +58,7 @@ class IntervalListItem extends React.Component {
       ...interval,
       [prop]: checked
     });
-  }
+  };
 
   updateProp = (prop) => ({ target: { value } }) => {
     const { interval, onUpdate } = this.props;
@@ -57,12 +66,12 @@ class IntervalListItem extends React.Component {
       ...interval,
       [prop]: value
     });
-  }
+  };
 
   remove = () => {
     const { onDelete, interval } = this.props;
     onDelete(interval.id);
-  }
+  };
 }
 
 IntervalListItem.propTypes = {

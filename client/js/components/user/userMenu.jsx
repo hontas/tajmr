@@ -36,6 +36,7 @@ class UserMenu extends React.Component {
 
     return (
       <form
+        data-testid="user-menu"
         className={classNames('pure-form pure-form-stacked user-menu', className)}
         onSubmit={this.preventDefault}
       >
