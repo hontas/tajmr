@@ -74,6 +74,7 @@ class CurrentIntervals extends React.Component {
           />
         )}
         <IntervalList
+          data-testid="current-intervals-list"
           intervals={activeAndCurrentIntervals}
           onDelete={this.onDelete}
           onUpdate={this.onUpdate}

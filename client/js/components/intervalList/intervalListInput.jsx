@@ -22,7 +22,7 @@ class IntervalListInput extends React.Component {
   state = stateFromProps(this.props);
 
   render() {
-    const { className, timestamp, titlePrefix } = this.props;
+    const { className, timestamp, titlePrefix, dataTestId } = this.props;
     const { value, isActive, isValid } = this.state;
     const baseClassName = 'interval-list-input';
     const variationClass = isValid ? '' : `${baseClassName}--error`;
@@ -30,6 +30,8 @@ class IntervalListInput extends React.Component {
     return (
       <div className={classNames(baseClassName, className, variationClass)}>
         <input
+          type="text"
+          data-testid={dataTestId}
           title={`${titlePrefix} time`}
           className={`${baseClassName}__input`}
           disabled={isActive}
@@ -89,11 +91,13 @@ function validateTimeString(time) {
 }
 
 IntervalListInput.defaultProps = {
-  className: ''
+  className: '',
+  dataTestId: ''
 };
 
 IntervalListInput.propTypes = {
   className: PropTypes.string,
+  dataTestId: PropTypes.string,
   titlePrefix: PropTypes.string,
   timestamp: PropTypes.number,
   onUpdate: PropTypes.func.isRequired

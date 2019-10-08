@@ -17,7 +17,7 @@ const WeekDayItem = ({ weekday, total, date, intervals = [] }) => {
 
   return (
     <div className={baseClassName}>
-      <div className={barClassName} style={style} tabIndex="-1">
+      <div className={barClassName} style={style} tabIndex="-1" data-testid="week-stats-item">
         {intervals.map(({ timespan, note, notWork }) => (
           <div
             className={classNames(`${barClassName}__item`, { 'not-work': notWork })}

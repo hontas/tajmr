@@ -78,15 +78,22 @@ export function attemptUpdate(interval) {
   return (dispatch) => {
     dispatch(requestIntervalUpdate());
 
-    // only need to handle failure here because
-    // firebase fires change event that we handle
+    const handleSuccess = (updatedInterval) => dispatch(intervalUpdated(updatedInterval));
+    const handleFailure = (err) => dispatch(intervalUpdateFailed(err));
+
+    // firebase also fires child_added event that we handle
     if (!interval.id) {
       return firebaseApi
         .createInterval(interval)
-        .catch((err) => dispatch(intervalUpdateFailed(err)));
+        .then(handleSuccess)
+        .catch(handleFailure);
     }
 
-    return firebaseApi.updateInterval(interval).catch((err) => dispatch(intervalUpdateFailed(err)));
+    // firebase also fires child_changed event that we handle
+    return firebaseApi
+      .updateInterval(interval)
+      .then(handleSuccess)
+      .catch(handleFailure);
   };
 }
 

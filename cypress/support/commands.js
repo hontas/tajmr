@@ -11,7 +11,13 @@
 //
 // -- This is a parent command --
 // Cypress.Commands.add("login", (email, password) => { ... })
-Cypress.Commands.add('getByTestId', (testId) => cy.get(`[data-testid="${testId}"]`));
+Cypress.Commands.add('getByTestId', { prevSubject: 'optional' }, (withinSubject, testId) =>
+  cy.get(`[data-testid="${testId}"]`, { withinSubject })
+);
+
+Cypress.Commands.add('waitUntilSaved', () =>
+  cy.getByTestId('saving-intervals-container').should('not.be.visible')
+);
 //
 //
 // -- This is a child command --

@@ -15,8 +15,8 @@ class Navbar extends React.Component {
 
   render() {
     const { showUserMenu } = this.state;
-    const { user, isSaving, isFetching } = this.props;
-    const isLoading = isSaving || isFetching;
+    const { user, isSaving, isFetching, appInitialized } = this.props;
+    const isLoading = appInitialized && (isSaving || isFetching);
 
     return (
       <nav className="navbar pure-menu pure-menu-horizontal pure-menu-fixed">
@@ -26,7 +26,10 @@ class Navbar extends React.Component {
           <small>{` ${BUILD_TIME}`}</small>
         </span>
         {isLoading && (
-          <div style={{ color: 'gray', display: 'inline-block', marginLeft: '1em' }}>
+          <div
+            data-testid={isFetching ? 'loading-intervals-container' : 'saving-intervals-container'}
+            className="loading-container"
+          >
             <Wave color="currentColor" className="spin-kit-spinner" />
             <small className="loading-text">
               {isFetching ? 'Laddar intervall...' : 'Sparar...'}
@@ -62,17 +65,19 @@ Navbar.propTypes = {
   dispatch: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   isSaving: PropTypes.bool.isRequired,
+  appInitialized: PropTypes.bool.isRequired,
   user: PropTypes.shape({
     uid: PropTypes.string.isRequired
   })
 };
 
-function mapStateToProps({ intervals, userSettings, user }) {
+function mapStateToProps({ intervals, userSettings, user, app }) {
   return {
     user,
     isFetching: intervals.isFetching,
     isSaving: intervals.isSaving,
-    userSettings
+    userSettings,
+    appInitialized: app.initialized
   };
 }
 

@@ -26,9 +26,13 @@ class WeekStats extends React.Component {
     return (
       <div className="week-stats">
         <h3 className="week-stats__title">
-          <Button onClick={this.lastWeek}>◀︎</Button>
+          <Button onClick={this.lastWeek} data-testid="prev-week-btn">
+            ◀︎
+          </Button>
           {intervals.length ? ` v.${getWeekNumber(timestamp)} ` : ` v.${getWeekNumber(now)} `}
-          <Button onClick={this.nextWeek}>▶︎</Button>
+          <Button onClick={this.nextWeek} data-testid="next-week-btn">
+            ▶︎
+          </Button>
         </h3>
         <div className="week-stats__bars flex-container flex--align-end">
           {mashUpWeekAndIntervals(intervals, timestamp).map((day) => (

@@ -5,25 +5,20 @@ import * as customPropTypes from '../../constants/propTypes';
 import IntervalListItem from './intervalListItem.jsx';
 
 function sortBy(array, prop) {
-  return array
-    .slice()
-    .sort((a, b) => b[prop] - a[prop]);
+  return array.slice().sort((a, b) => b[prop] - a[prop]);
 }
 
-const IntervalList = ({ intervals, onDelete, onUpdate, notes = [] }) => (
-  <ul className="interval-list">
-    {
-      sortBy(intervals, 'startTime')
-        .map((interval) => (
-          <IntervalListItem
-            key={interval.id}
-            interval={interval}
-            onDelete={onDelete}
-            onUpdate={onUpdate}
-            notes={notes}
-          />
-        ))
-    }
+const IntervalList = ({ intervals, onDelete, onUpdate, notes = [], ...props }) => (
+  <ul {...props} className="interval-list">
+    {sortBy(intervals, 'startTime').map((interval) => (
+      <IntervalListItem
+        key={interval.id}
+        interval={interval}
+        onDelete={onDelete}
+        onUpdate={onUpdate}
+        notes={notes}
+      />
+    ))}
   </ul>
 );
 

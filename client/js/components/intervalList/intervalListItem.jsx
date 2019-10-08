@@ -17,13 +17,15 @@ class IntervalListItem extends React.Component {
     } = this.props;
 
     return (
-      <li className={classNames('interval-list-item', className)}>
+      <li className={classNames('interval-list-item', className)} data-testid="interval-item">
         <IntervalListInput
+          dataTestId="interval-from-input"
           titlePrefix="from"
           timestamp={startTime}
           onUpdate={this.updateProp('startTime')}
         />
         <IntervalListInput
+          dataTestId="interval-end-input"
           titlePrefix="end"
           timestamp={endTime}
           onUpdate={this.updateProp('endTime')}
@@ -45,7 +47,13 @@ class IntervalListItem extends React.Component {
           onChange={this.onChecked('notWork')}
         />
 
-        <Button className="delete" theme="danger" title="remove" onClick={this.remove}>
+        <Button
+          className="delete"
+          theme="danger"
+          title="remove"
+          data-testid="remove-interval"
+          onClick={this.remove}
+        >
           <Trashcan size={15} />
         </Button>
       </li>
