@@ -16,7 +16,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "npm test && npx cypress"
+      "pre-push": "npm test && npx cypress run"
     }
   },
   "lint-staged": {
