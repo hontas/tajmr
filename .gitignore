@@ -8,3 +8,7 @@ package-lock.json
 tmp/
 coverage/
 .tern-project
+
+# cypress.io
+cypress/videos
+cypress/screenshots
