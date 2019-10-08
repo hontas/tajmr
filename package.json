@@ -11,8 +11,19 @@
     "build": "NODE_ENV=production webpack",
     "deploy": "npm run test && npm run build && GIT_DEPLOY_DIR=public ./scripts/deploy.sh",
     "postversion": "git push --follow-tags",
-    "dev": "npm run prebuild && webpack-dev-server --watch",
-    "precommit": "npm run lint && npm run test"
+    "dev": "npm run prebuild && webpack-dev-server --watch"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm test && npx cypress"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "author": "Pontus Lundin <lundin.pontus@gmail.com> (https://github.com/hontas)",
   "repository": {
@@ -64,10 +75,12 @@
     "html-webpack-plugin": "^3.2.0",
     "husky": "^3.0.8",
     "jest": "^24.9.0",
+    "lint-staged": "^9.4.2",
     "lolex": "^4.2.0",
     "md5": "^2.2.1",
     "mini-css-extract-plugin": "^0.8.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "prettier": "^1.18.2",
     "regenerator-runtime": "^0.13.3",
     "script-ext-html-webpack-plugin": "^2.1.4",
     "style-loader": "^1.0.0",
