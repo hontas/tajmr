@@ -2,15 +2,18 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 
+import { maxOneDecimal } from '../../utils/number';
+
 const ProgressBar = ({ progress, max, onlyDelta, unit = '' }) => {
   const percentage = (progress / max).toFixed(2);
   const isOvertime = percentage > 1.0;
   const width = !isOvertime ? `${percentage * 100}%` : `${(1 / percentage) * 100}%`;
   const restWidth = !isOvertime ? `${(1 - percentage) * 100}%` : `${(1 - 1 / percentage) * 100}%`;
-  const delta = Math.abs((max - progress).toFixed(1));
+  const delta = maxOneDecimal(Math.abs(max - progress));
   const classes = classNames('progress-bar', {
     'progress-bar--only-delta': onlyDelta
   });
+  const progressText = [progress, max].map(maxOneDecimal).join(' / ');
 
   return (
     <div className={classes}>
@@ -20,7 +23,7 @@ const ProgressBar = ({ progress, max, onlyDelta, unit = '' }) => {
         className={classNames('progress-bar__rest', { 'progress-bar__overtime': isOvertime })}
       />
       <div className="progress-bar__text">
-        <span className="progress-bar__text__progress">{`${progress.toFixed(1)} / ${max}`}</span>
+        <span className="progress-bar__text__progress">{progressText}</span>
         {!!delta && !onlyDelta && ' | '}
         {!!delta && <span className="progress-bar__text__delta">{`${delta}${unit}`}</span>}
       </div>

@@ -16,6 +16,7 @@
       { "optionalDependencies": false, "peerDependencies": false }
     ],
     "object-curly-newline": 0,
+    "import/prefer-default-export": 0,
     "react/button-has-type": 0,
 
     "react/destructuring-assignment": [2, "always", { "ignoreClassFields": true }],
