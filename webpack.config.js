@@ -8,7 +8,9 @@ const MiniCssExtractTextPlugin = require('mini-css-extract-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 const pkg = require('./package.json');
+require('dotenv').config();
 
 const isProduction = process.env.NODE_ENV === 'production';
 const publicPath = isProduction ? '/tajmr/' : '/';
@@ -152,6 +154,11 @@ if (isProduction) {
       cacheId: 'tajmr',
       filename: 'service-worker.js',
       staticFileGlobsIgnorePatterns: [/\.map$/, /\.cache$/]
+    }),
+    new SentryWebpackPlugin({
+      include: '.',
+      ignoreFile: '.gitignore',
+      ignore: ['node_modules', 'webpack.config.js']
     })
   );
 } else {
