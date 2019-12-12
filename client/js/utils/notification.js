@@ -10,6 +10,8 @@ function spawnNotification(body, icon, title) {
 }
 
 module.exports = (message) => {
+  if ('Notification' in window === false) return;
+
   Notification.requestPermission((permission) => {
     if (permission === 'granted') {
       const notification = spawnNotification(message, 'icons/apple-touch-icon.png', 'tajmr');
