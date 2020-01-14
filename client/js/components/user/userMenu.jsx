@@ -79,7 +79,7 @@ class UserMenu extends React.Component {
             <input
               value={hoursInWeek}
               onChange={this.handleChange('hoursInWeek', Number)}
-              style={{ float: 'right' }}
+              style={{ float: 'right', width: '100px' }}
               type="number"
             />
           </label>
@@ -92,8 +92,8 @@ class UserMenu extends React.Component {
         />
         <fieldset className="user-menu__fieldset">
           {updatePasswordError && <p style={{ whiteSpace: 'normal' }}>{updatePasswordError}</p>}
-          <div className="user-menu__change-pass pure-button-group">
-            <label htmlFor="oldPassword">
+          <div className="user-menu__change-pass">
+            <label htmlFor="oldPassword" className="user-menu__change-pass__label">
               <input
                 onKeyDown={this.preventDefault}
                 autoComplete="old-password"
@@ -106,7 +106,7 @@ class UserMenu extends React.Component {
                 id="oldPassword"
               />
             </label>
-            <label htmlFor="newPassword">
+            <label htmlFor="newPassword" className="user-menu__change-pass__label">
               <input
                 onKeyDown={this.preventDefault}
                 autoComplete="new-password"

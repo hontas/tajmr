@@ -58,7 +58,16 @@ class Navbar extends React.Component {
     );
   }
 
-  toggleUserMenu = () => this.setState(({ showUserMenu }) => ({ showUserMenu: !showUserMenu }));
+  toggleUserMenu = () => {
+    this.setState(({ showUserMenu }) => {
+      if (showUserMenu) {
+        document.body.classList.remove('navbar--user-menu-visible');
+      } else {
+        document.body.classList.add('navbar--user-menu-visible');
+      }
+      return { showUserMenu: !showUserMenu };
+    });
+  };
 }
 
 Navbar.propTypes = {

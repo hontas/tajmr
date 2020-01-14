@@ -15,4 +15,9 @@
 
 .main {
   flex: 1;
+  background: $primary-color;
+  @supports(-webkit-overflow-scrolling: touch) {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
 }

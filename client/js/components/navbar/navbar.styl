@@ -36,6 +36,19 @@
   }
 }
 
+.navbar--user-menu-visible {
+  overflow: hidden;}
+
+@css {
+  @supports(-webkit-overflow-scrolling: touch) {
+    .navbar {
+      padding-top: max(0.5em, env(safe-area-inset-top));
+      padding-left: max(0.5em, env(safe-area-inset-left));
+      padding-right: max(0.5em, env(safe-area-inset-right));
+    }
+  }
+}
+
 .navbar__menu-btn {
   background-color: transparent;
   color: white;

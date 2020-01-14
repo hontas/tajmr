@@ -4,3 +4,11 @@
   font-size: 1.5em;
   width: 100%;
 }
+
+@css {
+  @supports(-webkit-overflow-scrolling: touch) {
+    .work-button {
+      padding-left: max(1em, env(safe-area-inset-left));
+    }
+  }
+}

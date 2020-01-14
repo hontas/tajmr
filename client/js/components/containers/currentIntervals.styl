@@ -3,6 +3,21 @@
     margin-bottom: 3em;
     padding-bottom: 1.5em;
   }
+
+  .action-buttons {
+    @supports(-webkit-overflow-scrolling: touch) {
+      margin-left: calc(-1 * env(safe-area-inset-left));
+      margin-right: calc(-1 * env(safe-area-inset-right));
+    }
+  }
+}
+
+@css {
+  @supports(-webkit-overflow-scrolling: touch) {
+    .current-intervals__prev-work-btn {
+      padding-right: max(1em, env(safe-area-inset-right));
+    }
+  }
 }
 
 .current-intervals__prev-work-btn {

@@ -105,7 +105,7 @@ const config = {
       name: pkg.name,
       description: pkg.description,
       orientation: 'any',
-      start_url: '/tajmr/',
+      start_url: publicPath,
       theme_color: themeColor,
       background_color: themeColor,
       icons: [
