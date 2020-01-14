@@ -11,7 +11,7 @@ import pkg from '../../../../package.json';
 
 const { BUILD_TIME } = process.env;
 class Navbar extends React.Component {
-  state = { showUserMenu: false };
+  state = { showUserMenu: false, scrollY: 0 };
 
   render() {
     const { showUserMenu } = this.state;
@@ -59,13 +59,17 @@ class Navbar extends React.Component {
   }
 
   toggleUserMenu = () => {
-    this.setState(({ showUserMenu }) => {
+    this.setState(({ showUserMenu, scrollY }) => {
+
       if (showUserMenu) {
-        document.body.classList.remove('navbar--user-menu-visible');
+        document.body.style.position = '';
+        document.body.style.top = '';
+        window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
       } else {
-        document.body.classList.add('navbar--user-menu-visible');
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${window.scrollY}px`;
       }
-      return { showUserMenu: !showUserMenu };
+      return { showUserMenu: !showUserMenu, scrollY: window.scrollY };
     });
   };
 }

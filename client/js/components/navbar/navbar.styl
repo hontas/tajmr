@@ -36,9 +36,6 @@
   }
 }
 
-.navbar--user-menu-visible {
-  overflow: hidden;}
-
 @css {
   @supports(-webkit-overflow-scrolling: touch) {
     .navbar {
@@ -70,5 +67,13 @@
   transition: right .2s;
   &--active {
     right: 0;
+  }
+}
+
+@css {
+  @supports(-webkit-overflow-scrolling: touch) {
+    .navbar__user-menu {
+      top: calc(53px + env(safe-area-inset-top));
+    }
   }
 }
