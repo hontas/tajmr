@@ -8,6 +8,17 @@
   padding: .5em;
 }
 
+@css {
+  @supports(-webkit-overflow-scrolling: touch) {
+    .previous-intervals__title {
+      margin-left: calc(-1 * env(safe-area-inset-left));
+      padding-left: max(0.5em, env(safe-area-inset-left));
+      margin-right: calc(-1 * env(safe-area-inset-right));
+      padding-right: max(0.5em, env(safe-area-inset-right));
+    }
+  }  
+}
+
 .previous-intervals__show-more {
   display: block;
   margin: 0 .5em .5em;

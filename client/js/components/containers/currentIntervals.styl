@@ -1,4 +1,6 @@
 .current-intervals {
+  padding-top: 5em;
+
   @media screen and (min-width: $screen-large) {
     margin-bottom: 3em;
     padding-bottom: 1.5em;
@@ -14,6 +16,9 @@
 
 @css {
   @supports(-webkit-overflow-scrolling: touch) {
+    .current-intervals {
+      padding-top: calc(5em + env(safe-area-inset-top));
+    }
     .current-intervals__prev-work-btn {
       padding-right: max(1em, env(safe-area-inset-right));
     }
