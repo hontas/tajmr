@@ -1,5 +1,5 @@
 export const months = ['januari', 'februari', 'mars', 'april', 'maj', 'juni', 'juli', 'augusti', 'september', 'oktober', 'november', 'december']; // eslint-disable-line max-len
-export const weekDays = ['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag'];
+export const weekDays = ['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag', 'söndag'];
 export const oneHour = 1000 * 60 * 60;
 export const oneDay = oneHour * 24;
 export const oneWeek = oneDay * 7;
@@ -43,7 +43,7 @@ export function getWeek(timestamp) {
   weekStart.setDate((weekStart.getDate() - dayOffset) + 1); // because sunday is 0 which sucks
   weekStart.setHours(0);
   weekStart.setMinutes(0);
-  const weekEnd = +weekStart + (oneDay * 5); // skip weekend
+  const weekEnd = +weekStart + (oneDay * 7);
   return {
     startTime: +weekStart,
     endTime: weekEnd
@@ -58,8 +58,9 @@ export function createWorkWeek(timestamp = Date.now()) {
   const monday = d.getTime();
 
   return weekDays
-    .slice(1, 6)
+    .slice(1, 8)
     .map((weekday, delta) => ({
+      isWeekEnd: delta > 4,
       weekday,
       date: getDate(new Date(monday + (oneDay * delta)))
     }));

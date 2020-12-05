@@ -91,9 +91,13 @@ function groupByWeekDay(intervals) {
 
 function mashUpWeekAndIntervals(intervals, timestamp) {
   const intervalHash = groupByWeekDay(intervals);
+  
   return createWorkWeek(timestamp).map((day) => ({
     ...day,
     total: 0,
     ...intervalHash[day.date]
-  }));
+  })).filter((item) => {
+    if (item.isWeekEnd && item.total === 0) return false;
+    return true;
+  });
 }
