@@ -82,7 +82,7 @@ export function getMonth(timestamp) {
   };
 }
 
-export function getWorkDaysinMonth({ startTime, endTime }) {
+export function getWorkDaysInMonth({ startTime, endTime }) {
   const startDate = new Date(startTime);
   const endDate = new Date(endTime);
   const startDay = startDate.getDay();

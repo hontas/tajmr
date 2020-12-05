@@ -9,7 +9,7 @@ import {
   getMonth,
   createWorkWeek,
   isCurrentWeek,
-  getWorkDaysinMonth,
+  getWorkDaysInMonth,
   startOfDay,
   endOfDay
 } from './time';
@@ -245,17 +245,17 @@ describe('time', () => {
     });
   });
 
-  describe('#getWorkDaysinMonth', () => {
+  describe('#getWorkDaysInMonth', () => {
     test('should calculate all working days in a month', () => {
       const september = getMonth(+(new Date('Sep 5, 2017')));
       const october = getMonth(+(new Date('Oct 1, 2017')));
       const november = getMonth(+(new Date('Nov 1, 2017')));
       const december = getMonth(+(new Date('Dec 1, 2017')));
 
-      expect(getWorkDaysinMonth(september)).toBe(21);
-      expect(getWorkDaysinMonth(october)).toBe(22);
-      expect(getWorkDaysinMonth(november)).toBe(22);
-      expect(getWorkDaysinMonth(december)).toBe(21);
+      expect(getWorkDaysInMonth(september)).toBe(21);
+      expect(getWorkDaysInMonth(october)).toBe(22);
+      expect(getWorkDaysInMonth(november)).toBe(22);
+      expect(getWorkDaysInMonth(december)).toBe(21);
     });
   });
 

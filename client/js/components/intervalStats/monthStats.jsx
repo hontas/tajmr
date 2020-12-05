@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as customPropTypes from '../../constants/propTypes';
 import ProgressBar from '../ui-elements/progressBar.jsx';
-import { oneHour, getMonth, getWorkDaysinMonth } from '../../utils/time';
+import { oneHour, getMonth, getWorkDaysInMonth } from '../../utils/time';
 import { getIntervalSum } from '../../utils/intervals';
 
 const MonthStats = ({ hoursPerWeek, monthIntervals, timestamp }) => {
   const month = getMonth(timestamp);
   const monthSoFar = { startTime: month.startTime, endTime: Date.now() };
   const workedHoursInMonth = getIntervalSum(monthIntervals) / oneHour;
-  const totalWorkHoursInMonth = (hoursPerWeek / 5) * getWorkDaysinMonth(month);
-  const totalWorkHoursSoFar = (hoursPerWeek / 5) * getWorkDaysinMonth(monthSoFar);
+  const totalWorkHoursInMonth = (hoursPerWeek / 5) * getWorkDaysInMonth(month);
+  const totalWorkHoursSoFar = (hoursPerWeek / 5) * getWorkDaysInMonth(monthSoFar);
 
   return (
     <div className="month-stats">
