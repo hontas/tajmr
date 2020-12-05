@@ -1,3 +1,5 @@
+import firebaseApi from '../../client/js/utils/firebaseApi';
+
 const testIds = {
   appInit: 'app-init',
   loginForm: 'login-form',
@@ -17,6 +19,10 @@ const testIds = {
 const animationDuration = 500;
 
 context('login', () => {
+  before(() => {
+    firebaseApi.logout();
+  });
+
   beforeEach(() => {
     cy.visit('/');
     cy.getByTestId(testIds.appInit, { timeout: 15000 });
