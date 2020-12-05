@@ -51,7 +51,7 @@ describe('time', () => {
 
   describe('#getWeekDay', () => {
     test('should return localised weekday', () => { // as not supported by node? :(
-      expect(getWeekday(new Date('2016-04-04T07:00:00'))).toBe('Mon');
+      expect(getWeekday(new Date('2016-04-04T07:00:00'))).toBe('mån');
     });
   });
 
@@ -169,7 +169,7 @@ describe('time', () => {
 
   describe('#getWeek', () => {
     const startDate = new Date('Sep 25, 2017'); // monday morning
-    const endDate = new Date('Sep 30, 2017'); // saturday morning
+    const endDate = new Date('Oct 2, 2017 00:00'); // next monday morning
     const middleOfWeek = new Date('Sep 27, 2017 14:53'); // wednesday afternoon
     const endOfWeek = new Date('Oct 1, 2017 11:30'); // sunday morning
 
@@ -264,13 +264,15 @@ describe('time', () => {
       const v44 = +(new Date('Nov 2, 2017'));
       const workWeek = createWorkWeek(v44);
       expect(Array.isArray(workWeek)).toBe(true);
-      expect(workWeek).toHaveLength(5);
+      expect(workWeek).toHaveLength(7);
       expect(workWeek).toEqual([
-        { date: '10/30', weekday: 'måndag' },
-        { date: '10/31', weekday: 'tisdag' },
-        { date: '11/1', weekday: 'onsdag' },
-        { date: '11/2', weekday: 'torsdag' },
-        { date: '11/3', weekday: 'fredag' }
+        { isWeekEnd: false, date: '30/10', weekday: 'måndag' },
+        { isWeekEnd: false, date: '31/10', weekday: 'tisdag' },
+        { isWeekEnd: false, date: '1/11', weekday: 'onsdag' },
+        { isWeekEnd: false, date: '2/11', weekday: 'torsdag' },
+        { isWeekEnd: false, date: '3/11', weekday: 'fredag' },
+        { isWeekEnd: true, date: '4/11', weekday: 'lördag' },
+        { isWeekEnd: true, date: '5/11', weekday: 'söndag' }
       ]);
     });
   });
