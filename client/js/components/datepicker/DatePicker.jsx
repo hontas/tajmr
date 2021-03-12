@@ -21,7 +21,7 @@ const DatePicker = ({ className, date, onDayClick, buttonTitle }) => {
 
     if (!showDateInput && !handleOutsideClick.current) {
       const clickHandler = ({ target }) => {
-        if (!datePicker.current.contains(target)) {
+        if (datePicker?.current.contains(target) === false) {
           setShowDateInput(false);
           document.removeEventListener('click', clickHandler);
         }
