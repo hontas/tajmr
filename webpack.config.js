@@ -32,8 +32,6 @@ const cssLoader = [{ loader: 'style-loader' }, { loader: 'css-loader' }];
 const config = {
   mode: isProduction ? 'production' : 'development',
 
-  devtool: isProduction ? '' : 'cheap-module-source-map',
-
   entry: {
     app: paths.entry,
     registerServiceWorker: paths.regSW
@@ -159,6 +157,7 @@ if (isProduction) {
   );
 } else {
   config.plugins.push(new webpack.HotModuleReplacementPlugin());
+  config.devtool = 'eval-source-map';
 }
 
 module.exports = config;
