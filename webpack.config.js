@@ -80,11 +80,7 @@ const config = {
 
   optimization: {
     minimizer: [
-      new TerserPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true
-      }),
+      new TerserPlugin(),
       new OptimizeCSSAssetsPlugin({})
     ]
   },
@@ -136,7 +132,7 @@ const config = {
       inline: /registerServiceWorker/
     }),
     new webpack.DefinePlugin({
-      'process.env.BUILD_TIME': JSON.stringify(new Date().toLocaleString())
+      'process.env.BUILD_TIME': JSON.stringify(new Intl.DateTimeFormat('sv-SE', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date()))
     })
   ],
   stats: {
@@ -162,7 +158,7 @@ if (isProduction) {
     })
   );
 } else {
-  config.plugins.push(new webpack.NamedModulesPlugin(), new webpack.HotModuleReplacementPlugin());
+  config.plugins.push(new webpack.HotModuleReplacementPlugin());
 }
 
 module.exports = config;

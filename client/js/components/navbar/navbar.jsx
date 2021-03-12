@@ -9,7 +9,6 @@ import Hamburger from '../icons/Hamburger.jsx';
 import UserMenu from '../user/userMenu.jsx';
 import pkg from '../../../../package.json';
 
-const { BUILD_TIME } = process.env;
 class Navbar extends React.Component {
   state = { showUserMenu: false, scrollY: 0 };
 
@@ -23,7 +22,7 @@ class Navbar extends React.Component {
         <h1 className="brand pure-menu-heading">TajmR</h1>
         <span className="version">
           {`v${pkg.version}`}
-          <small>{` ${BUILD_TIME}`}</small>
+          <small>{` ${process.env.BUILD_TIME}`}</small>
         </span>
         {isLoading && (
           <div
