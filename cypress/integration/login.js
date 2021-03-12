@@ -45,8 +45,8 @@ context('login', () => {
     cy.getByTestId(testIds.workButton).should('include.text', 'Börja debitera');
 
     // wait for intervals to load
-    cy.getByTestId(testIds.loadingIntervals);
-    cy.getByTestId(testIds.loadingIntervals).should('not.be.visible');
+    cy.getByTestId(testIds.loadingIntervals).should('be.visible');
+    cy.getByTestId(testIds.loadingIntervals).should('not.exist');
     cy.wait(animationDuration);
 
     // add intervals
