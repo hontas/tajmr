@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import { Wave } from 'better-react-spinkit';
 
 import Button from '../button/button.jsx';
 import Hamburger from '../icons/Hamburger.jsx';
 import UserMenu from '../user/userMenu.jsx';
+import * as SpinKit from '../spinkit/spinkit.jsx';
 import pkg from '../../../../package.json';
 
 class Navbar extends React.Component {
@@ -29,7 +29,7 @@ class Navbar extends React.Component {
             data-testid={isFetching ? 'loading-intervals-container' : 'saving-intervals-container'}
             className="loading-container"
           >
-            <Wave color="currentColor" className="spin-kit-spinner" />
+            <SpinKit.Wave color="currentColor" />
             <small className="loading-text">
               {isFetching ? 'Laddar intervall...' : 'Sparar...'}
             </small>
@@ -49,7 +49,7 @@ class Navbar extends React.Component {
           <UserMenu
             {...this.props}
             className={classNames('navbar__user-menu', {
-              'navbar__user-menu--active': showUserMenu
+              'navbar__user-menu--active': showUserMenu,
             })}
           />
         )}
@@ -59,7 +59,6 @@ class Navbar extends React.Component {
 
   toggleUserMenu = () => {
     this.setState(({ showUserMenu, scrollY }) => {
-
       if (showUserMenu) {
         document.body.style.position = '';
         document.body.style.top = '';
@@ -79,8 +78,8 @@ Navbar.propTypes = {
   isSaving: PropTypes.bool.isRequired,
   appInitialized: PropTypes.bool.isRequired,
   user: PropTypes.shape({
-    uid: PropTypes.string.isRequired
-  })
+    uid: PropTypes.string.isRequired,
+  }),
 };
 
 function mapStateToProps({ intervals, userSettings, user, app }) {
@@ -89,7 +88,7 @@ function mapStateToProps({ intervals, userSettings, user, app }) {
     isFetching: intervals.isFetching,
     isSaving: intervals.isSaving,
     userSettings,
-    appInitialized: app.initialized
+    appInitialized: app.initialized,
   };
 }
 

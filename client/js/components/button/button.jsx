@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { FadingCircle } from 'better-react-spinkit';
+import * as SpinKit from '../spinkit/spinkit.jsx';
 
 const Button = ({
   className,
@@ -18,7 +18,7 @@ const Button = ({
     <button {...rest} className={classes} type={type}>
       {text}
       {children}
-      {isLoading && <FadingCircle className="spin-kit-spinner" color="currentColor" size={15} />}
+      {isLoading && <SpinKit.Bounce size="15px" />}
     </button>
   );
 };
@@ -26,7 +26,7 @@ const Button = ({
 Button.defaultProps = {
   text: null,
   children: null,
-  isLoading: false
+  isLoading: false,
 };
 
 Button.propTypes = {
@@ -39,8 +39,8 @@ Button.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element)
-  ])
+    PropTypes.arrayOf(PropTypes.element),
+  ]),
 };
 
 export default Button;
