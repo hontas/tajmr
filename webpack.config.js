@@ -77,6 +77,9 @@ const config = {
   },
 
   optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
     minimizer: [
       new TerserPlugin(),
       new OptimizeCSSAssetsPlugin({})
