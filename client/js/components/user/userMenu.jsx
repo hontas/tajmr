@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import Button from '../button/button.jsx';
 
 import * as customPropTypes from '../../constants/propTypes';
-import { updateSettings } from '../../redux/userSettings';
 import firebaseApi from '../../utils/firebaseApi';
 
 const garavatarUrl = 'https://www.gravatar.com/avatar';
@@ -15,7 +14,7 @@ class UserMenu extends React.Component {
     isSavingUserSettings: false,
     isSavingUserPassword: false,
     updatePasswordError: null,
-    updatePasswordSuccess: false
+    updatePasswordSuccess: false,
   };
 
   render() {
@@ -24,13 +23,13 @@ class UserMenu extends React.Component {
       displayMonthReport,
       displayNotifications,
       displayPreviousIntervals,
-      hoursInWeek
+      hoursInWeek,
     } = userSettings;
     const {
       isSavingUserSettings,
       isSavingUserPassword,
       updatePasswordError,
-      updatePasswordSuccess
+      updatePasswordSuccess,
     } = this.state;
     const photoURL = user && (user.photoURL || `${garavatarUrl}/${md5(user.email)}`);
 
@@ -147,7 +146,7 @@ class UserMenu extends React.Component {
       this.setState({
         isSavingUserPassword: false,
         updatePasswordError: message,
-        updatePasswordSuccess: !message
+        updatePasswordSuccess: !message,
       });
 
     firebaseApi
@@ -162,11 +161,11 @@ class UserMenu extends React.Component {
   };
 
   handleChange(prop, transform = (x) => x) {
-    const { dispatch } = this.props;
+    const { updateSettings } = this.props;
 
     return ({ target }) => {
       const value = target.type === 'checkbox' ? target.checked : transform(target.value);
-      dispatch(updateSettings({ [prop]: value }));
+      updateSettings(prop, value);
     };
   }
 
@@ -183,13 +182,13 @@ class UserMenu extends React.Component {
 
 UserMenu.propTypes = {
   className: PropTypes.string,
-  dispatch: PropTypes.func.isRequired,
+  updateSettings: PropTypes.func.isRequired,
   user: PropTypes.shape({
     uid: PropTypes.string.isRequired,
     photoURL: PropTypes.string,
-    email: PropTypes.string.isRequired
+    email: PropTypes.string.isRequired,
   }),
-  userSettings: customPropTypes.userSettings.isRequired
+  userSettings: customPropTypes.userSettings.isRequired,
 };
 
 export default UserMenu;

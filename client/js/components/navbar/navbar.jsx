@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
@@ -6,19 +6,51 @@ import classNames from 'classnames';
 import Button from '../button/button.jsx';
 import Hamburger from '../icons/Hamburger.jsx';
 import UserMenu from '../user/userMenu.jsx';
+import * as userSettingActions from '../../redux/userSettings';
+import * as customPropTypes from '../../constants/propTypes';
 import * as SpinKit from '../spinkit/spinkit.jsx';
+import debounce from '../../utils/debounce';
 import pkg from '../../../../package.json';
 
-class Navbar extends React.Component {
-  state = { showUserMenu: false, scrollY: 0 };
+function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, dispatch }) {
+  const [menuRightPosition, setMenuRightPosition] = React.useState(0);
+  const [showUserMenu, setShowUserMenu] = React.useState(false);
+  const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
+  const navBarInnerRef = React.useRef(null);
+  const isLoading = appInitialized && (isSaving || isFetching);
 
-  render() {
-    const { showUserMenu } = this.state;
-    const { user, isSaving, isFetching, appInitialized } = this.props;
-    const isLoading = appInitialized && (isSaving || isFetching);
+  React.useEffect(() => {
+    const resizeHandler = debounce(() => setWindowWidth(window.innerWidth));
+    window.addEventListener('resize', resizeHandler);
+    return () => {
+      window.removeEventListener('resize', resizeHandler);
+    };
+  }, []);
 
-    return (
-      <nav className="navbar pure-menu pure-menu-horizontal pure-menu-fixed">
+  React.useEffect(() => {
+    const { right } = navBarInnerRef.current?.getBoundingClientRect();
+    setMenuRightPosition(windowWidth - right);
+  }, [navBarInnerRef, windowWidth]);
+
+  const updateSettings = (prop, value) => {
+    dispatch(userSettingActions.updateSettings({ [prop]: value }));
+  };
+
+  const toggleUserMenu = () => {
+    if (showUserMenu) {
+      document.body.style.overflow = '';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+    setShowUserMenu(!showUserMenu);
+  };
+
+  return (
+    <nav
+      className="navbar pure-menu pure-menu-horizontal pure-menu-fixed"
+      style={{ '--user-menu-right-pos': `${menuRightPosition}px` }}
+    >
+      <div className="navbar__inner" ref={navBarInnerRef}>
         <h1 className="brand pure-menu-heading">TajmR</h1>
         <span className="version">
           {`v${pkg.version}`}
@@ -37,39 +69,27 @@ class Navbar extends React.Component {
         )}
 
         {user && (
-          <Button
-            className="navbar__menu-btn"
-            data-testid="user-menu-toggle"
-            onClick={this.toggleUserMenu}
-          >
-            <Hamburger active={showUserMenu} />
-          </Button>
+          <>
+            <Button
+              className="navbar__menu-btn"
+              data-testid="user-menu-toggle"
+              onClick={toggleUserMenu}
+            >
+              <Hamburger active={showUserMenu} />
+            </Button>
+            <UserMenu
+              user={user}
+              userSettings={userSettings}
+              updateSettings={updateSettings}
+              className={classNames('navbar__user-menu', {
+                'navbar__user-menu--active': showUserMenu,
+              })}
+            />
+          </>
         )}
-        {user && (
-          <UserMenu
-            {...this.props}
-            className={classNames('navbar__user-menu', {
-              'navbar__user-menu--active': showUserMenu,
-            })}
-          />
-        )}
-      </nav>
-    );
-  }
-
-  toggleUserMenu = () => {
-    this.setState(({ showUserMenu, scrollY }) => {
-      if (showUserMenu) {
-        document.body.style.position = '';
-        document.body.style.top = '';
-        window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
-      } else {
-        document.body.style.position = 'fixed';
-        document.body.style.top = `-${window.scrollY}px`;
-      }
-      return { showUserMenu: !showUserMenu, scrollY: window.scrollY };
-    });
-  };
+      </div>
+    </nav>
+  );
 }
 
 Navbar.propTypes = {
@@ -77,6 +97,7 @@ Navbar.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   isSaving: PropTypes.bool.isRequired,
   appInitialized: PropTypes.bool.isRequired,
+  userSettings: customPropTypes.userSettings.isRequired,
   user: PropTypes.shape({
     uid: PropTypes.string.isRequired,
   }),
