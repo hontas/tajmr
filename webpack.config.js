@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
@@ -18,7 +19,6 @@ const themeColor = '#1f8dd6';
 const paths = {
   html: path.resolve(__dirname, 'client/index.html'),
   entry: path.resolve(__dirname, 'client/js/app.js'),
-  regSW: path.resolve(__dirname, 'client/js/register-sw.js'),
   public: path.resolve(__dirname, 'public'),
   icon: path.resolve(__dirname, 'client/resources/apple-touch-icon.png')
 };
@@ -34,7 +34,6 @@ const config = {
 
   entry: {
     app: paths.entry,
-    registerServiceWorker: paths.regSW
   },
 
   output: {
@@ -133,8 +132,16 @@ const config = {
       inline: /registerServiceWorker/
     }),
     new webpack.DefinePlugin({
-      'process.env.BUILD_TIME': JSON.stringify(new Intl.DateTimeFormat('sv-SE', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date()))
-    })
+      'process.env.BUILD_TIME': JSON.stringify(
+        new Intl.DateTimeFormat('sv-SE', { dateStyle: 'medium', timeStyle: 'short' }).format(
+          new Date()
+        )
+      ),
+    }),
+    new WorkboxPlugin.GenerateSW({
+      clientsClaim: true,
+      skipWaiting: true,
+    }),
   ],
   stats: {
     children: false
@@ -147,11 +154,6 @@ const config = {
 
 if (isProduction) {
   config.plugins.push(
-    new SWPrecacheWebpackPlugin({
-      cacheId: 'tajmr',
-      filename: 'service-worker.js',
-      staticFileGlobsIgnorePatterns: [/\.map$/, /\.cache$/]
-    }),
     new SentryWebpackPlugin({
       include: '.',
       ignoreFile: '.gitignore',

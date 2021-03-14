@@ -21,6 +21,7 @@ import {
   reset as intervalReset
 } from './redux/intervals';
 import Application from './components/application/application.jsx';
+import './register-sw';
 
 Sentry.init({ dsn: 'https://a359f82382f84f2d85c9a876827f8e1a@sentry.io/1836574' });
 
