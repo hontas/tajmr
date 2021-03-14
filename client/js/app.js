@@ -1,6 +1,4 @@
 /* eslint-disable react/jsx-filename-extension */
-import 'core-js';
-import 'regenerator-runtime/runtime';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -18,7 +16,7 @@ import {
   intervalRemoved,
   intervalUpdated,
   fetchIntervalsForUser,
-  reset as intervalReset
+  reset as intervalReset,
 } from './redux/intervals';
 import Application from './components/application/application.jsx';
 import './register-sw';
@@ -48,11 +46,4 @@ const App = () => (
   </Provider>
 );
 
-if (process.env.NODE_ENV !== 'production') {
-  // eslint-disable-next-line global-require
-  // const axe = require('react-axe');
-  // axe(React, ReactDOM, 1000);
-  ReactDOM.render(<App />, document.getElementById('root'));
-} else {
-  ReactDOM.render(<App />, document.getElementById('root'));
-}
+ReactDOM.render(<App />, document.getElementById('root'));

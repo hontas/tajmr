@@ -5,11 +5,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-const MiniCssExtractTextPlugin = require('mini-css-extract-plugin');
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const SentryWebpackPlugin = require('@sentry/webpack-plugin');
+// const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const pkg = require('./package.json');
 require('dotenv').config();
 
@@ -20,7 +19,7 @@ const paths = {
   html: path.resolve(__dirname, 'client/index.html'),
   entry: path.resolve(__dirname, 'client/js/app.js'),
   public: path.resolve(__dirname, 'public'),
-  icon: path.resolve(__dirname, 'client/resources/apple-touch-icon.png')
+  icon: path.resolve(__dirname, 'client/resources/apple-touch-icon.png'),
 };
 
 if (!isProduction) {
@@ -38,13 +37,13 @@ const config = {
 
   output: {
     path: paths.public,
-    filename: isProduction ? '[name].[hash].js' : '[name].js',
-    publicPath
+    filename: isProduction ? '[name].[contenthash].js' : '[name].js',
+    publicPath,
   },
 
   devServer: {
     contentBase: paths.public,
-    hot: true
+    hot: true,
   },
 
   module: {
@@ -52,37 +51,34 @@ const config = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
       },
       {
         test: /\.css$/,
-        use: cssLoader
+        use: cssLoader,
       },
       {
         test: /\.styl$/,
         include: /critical/,
         use: [
-          isProduction ? MiniCssExtractTextPlugin.loader : { loader: 'style-loader' },
+          isProduction ? MiniCssExtractPlugin.loader : { loader: 'style-loader' },
           { loader: 'css-loader' },
-          { loader: 'stylus-loader' }
-        ]
+          { loader: 'stylus-loader' },
+        ],
       },
       {
         test: /\.styl$/,
         exclude: /critical/,
-        use: [...cssLoader, { loader: 'stylus-loader' }]
-      }
-    ]
+        use: [...cssLoader, { loader: 'stylus-loader' }],
+      },
+    ],
   },
 
   optimization: {
     splitChunks: {
       chunks: 'all',
     },
-    minimizer: [
-      new TerserPlugin(),
-      new OptimizeCSSAssetsPlugin({})
-    ]
+    minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
   },
 
   plugins: [
@@ -92,10 +88,8 @@ const config = {
       meta: {
         description: pkg.description,
         'application-name': pkg.name,
-        'msapplication-TileImage': `${publicPath}icons/apple-touch-icon-144x144.png`,
-        'msapplication-TileColor': themeColor
       },
-      minimize: false
+      minimize: false,
     }),
     new WebpackPwaManifest({
       name: pkg.name,
@@ -104,32 +98,33 @@ const config = {
       start_url: publicPath,
       theme_color: themeColor,
       background_color: themeColor,
+      ios: true,
       icons: [
         {
           src: paths.icon,
           sizes: [192, 512],
-          destination: path.join('icons', 'ios'),
-          ios: true
-        }
-      ]
+        },
+      ],
     }),
     new FaviconsWebpackPlugin({
       logo: paths.icon,
       title: pkg.name,
-      prefix: 'icons/',
       background: themeColor,
-      icons: {
-        android: false,
-        appleStartup: false,
-        firefox: false
-      }
+      cache: true,
+      favicons: {
+        icons: {
+          android: false,
+          appleIcon: true,
+          appleStartup: false,
+          coast: false,
+          firefox: false,
+          windows: false,
+          yandex: false,
+        },
+      },
     }),
-    new MiniCssExtractTextPlugin({
-      filename: isProduction ? '[name].[hash].css' : '[name].css'
-    }),
-    new ScriptExtHtmlWebpackPlugin({
-      defaultAttribute: 'async',
-      inline: /registerServiceWorker/
+    new MiniCssExtractPlugin({
+      filename: isProduction ? '[name].[contenthash].css' : '[name].css',
     }),
     new webpack.DefinePlugin({
       'process.env.BUILD_TIME': JSON.stringify(
@@ -144,21 +139,21 @@ const config = {
     }),
   ],
   stats: {
-    children: false
+    children: false,
   },
 
   watchOptions: {
-    aggregateTimeout: 200
-  }
+    aggregateTimeout: 200,
+  },
 };
 
 if (isProduction) {
   config.plugins.push(
     new SentryWebpackPlugin({
-      include: '.',
+      include: 'client',
       ignoreFile: '.gitignore',
-      ignore: ['node_modules', 'webpack.config.js']
     })
+    // new BundleAnalyzerPlugin()
   );
 } else {
   config.plugins.push(new webpack.HotModuleReplacementPlugin());
