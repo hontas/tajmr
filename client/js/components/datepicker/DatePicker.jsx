@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import DayPicker from 'react-day-picker';
 import classNames from 'classnames';
+import 'react-day-picker/lib/style.css';
 
 // 📅
 import Calendar from '../icons/Calendar.jsx';
@@ -12,7 +13,7 @@ const DatePicker = ({ className, date, onDayClick, buttonTitle }) => {
   const handleOutsideClick = useRef(null);
   const classes = classNames('date-picker', className, {
     'date-picker--disabled': !date,
-    'date-picker--show-picker': showDateInput
+    'date-picker--show-picker': showDateInput,
   });
 
   const toggleDateInput = (evt) => {
@@ -61,14 +62,14 @@ const DatePicker = ({ className, date, onDayClick, buttonTitle }) => {
 DatePicker.defaultProps = {
   className: '',
   buttonTitle: '',
-  date: null
+  date: null,
 };
 
 DatePicker.propTypes = {
   className: PropTypes.string,
   buttonTitle: PropTypes.string,
   date: PropTypes.number,
-  onDayClick: PropTypes.func.isRequired
+  onDayClick: PropTypes.func.isRequired,
 };
 
 export default DatePicker;
