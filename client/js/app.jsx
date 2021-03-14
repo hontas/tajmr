@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 
 import connectWithFirebase from './utils/connectWithFirebase';
 import createStore from './redux/createStore';
