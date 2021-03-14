@@ -4,14 +4,13 @@ import 'firebase/database';
 
 import { getWeek } from '../utils/time';
 
-// Initialize Firebase
 const config = {
-  apiKey: 'AIzaSyDXVqvULyVze_vLoV6QFTsqwirITCj3Ai8',
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: 'tajmr.firebaseapp.com',
   databaseURL: 'https://tajmr.firebaseio.com',
   projectId: 'firebase-tajmr',
   storageBucket: 'firebase-tajmr.appspot.com',
-  messagingSenderId: '784102119013',
+  messagingSenderId: import.meta.env.VITE_FIREBASE_SENDER_ID,
 };
 firebase.initializeApp(config);
 
@@ -112,26 +111,38 @@ const api = {
       .startAt(Date.now())
       .on('child_added', (snapshot) => {
         const interval = snapshot.val();
-        const userId = auth.currentUser && auth.currentUser.uid;
-        console.log('child_added!!!!', interval); // eslint-disable-line no-console
+        const userId = auth.currentUser?.uid;
 
-        if (interval.user !== userId) return;
-
-        const id = snapshot.key;
-        api.emit(intervalAdded({ ...interval, id }));
+        if (userId && interval.user === userId) {
+          // eslint-disable-next-line no-console
+          console.log('child_added', interval, userId);
+          const id = snapshot.key;
+          api.emit(intervalAdded({ ...interval, id }));
+        }
       });
 
     api.intervals.on('child_changed', (snapshot) => {
       const interval = snapshot.val();
-      const id = snapshot.key;
-      console.log('child_changed', interval, id); // eslint-disable-line no-console
-      api.emit(intervalUpdated({ ...interval, id }));
+      const userId = auth.currentUser?.uid;
+
+      if (userId && interval.user === userId) {
+        // eslint-disable-next-line no-console
+        console.log('child_changed', interval);
+        const id = snapshot.key;
+        api.emit(intervalUpdated({ ...interval, id }));
+      }
     });
 
     api.intervals.on('child_removed', (snapshot) => {
+      const interval = snapshot.val();
       const id = snapshot.key;
-      console.log('child_removed', id); // eslint-disable-line no-console
-      api.emit(intervalRemoved(id));
+      const userId = auth.currentUser?.uid;
+
+      if (userId && interval.user === userId) {
+        // eslint-disable-next-line no-console
+        console.log('child_removed', id);
+        api.emit(intervalRemoved(id));
+      }
     });
   },
 };
