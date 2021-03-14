@@ -1,0 +1,35 @@
+.interval-list-item {
+  display: flex;
+  margin-bottom: 0.5em;
+}
+
+.interval-list-item .button {
+  display: inline-block;
+  font-size: 1em;
+  margin: 0 0.5em;
+  width: auto;
+  color: white;
+}
+
+.interval-list-item .delete {
+  flex-basis: 40px;
+  margin-left: 0;
+  padding: 0.5em;
+}
+
+.interval-list-item__note {
+  color: #333;
+  font-size: 1em;
+  flex: 1;
+  margin: 0 0.5em;
+
+}
+.interval-list-item__note[disabled] {
+  background: whitesmoke;
+  color: darkgray;
+  cursor: not-allowed;
+}
+
+.interval-list-item__no-work {
+  margin: .75em .5em 0 0;
+}

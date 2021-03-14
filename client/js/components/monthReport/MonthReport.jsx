@@ -5,13 +5,14 @@ import classNames from 'classnames';
 import Button from '../button/button.jsx';
 import * as customTypes from '../../constants/propTypes';
 import { getMonth, getHours, months } from '../../utils/time';
+import './MonthReport.css';
 
 const isNotWork = 'notwork';
 
 class MonthReport extends Component {
   state = {
     referenceDate: new Date(),
-    filterOut: []
+    filterOut: [],
   };
 
   render() {
@@ -34,7 +35,7 @@ class MonthReport extends Component {
           {categories.map((cat) => (
             <Button
               className={classNames('MonthReport__filter', {
-                'MonthReport__filter--active': filteredCategories.includes(cat)
+                'MonthReport__filter--active': filteredCategories.includes(cat),
               })}
               key={cat}
               onClick={() => this.toggleFilter(cat)}
@@ -48,7 +49,7 @@ class MonthReport extends Component {
             <li
               key={note}
               className={classNames('MonthReport__list-item', {
-                'not-work': note.startsWith(isNotWork)
+                'not-work': note.startsWith(isNotWork),
               })}
             >
               <p className="MonthReport__list-item__title">{note}</p>
@@ -111,7 +112,7 @@ class MonthReport extends Component {
 
 MonthReport.propTypes = {
   className: PropTypes.string,
-  intervals: customTypes.intervals.isRequired
+  intervals: customTypes.intervals.isRequired,
 };
 
 export default MonthReport;

@@ -3,6 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { maxOneDecimal } from '../../utils/number';
+import './progress-bar.css';
 
 const ProgressBar = ({ progress, max, onlyDelta, unit = '' }) => {
   const percentage = (progress / max).toFixed(2);
@@ -11,7 +12,7 @@ const ProgressBar = ({ progress, max, onlyDelta, unit = '' }) => {
   const restWidth = !isOvertime ? `${(1 - percentage) * 100}%` : `${(1 - 1 / percentage) * 100}%`;
   const delta = maxOneDecimal(Math.abs(max - progress));
   const classes = classNames('progress-bar', {
-    'progress-bar--only-delta': onlyDelta
+    'progress-bar--only-delta': onlyDelta,
   });
   const progressText = [progress, max].map(maxOneDecimal).join(' / ');
 
@@ -35,7 +36,7 @@ ProgressBar.propTypes = {
   progress: PropTypes.number.isRequired,
   onlyDelta: PropTypes.bool,
   unit: PropTypes.string,
-  max: PropTypes.number.isRequired
+  max: PropTypes.number.isRequired,
 };
 
 export default ProgressBar;

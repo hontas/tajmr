@@ -1,0 +1,12 @@
+.digital-clock {
+  font-weight: 500;
+  margin-bottom: 1em;
+  text-align: center;
+
+}
+.digital-clock__time {
+  font-size: 12vw;
+  display: block;
+  line-height: 10vw;
+  margin: 0 auto;
+}

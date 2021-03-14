@@ -11,6 +11,8 @@ import { getWeek, getMonth, startOfDay } from '../../utils/time';
 import { isComplete } from '../../utils/intervals';
 import { ErrorBoundaryFallback } from '../ErrorBoundaryFallback.jsx';
 
+import './previousIntervals.css';
+
 const limits = {
   ZERO: 0,
   WEEK: 1,

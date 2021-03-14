@@ -1,10 +1,10 @@
-.idea
-public/
-node_modules/
+public
+node_modules
 .DS_Store
-*.sublime-*
+dist
+dist-ssr
+*.local
 npm-*
-package-lock.json
 tmp/
 coverage/
 .tern-project

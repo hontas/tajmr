@@ -18,6 +18,8 @@ import { getIntervalSum, isActive, isComplete } from '../../utils/intervals';
 import { getWeek, getMonth, getDayRange } from '../../utils/time';
 import { ErrorBoundaryFallback } from '../ErrorBoundaryFallback.jsx';
 
+import './currentIntervals.css';
+
 class CurrentIntervals extends React.Component {
   state = {
     displayAddForm: false,

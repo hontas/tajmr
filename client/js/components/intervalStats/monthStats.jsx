@@ -4,6 +4,7 @@ import * as customPropTypes from '../../constants/propTypes';
 import ProgressBar from '../ui-elements/progressBar.jsx';
 import { oneHour, getMonth, getWorkDaysInMonth } from '../../utils/time';
 import { getIntervalSum } from '../../utils/intervals';
+import './monthStats.css';
 
 const MonthStats = ({ hoursPerWeek, monthIntervals, timestamp }) => {
   const month = getMonth(timestamp);
@@ -23,13 +24,13 @@ const MonthStats = ({ hoursPerWeek, monthIntervals, timestamp }) => {
 };
 
 MonthStats.defaultProps = {
-  hoursPerWeek: 40
+  hoursPerWeek: 40,
 };
 
 MonthStats.propTypes = {
   monthIntervals: customPropTypes.intervals.isRequired,
   hoursPerWeek: PropTypes.number,
-  timestamp: PropTypes.number.isRequired
+  timestamp: PropTypes.number.isRequired,
 };
 
 export default MonthStats;

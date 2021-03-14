@@ -4,12 +4,12 @@ function spawnNotification(body, icon, title) {
   const options = {
     body,
     icon,
-    tag: title
+    tag: title,
   };
   return new Notification(title, options);
 }
 
-module.exports = (message) => {
+export default function notify(message) {
   if ('Notification' in window === false) return;
 
   Notification.requestPermission((permission) => {
@@ -20,4 +20,4 @@ module.exports = (message) => {
       }, fiveSeconds);
     }
   });
-};
+}

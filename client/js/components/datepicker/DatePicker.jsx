@@ -6,6 +6,7 @@ import 'react-day-picker/lib/style.css';
 
 // 📅
 import Calendar from '../icons/Calendar.jsx';
+import './datepicker.css';
 
 const DatePicker = ({ className, date, onDayClick, buttonTitle }) => {
   const [showDateInput, setShowDateInput] = useState();

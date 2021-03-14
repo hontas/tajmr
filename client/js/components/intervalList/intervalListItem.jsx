@@ -7,13 +7,14 @@ import * as customPropTypes from '../../constants/propTypes';
 import Trashcan from '../icons/Trashcan.jsx';
 import Button from '../button/button.jsx';
 import AutoComplete from '../autoComplete/AutoComplete.jsx';
+import './intervalListItem.css';
 
 class IntervalListItem extends React.Component {
   render() {
     const {
       notes,
       className,
-      interval: { startTime, endTime, note, notWork }
+      interval: { startTime, endTime, note, notWork },
     } = this.props;
 
     return (
@@ -64,7 +65,7 @@ class IntervalListItem extends React.Component {
     const { interval, onUpdate } = this.props;
     onUpdate({
       ...interval,
-      [prop]: checked
+      [prop]: checked,
     });
   };
 
@@ -72,7 +73,7 @@ class IntervalListItem extends React.Component {
     const { interval, onUpdate } = this.props;
     onUpdate({
       ...interval,
-      [prop]: value
+      [prop]: value,
     });
   };
 
@@ -87,7 +88,7 @@ IntervalListItem.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   notes: PropTypes.arrayOf(PropTypes.string),
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 export default IntervalListItem;

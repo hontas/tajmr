@@ -1,3 +1,5 @@
+/* global PKG_VERSION BUILD_TIME */
+
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -10,6 +12,8 @@ import * as userSettingActions from '../../redux/userSettings';
 import * as customPropTypes from '../../constants/propTypes';
 import * as SpinKit from '../spinkit/spinkit.jsx';
 import debounce from '../../utils/debounce';
+
+import './navbar.css';
 
 function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, dispatch }) {
   const [menuRightPosition, setMenuRightPosition] = React.useState(0);
@@ -49,23 +53,27 @@ function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, disp
     setShowUserMenu(!showUserMenu);
   };
 
+  const BuildInfo = () => (
+    <span className="navbar__version">
+      <small>{`${process.env.RELEASE} - ${process.env.BUILD_TIME}`}</small>
+    </span>
+  );
+
   return (
     <nav
       className="navbar pure-menu pure-menu-horizontal pure-menu-fixed"
       style={{ '--user-menu-right-pos': `${menuRightPosition}px` }}
     >
       <div className="navbar__inner" ref={navBarInnerRef}>
-        <h1 className="brand pure-menu-heading">TajmR</h1>
-        <span className="version">
-          <small>{`${process.env.RELEASE} - ${process.env.BUILD_TIME}`}</small>
-        </span>
+        <h1 className="navbar__brand pure-menu-heading">TajmR</h1>
+        <BuildInfo />
         {isLoading && (
           <div
             data-testid={isFetching ? 'loading-intervals-container' : 'saving-intervals-container'}
-            className="loading-container"
+            className="navbar__loading-container"
           >
             <SpinKit.Wave color="currentColor" />
-            <small className="loading-text">
+            <small className="navbar__loading-text">
               {isFetching ? 'Laddar intervall...' : 'Sparar...'}
             </small>
           </div>

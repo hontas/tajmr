@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Navbar from '../navbar/navbar.jsx';
 import Footer from '../footer/footer.jsx';
 import * as SpinKit from '../spinkit/spinkit.jsx';
+import './application.css';
 
 const CurrentIntervals = React.lazy(() => import('../containers/currentIntervals.jsx'));
 const PreviousIntervals = React.lazy(() => import('../containers/previousIntervals.jsx'));

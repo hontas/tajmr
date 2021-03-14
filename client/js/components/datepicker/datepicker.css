@@ -1,0 +1,40 @@
+.date-picker {
+  padding-right: .5em;
+  position: relative;
+}
+
+.date-picker__calendar-btn {
+  background: transparent;
+  border: none;
+  height: 100%;
+  padding: 3px 0 0;
+}
+.date-picker__calendar-btn:focus {
+  outline: none;
+}
+
+.date-picker__calendar {
+  font-size: smaller;
+  left: 0;
+  padding-top: .6em;
+  position: absolute;
+  top: 2.6em;
+  z-index: 10;
+}
+
+.date-picker .DayPicker-wrapper {
+  background: white;
+  color: #333;
+}
+
+.date-picker:focus {
+  outline: none;
+}
+
+.date-picker--show-picker {
+  color: var(--text-color-light);
+}
+
+.date-picker--disabled {
+  color: lightblue;
+}

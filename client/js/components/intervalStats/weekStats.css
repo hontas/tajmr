@@ -1,0 +1,18 @@
+.week-stats {
+  min-height: 180px;
+}
+
+.week-stats__bars,
+.week-stats__title {
+  margin: 1em .5em;
+}
+
+.week-stats__title {
+  font-weight: 500;
+  text-align: center;
+}
+
+.week-stats__title .button {
+  color: white;
+  background-color: transparent;
+}

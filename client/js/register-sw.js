@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    if (process.env.NODE_ENV !== 'production') return;
+    if (import.meta.env.DEV) return;
 
     navigator.serviceWorker
       .register('service-worker.js')

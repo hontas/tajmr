@@ -11,8 +11,9 @@ import {
   getWeekday,
   getWeekNumber,
   createWorkWeek,
-  oneWeek
+  oneWeek,
 } from '../../utils/time';
+import './weekStats.css';
 
 class WeekStats extends React.Component {
   render() {
@@ -59,7 +60,7 @@ WeekStats.propTypes = {
   fetchIntervalsInWeek: PropTypes.func.isRequired,
   intervals: customPropTypes.intervals.isRequired,
   userSettings: customPropTypes.userSettings.isRequired,
-  timestamp: PropTypes.number.isRequired
+  timestamp: PropTypes.number.isRequired,
 };
 
 export const WeekStatsTimeWrapper = RenderEvery(thirtySeconds)(WeekStats);
@@ -74,7 +75,7 @@ function groupByWeekDay(intervals) {
     const current = hashMap[dateString] || {
       total: 0,
       weekDay,
-      intervals: []
+      intervals: [],
     };
 
     return {
@@ -83,21 +84,23 @@ function groupByWeekDay(intervals) {
         ...current,
         notWork: notWork || current.notWork,
         total: current.total + timespan,
-        intervals: [...current.intervals, { notWork, timespan, note }]
-      }
+        intervals: [...current.intervals, { notWork, timespan, note }],
+      },
     };
   }, {});
 }
 
 function mashUpWeekAndIntervals(intervals, timestamp) {
   const intervalHash = groupByWeekDay(intervals);
-  
-  return createWorkWeek(timestamp).map((day) => ({
-    ...day,
-    total: 0,
-    ...intervalHash[day.date]
-  })).filter((item) => {
-    if (item.isWeekEnd && item.total === 0) return false;
-    return true;
-  });
+
+  return createWorkWeek(timestamp)
+    .map((day) => ({
+      ...day,
+      total: 0,
+      ...intervalHash[day.date],
+    }))
+    .filter((item) => {
+      if (item.isWeekEnd && item.total === 0) return false;
+      return true;
+    });
 }

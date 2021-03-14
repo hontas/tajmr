@@ -1,0 +1,29 @@
+.footer {
+  background-color: var(--primary-color-dark);
+  color: whitesmoke;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+
+}
+.footer__heart {
+  color: var(--danger-color)
+}
+
+@media screen and (min-width: var(--screen-large)) {
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
+@supports(-webkit-overflow-scrolling: touch) {
+  .footer {
+    padding-left: max(1em, env(safe-area-inset-left));
+    padding-right: max(1em, env(safe-area-inset-right));
+    padding-bottom: max(1em, env(safe-area-inset-bottom));
+  }
+}

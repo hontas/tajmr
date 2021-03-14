@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
-import firebaseApi from '../../utils/firebaseApi';
+import firebaseApi from '../../api/firebase';
 import Button from '../button/button.jsx';
+import './login.css';
 
 const Login = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -31,7 +32,7 @@ const Login = () => {
 
   return (
     <div className="login">
-      <form className="auth-form" onSubmit={handleSubmit} data-testid="login-form">
+      <form className="login__auth-form" onSubmit={handleSubmit} data-testid="login-form">
         {message && (
           <p className="login__error">
             <span role="img">⚠</span>
@@ -39,10 +40,15 @@ const Login = () => {
           </p>
         )}
         <label aria-label="email">
-          <input type="email" autoComplete="email" ref={emailInput} />
+          <input className="login__input" type="email" autoComplete="email" ref={emailInput} />
         </label>
         <label aria-label="password">
-          <input type="password" autoComplete="password" ref={passwordInput} />
+          <input
+            className="login__input"
+            type="password"
+            autoComplete="password"
+            ref={passwordInput}
+          />
         </label>
         <Button type="submit" onClick={handleSubmit} isLoading={isLoggingIn} theme="primary">
           Log in

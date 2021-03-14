@@ -5,7 +5,8 @@ import classNames from 'classnames';
 import Button from '../button/button.jsx';
 
 import * as customPropTypes from '../../constants/propTypes';
-import firebaseApi from '../../utils/firebaseApi';
+import firebaseApi from '../../api/firebase';
+import './user-menu.css';
 
 const garavatarUrl = 'https://www.gravatar.com/avatar';
 

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../button/button.jsx';
+import './footer.css';
 
 export default () => {
   const [beforeInstallEvent, setBeforeInstallEvent] = useState(null);
   const [installingPWA, setInstallingPWA] = useState(false);
-  
+
   const installPWA = async () => {
     if (!beforeInstallEvent) return;
 
@@ -32,17 +33,21 @@ export default () => {
     window.addEventListener('beforeinstallprompt', onBeforeInstall);
     return () => window.removeEventListener('beforeinstallprompt', onBeforeInstall);
   }, []);
-  
+
   return (
     <footer className="footer">
       <span>
-        Built with 
-        <span role="img" aria-label="heart"> ❤ </span>
-        by 
-        {' '}
-        <a className="animated" href="https://github.com/hontas">hontas</a>
+        Built with
+        <span className="footer__heart" role="img" aria-label="heart">
+          {' '}
+          ❤{' '}
+        </span>
+        by{' '}
+        <a className="animated" href="https://github.com/hontas">
+          hontas
+        </a>
       </span>
-      
+
       {beforeInstallEvent && (
         <Button theme="primary" isLoading={installingPWA} onClick={installPWA}>
           {installingPWA ? 'Installing PWA' : 'Install PWA'}
@@ -50,7 +55,7 @@ export default () => {
       )}
 
       <a className="animated" href="https://github.com/hontas/tajmr.git">
-      GitHub
+        GitHub
       </a>
     </footer>
   );

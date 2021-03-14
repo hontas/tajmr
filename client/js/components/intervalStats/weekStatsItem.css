@@ -1,0 +1,58 @@
+.week-stats-item {
+  flex: 1;
+  margin-right: 1px;
+  text-align: center;
+}
+.week-stats-item:last-child {
+  margin-right: 0;
+}
+
+.week-stats-item__bar {
+  background: var(--text-color-light);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: height 400ms;
+}
+.week-stats-item__bar .not-work {
+  background: var(--danger-color);
+}
+
+.week-stats-item__bar__item {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.week-stats-item__bar__info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  font-size: smaller;
+  opacity: 0;
+  margin: 0;
+  transition: opacity 400ms;
+}
+
+.week-stats-item__bar__total {
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: opacity 400ms;
+}
+
+.week-stats-item__bar:focus .week-stats-item__bar__info {
+  opacity: 1;
+}
+.week-stats-item__bar:focus .week-stats-item__bar__total {
+  opacity: 0;
+}
+
+.week-stats-item__total {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}

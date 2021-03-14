@@ -1,0 +1,15 @@
+.interval-list {
+  list-style: none;
+  padding-left: 0;
+
+}
+
+.interval-list input {
+  padding: .5em .25em;
+}
+
+@media screen and (min-width: var(--screen-small)) {
+  .interval-list input {
+    padding: .5em;
+  }
+}

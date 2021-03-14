@@ -1,0 +1,64 @@
+.progress-bar {
+  box-shadow: inset 1px 1px 5px rgba(0,0,0,.1);
+  color: rgba(255, 255, 255, .25);
+  display: flex;
+  margin: 1em .5em;
+  position: relative;
+  transition: margin 300ms;
+}
+
+.progress-bar:hover {
+  color: white;
+}
+
+@media screen and (min-width: var(--screen-small)) {
+  .progress-bar {
+    margin: 1.5em .5em;
+  }
+}
+
+@media screen and (min-width: var(--screen-large)) {
+  .progress-bar {
+    margin: 2em 0;
+  }
+}
+
+.progress-bar__text,
+.progress-bar__rest,
+.progress-bar__progress {
+  line-height: 2em;
+  font-size: .75em;
+  font-weight: 100;
+  flex: 1;
+  height: 2em;
+  transition: flex-basis 500ms;
+  text-align: center;
+}
+
+.progress-bar__progress {
+  background-color: var(--text-color-light);
+  box-shadow: inset 1px 1px 2px rgba(255,255,255,.25);
+}
+
+.progress-bar__rest {
+  background-color: var(--primary-color-dark-a25);
+}
+
+.progress-bar__text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.progress-bar__text:hover {
+  transform: scale(1.8);
+}
+
+.progress-bar__overtime {
+  background-color: var(--success-color);
+  border-left: 1px solid var(--success-color-dark-a75);
+}
+
+.progress-bar--only-delta .progress-bar__text__progress {
+  display: none;
+}

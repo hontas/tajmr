@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import * as SpinKit from '../spinkit/spinkit.jsx';
+import './button.css';
 
 const Button = React.forwardRef(
   (

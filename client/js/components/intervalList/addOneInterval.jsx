@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import IntervalListItem from './intervalListItem.jsx';
 import Save from '../icons/Save.jsx';
 import Button from '../button/button.jsx';
+import './addOneInterval.css';
 
 class AddOneInterval extends React.Component {
   constructor(props) {
@@ -14,8 +15,8 @@ class AddOneInterval extends React.Component {
       interval: {
         startTime: getTimestampFromHMS(startHour),
         endTime: getTimestampFromHMS(startHour + hours, minutes),
-        note: ''
-      }
+        note: '',
+      },
     };
   }
 
@@ -73,7 +74,7 @@ AddOneInterval.propTypes = {
   onAdd: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   fullDay: PropTypes.number.isRequired,
-  notes: PropTypes.arrayOf(PropTypes.string)
+  notes: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default AddOneInterval;

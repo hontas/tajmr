@@ -1,0 +1,75 @@
+.user-menu {
+  background-color: var(--primary-color-dark);
+  color: whitesmoke;
+  padding: 1em 2em;
+}
+
+.user-menu input:not([type=checkbox]) {
+  color: #333;
+}
+
+.user-menu input[type=number] {
+  text-align: right;
+}
+
+.user-menu .user-menu__fieldset {
+  margin-top: .5em;
+}
+
+.user-menu .pure-menu-link {
+  color: whitesmoke;
+}
+
+.user-menu .pure-button {
+  display: grid;
+  width: 100%;
+}
+
+.user-menu .pure-button-primary {
+  margin-bottom: .5em;
+}
+
+.user-menu .profile-image {
+  border-radius: 50%;
+  margin-left: 0.5em;
+  position: relative;
+  top: 3px;
+  vertical-align: middle;
+  width: 50px;
+}
+
+.user-menu__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-menu__label {
+  display: flex !important;
+  align-items: center;
+  padding: .25em 0;
+  justify-content: space-between;
+}
+
+.user-menu__log-out.button {
+  color: white;
+  width: auto;
+}
+
+.user-menu__change-pass {
+  display: grid;
+  grid-row-gap: 0.5em;
+  margin-top: 2em;
+
+}
+.user-menu__change-pass .user-menu__change-pass__label {
+  margin: 0 !important;
+}
+
+.user-menu__change-pass .user-menu__change-pass__input {
+  margin: 0 !important;
+  width: 100%;
+}
+.user-menu__change-pass .user-menu__change-pass__btn {
+  border-radius: 0 2px 2px 0;
+}

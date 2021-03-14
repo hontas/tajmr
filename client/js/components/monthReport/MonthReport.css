@@ -1,0 +1,61 @@
+.MonthReport {
+  padding: 0 .5em;
+}
+
+.MonthReport__title {
+  margin-bottom: 0;
+  text-align: center;
+}
+.MonthReport__subtitle {
+  margin: 0 0 .5em;
+  text-align: center;
+}
+.MonthReport__subtitle .button {
+  background-color: transparent;
+  color: white;
+}
+
+.MonthReport__filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: .75em;
+}
+
+.MonthReport__filter {
+  background-color: var(--primary-color-dark); /* TODO: alpha($primary-color-dark, .25); */
+  color: rgba(255,255,255,.5);
+  margin-bottom: .25em;
+}
+.MonthReport__filter--active {
+  background-color: var(--primary-color-dark); /* TODO: alpha($primary-color-dark, .75); */
+  color: rgba(255,255,255,.9);
+}
+
+.MonthReport__list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.MonthReport__list-item {
+  --borderStyle: 1px solid rgba(255,255,255,.75);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 .5em;
+
+}
+.MonthReport__list-item:first-child,
+.MonthReport__list-item:last-child {
+  border-top: var(--borderStyle);
+}
+
+.MonthReport__list-item.not-work {
+  background-color: var(--danger-color); /* TODO: alpha($danger-color, 75%); */
+}
+
+.MonthReport__list-item__title,
+.MonthReport__list-item__value {
+  margin: .5em 0;
+}

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import * as customPropTypes from '../../constants/propTypes';
 import IntervalListItem from './intervalListItem.jsx';
+import './intervalList.css';
 
 function sortBy(array, prop) {
   return array.slice().sort((a, b) => b[prop] - a[prop]);
@@ -26,7 +27,7 @@ IntervalList.propTypes = {
   intervals: customPropTypes.intervals.isRequired,
   onDelete: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
-  notes: PropTypes.arrayOf(PropTypes.string)
+  notes: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default IntervalList;

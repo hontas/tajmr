@@ -4,6 +4,7 @@ import classNames from 'classnames';
 
 import DatePicker from '../datepicker/DatePicker.jsx';
 import { getTimeString } from '../../utils/time';
+import './intervalListInput.css';
 
 function stateFromProps(props) {
   const isActive = !props.timestamp;
@@ -92,7 +93,7 @@ function validateTimeString(time) {
 
 IntervalListInput.defaultProps = {
   className: '',
-  dataTestId: ''
+  dataTestId: '',
 };
 
 IntervalListInput.propTypes = {
@@ -100,7 +101,7 @@ IntervalListInput.propTypes = {
   dataTestId: PropTypes.string,
   titlePrefix: PropTypes.string,
   timestamp: PropTypes.number,
-  onUpdate: PropTypes.func.isRequired
+  onUpdate: PropTypes.func.isRequired,
 };
 
 export default IntervalListInput;

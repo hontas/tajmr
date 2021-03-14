@@ -1,0 +1,30 @@
+.login {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login__error {
+  color: whitesmoke;
+}
+
+.login__auth-form {
+  color: #333;
+  padding: .5em;
+  width: 100%;
+}
+
+.login__input {
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  display: block;
+  margin-bottom: .5em;
+  padding: .5em;
+  width: 100%;
+}
+
+.login__auth-form .pure-button {
+  display: block;
+  width: 100%;
+}

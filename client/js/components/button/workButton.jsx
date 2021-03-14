@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Button from './button.jsx';
+import './workButton.css';
 
 const WorkButton = ({ isLoading = false, activeInterval, onClick, ...props }) => {
   const buttonText = activeInterval ? 'Ta en fika ▐▐' : 'Börja debitera ▶';

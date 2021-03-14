@@ -1,0 +1,110 @@
+.navbar {
+  background: var(--primary-color-dark);
+}
+
+@supports (-webkit-overflow-scrolling: touch) {
+  .navbar {
+    padding-top: max(0.5em, env(safe-area-inset-top));
+    padding-left: max(0.5em, env(safe-area-inset-left));
+    padding-right: max(0.5em, env(safe-area-inset-right));
+  }
+}
+
+.navbar__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: var(--screen-large);
+  margin: 0 auto;
+  padding: 0.5em;
+}
+
+.navbar__version {
+  color: #aaa;
+  display: none;
+}
+
+.navbar__brand {
+  color: var(--text-color-primary);
+  font-size: 1.25em;
+  line-height: 0.85em;
+  margin: 0;
+}
+
+.navbar__brand:focus ~ .navbar__version,
+.navbar__brand:hover ~ .navbar__version {
+  display: initial;
+}
+
+.navbar__loading-container {
+  color: gray;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 0.5em;
+}
+
+.navbar__loading-text {
+  display: none;
+}
+@media screen and (min-width: var(--screen-small)) {
+  .navbar__loading-text {
+    display: initial;
+  }
+}
+
+.navbar__menu-btn {
+  background-color: transparent;
+  display: inline-block;
+  color: white;
+  font-size: 14px;
+  width: 2.5em;
+  height: 1.5em;
+  padding: 0.3em;
+}
+
+.navbar__user-menu {
+  --width: 100%;
+  position: fixed;
+  overflow-y: scroll;
+  height: calc(100vh - 53px);
+  width: var(--width);
+  max-width: 560px;
+  top: 53px;
+  right: calc(var(--width) * -1);
+  bottom: 0;
+  transition: right 0.2s;
+}
+.navbar__user-menu--active {
+  right: var(--user-menu-right-pos, 0);
+}
+
+@supports (-webkit-overflow-scrolling: touch) {
+  .navbar__user-menu {
+    top: calc(53px + env(safe-area-inset-top));
+    height: calc(100vh - 53px - env(safe-area-inset-top));
+  }
+}
+
+.navbar__user-menu-backdrop {
+  background-color: rgba(45, 62, 80, 0.7);
+  border: none;
+  position: fixed;
+  top: 53px;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms 0ms ease-in;
+}
+
+.navbar__user-menu-backdrop:focus {
+  outline: none;
+}
+
+.navbar__user-menu-backdrop--active {
+  opacity: 1;
+  pointer-events: auto;
+  transition-duration: 250ms;
+  transition-delay: 50ms;
+}

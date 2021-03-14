@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import './autoComplete.css';
+
 class AutoComplete extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       query: props.value || '',
-      suggestions: []
+      suggestions: [],
     };
   }
 
@@ -94,7 +96,7 @@ class AutoComplete extends React.Component {
     const suggestions = this.props.notes.filter((note) => note.toLowerCase().startsWith(query));
     this.setState({
       query,
-      suggestions: query ? suggestions : []
+      suggestions: query ? suggestions : [],
     });
   };
 
@@ -111,7 +113,7 @@ class AutoComplete extends React.Component {
 }
 
 AutoComplete.defaultProps = {
-  notes: []
+  notes: [],
 };
 
 AutoComplete.propTypes = {
@@ -120,7 +122,7 @@ AutoComplete.propTypes = {
   placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string,
-  notes: PropTypes.arrayOf(PropTypes.string)
+  notes: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default AutoComplete;

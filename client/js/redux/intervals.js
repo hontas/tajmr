@@ -1,5 +1,6 @@
 import Ajv from 'ajv';
-import firebaseApi from '../utils/firebaseApi';
+
+import firebaseApi from '../api/firebase';
 
 export const INTERVAL_ADD = 'INTERVAL_ADD';
 export const INTERVAL_UPDATED = 'INTERVAL_UPDATED';

@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { getHours, getTimeString } from '../../utils/time';
+import './weekStatsItem.css';
 
 const getDuration = (timestamp) => getTimeString(timestamp, { isDuration: true });
 
 const WeekDayItem = ({ weekday, total, date, intervals = [] }) => {
   const barHeight = getHours(total) * 10; // 10 hours = 100px;
   const style = {
-    height: `${barHeight}px`
+    height: `${barHeight}px`,
   };
   const baseClassName = 'week-stats-item';
   const barClassName = `${baseClassName}__bar`;
@@ -42,14 +43,14 @@ const WeekDayItem = ({ weekday, total, date, intervals = [] }) => {
 };
 
 WeekDayItem.defaultProps = {
-  total: 0
+  total: 0,
 };
 
 WeekDayItem.propTypes = {
   weekday: PropTypes.string.isRequired,
   total: PropTypes.number,
   date: PropTypes.string.isRequired,
-  intervals: PropTypes.arrayOf(PropTypes.object)
+  intervals: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default WeekDayItem;
