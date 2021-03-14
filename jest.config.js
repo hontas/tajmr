@@ -1,6 +1,6 @@
 module.exports = {
   moduleNameMapper: {
-    '^.+\\.(css|styl)$': '/Users/pontahontas/Sites/dev/tajmr/client/styles/CSSStub.js'
+    '^.+\\.(css|styl)$': '/Users/hontas/Sites/dev/tajmr/client/styles/CSSStub.js',
   },
-  setupFilesAfterEnv: ['./test/test-setup.js']
+  setupFilesAfterEnv: ['./test/test-setup.js'],
 };
