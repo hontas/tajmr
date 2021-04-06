@@ -7,6 +7,7 @@ const Button = ({
   className,
   text,
   isLoading,
+  disabled,
   children,
   type = 'button',
   theme = 'default',
@@ -15,7 +16,7 @@ const Button = ({
   const classes = classNames('pure-button button', `button--${theme}`, className);
 
   return (
-    <button {...rest} className={classes} type={type}>
+    <button {...rest} className={classes} type={type} disabled={disabled}>
       {text}
       {children}
       {isLoading && <SpinKit.Bounce size="15px" />}
@@ -32,6 +33,7 @@ Button.defaultProps = {
 Button.propTypes = {
   className: PropTypes.string,
   isLoading: PropTypes.bool,
+  disabled: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
   text: PropTypes.string,
   type: PropTypes.oneOf(['button', 'submit']),
