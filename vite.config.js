@@ -2,6 +2,7 @@ import path from 'path';
 import { defineConfig } from 'vite';
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import { generateSW } from 'rollup-plugin-workbox';
+import copy from 'rollup-plugin-copy';
 
 import pkg from './package.json';
 
@@ -22,6 +23,17 @@ export default defineConfig({
       swDest: path.join('dist', 'service-worker.js'),
       clientsClaim: true,
       skipWaiting: true,
+    }),
+    copy({
+      targets: [
+        {
+          src: ['client/assets/icons/icon_512x512.png', 'client/assets/icons/icon_192x192.png'],
+          dest: 'dist/assets',
+        },
+      ],
+      verbose: true,
+      hook: 'writeBundle',
+      copyOnce: true,
     }),
   ],
 });
