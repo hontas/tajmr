@@ -10,7 +10,6 @@ import * as userSettingActions from '../../redux/userSettings';
 import * as customPropTypes from '../../constants/propTypes';
 import * as SpinKit from '../spinkit/spinkit.jsx';
 import debounce from '../../utils/debounce';
-import pkg from '../../../../package.json';
 
 function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, dispatch }) {
   const [menuRightPosition, setMenuRightPosition] = React.useState(0);
@@ -53,8 +52,7 @@ function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, disp
       <div className="navbar__inner" ref={navBarInnerRef}>
         <h1 className="brand pure-menu-heading">TajmR</h1>
         <span className="version">
-          {`v${pkg.version}`}
-          <small>{` ${process.env.BUILD_TIME}`}</small>
+          <small>{`build time: ${process.env.BUILD_TIME}`}</small>
         </span>
         {isLoading && (
           <div
