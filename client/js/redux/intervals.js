@@ -1,3 +1,4 @@
+import Ajv from 'ajv';
 import firebaseApi from '../utils/firebaseApi';
 
 export const INTERVAL_ADD = 'INTERVAL_ADD';
@@ -11,10 +12,46 @@ export const INTERVALS_UPDATE_TIMESTAMP = 'INTERVALS_UPDATE_TIMESTAMP';
 export const REQUEST_INTERVAL_UPDATE = 'REQUEST_INTERVAL_UPDATE';
 const RESET_STATE = 'INTERVAL RESET_STATE';
 
+const ajv = new Ajv();
+const intervalSchema = {
+  type: 'object',
+  properties: {
+    createdAt: { type: 'integer' },
+    updatedAt: { type: 'integer' },
+    startTime: { type: 'integer' },
+    endTime: { type: 'integer' },
+    notWork: { type: 'boolean' },
+    note: { type: 'string' },
+    user: { type: 'string' },
+    id: { type: 'string' },
+  },
+  required: ['createdAt', 'startTime', 'user'],
+  additionalProperties: false,
+};
+const newIntervalSchema = {
+  type: 'object',
+  properties: {
+    startTime: { type: 'integer' },
+  },
+  required: ['startTime'],
+  additionalProperties: false,
+};
+
+const createValidator = (validator) => (interval) => {
+  const valid = validator(interval);
+
+  if (!valid) {
+    console.log('interval validation failed for', interval, validator.errors);
+    return validator.errors;
+  }
+};
+const validateInterval = createValidator(ajv.compile(intervalSchema));
+const validateNewInterval = createValidator(ajv.compile(newIntervalSchema));
+
 export function intervalAdded(interval) {
   return {
     type: INTERVAL_ADD,
-    interval
+    interval,
   };
 }
 
@@ -33,35 +70,35 @@ export function requestIntervalUpdate() {
 export function intervalUpdated(interval) {
   return {
     type: INTERVAL_UPDATED,
-    interval
+    interval,
   };
 }
 
 export function intervalsFetched(intervals) {
   return {
     type: INTERVALS_FETCHED,
-    intervals
+    intervals,
   };
 }
 
 export function updateTimestamp(timestamp) {
   return {
     type: INTERVALS_UPDATE_TIMESTAMP,
-    timestamp
+    timestamp,
   };
 }
 
 export function intervalUpdateFailed(error) {
   return {
     type: INTERVAL_UPDATE_FAILED,
-    error
+    error,
   };
 }
 
 export function intervalRemoved(id) {
   return {
     type: INTERVAL_REMOVE,
-    id
+    id,
   };
 }
 
@@ -71,29 +108,33 @@ export function intervalRemoved(id) {
 
 export const attemptRemove = (id) => (dispatch) => {
   dispatch(requestIntervalUpdate());
-  firebaseApi.removeInterval(id).then(() => dispatch(intervalRemoved(id)));
+  firebaseApi
+    .removeInterval(id)
+    .then(() => dispatch(intervalRemoved(id)))
+    .catch((err) =>
+      dispatch(intervalUpdateFailed(`Could not remove interval with id: ${id}. ${err}`))
+    );
 };
 
 export function attemptUpdate(interval) {
   return (dispatch) => {
-    dispatch(requestIntervalUpdate());
-
     const handleSuccess = (updatedInterval) => dispatch(intervalUpdated(updatedInterval));
     const handleFailure = (err) => dispatch(intervalUpdateFailed(err));
 
-    // firebase also fires child_added event that we handle
+    dispatch(requestIntervalUpdate());
+
     if (!interval.id) {
-      return firebaseApi
-        .createInterval(interval)
-        .then(handleSuccess)
-        .catch(handleFailure);
+      const errors = validateNewInterval(interval);
+      if (errors) return Promise.resolve(handleFailure(errors));
+
+      // firebase also fires child_added event that we handle
+      return firebaseApi.createInterval(interval).then(handleSuccess).catch(handleFailure);
     }
 
+    const errors = validateInterval(interval);
+    if (errors) return Promise.resolve(handleFailure(errors));
     // firebase also fires child_changed event that we handle
-    return firebaseApi
-      .updateInterval(interval)
-      .then(handleSuccess)
-      .catch(handleFailure);
+    return firebaseApi.updateInterval(interval).then(handleSuccess).catch(handleFailure);
   };
 }
 
@@ -103,9 +144,30 @@ export function fetchIntervalsForUser() {
 
     return firebaseApi
       .fetchIntervalsForUser()
-      .then((intervals) => dispatch(intervalsFetched(intervals)))
-      .catch(() => dispatch(intervalsFetched({})));
+      .then(filterBadApples)
+      .then(({ intervals }) => dispatch(intervalsFetched(intervals)))
+      .catch((error) => {
+        console.log('[fetchIntervalsForUser]', error);
+        dispatch(intervalsFetched({}));
+      });
   };
+}
+
+function filterBadApples(intervals) {
+  const damagedIntervals = [];
+  const validIntervals = [];
+  const keys = Object.keys(intervals);
+  keys.forEach((key) => {
+    const value = intervals[key];
+    const errors = validateInterval(value);
+    if (errors) {
+      console.log('Invalid interval', value, errors);
+      damagedIntervals.push({ ...value, id: key });
+    } else {
+      validIntervals.push(value);
+    }
+  });
+  return { intervals: validIntervals, damagedIntervals };
 }
 
 const initialState = {
@@ -113,7 +175,7 @@ const initialState = {
   updatedAt: 0,
   isFetching: true,
   isSaving: false,
-  items: []
+  items: [],
 };
 
 export default function intervalsReducer(state = initialState, action) {
@@ -123,20 +185,20 @@ export default function intervalsReducer(state = initialState, action) {
         ...state,
         updatedAt: Date.now(),
         isFetching: false,
-        items: []
+        items: [],
       };
 
     case INTERVALS_UPDATE_TIMESTAMP:
       return {
         ...state,
-        timestamp: action.timestamp
+        timestamp: action.timestamp,
       };
 
     case INTERVALS_REQUEST:
       return {
         ...state,
         updatedAt: Date.now(),
-        isFetching: true
+        isFetching: true,
       };
 
     case INTERVALS_FETCHED: {
@@ -144,7 +206,7 @@ export default function intervalsReducer(state = initialState, action) {
         ...state,
         isFetching: false,
         updatedAt: Date.now(),
-        items: Object.keys(action.intervals).map((id) => ({ ...action.intervals[id], id }))
+        items: Object.keys(action.intervals).map((id) => ({ ...action.intervals[id], id })),
       };
     }
 
@@ -152,7 +214,7 @@ export default function intervalsReducer(state = initialState, action) {
       return {
         ...state,
         updatedAt: Date.now(),
-        isSaving: true
+        isSaving: true,
       };
 
     case INTERVAL_ADD:
@@ -160,7 +222,7 @@ export default function intervalsReducer(state = initialState, action) {
         ...state,
         updatedAt: Date.now(),
         isSaving: false,
-        items: [...state.items, action.interval]
+        items: [...state.items, action.interval],
       };
 
     case INTERVAL_UPDATED:
@@ -171,7 +233,7 @@ export default function intervalsReducer(state = initialState, action) {
         ...state,
         updatedAt: Date.now(),
         isSaving: false,
-        items
+        items,
       };
     }
 
@@ -180,7 +242,7 @@ export default function intervalsReducer(state = initialState, action) {
         ...state,
         updatedAt: Date.now(),
         error: action.error,
-        isSaving: false
+        isSaving: false,
       };
 
     case INTERVAL_REMOVE: {
@@ -188,7 +250,7 @@ export default function intervalsReducer(state = initialState, action) {
         ...state,
         updatedAt: Date.now(),
         isSaving: false,
-        items: state.items.filter(({ id }) => action.id !== id)
+        items: state.items.filter(({ id }) => action.id !== id),
       };
     }
 
