@@ -15,20 +15,22 @@ import * as intervalActions from '../../redux/intervals';
 import AddOneInterval from '../intervalList/addOneInterval.jsx';
 import { getIntervalSum, isActive, isComplete } from '../../utils/intervals';
 import { getWeek, getMonth, getDayRange } from '../../utils/time';
+import { ErrorBoundary } from '../ErrorBoundary.jsx';
 
 class CurrentIntervals extends React.Component {
   state = {
-    displayAddForm: false
+    displayAddForm: false,
   };
 
   render() {
     const {
+      isLoading,
       intervals,
       activeInterval,
       todaysIntervals,
       userSettings,
       timestamp,
-      notes
+      notes,
     } = this.props;
     const { displayAddForm } = this.state;
 
@@ -49,51 +51,59 @@ class CurrentIntervals extends React.Component {
 
     return (
       <div className="current-intervals">
-        <DigitalClock elapsed={intervalSum} from={activeInterval ? activeInterval.startTime : 0} />
-        <ProgressBarTimeWrapper intervals={activeAndCurrentIntervals} max={hoursInWeek / 5} />
-        <div className="action-buttons" style={{ display: 'flex' }}>
-          <WorkButton
-            data-testid="work-button"
-            activeInterval={!!activeInterval}
-            onClick={this.onClick}
-          />
-          <Button
-            className="current-intervals__prev-work-btn"
-            theme="primary"
-            onClick={this.onAddPrevClick}
-          >
-            Efterregga
-          </Button>
-        </div>
-        {displayAddForm && (
-          <AddOneInterval
-            onAdd={this.onAddOneInterval}
-            onCancel={this.onCancelPrevClick}
-            fullDay={hoursInDay}
-            notes={notes}
-          />
-        )}
-        <IntervalList
-          data-testid="current-intervals-list"
-          intervals={activeAndCurrentIntervals}
-          onDelete={this.onDelete}
-          onUpdate={this.onUpdate}
-          notes={notes}
-        />
-        <WeekStatsTimeWrapper
-          fetchIntervalsInWeek={this.updateTimestamp}
-          intervals={weekIntervals}
-          timestamp={timestamp}
-          userSettings={userSettings}
-        />
-        {intervals.length > 0 && (
-          <MonthStats
-            timestamp={timestamp}
-            monthIntervals={monthIntervals}
-            hoursPerWeek={userSettings.hoursInWeek}
-          />
-        )}
-        {userSettings.displayMonthReport && <MonthReport intervals={intervals} />}
+        <ErrorBoundary>
+          <>
+            <DigitalClock
+              elapsed={intervalSum}
+              from={activeInterval ? activeInterval.startTime : 0}
+            />
+            <ProgressBarTimeWrapper intervals={activeAndCurrentIntervals} max={hoursInWeek / 5} />
+            <div className="action-buttons" style={{ display: 'flex' }}>
+              <WorkButton
+                data-testid="work-button"
+                activeInterval={!!activeInterval}
+                onClick={this.onClick}
+                isLoading={isLoading}
+              />
+              <Button
+                className="current-intervals__prev-work-btn"
+                theme="primary"
+                onClick={this.onAddPrevClick}
+              >
+                Efterregga
+              </Button>
+            </div>
+            {displayAddForm && (
+              <AddOneInterval
+                onAdd={this.onAddOneInterval}
+                onCancel={this.onCancelPrevClick}
+                fullDay={hoursInDay}
+                notes={notes}
+              />
+            )}
+            <IntervalList
+              data-testid="current-intervals-list"
+              intervals={activeAndCurrentIntervals}
+              onDelete={this.onDelete}
+              onUpdate={this.onUpdate}
+              notes={notes}
+            />
+            <WeekStatsTimeWrapper
+              fetchIntervalsInWeek={this.updateTimestamp}
+              intervals={weekIntervals}
+              timestamp={timestamp}
+              userSettings={userSettings}
+            />
+            {intervals.length > 0 && (
+              <MonthStats
+                timestamp={timestamp}
+                monthIntervals={monthIntervals}
+                hoursPerWeek={userSettings.hoursInWeek}
+              />
+            )}
+            {userSettings.displayMonthReport && <MonthReport intervals={intervals} />}
+          </>
+        </ErrorBoundary>
       </div>
     );
   }
@@ -133,6 +143,7 @@ class CurrentIntervals extends React.Component {
 
 CurrentIntervals.propTypes = {
   ...CurrentIntervals.propTypes,
+  isLoading: PropTypes.bool,
   activeInterval: customTypes.interval,
   intervals: customTypes.intervals.isRequired,
   todaysIntervals: customTypes.intervals.isRequired,
@@ -140,11 +151,11 @@ CurrentIntervals.propTypes = {
   attemptRemove: PropTypes.func.isRequired,
   updateTimestamp: PropTypes.func.isRequired,
   timestamp: PropTypes.number.isRequired,
-  notes: PropTypes.arrayOf(PropTypes.string)
+  notes: PropTypes.arrayOf(PropTypes.string),
 };
 
 CurrentIntervals.defaultProps = {
-  activeInterval: null
+  activeInterval: null,
 };
 
 const todayRange = getDayRange(Date.now());
@@ -154,20 +165,18 @@ function isToday({ startTime, endTime }) {
   return startedToday || endedToday;
 }
 
-function mapStateToProps({ intervals: { items, timestamp }, userSettings }) {
+function mapStateToProps({ intervals: { items, timestamp, isFetching, isSaving }, userSettings }) {
   const notes = items.map(({ note }) => (note ? note.toLowerCase() : note)).filter((note) => note);
 
   return {
     timestamp,
+    isLoading: isFetching || isSaving,
     intervals: items,
     todaysIntervals: items.filter(isToday).filter(isComplete),
     activeInterval: items.find(isActive),
     userSettings,
-    notes: [...new Set(notes)]
+    notes: [...new Set(notes)],
   };
 }
 
-export default connect(
-  mapStateToProps,
-  intervalActions
-)(CurrentIntervals);
+export default connect(mapStateToProps, intervalActions)(CurrentIntervals);

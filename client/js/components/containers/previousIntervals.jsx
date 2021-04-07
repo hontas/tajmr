@@ -8,12 +8,13 @@ import Button from '../button/button.jsx';
 import { attemptUpdate, attemptRemove } from '../../redux/intervals';
 import { getWeek, getMonth, startOfDay } from '../../utils/time';
 import { isComplete } from '../../utils/intervals';
+import { ErrorBoundary } from '../ErrorBoundary.jsx';
 
 const limits = {
   ZERO: 0,
   WEEK: 1,
   MONTH: 2,
-  ALL: 3
+  ALL: 3,
 };
 
 class PreviousIntervals extends React.Component {
@@ -25,7 +26,7 @@ class PreviousIntervals extends React.Component {
   }
 
   state = {
-    limit: limits.ZERO
+    limit: limits.ZERO,
   };
 
   render() {
@@ -39,12 +40,20 @@ class PreviousIntervals extends React.Component {
     return (
       <div className="previous-intervals">
         <h3 className="previous-intervals__title">Tidigare</h3>
-        <IntervalList intervals={intervals} onDelete={this.onDelete} onUpdate={this.onUpdate} />
-        {showMore && (
-          <Button className="previous-intervals__show-more" onClick={this.showMore} theme="primary">
-            Visa fler
-          </Button>
-        )}
+        <ErrorBoundary>
+          <>
+            <IntervalList intervals={intervals} onDelete={this.onDelete} onUpdate={this.onUpdate} />
+            {showMore && (
+              <Button
+                className="previous-intervals__show-more"
+                onClick={this.showMore}
+                theme="primary"
+              >
+                Visa fler
+              </Button>
+            )}
+          </>
+        </ErrorBoundary>
       </div>
     );
   }
@@ -82,7 +91,7 @@ class PreviousIntervals extends React.Component {
 PreviousIntervals.propTypes = {
   dispatch: PropTypes.func.isRequired,
   intervals: customPropTypes.intervals.isRequired,
-  userSettings: customPropTypes.userSettings.isRequired
+  userSettings: customPropTypes.userSettings.isRequired,
 };
 
 const now = Date.now();
@@ -104,7 +113,7 @@ function isSameMonth({ startTime }) {
 function mapStateToProps({ intervals: { items }, userSettings }) {
   return {
     userSettings,
-    intervals: items
+    intervals: items,
   };
 }
 
