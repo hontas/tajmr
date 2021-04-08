@@ -3,26 +3,22 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import * as SpinKit from '../spinkit/spinkit.jsx';
 
-const Button = ({
-  className,
-  text,
-  isLoading,
-  disabled,
-  children,
-  type = 'button',
-  theme = 'default',
-  ...rest
-}) => {
-  const classes = classNames('pure-button button', `button--${theme}`, className);
+const Button = React.forwardRef(
+  (
+    { className, text, isLoading, disabled, children, type = 'button', theme = 'default', ...rest },
+    ref
+  ) => {
+    const classes = classNames('pure-button button', `button--${theme}`, className);
 
-  return (
-    <button {...rest} className={classes} type={type} disabled={disabled}>
-      {text}
-      {children}
-      {isLoading && <SpinKit.Bounce size="15px" />}
-    </button>
-  );
-};
+    return (
+      <button ref={ref} {...rest} className={classes} type={type} disabled={disabled}>
+        {text}
+        {children}
+        {isLoading && <SpinKit.Bounce size="15px" />}
+      </button>
+    );
+  }
+);
 
 Button.defaultProps = {
   text: null,

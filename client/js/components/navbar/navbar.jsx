@@ -18,6 +18,9 @@ function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, disp
   const navBarInnerRef = React.useRef(null);
   const isLoading = appInitialized && (isSaving || isFetching);
 
+  const userMenuToggle = React.useRef();
+  const userMenuBackdrop = React.useRef();
+
   React.useEffect(() => {
     const resizeHandler = debounce(() => setWindowWidth(window.innerWidth));
     window.addEventListener('resize', resizeHandler);
@@ -38,8 +41,10 @@ function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, disp
   const toggleUserMenu = () => {
     if (showUserMenu) {
       document.body.style.overflow = '';
+      userMenuToggle.current.focus();
     } else {
       document.body.style.overflow = 'hidden';
+      userMenuBackdrop.current.focus();
     }
     setShowUserMenu(!showUserMenu);
   };
@@ -69,12 +74,22 @@ function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, disp
         {user && (
           <>
             <Button
+              ref={userMenuToggle}
               className="navbar__menu-btn"
               data-testid="user-menu-toggle"
               onClick={toggleUserMenu}
             >
               <Hamburger active={showUserMenu} />
             </Button>
+            <button
+              ref={userMenuBackdrop}
+              className={classNames('navbar__user-menu-backdrop', {
+                'navbar__user-menu-backdrop--active': showUserMenu,
+              })}
+              onClick={toggleUserMenu}
+              title="Close user menu"
+              aria-label="Close user menu"
+            />
             <UserMenu
               user={user}
               userSettings={userSettings}

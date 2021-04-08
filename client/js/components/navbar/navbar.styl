@@ -78,6 +78,30 @@
   }
 }
 
+.navbar__user-menu-backdrop {
+  background-color: rgba(45,62,80,0.7);
+  border: none;
+  position: fixed;
+  top: 53px;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms 0ms ease-in;
+
+  &:focus {
+    outline: none;
+  }
+  
+  &--active {
+    opacity: 1;
+    pointer-events: auto;
+    transition-duration: 250ms;
+    transition-delay: 50ms;
+  }
+}
+
 @css {
   @supports(-webkit-overflow-scrolling: touch) {
     .navbar__user-menu {
