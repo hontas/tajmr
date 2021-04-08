@@ -154,17 +154,17 @@ export function fetchIntervalsForUser() {
 }
 
 function filterBadApples(intervals) {
-  const damagedIntervals = [];
-  const validIntervals = [];
+  const damagedIntervals = {};
+  const validIntervals = {};
   const keys = Object.keys(intervals);
   keys.forEach((key) => {
     const value = intervals[key];
     const errors = validateInterval(value);
     if (errors) {
       console.log('Invalid interval', value, errors);
-      damagedIntervals.push({ ...value, id: key });
+      damagedIntervals[key] = value;
     } else {
-      validIntervals.push(value);
+      validIntervals[key] = value;
     }
   });
   return { intervals: validIntervals, damagedIntervals };
