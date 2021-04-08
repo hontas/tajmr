@@ -57,7 +57,7 @@ function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, disp
       <div className="navbar__inner" ref={navBarInnerRef}>
         <h1 className="brand pure-menu-heading">TajmR</h1>
         <span className="version">
-          <small>{`build time: ${process.env.BUILD_TIME}`}</small>
+          <small>{`${process.env.RELEASE} - ${process.env.BUILD_TIME}`}</small>
         </span>
         {isLoading && (
           <div
