@@ -9,10 +9,11 @@
     "e2e": "npx cypress open",
     "prebuild": "rm -rf public && mkdir public",
     "build": "NODE_ENV=production webpack",
-    "deploy": "npm run test && npm run build && GIT_DEPLOY_DIR=public ./scripts/deploy.sh",
+    "deploy": "npm run test && npm run bump && npm run build && GIT_DEPLOY_DIR=public ./scripts/deploy.sh",
     "postversion": "git push --follow-tags",
     "predev": "npm run prebuild",
-    "dev": "webpack serve"
+    "dev": "webpack serve",
+    "bump": "npm version patch"
   },
   "husky": {
     "hooks": {
