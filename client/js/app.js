@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 
 import '../styles/critical.styl';
 import '../styles';
@@ -21,7 +21,10 @@ import {
 import Application from './components/application/application.jsx';
 import './register-sw';
 
-Sentry.init({ dsn: 'https://a359f82382f84f2d85c9a876827f8e1a@sentry.io/1836574' });
+Sentry.init({
+  dsn: 'https://a359f82382f84f2d85c9a876827f8e1a@sentry.io/1836574',
+  release: process.env.RELEASE,
+});
 
 export const store = createStore(); // eslint-disable-line
 firebaseApi.subscribe((action) => store.dispatch(action));

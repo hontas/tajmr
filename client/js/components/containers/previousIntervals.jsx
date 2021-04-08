@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import * as Sentry from '@sentry/react';
 
 import * as customPropTypes from '../../constants/propTypes';
 import IntervalList from '../intervalList/intervalList.jsx';
@@ -8,7 +9,7 @@ import Button from '../button/button.jsx';
 import { attemptUpdate, attemptRemove } from '../../redux/intervals';
 import { getWeek, getMonth, startOfDay } from '../../utils/time';
 import { isComplete } from '../../utils/intervals';
-import { ErrorBoundary } from '../ErrorBoundary.jsx';
+import { ErrorBoundaryFallback } from '../ErrorBoundaryFallback.jsx';
 
 const limits = {
   ZERO: 0,
@@ -40,7 +41,7 @@ class PreviousIntervals extends React.Component {
     return (
       <div className="previous-intervals">
         <h3 className="previous-intervals__title">Tidigare</h3>
-        <ErrorBoundary>
+        <Sentry.ErrorBoundary fallback={ErrorBoundaryFallback}>
           <>
             <IntervalList intervals={intervals} onDelete={this.onDelete} onUpdate={this.onUpdate} />
             {showMore && (
@@ -53,7 +54,7 @@ class PreviousIntervals extends React.Component {
               </Button>
             )}
           </>
-        </ErrorBoundary>
+        </Sentry.ErrorBoundary>
       </div>
     );
   }

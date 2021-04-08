@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import * as Sentry from '@sentry/react';
 
 import MonthReport from '../monthReport/MonthReport.jsx';
 import * as customTypes from '../../constants/propTypes';
@@ -15,7 +16,7 @@ import * as intervalActions from '../../redux/intervals';
 import AddOneInterval from '../intervalList/addOneInterval.jsx';
 import { getIntervalSum, isActive, isComplete } from '../../utils/intervals';
 import { getWeek, getMonth, getDayRange } from '../../utils/time';
-import { ErrorBoundary } from '../ErrorBoundary.jsx';
+import { ErrorBoundaryFallback } from '../ErrorBoundaryFallback.jsx';
 
 class CurrentIntervals extends React.Component {
   state = {
@@ -51,7 +52,7 @@ class CurrentIntervals extends React.Component {
 
     return (
       <div className="current-intervals">
-        <ErrorBoundary>
+        <Sentry.ErrorBoundary fallback={ErrorBoundaryFallback}>
           <>
             <DigitalClock
               elapsed={intervalSum}
@@ -103,7 +104,7 @@ class CurrentIntervals extends React.Component {
             )}
             {userSettings.displayMonthReport && <MonthReport intervals={intervals} />}
           </>
-        </ErrorBoundary>
+        </Sentry.ErrorBoundary>
       </div>
     );
   }

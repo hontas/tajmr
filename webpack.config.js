@@ -132,6 +132,7 @@ const config = {
           new Date()
         )
       ),
+      'process.env.RELEASE': JSON.stringify(`${pkg.name}@${pkg.version}`),
     }),
     new WorkboxPlugin.GenerateSW({
       clientsClaim: true,
