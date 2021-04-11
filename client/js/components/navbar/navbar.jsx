@@ -1,4 +1,4 @@
-/* global PKG_VERSION BUILD_TIME */
+/* global RELEASE BUILD_TIME */
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -55,7 +55,7 @@ function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, disp
 
   const BuildInfo = () => (
     <span className="navbar__version">
-      <small>{`${process.env.RELEASE} - ${process.env.BUILD_TIME}`}</small>
+      <small>{`${RELEASE} - ${BUILD_TIME}`}</small>
     </span>
   );
 

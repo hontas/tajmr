@@ -9,7 +9,7 @@ import pkg from './package.json';
 // https://vitejs.dev/config/
 export default defineConfig({
   define: {
-    PKG_VERSION: JSON.stringify(pkg.version),
+    RELEASE: JSON.stringify(`${pkg.name}@${pkg.version}`),
     BUILD_TIME: JSON.stringify(
       new Intl.DateTimeFormat('sv-SE', { dateStyle: 'medium', timeStyle: 'short' }).format(
         new Date()

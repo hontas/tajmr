@@ -1,4 +1,4 @@
-/* global PKG_VERSION */
+/* global RELEASE */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -13,7 +13,7 @@ import '../styles/main.css';
 
 Sentry.init({
   dsn: 'https://a359f82382f84f2d85c9a876827f8e1a@sentry.io/1836574',
-  release: `tajmr@${PKG_VERSION}`,
+  release: RELEASE,
 });
 
 export const store = createStore();
