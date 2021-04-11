@@ -1,6 +1,6 @@
 {
-  "extends": ["airbnb", "prettier"],
-  "plugins": ["cypress"],
+  "extends": ["plugin:security/recommended", "airbnb", "prettier"],
+  "plugins": ["cypress", "security"],
   "parser": "babel-eslint",
   "env": {
     "browser": true,
