@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import * as Sentry from '@sentry/react';
+import { Integrations } from '@sentry/tracing';
 
 import '../styles/critical.styl';
 import '../styles';
@@ -22,8 +23,10 @@ import Application from './components/application/application.jsx';
 import './register-sw';
 
 Sentry.init({
-  dsn: 'https://a359f82382f84f2d85c9a876827f8e1a@sentry.io/1836574',
+  dsn: 'https://a359f82382f84f2d85c9a876827f8e1a@o327083.ingest.sentry.io/1836574',
+  integrations: [new Integrations.BrowserTracing()],
   release: process.env.RELEASE,
+  tracesSampleRate: 0.2,
 });
 
 export const store = createStore(); // eslint-disable-line
