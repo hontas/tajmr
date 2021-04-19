@@ -7,6 +7,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="mobile-web-app-capable" content="yes" />
     <link rel="canonical" href="https://hontas.github.io/tajmr/" />
+    <style>
+      :root {
+        --primary-color: #1f8dd6;
+        --primary-color-dark: #2d3e50;
+
+        --secondary-color-dark: #555;
+
+        --danger-color: #bd5a5a;
+        --danger-color-dark: #5a2929;
+
+        --success-color: #7df36f;
+        --success-color-dark: #2f5f2a;
+
+        --text-color-primary: white;
+        --text-color-secondary: lightgray;
+        --text-color-danger: lightgray;
+        --text-color-light: #6fbef3;
+
+        --screen-small: 480px;
+        --screen-medium: 768px;
+        --screen-large: 1024px;
+      }
+      body {
+        background: var(--primary-color-dark);
+        color: var(--text-color-primary);
+        font-family: -apple-system, '.SFNSText-Regular', 'San Francisco', 'Roboto', 'Segoe UI',
+          'Helvetica Neue', 'Lucida Grande', sans-serif;
+        font-weight: 300;
+        margin: 0;
+        padding: 0;
+      }
+
+      .splash-screen {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      .spinner {
+        width: 50px;
+        height: 40px;
+        text-align: center;
+        font-size: 10px;
+      }
+
+      .spinner > div {
+        background-color: currentColor;
+        height: 100%;
+        width: 6px;
+        display: inline-block;
+
+        -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+        animation: sk-stretchdelay 1.2s infinite ease-in-out;
+      }
+
+      .spinner .rect2 {
+        -webkit-animation-delay: -1.1s;
+        animation-delay: -1.1s;
+      }
+
+      .spinner .rect3 {
+        -webkit-animation-delay: -1s;
+        animation-delay: -1s;
+      }
+
+      .spinner .rect4 {
+        -webkit-animation-delay: -0.9s;
+        animation-delay: -0.9s;
+      }
+
+      .spinner .rect5 {
+        -webkit-animation-delay: -0.8s;
+        animation-delay: -0.8s;
+      }
+
+      @-webkit-keyframes sk-stretchdelay {
+        0%,
+        40%,
+        100% {
+          -webkit-transform: scaleY(0.4);
+        }
+        20% {
+          -webkit-transform: scaleY(1);
+        }
+      }
+
+      @keyframes sk-stretchdelay {
+        0%,
+        40%,
+        100% {
+          transform: scaleY(0.4);
+          -webkit-transform: scaleY(0.4);
+        }
+        20% {
+          transform: scaleY(1);
+          -webkit-transform: scaleY(1);
+        }
+      }
+    </style>
     <script>
       // redirect to https
       if (window.location.host === 'hontas.github.io' && window.location.protocol === 'http:') {
@@ -16,9 +117,14 @@
   </head>
   <body>
     <div id="root">
-      <div class="application">
-        <div class="navbar pure-menu pure-menu-horizontal pure-menu-fixed">
-          <h1 class="brand pure-menu-heading">TajmR</h1>
+      <div class="splash-screen">
+        <h1 class="brand pure-menu-heading">TajmR</h1>
+        <div class="spinner">
+          <div class="rect1"></div>
+          <div class="rect2"></div>
+          <div class="rect3"></div>
+          <div class="rect4"></div>
+          <div class="rect5"></div>
         </div>
       </div>
     </div>
