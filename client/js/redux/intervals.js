@@ -1,4 +1,4 @@
-import Ajv from 'ajv';
+import Joi from 'joi';
 import firebaseApi from '../utils/firebaseApi';
 
 export const INTERVAL_ADD = 'INTERVAL_ADD';
@@ -12,41 +12,30 @@ export const INTERVALS_UPDATE_TIMESTAMP = 'INTERVALS_UPDATE_TIMESTAMP';
 export const REQUEST_INTERVAL_UPDATE = 'REQUEST_INTERVAL_UPDATE';
 const RESET_STATE = 'INTERVAL RESET_STATE';
 
-const ajv = new Ajv();
-const intervalSchema = {
-  type: 'object',
-  properties: {
-    createdAt: { type: 'integer' },
-    updatedAt: { type: 'integer' },
-    startTime: { type: 'integer' },
-    endTime: { type: 'integer' },
-    notWork: { type: 'boolean' },
-    note: { type: 'string' },
-    user: { type: 'string' },
-    id: { type: 'string' },
-  },
-  required: ['createdAt', 'startTime', 'user'],
-  additionalProperties: false,
-};
-const newIntervalSchema = {
-  type: 'object',
-  properties: {
-    startTime: { type: 'integer' },
-  },
-  required: ['startTime'],
-  additionalProperties: false,
-};
+const joiIntervalSchema = Joi.object({
+  createdAt: Joi.date().timestamp().required(),
+  updatedAt: Joi.date().timestamp(),
+  startTime: Joi.date().timestamp().required(),
+  endTime: Joi.date().timestamp(),
+  notWork: Joi.boolean(),
+  note: Joi.string(),
+  user: Joi.string(),
+  id: Joi.string(),
+});
+const joiNewIntervalSchema = Joi.object({
+  startTime: Joi.date().timestamp().required(),
+});
 
 const createValidator = (validator) => (interval) => {
-  const valid = validator(interval);
+  const { error } = validator(interval);
 
-  if (!valid) {
-    console.log('interval validation failed for', interval, validator.errors);
-    return validator.errors;
+  if (error) {
+    console.log('interval validation failed for', interval, error);
+    return error;
   }
 };
-const validateInterval = createValidator(ajv.compile(intervalSchema));
-const validateNewInterval = createValidator(ajv.compile(newIntervalSchema));
+const validateInterval = createValidator(joiIntervalSchema);
+const validateNewInterval = createValidator(joiNewIntervalSchema);
 
 export function intervalAdded(interval) {
   return {
