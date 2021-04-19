@@ -1,5 +1,5 @@
-import Joi from 'joi';
 import firebaseApi from '../utils/firebaseApi';
+import { validateInterval, validateNewInterval } from '../utils/interValidator';
 
 export const INTERVAL_ADD = 'INTERVAL_ADD';
 export const INTERVAL_UPDATED = 'INTERVAL_UPDATED';
@@ -11,31 +11,6 @@ export const INTERVALS_FETCHED = 'INTERVALS_FETCHED';
 export const INTERVALS_UPDATE_TIMESTAMP = 'INTERVALS_UPDATE_TIMESTAMP';
 export const REQUEST_INTERVAL_UPDATE = 'REQUEST_INTERVAL_UPDATE';
 const RESET_STATE = 'INTERVAL RESET_STATE';
-
-const joiIntervalSchema = Joi.object({
-  createdAt: Joi.date().timestamp().required(),
-  updatedAt: Joi.date().timestamp(),
-  startTime: Joi.date().timestamp().required(),
-  endTime: Joi.date().timestamp(),
-  notWork: Joi.boolean(),
-  note: Joi.string(),
-  user: Joi.string(),
-  id: Joi.string(),
-});
-const joiNewIntervalSchema = Joi.object({
-  startTime: Joi.date().timestamp().required(),
-});
-
-const createValidator = (validator) => (interval) => {
-  const { error } = validator(interval);
-
-  if (error) {
-    console.log('interval validation failed for', interval, error);
-    return error;
-  }
-};
-const validateInterval = createValidator(joiIntervalSchema);
-const validateNewInterval = createValidator(joiNewIntervalSchema);
 
 export function intervalAdded(interval) {
   return {
