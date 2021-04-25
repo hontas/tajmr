@@ -1,0 +1,61 @@
+.container {
+  padding: 0 0.5em;
+}
+
+.title {
+  margin-bottom: 0;
+  text-align: center;
+}
+.subtitle {
+  margin: 0 0 0.5em;
+  text-align: center;
+}
+
+.button {
+  background-color: transparent;
+  color: white;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 0.75em;
+}
+
+.filter {
+  background-color: var(--primary-color-dark-translucent); /*0.25*/
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.25em;
+}
+
+.filterActive {
+  background-color: var(--primary-color-dark-hazy); /*0.75*/
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5em;
+}
+.listItem:first-child,
+.listItem:last-child {
+  border-top: 1px solid rgba(255, 255, 255, 0.75);
+}
+
+.notWork {
+  background-color: var(--danger-color-hazy); /*0.75*/
+}
+
+.listItemTitle,
+.listItemValue {
+  margin: 0.5em 0;
+}
