@@ -1,22 +1,5 @@
 import firebaseApi from '../../client/js/utils/firebaseApi';
-
-const testIds = {
-  appInit: 'app-init',
-  loginForm: 'login-form',
-  workButton: 'work-button',
-  userMenuToggle: 'user-menu-toggle',
-  userMenu: 'user-menu',
-  loadingIntervals: 'loading-intervals-container',
-  currentIntervals: 'current-intervals-list',
-  interval: 'interval-item',
-  intervalFromInput: 'interval-from-input',
-  intervalEndInput: 'interval-end-input',
-  weekStatItem: 'week-stats-item',
-  removeIntervalBtn: 'remove-interval',
-  prevWeekBtn: 'prev-week-btn',
-  nextWeekBtn: 'next-week-btn'
-};
-const animationDuration = 500;
+import { testIds, animationDuration } from '../constants';
 
 context('login', () => {
   before(() => {
@@ -31,23 +14,13 @@ context('login', () => {
   afterEach(() => {
     cy.getByTestId(testIds.userMenuToggle).click();
     cy.wait(animationDuration);
-    cy.getByTestId(testIds.userMenu)
-      .contains('Logga ut')
-      .click();
+    cy.getByTestId(testIds.userMenu).contains('Logga ut').click();
     cy.getByTestId(testIds.loginForm);
   });
 
   it('should log in and display intervals, then log out', () => {
     // log in
-    cy.getByTestId(testIds.loginForm);
-    cy.get('input[type="email"]').type('test@example.com');
-    cy.get('input[type="password"]').type('testuser{enter}');
-    cy.getByTestId(testIds.workButton).should('include.text', 'Börja debitera');
-
-    // wait for intervals to load
-    cy.getByTestId(testIds.loadingIntervals).should('be.visible');
-    cy.getByTestId(testIds.loadingIntervals).should('not.exist');
-    cy.wait(animationDuration);
+    cy.login();
 
     // add intervals
     cy.getByTestId(testIds.workButton).click();
@@ -57,9 +30,7 @@ context('login', () => {
     // finish interval
     cy.getByTestId(testIds.workButton).click();
     cy.waitUntilSaved();
-    cy.getByTestId(testIds.currentIntervals)
-      .children()
-      .should('have.length', 1);
+    cy.getByTestId(testIds.currentIntervals).children().should('have.length', 1);
 
     // edit time in input
     cy.getByTestId(testIds.interval)
@@ -77,12 +48,13 @@ context('login', () => {
       .should('have.length', 2)
       .and('include.text', '08:00');
 
+    // register past intervals
+    cy.getByTestId(testIds.regPrevWorkBtn).click();
+
     // switch to another week
     cy.getByTestId(testIds.prevWeekBtn).click();
     cy.wait(animationDuration);
-    cy.getByTestId(testIds.weekStatItem)
-      .children()
-      .should('have.length', 0);
+    cy.getByTestId(testIds.weekStatItem).children().should('have.length', 0);
     cy.getByTestId(testIds.nextWeekBtn).click();
     cy.wait(animationDuration);
 
@@ -91,8 +63,6 @@ context('login', () => {
     // remove intervals
     cy.getByTestId(testIds.removeIntervalBtn).click();
     cy.waitUntilSaved();
-    cy.getByTestId(testIds.currentIntervals)
-      .children()
-      .should('have.length', 0);
+    cy.getByTestId(testIds.currentIntervals).children().should('have.length', 0);
   });
 });
