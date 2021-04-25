@@ -1,6 +1,6 @@
 {
   "name": "tajmr",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Record time sometime",
   "scripts": {
     "lint": "eslint --ignore-path .gitignore --ext .js,.jsx .",
