@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 import firebaseApi from '../../utils/firebaseApi';
 import Button from '../button/button.jsx';
 
+import styles from './login.module.css';
+
 const Login = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
@@ -30,10 +32,10 @@ const Login = () => {
   };
 
   return (
-    <div className="login">
-      <form className="auth-form" onSubmit={handleSubmit} data-testid="login-form">
+    <div className={styles.login}>
+      <form className={styles.authForm} onSubmit={handleSubmit} data-testid="login-form">
         {message && (
-          <p className="login__error">
+          <p className={styles.error}>
             <span role="img">⚠</span>
             {message}
           </p>
@@ -44,10 +46,10 @@ const Login = () => {
         <label aria-label="password">
           <input type="password" autoComplete="password" ref={passwordInput} />
         </label>
-        <Button type="submit" onClick={handleSubmit} isLoading={isLoggingIn} theme="primary">
+        <Button block type="submit" onClick={handleSubmit} isLoading={isLoggingIn} theme="primary">
           Log in
         </Button>
-        <Button onClick={forgotPassword} isLoading={isResetting} theme="link">
+        <Button block onClick={forgotPassword} isLoading={isResetting} theme="link">
           Forgot password
         </Button>
       </form>
