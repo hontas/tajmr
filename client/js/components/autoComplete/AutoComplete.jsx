@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import styles from './AutoComplete.module.css';
+
 class AutoComplete extends React.Component {
   constructor(props) {
     super(props);
@@ -17,36 +19,32 @@ class AutoComplete extends React.Component {
 
     return (
       <div
-        className={classNames('AutoComplete', className)}
+        className={classNames(styles.container, className)}
         onKeyDown={this.onKeyDown}
         role="presentation"
       >
-        <label className="AutoComplete__label">
+        <label className={styles.label}>
           {label}
           <input
             data-testid={dataTestId}
             type="text"
             value={query}
             placeholder={placeholder}
-            className="AutoComplete__input"
+            className={styles.input}
             onBlur={this.onBlur}
             onChange={this.onChange}
           />
         </label>
         <ul
-          className="AutoComplete__suggestions"
+          className={styles.suggestions}
           ref={(node) => {
             this.suggestionsList = node;
           }}
         >
           {!!suggestions.length &&
             suggestions.map((note) => (
-              <li key={note} className="AutoComplete__suggestion">
-                <button
-                  className="AutoComplete__suggestion__btn"
-                  onClick={this.onSelect}
-                  type="button"
-                >
+              <li key={note}>
+                <button className={styles.suggestionBtn} onClick={this.onSelect} type="button">
                   {note}
                 </button>
               </li>
@@ -71,7 +69,7 @@ class AutoComplete extends React.Component {
 
     switch (evt.key) {
       case 'Enter':
-        if (evt.target.classList.contains('AutoComplete__suggestion__btn')) {
+        if (evt.target.classList.contains(styles.suggestionBtn)) {
           this.onSelect(evt);
         }
         break;
