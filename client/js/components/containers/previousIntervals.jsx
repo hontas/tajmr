@@ -11,6 +11,8 @@ import { getWeek, getMonth, startOfDay } from '../../utils/time';
 import { isComplete } from '../../utils/intervals';
 import { ErrorBoundaryFallback } from '../ErrorBoundaryFallback.jsx';
 
+import styles from './previousIntervals.module.css';
+
 const limits = {
   ZERO: 0,
   WEEK: 1,
@@ -39,17 +41,13 @@ class PreviousIntervals extends React.Component {
     if (!userSettings.displayPreviousIntervals) return null;
 
     return (
-      <div className="previous-intervals">
-        <h3 className="previous-intervals__title">Tidigare</h3>
+      <div className={styles.container}>
+        <h3 className={styles.title}>Tidigare</h3>
         <Sentry.ErrorBoundary fallback={ErrorBoundaryFallback}>
           <>
             <IntervalList intervals={intervals} onDelete={this.onDelete} onUpdate={this.onUpdate} />
             {showMore && (
-              <Button
-                className="previous-intervals__show-more"
-                onClick={this.showMore}
-                theme="primary"
-              >
+              <Button className={styles.showMore} onClick={this.showMore} theme="primary">
                 Visa fler
               </Button>
             )}
