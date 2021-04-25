@@ -8,10 +8,26 @@ import styles from './button.module.css';
 
 const Button = React.forwardRef(
   (
-    { className, text, isLoading, disabled, children, type = 'button', theme = 'default', ...rest },
+    {
+      className,
+      text,
+      isLoading,
+      disabled,
+      children,
+      type = 'button',
+      theme = 'default',
+      block,
+      ...rest
+    },
     ref
   ) => {
-    const classes = classNames('pure-button button', styles[theme], className);
+    const classes = classNames(
+      'pure-button',
+      styles.button,
+      styles[theme],
+      { [styles.block]: block },
+      className
+    );
 
     return (
       <button ref={ref} {...rest} className={classes} type={type} disabled={disabled}>
@@ -35,6 +51,7 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
   text: PropTypes.string,
+  block: PropTypes.bool,
   type: PropTypes.oneOf(['button', 'submit']),
   theme: PropTypes.oneOf(['default', 'primary', 'secondary', 'danger', 'success', 'link']),
   children: PropTypes.oneOfType([
