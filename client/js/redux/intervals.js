@@ -89,14 +89,20 @@ export function attemptUpdate(interval) {
 
     if (!interval.id) {
       const errors = validateNewInterval(interval);
-      if (errors) return Promise.resolve(handleFailure(errors));
+      if (errors) {
+        handleFailure(errors);
+        return Promise.reject(errors);
+      }
 
       // firebase also fires child_added event that we handle
       return firebaseApi.createInterval(interval).then(handleSuccess).catch(handleFailure);
     }
 
     const errors = validateInterval(interval);
-    if (errors) return Promise.resolve(handleFailure(errors));
+    if (errors) {
+      handleFailure(errors);
+      return Promise.reject(errors);
+    }
     // firebase also fires child_changed event that we handle
     return firebaseApi.updateInterval(interval).then(handleSuccess).catch(handleFailure);
   };
@@ -140,6 +146,7 @@ const initialState = {
   isFetching: true,
   isSaving: false,
   items: [],
+  error: '',
 };
 
 export default function intervalsReducer(state = initialState, action) {

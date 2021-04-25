@@ -15,6 +15,9 @@ const intervalSchema = {
 const newIntervalSchema = {
   properties: {
     startTime: 'number',
+    endTime: 'number',
+    note: 'string',
+    notWork: 'boolean',
   },
   required: ['startTime'],
 };
