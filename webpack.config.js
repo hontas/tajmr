@@ -33,7 +33,7 @@ const cssLoader = [
     options: {
       modules: {
         auto: true,
-        localIdentName: '[name]__[local]--[hash:base64:5]',
+        localIdentName: isProduction ? '[hash:base64]' : '[name]__[local]',
       },
     },
   },
