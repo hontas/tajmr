@@ -1,0 +1,32 @@
+.container {
+  padding-top: 5em;
+}
+
+.actionButtons {
+  display: flex;
+}
+
+.prevWorkBtn {
+  border-radius: 0;
+  border-left: 1px solid var(--primary-color);
+}
+
+@supports (-webkit-overflow-scrolling: touch) {
+  .container {
+    padding-top: calc(5em + env(safe-area-inset-top));
+  }
+  .actionButtons {
+    margin-left: calc(-1 * env(safe-area-inset-left));
+    margin-right: calc(-1 * env(safe-area-inset-right));
+  }
+  .prevWorkBtn {
+    padding-right: max(1em, env(safe-area-inset-right));
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    margin-bottom: 3em;
+    padding-bottom: 1.5em;
+  }
+}

@@ -18,6 +18,8 @@ import { getIntervalSum, isActive, isComplete } from '../../utils/intervals';
 import { getWeek, getMonth, getDayRange } from '../../utils/time';
 import { ErrorBoundaryFallback } from '../ErrorBoundaryFallback.jsx';
 
+import styles from './currentIntervals.module.css';
+
 class CurrentIntervals extends React.Component {
   state = {
     displayAddForm: false,
@@ -51,7 +53,7 @@ class CurrentIntervals extends React.Component {
     );
 
     return (
-      <div className="current-intervals">
+      <div className={styles.container}>
         <Sentry.ErrorBoundary fallback={ErrorBoundaryFallback}>
           <>
             <DigitalClock
@@ -59,7 +61,7 @@ class CurrentIntervals extends React.Component {
               from={activeInterval ? activeInterval.startTime : 0}
             />
             <ProgressBarTimeWrapper intervals={activeAndCurrentIntervals} max={hoursInWeek / 5} />
-            <div className="action-buttons" style={{ display: 'flex' }}>
+            <div className={styles.actionButtons}>
               <WorkButton
                 data-testid="work-button"
                 activeInterval={!!activeInterval}
@@ -67,7 +69,7 @@ class CurrentIntervals extends React.Component {
                 isLoading={isLoading}
               />
               <Button
-                className="current-intervals__prev-work-btn"
+                className={styles.prevWorkBtn}
                 data-testid="register-previous-work-button"
                 theme="primary"
                 onClick={this.onAddPrevClick}
