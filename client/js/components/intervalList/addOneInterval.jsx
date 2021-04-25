@@ -1,65 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import IntervalListItem from './intervalListItem.jsx';
 import Save from '../icons/Save.jsx';
 import Button from '../button/button.jsx';
+import Error from '../error/Error.jsx';
 
-class AddOneInterval extends React.Component {
-  constructor(props) {
-    super(props);
-    const startHour = 9;
-    const hours = parseInt(props.fullDay, 10);
-    const minutes = Math.round(60 * (props.fullDay - hours));
-    this.state = {
-      interval: {
-        startTime: getTimestampFromHMS(startHour),
-        endTime: getTimestampFromHMS(startHour + hours, minutes),
-        note: ''
-      }
-    };
-  }
+const startHour = 9;
+const noop = () => {};
 
-  render() {
-    const { interval } = this.state;
-    const { notes, onCancel } = this.props;
+const AddOneInterval = ({ notes, onCancel, onAdd, fullDay, ...rest }) => {
+  const hours = parseInt(fullDay, 10);
+  const minutes = Math.round(60 * (fullDay - hours));
+  const [error, setError] = useState(null);
+  const [interval, setInterval] = useState({
+    startTime: getTimestampFromHMS(startHour),
+    endTime: getTimestampFromHMS(startHour + hours, minutes),
+    note: '',
+  });
 
-    return (
-      <form className="add-one-interval" onSubmit={this.onAdd}>
+  const handleClickSubmit = (evt) => {
+    evt.preventDefault();
+    onAdd(interval)
+      .then(() => setError(null))
+      .catch(setError);
+  };
+
+  const onUpdate = (updatedInterval) => {
+    setInterval(updatedInterval);
+  };
+
+  return (
+    <>
+      <form {...rest} className="add-one-interval" onSubmit={handleClickSubmit}>
         <IntervalListItem
           className="add-one-interval__interval-list-item"
           interval={interval}
-          onUpdate={this.onUpdate}
-          onDelete={onDelete}
+          onUpdate={onUpdate}
+          onDelete={noop}
           notes={notes}
         />
         <Button
+          data-testid="add-one-interval-save-btn"
           type="submit"
           theme="primary"
-          onClick={this.onAdd}
+          onClick={handleClickSubmit}
           className="add-one-interval__btn"
         >
           <Save size={17} />
         </Button>
-        <Button theme="secondary" className="add-one-interval__btn" onClick={onCancel}>
+        <Button
+          data-testid="add-one-interval-cancel-btn"
+          theme="secondary"
+          className="add-one-interval__btn"
+          onClick={onCancel}
+        >
           ✖
         </Button>
       </form>
-    );
-  }
-
-  onAdd = (evt) => {
-    evt.preventDefault();
-    this.props.onAdd(this.state.interval);
-  };
-
-  onCancel = () => {};
-
-  onUpdate = (interval) => {
-    this.setState({ interval });
-  };
-}
-
-function onDelete() {}
+      {error && <Error error={error} />}
+    </>
+  );
+};
 
 function getTimestampFromHMS(hours, minutes = 0, seconds = 0) {
   const date = new Date();
@@ -73,7 +74,7 @@ AddOneInterval.propTypes = {
   onAdd: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   fullDay: PropTypes.number.isRequired,
-  notes: PropTypes.arrayOf(PropTypes.string)
+  notes: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default AddOneInterval;
