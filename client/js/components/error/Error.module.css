@@ -1,0 +1,8 @@
+.errorMsg {
+  background: var(--danger-color);
+  border-color: var(--danger-color-dark);
+  font-size: smaller;
+  display: flex;
+  justify-content: center;
+  padding: 0.5em;
+}
