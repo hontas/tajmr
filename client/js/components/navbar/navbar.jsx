@@ -9,30 +9,14 @@ import UserMenu from '../user/userMenu.jsx';
 import * as userSettingActions from '../../redux/userSettings';
 import * as customPropTypes from '../../constants/propTypes';
 import * as SpinKit from '../spinkit/spinkit.jsx';
-import debounce from '../../utils/debounce';
 
 function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, dispatch }) {
-  const [menuRightPosition, setMenuRightPosition] = React.useState(0);
   const [showUserMenu, setShowUserMenu] = React.useState(false);
-  const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
   const navBarInnerRef = React.useRef(null);
   const isLoading = appInitialized && (isSaving || isFetching);
 
   const userMenuToggle = React.useRef();
   const userMenuBackdrop = React.useRef();
-
-  React.useEffect(() => {
-    const resizeHandler = debounce(() => setWindowWidth(window.innerWidth));
-    window.addEventListener('resize', resizeHandler);
-    return () => {
-      window.removeEventListener('resize', resizeHandler);
-    };
-  }, []);
-
-  React.useEffect(() => {
-    const { right } = navBarInnerRef.current?.getBoundingClientRect();
-    setMenuRightPosition(windowWidth - right);
-  }, [navBarInnerRef, windowWidth]);
 
   const updateSettings = (prop, value) => {
     dispatch(userSettingActions.updateSettings({ [prop]: value }));
@@ -50,10 +34,7 @@ function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, disp
   };
 
   return (
-    <nav
-      className="navbar pure-menu pure-menu-horizontal pure-menu-fixed"
-      style={{ '--user-menu-right-pos': `${menuRightPosition}px` }}
-    >
+    <nav className="navbar pure-menu pure-menu-horizontal pure-menu-fixed">
       <div className="navbar__inner" ref={navBarInnerRef}>
         <h1 className="brand pure-menu-heading">TajmR</h1>
         <span className="version">

@@ -63,18 +63,18 @@
 }
 
 .navbar__user-menu {
-  $width = 100%;
   position: fixed;
   overflow-y: scroll;
   height: calc(100vh - 53px);
-  width: $width;
+  width: 100vw;
   max-width: 560px;
   top: 53px;
-  right: $width*-1;
+  right: 0;
   bottom: 0;
-  transition: right .2s;
+  transition: transform .3s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transform: translateX(max(100vw, 560px))
   &--active {
-    right: var(--user-menu-right-pos, 0);
+    transform: translateX(0)
   }
 }
 
