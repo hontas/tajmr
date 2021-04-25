@@ -135,12 +135,10 @@ class CurrentIntervals extends React.Component {
   onCancelPrevClick = () => this.setState({ displayAddForm: false });
 
   onAddOneInterval = (interval) => {
-    const { attemptUpdate, intervalAdded } = this.props;
-    attemptUpdate(interval).then((saveInterval) => {
+    const { attemptUpdate } = this.props;
+    return attemptUpdate(interval).then(() => {
       this.setState({ displayAddForm: false });
-      intervalAdded(saveInterval);
     });
-    // 👆 must do manual add cause child_added only register startDate > Date.now()
   };
 }
 
