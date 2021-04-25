@@ -7,13 +7,13 @@ class AutoComplete extends React.Component {
     super(props);
     this.state = {
       query: props.value || '',
-      suggestions: []
+      suggestions: [],
     };
   }
 
   render() {
     const { query, suggestions } = this.state;
-    const { className, label = '', placeholder = '' } = this.props;
+    const { className, label = '', placeholder = '', dataTestId } = this.props;
 
     return (
       <div
@@ -24,6 +24,7 @@ class AutoComplete extends React.Component {
         <label className="AutoComplete__label">
           {label}
           <input
+            data-testid={dataTestId}
             type="text"
             value={query}
             placeholder={placeholder}
@@ -94,7 +95,7 @@ class AutoComplete extends React.Component {
     const suggestions = this.props.notes.filter((note) => note.toLowerCase().startsWith(query));
     this.setState({
       query,
-      suggestions: query ? suggestions : []
+      suggestions: query ? suggestions : [],
     });
   };
 
@@ -111,16 +112,17 @@ class AutoComplete extends React.Component {
 }
 
 AutoComplete.defaultProps = {
-  notes: []
+  notes: [],
 };
 
 AutoComplete.propTypes = {
   className: PropTypes.string,
+  dataTestId: PropTypes.string,
   label: PropTypes.string,
   placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string,
-  notes: PropTypes.arrayOf(PropTypes.string)
+  notes: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default AutoComplete;

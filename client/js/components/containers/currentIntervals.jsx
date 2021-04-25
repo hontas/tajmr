@@ -68,6 +68,7 @@ class CurrentIntervals extends React.Component {
               />
               <Button
                 className="current-intervals__prev-work-btn"
+                data-testid="register-previous-work-button"
                 theme="primary"
                 onClick={this.onAddPrevClick}
               >
@@ -76,6 +77,7 @@ class CurrentIntervals extends React.Component {
             </div>
             {displayAddForm && (
               <AddOneInterval
+                data-testid="add-previous-interval-form"
                 onAdd={this.onAddOneInterval}
                 onCancel={this.onCancelPrevClick}
                 fullDay={hoursInDay}

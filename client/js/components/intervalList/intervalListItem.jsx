@@ -13,7 +13,7 @@ class IntervalListItem extends React.Component {
     const {
       notes,
       className,
-      interval: { startTime, endTime, note, notWork }
+      interval: { startTime, endTime, note, notWork },
     } = this.props;
 
     return (
@@ -32,6 +32,7 @@ class IntervalListItem extends React.Component {
         />
 
         <AutoComplete
+          dataTestId="interval-note-input"
           className="interval-list-item__note"
           placeholder="Anteckning"
           onChange={this.updateProp('note')}
@@ -40,6 +41,7 @@ class IntervalListItem extends React.Component {
         />
 
         <input
+          data-testid="interval-not-work-checkbox"
           className="interval-list-item__no-work"
           type="checkbox"
           title="not work"
@@ -64,7 +66,7 @@ class IntervalListItem extends React.Component {
     const { interval, onUpdate } = this.props;
     onUpdate({
       ...interval,
-      [prop]: checked
+      [prop]: checked,
     });
   };
 
@@ -72,7 +74,7 @@ class IntervalListItem extends React.Component {
     const { interval, onUpdate } = this.props;
     onUpdate({
       ...interval,
-      [prop]: value
+      [prop]: value,
     });
   };
 
@@ -87,7 +89,7 @@ IntervalListItem.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   notes: PropTypes.arrayOf(PropTypes.string),
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 export default IntervalListItem;
