@@ -1,0 +1,12 @@
+.workButton {
+  border-radius: 0;
+  display: grid;
+  font-size: 1.5em;
+  width: 100%;
+}
+
+@supports (-webkit-overflow-scrolling: touch) {
+  .workButton {
+    padding-left: max(1em, env(safe-area-inset-left));
+  }
+}
