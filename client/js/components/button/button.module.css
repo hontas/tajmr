@@ -1,0 +1,35 @@
+.button {
+  transition: background 0.3s;
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-gap: 0.5em;
+  justify-content: center;
+  align-items: center;
+}
+
+.primary {
+  background: var(--primary-color-dark);
+  color: var(--text-color-light);
+}
+.secondary {
+  background: var(--secondary-color-dark);
+  color: var(--text-color-secondary);
+}
+.danger {
+  background: var(--danger-color-dark);
+  color: var(--text-color-danger);
+}
+.success {
+  background: var(--success-color);
+  color: var(--text-color-light);
+}
+.link {
+  background: transparent;
+  color: var(--primary-color-dark);
+}
+
+.link:focus,
+.link:hover {
+  background: transparent;
+  text-decoration: underline;
+}

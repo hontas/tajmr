@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+
 import * as SpinKit from '../spinkit/spinkit.jsx';
+
+import styles from './button.module.css';
 
 const Button = React.forwardRef(
   (
     { className, text, isLoading, disabled, children, type = 'button', theme = 'default', ...rest },
     ref
   ) => {
-    const classes = classNames('pure-button button', `button--${theme}`, className);
+    const classes = classNames('pure-button button', styles[theme], className);
 
     return (
       <button ref={ref} {...rest} className={classes} type={type} disabled={disabled}>
