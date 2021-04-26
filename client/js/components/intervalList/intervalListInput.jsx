@@ -5,6 +5,8 @@ import classNames from 'classnames';
 import DatePicker from '../datepicker/DatePicker.jsx';
 import { getTimeString } from '../../utils/time';
 
+import styles from './intervalListInput.module.css';
+
 function stateFromProps(props) {
   const isActive = !props.timestamp;
   const value = isActive ? 'active' : getTimeString(props.timestamp);
@@ -24,16 +26,14 @@ class IntervalListInput extends React.Component {
   render() {
     const { className, timestamp, titlePrefix, dataTestId } = this.props;
     const { value, isActive, isValid } = this.state;
-    const baseClassName = 'interval-list-input';
-    const variationClass = isValid ? '' : `${baseClassName}--error`;
 
     return (
-      <div className={classNames(baseClassName, className, variationClass)}>
+      <div className={classNames(styles.container, className, { [styles.error]: !isValid })}>
         <input
           type="text"
           data-testid={dataTestId}
           title={`${titlePrefix} time`}
-          className={`${baseClassName}__input`}
+          className={styles.input}
           disabled={isActive}
           onBlur={this.validateAndPush}
           onChange={this.handleChange}
@@ -41,7 +41,7 @@ class IntervalListInput extends React.Component {
         />
         <DatePicker
           buttonTitle={`${titlePrefix} date`}
-          className={`${baseClassName}__date`}
+          className={styles.date}
           date={timestamp}
           onDayClick={this.handleDateChange}
         />
@@ -92,7 +92,7 @@ function validateTimeString(time) {
 
 IntervalListInput.defaultProps = {
   className: '',
-  dataTestId: ''
+  dataTestId: '',
 };
 
 IntervalListInput.propTypes = {
@@ -100,7 +100,7 @@ IntervalListInput.propTypes = {
   dataTestId: PropTypes.string,
   titlePrefix: PropTypes.string,
   timestamp: PropTypes.number,
-  onUpdate: PropTypes.func.isRequired
+  onUpdate: PropTypes.func.isRequired,
 };
 
 export default IntervalListInput;

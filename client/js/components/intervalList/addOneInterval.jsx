@@ -51,10 +51,10 @@ const AddOneInterval = ({ notes, onCancel, onAdd, fullDay, ...rest }) => {
         <Button
           className={styles.cancelBtn}
           data-testid="add-one-interval-cancel-btn"
-          theme="secondary"
+          theme="primary"
           onClick={onCancel}
         >
-          ✖
+          ╳
         </Button>
       </form>
       {error && <Error error={error} />}

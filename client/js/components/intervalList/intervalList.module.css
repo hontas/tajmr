@@ -1,0 +1,14 @@
+.container {
+  list-style: none;
+  padding-left: 0;
+}
+
+.container input {
+  padding: 0.5em 0.25em;
+}
+
+@media screen and (min-width: 480px) {
+  .container input {
+    padding: 0.5em;
+  }
+}

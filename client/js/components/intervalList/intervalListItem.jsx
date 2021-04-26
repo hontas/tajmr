@@ -8,6 +8,8 @@ import Trashcan from '../icons/Trashcan.jsx';
 import Button from '../button/button.jsx';
 import AutoComplete from '../autoComplete/AutoComplete.jsx';
 
+import styles from './intervalListItem.module.css';
+
 class IntervalListItem extends React.Component {
   render() {
     const {
@@ -18,13 +20,14 @@ class IntervalListItem extends React.Component {
     } = this.props;
 
     return (
-      <li className={classNames('interval-list-item', className)} data-testid="interval-item">
+      <li className={classNames(styles.container, className)} data-testid="interval-item">
         <IntervalListInput
           dataTestId="interval-from-input"
           titlePrefix="from"
           timestamp={startTime}
           onUpdate={this.updateProp('startTime')}
         />
+
         <IntervalListInput
           dataTestId="interval-end-input"
           titlePrefix="end"
@@ -34,7 +37,7 @@ class IntervalListItem extends React.Component {
 
         <AutoComplete
           dataTestId="interval-note-input"
-          className="interval-list-item__note"
+          className={styles.note}
           placeholder="Anteckning"
           onChange={this.updateProp('note')}
           value={note}
@@ -43,7 +46,7 @@ class IntervalListItem extends React.Component {
 
         <input
           data-testid="interval-not-work-checkbox"
-          className="interval-list-item__no-work"
+          className={styles.notWork}
           type="checkbox"
           title="not work"
           checked={notWork || false}
@@ -52,7 +55,7 @@ class IntervalListItem extends React.Component {
 
         {onDelete && (
           <Button
-            className="delete"
+            className={styles.deleteBtn}
             theme="danger"
             title="remove"
             data-testid="remove-interval"
