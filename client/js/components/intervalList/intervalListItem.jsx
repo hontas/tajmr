@@ -12,6 +12,7 @@ class IntervalListItem extends React.Component {
   render() {
     const {
       notes,
+      onDelete,
       className,
       interval: { startTime, endTime, note, notWork },
     } = this.props;
@@ -49,15 +50,17 @@ class IntervalListItem extends React.Component {
           onChange={this.onChecked('notWork')}
         />
 
-        <Button
-          className="delete"
-          theme="danger"
-          title="remove"
-          data-testid="remove-interval"
-          onClick={this.remove}
-        >
-          <Trashcan size={15} />
-        </Button>
+        {onDelete && (
+          <Button
+            className="delete"
+            theme="danger"
+            title="remove"
+            data-testid="remove-interval"
+            onClick={this.remove}
+          >
+            <Trashcan size={15} />
+          </Button>
+        )}
       </li>
     );
   }
@@ -86,7 +89,7 @@ class IntervalListItem extends React.Component {
 
 IntervalListItem.propTypes = {
   interval: customPropTypes.interval.isRequired,
-  onDelete: PropTypes.func.isRequired,
+  onDelete: PropTypes.func,
   onUpdate: PropTypes.func.isRequired,
   notes: PropTypes.arrayOf(PropTypes.string),
   className: PropTypes.string,
