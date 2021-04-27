@@ -10,17 +10,13 @@ import styles from './monthStats.module.css';
 
 const MonthStats = ({ hoursPerWeek, monthIntervals, timestamp }) => {
   const month = getMonth(timestamp);
-  const monthSoFar = { startTime: month.startTime, endTime: Date.now() };
   const workedHoursInMonth = getIntervalSum(monthIntervals) / oneHour;
   const totalWorkHoursInMonth = (hoursPerWeek / 5) * getWorkDaysInMonth(month);
-  const totalWorkHoursSoFar = (hoursPerWeek / 5) * getWorkDaysInMonth(monthSoFar);
 
   return (
     <div className={styles.container}>
       <h3 className={styles.heading}>Månad</h3>
       <ProgressBar progress={workedHoursInMonth} max={totalWorkHoursInMonth} />
-      <h3 className={styles.heading}>Flex</h3>
-      <ProgressBar progress={workedHoursInMonth} max={totalWorkHoursSoFar} unit="h" onlyDelta />
     </div>
   );
 };
