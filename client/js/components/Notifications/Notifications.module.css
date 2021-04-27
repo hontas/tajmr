@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 53px;
+  left: 0;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+}
+
+.notification {
+  animation-name: slide-in;
+  animation-duration: 0.5s;
+  border: 1px solid var(--primary-color-dark);
+  background-color: var(--primary-color-dark-hazy);
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: smaller;
+  padding: 0.5em 1em;
+  margin: 0.2em;
+  width: 50vw;
+}
+
+.action {
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: bold;
+  margin-right: -1em;
+}
+.action:hover,
+.action:focus {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+}
+.action:active {
+  color: rgba(255, 255, 255, 1);
+  box-shadow: none;
+}
+
+@keyframes slide-in {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}

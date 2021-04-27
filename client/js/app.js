@@ -19,7 +19,7 @@ import {
   reset as intervalReset,
 } from './redux/intervals';
 import Application from './components/application/application.jsx';
-import './register-sw';
+import { register } from './register-sw';
 
 Sentry.init({
   dsn: 'https://a359f82382f84f2d85c9a876827f8e1a@o327083.ingest.sentry.io/1836574',
@@ -28,7 +28,17 @@ Sentry.init({
   tracesSampleRate: 0.2,
 });
 
-export const store = createStore(); // eslint-disable-line
+export const store = createStore();
+
+register({
+  onUpdate(newWorker) {
+    store.dispatch({ type: 'NEW_VERSION_AVAILABLE', payload: newWorker });
+  },
+  onAvailableOffline() {
+    store.dispatch({ type: 'APP_AVAILABLE_OFFLINE' });
+  },
+});
+
 firebaseApi.subscribe((action) => store.dispatch(action));
 firebaseApi.init({ intervalAdded, intervalRemoved, intervalUpdated });
 firebaseApi.auth.onAuthStateChanged((user) => {

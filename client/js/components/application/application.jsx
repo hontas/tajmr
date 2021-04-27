@@ -1,8 +1,10 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Loader from './Loader.jsx';
 
+import Notifications from '../Notifications/Notifications.jsx';
+
+import Loader from './Loader.jsx';
 import styles from './application.module.css';
 
 const Navbar = React.lazy(() => import(/* webpackChunkName: "Navbar" */ '../navbar/navbar.jsx'));
@@ -18,6 +20,7 @@ const Login = React.lazy(() => import('../auth/login.jsx'));
 function Application({ initialized, user }) {
   return (
     <div className={styles.application}>
+      <Notifications />
       <React.Suspense fallback={<Loader />}>
         {initialized ? (
           <>
