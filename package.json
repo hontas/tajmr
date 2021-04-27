@@ -70,7 +70,6 @@
     "cypress": "^6.6.0",
     "dotenv": "^8.2.0",
     "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.14.0",
     "eslint": "^7.22.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^8.1.0",
