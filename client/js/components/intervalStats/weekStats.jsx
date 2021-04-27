@@ -37,7 +37,7 @@ class WeekStats extends React.Component {
             ▶︎
           </Button>
         </h3>
-        <div className={classNames(styles.bars, 'flex-container flex--align-end')}>
+        <div className={classNames(styles.bars)}>
           {mashUpWeekAndIntervals(intervals, timestamp).map((day) => (
             <WeekStatsItem key={day.weekday} {...day} />
           ))}

@@ -5,8 +5,7 @@ import { Provider } from 'react-redux';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 
-import '../styles/critical.styl';
-import '../styles';
+import '../styles/critical.css';
 import firebaseApi from './utils/firebaseApi';
 import createStore from './redux/createStore';
 import * as userActions from './redux/user';

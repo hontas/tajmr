@@ -3,6 +3,8 @@
 }
 
 .bars {
+  display: flex;
+  align-items: flex-end;
   margin: 1em 0.5em;
 }
 
