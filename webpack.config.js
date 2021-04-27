@@ -26,7 +26,18 @@ if (!isProduction) {
   process.traceDeprecation = true;
 }
 
-const cssLoader = [{ loader: 'style-loader' }, { loader: 'css-loader' }];
+const cssLoader = [
+  { loader: 'style-loader' },
+  {
+    loader: 'css-loader',
+    options: {
+      modules: {
+        auto: true,
+        localIdentName: isProduction ? '[hash:base64]' : '[name]__[local]',
+      },
+    },
+  },
+];
 
 const config = {
   mode: isProduction ? 'production' : 'development',

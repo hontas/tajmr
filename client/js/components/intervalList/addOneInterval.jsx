@@ -5,8 +5,9 @@ import Save from '../icons/Save.jsx';
 import Button from '../button/button.jsx';
 import Error from '../error/Error.jsx';
 
+import styles from './addOneInterval.module.css';
+
 const startHour = 9;
-const noop = () => {};
 
 const AddOneInterval = ({ notes, onCancel, onAdd, fullDay, ...rest }) => {
   const hours = parseInt(fullDay, 10);
@@ -31,30 +32,29 @@ const AddOneInterval = ({ notes, onCancel, onAdd, fullDay, ...rest }) => {
 
   return (
     <>
-      <form {...rest} className="add-one-interval" onSubmit={handleClickSubmit}>
+      <form {...rest} className={styles.container} onSubmit={handleClickSubmit}>
         <IntervalListItem
-          className="add-one-interval__interval-list-item"
+          className={styles.intervalListItem}
           interval={interval}
           onUpdate={onUpdate}
-          onDelete={noop}
           notes={notes}
         />
         <Button
+          className={styles.saveBtn}
           data-testid="add-one-interval-save-btn"
           type="submit"
           theme="primary"
           onClick={handleClickSubmit}
-          className="add-one-interval__btn"
         >
-          <Save size={17} />
+          <Save size={16} />
         </Button>
         <Button
+          className={styles.cancelBtn}
           data-testid="add-one-interval-cancel-btn"
-          theme="secondary"
-          className="add-one-interval__btn"
+          theme="primary"
           onClick={onCancel}
         >
-          ✖
+          ╳
         </Button>
       </form>
       {error && <Error error={error} />}

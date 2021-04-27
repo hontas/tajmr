@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  margin-bottom: 0.5em;
+}
+
+.note {
+  color: #333;
+  font-size: 1em;
+  flex: 1;
+  margin: 0 0.5em;
+}
+.note[disabled] {
+  background: whitesmoke;
+  color: darkgray;
+  cursor: not-allowed;
+}
+
+.notWork {
+  margin: 0.75em 0.5em 0 0;
+}
+
+.deleteBtn {
+  flex-basis: 40px;
+  margin-right: 0.5em;
+  padding: 0.5em;
+}

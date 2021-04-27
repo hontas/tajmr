@@ -1,0 +1,74 @@
+.container {
+  background-color: var(--primary-color-dark);
+  color: whitesmoke;
+  padding: 1em 2em;
+}
+.container input:not([type='checkbox']) {
+  color: #333;
+}
+
+.container input[type='number'] {
+  text-align: right;
+}
+
+.fieldset {
+  margin-top: 0.5em;
+}
+
+.container .pure-menu-link {
+  color: whitesmoke;
+}
+
+.container .pure-button {
+  display: grid;
+  width: 100%;
+}
+
+.container .pure-button-primary {
+  margin-bottom: 0.5em;
+}
+
+.profileImage {
+  border-radius: 50%;
+  margin-left: 0.5em;
+  position: relative;
+  top: 3px;
+  vertical-align: middle;
+  width: 50px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  display: flex !important;
+  align-items: center;
+  padding: 0.25em 0;
+  justify-content: space-between;
+}
+
+.logOut {
+  color: white;
+  width: auto;
+}
+
+.changePass {
+  display: grid;
+  grid-row-gap: 0.5em;
+  margin-top: 2em;
+}
+.changePass .changePassLabel {
+  margin: 0 !important;
+}
+
+.changePass .changePassInput {
+  margin: 0 !important;
+  width: 100%;
+}
+
+.changePass .changePassBtn {
+  border-radius: 0 2px 2px 0;
+}

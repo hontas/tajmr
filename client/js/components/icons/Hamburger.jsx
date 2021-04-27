@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import './Hamburger.styl';
+
+import styles from './Hamburger.module.css';
 
 const Hamburger = ({ className, active }) => (
-  <div className={classNames('hamburger', { 'hamburger--active': active }, className)} />
+  <div className={classNames(styles.hamburger, { [styles.active]: active }, className)} />
 );
 
 Hamburger.propTypes = {
   className: PropTypes.string,
-  active: PropTypes.bool
+  active: PropTypes.bool,
 };
 
 export default Hamburger;

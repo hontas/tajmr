@@ -7,13 +7,15 @@ import 'react-day-picker/lib/style.css';
 // 📅
 import Calendar from '../icons/Calendar.jsx';
 
+import styles from './DatePicker.module.css';
+
 const DatePicker = ({ className, date, onDayClick, buttonTitle }) => {
   const [showDateInput, setShowDateInput] = useState();
   const datePicker = useRef();
   const handleOutsideClick = useRef(null);
-  const classes = classNames('date-picker', className, {
-    'date-picker--disabled': !date,
-    'date-picker--show-picker': showDateInput,
+  const classes = classNames(styles.container, className, {
+    [styles.disabled]: !date,
+    [styles.showPicker]: showDateInput,
   });
 
   const toggleDateInput = (evt) => {
@@ -39,7 +41,7 @@ const DatePicker = ({ className, date, onDayClick, buttonTitle }) => {
     <div className={classes} ref={datePicker}>
       <button
         type="button"
-        className="date-picker__calendar-btn"
+        className={styles.calendarBtn}
         title={buttonTitle}
         onClick={toggleDateInput}
       >
@@ -47,7 +49,7 @@ const DatePicker = ({ className, date, onDayClick, buttonTitle }) => {
       </button>
       {date && showDateInput && (
         <DayPicker
-          className="date-picker__calendar"
+          className={styles.calendar}
           initialMonth={new Date(date)}
           showOutsideDays
           firstDayOfWeek={1}

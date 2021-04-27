@@ -8,22 +8,26 @@ import Trashcan from '../icons/Trashcan.jsx';
 import Button from '../button/button.jsx';
 import AutoComplete from '../autoComplete/AutoComplete.jsx';
 
+import styles from './intervalListItem.module.css';
+
 class IntervalListItem extends React.Component {
   render() {
     const {
       notes,
+      onDelete,
       className,
       interval: { startTime, endTime, note, notWork },
     } = this.props;
 
     return (
-      <li className={classNames('interval-list-item', className)} data-testid="interval-item">
+      <li className={classNames(styles.container, className)} data-testid="interval-item">
         <IntervalListInput
           dataTestId="interval-from-input"
           titlePrefix="from"
           timestamp={startTime}
           onUpdate={this.updateProp('startTime')}
         />
+
         <IntervalListInput
           dataTestId="interval-end-input"
           titlePrefix="end"
@@ -33,7 +37,7 @@ class IntervalListItem extends React.Component {
 
         <AutoComplete
           dataTestId="interval-note-input"
-          className="interval-list-item__note"
+          className={styles.note}
           placeholder="Anteckning"
           onChange={this.updateProp('note')}
           value={note}
@@ -42,22 +46,24 @@ class IntervalListItem extends React.Component {
 
         <input
           data-testid="interval-not-work-checkbox"
-          className="interval-list-item__no-work"
+          className={styles.notWork}
           type="checkbox"
           title="not work"
           checked={notWork || false}
           onChange={this.onChecked('notWork')}
         />
 
-        <Button
-          className="delete"
-          theme="danger"
-          title="remove"
-          data-testid="remove-interval"
-          onClick={this.remove}
-        >
-          <Trashcan size={15} />
-        </Button>
+        {onDelete && (
+          <Button
+            className={styles.deleteBtn}
+            theme="danger"
+            title="remove"
+            data-testid="remove-interval"
+            onClick={this.remove}
+          >
+            <Trashcan size={15} />
+          </Button>
+        )}
       </li>
     );
   }
@@ -86,7 +92,7 @@ class IntervalListItem extends React.Component {
 
 IntervalListItem.propTypes = {
   interval: customPropTypes.interval.isRequired,
-  onDelete: PropTypes.func.isRequired,
+  onDelete: PropTypes.func,
   onUpdate: PropTypes.func.isRequired,
   notes: PropTypes.arrayOf(PropTypes.string),
   className: PropTypes.string,

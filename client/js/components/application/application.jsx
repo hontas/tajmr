@@ -1,7 +1,9 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Loader from '../loader/Loader.jsx';
+import Loader from './Loader.jsx';
+
+import styles from './application.module.css';
 
 const Navbar = React.lazy(() => import(/* webpackChunkName: "Navbar" */ '../navbar/navbar.jsx'));
 const Footer = React.lazy(() => import(/* webpackChunkName: "Footer" */ '../footer/footer.jsx'));
@@ -15,12 +17,12 @@ const Login = React.lazy(() => import('../auth/login.jsx'));
 
 function Application({ initialized, user }) {
   return (
-    <div className="application">
+    <div className={styles.application}>
       <React.Suspense fallback={<Loader />}>
         {initialized ? (
           <>
             <Navbar />
-            <main className="main">
+            <main className={styles.main}>
               {user ? (
                 <>
                   <CurrentIntervals />

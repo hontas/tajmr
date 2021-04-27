@@ -1,0 +1,44 @@
+html,
+body {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+#root {
+  height: 100vh;
+}
+
+a,
+a:hover,
+a:focus,
+a:visited,
+a:active {
+  color: var(--text-color-light);
+}
+
+/* animated underline on hover */
+a.animated {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+a.animated:after {
+  background-color: currentColor;
+  content: '';
+  display: block;
+  height: 1px;
+  transform: scaleX(0.001);
+  transition: transform 0.2s ease-out;
+}
+
+a.animated:hover {
+  text-decoration: none;
+}
+a.animated:hover:after {
+  transform: scaleX(1);
+}

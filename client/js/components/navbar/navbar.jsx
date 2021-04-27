@@ -10,6 +10,8 @@ import * as userSettingActions from '../../redux/userSettings';
 import * as customPropTypes from '../../constants/propTypes';
 import * as SpinKit from '../spinkit/spinkit.jsx';
 
+import styles from './navbar.module.css';
+
 function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, dispatch }) {
   const [showUserMenu, setShowUserMenu] = React.useState(false);
   const navBarInnerRef = React.useRef(null);
@@ -34,19 +36,21 @@ function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, disp
   };
 
   return (
-    <nav className="navbar pure-menu pure-menu-horizontal pure-menu-fixed">
-      <div className="navbar__inner" ref={navBarInnerRef}>
-        <h1 className="brand pure-menu-heading">TajmR</h1>
-        <span className="version">
+    <nav
+      className={classNames('pure-menu', 'pure-menu-horizontal', 'pure-menu-fixed', styles.navbar)}
+    >
+      <div className={styles.inner} ref={navBarInnerRef}>
+        <h1 className={classNames('pure-menu-heading', styles.brand)}>TajmR</h1>
+        <span className={styles.version}>
           <small>{`${process.env.RELEASE} - ${process.env.BUILD_TIME}`}</small>
         </span>
         {isLoading && (
           <div
             data-testid={isFetching ? 'loading-intervals-container' : 'saving-intervals-container'}
-            className="loading-container"
+            className={styles.loadingContainer}
           >
             <SpinKit.Wave color="currentColor" />
-            <small className="loading-text">
+            <small className={styles.loadingText}>
               {isFetching ? 'Laddar intervall...' : 'Sparar...'}
             </small>
           </div>
@@ -56,7 +60,7 @@ function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, disp
           <>
             <Button
               ref={userMenuToggle}
-              className="navbar__menu-btn"
+              className={styles.menuBtn}
               data-testid="user-menu-toggle"
               onClick={toggleUserMenu}
             >
@@ -64,8 +68,8 @@ function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, disp
             </Button>
             <button
               ref={userMenuBackdrop}
-              className={classNames('navbar__user-menu-backdrop', {
-                'navbar__user-menu-backdrop--active': showUserMenu,
+              className={classNames(styles.userMenuBackdrop, {
+                [styles.userMenuBackdropActive]: showUserMenu,
               })}
               onClick={toggleUserMenu}
               title="Close user menu"
@@ -75,8 +79,8 @@ function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, disp
               user={user}
               userSettings={userSettings}
               updateSettings={updateSettings}
-              className={classNames('navbar__user-menu', {
-                'navbar__user-menu--active': showUserMenu,
+              className={classNames(styles.userMenu, {
+                [styles.userMenuActive]: showUserMenu,
               })}
             />
           </>

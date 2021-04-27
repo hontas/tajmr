@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import PropTypes, * as customPropTypes from '../../constants/propTypes';
 
 import RenderEvery, { thirtySeconds } from '../hoc/RenderEvery.jsx';
@@ -11,8 +12,10 @@ import {
   getWeekday,
   getWeekNumber,
   createWorkWeek,
-  oneWeek
+  oneWeek,
 } from '../../utils/time';
+
+import styles from './weekStats.module.css';
 
 class WeekStats extends React.Component {
   render() {
@@ -24,17 +27,17 @@ class WeekStats extends React.Component {
       .reduce((res, curr) => res + curr, 0);
 
     return (
-      <div className="week-stats">
-        <h3 className="week-stats__title">
-          <Button onClick={this.lastWeek} data-testid="prev-week-btn">
+      <div className={styles.container}>
+        <h3 className={styles.title}>
+          <Button className={styles.button} onClick={this.lastWeek} data-testid="prev-week-btn">
             ◀︎
           </Button>
           {intervals.length ? ` v.${getWeekNumber(timestamp)} ` : ` v.${getWeekNumber(now)} `}
-          <Button onClick={this.nextWeek} data-testid="next-week-btn">
+          <Button className={styles.button} onClick={this.nextWeek} data-testid="next-week-btn">
             ▶︎
           </Button>
         </h3>
-        <div className="week-stats__bars flex-container flex--align-end">
+        <div className={classNames(styles.bars)}>
           {mashUpWeekAndIntervals(intervals, timestamp).map((day) => (
             <WeekStatsItem key={day.weekday} {...day} />
           ))}
@@ -59,7 +62,7 @@ WeekStats.propTypes = {
   fetchIntervalsInWeek: PropTypes.func.isRequired,
   intervals: customPropTypes.intervals.isRequired,
   userSettings: customPropTypes.userSettings.isRequired,
-  timestamp: PropTypes.number.isRequired
+  timestamp: PropTypes.number.isRequired,
 };
 
 export const WeekStatsTimeWrapper = RenderEvery(thirtySeconds)(WeekStats);
@@ -74,7 +77,7 @@ function groupByWeekDay(intervals) {
     const current = hashMap[dateString] || {
       total: 0,
       weekDay,
-      intervals: []
+      intervals: [],
     };
 
     return {
@@ -83,21 +86,23 @@ function groupByWeekDay(intervals) {
         ...current,
         notWork: notWork || current.notWork,
         total: current.total + timespan,
-        intervals: [...current.intervals, { notWork, timespan, note }]
-      }
+        intervals: [...current.intervals, { notWork, timespan, note }],
+      },
     };
   }, {});
 }
 
 function mashUpWeekAndIntervals(intervals, timestamp) {
   const intervalHash = groupByWeekDay(intervals);
-  
-  return createWorkWeek(timestamp).map((day) => ({
-    ...day,
-    total: 0,
-    ...intervalHash[day.date]
-  })).filter((item) => {
-    if (item.isWeekEnd && item.total === 0) return false;
-    return true;
-  });
+
+  return createWorkWeek(timestamp)
+    .map((day) => ({
+      ...day,
+      total: 0,
+      ...intervalHash[day.date],
+    }))
+    .filter((item) => {
+      if (item.isWeekEnd && item.total === 0) return false;
+      return true;
+    });
 }

@@ -1,0 +1,24 @@
+.container {
+  padding-bottom: 4em;
+}
+
+.title {
+  background: var(--primary-color-dark);
+  color: white;
+  padding: 0.5em;
+}
+
+.showMore {
+  display: block;
+  margin: 0 0.5em 0.5em;
+  width: calc(100% - 1em);
+}
+
+@supports (-webkit-overflow-scrolling: touch) {
+  .title {
+    margin-left: calc(-1 * env(safe-area-inset-left));
+    padding-left: max(0.5em, env(safe-area-inset-left));
+    margin-right: calc(-1 * env(safe-area-inset-right));
+    padding-right: max(0.5em, env(safe-area-inset-right));
+  }
+}

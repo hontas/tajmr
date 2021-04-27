@@ -6,12 +6,14 @@ import Button from '../button/button.jsx';
 import * as customTypes from '../../constants/propTypes';
 import { getMonth, getHours, months } from '../../utils/time';
 
+import styles from './MonthReport.module.css';
+
 const isNotWork = 'notwork';
 
 class MonthReport extends Component {
   state = {
     referenceDate: new Date(),
-    filterOut: []
+    filterOut: [],
   };
 
   render() {
@@ -23,18 +25,22 @@ class MonthReport extends Component {
     const totalMinusNotWork = filteredCategories.reduce((res, curr) => res + intervals[curr], 0);
 
     return (
-      <div className={classNames('MonthReport', className)}>
-        <h2 className="MonthReport__title">Månadssammanställning</h2>
-        <h3 className="MonthReport__subtitle">
-          <Button onClick={this.lastMonth}>◀︎</Button>
+      <div className={classNames(styles.container, className)}>
+        <h2 className={styles.title}>Månadssammanställning</h2>
+        <h3 className={styles.subtitle}>
+          <Button className={styles.button} onClick={this.lastMonth}>
+            ◀︎
+          </Button>
           {`${months[referenceDate.getMonth()]} ${referenceDate.getFullYear()}`}
-          <Button onClick={this.nextMonth}>▶︎</Button>
+          <Button className={styles.button} onClick={this.nextMonth}>
+            ▶︎
+          </Button>
         </h3>
-        <div className="MonthReport__filters">
+        <div className={styles.filters}>
           {categories.map((cat) => (
             <Button
-              className={classNames('MonthReport__filter', {
-                'MonthReport__filter--active': filteredCategories.includes(cat)
+              className={classNames(styles.filter, {
+                [styles.filterActive]: filteredCategories.includes(cat),
               })}
               key={cat}
               onClick={() => this.toggleFilter(cat)}
@@ -43,25 +49,21 @@ class MonthReport extends Component {
             </Button>
           ))}
         </div>
-        <ul className="MonthReport__list">
+        <ul className={styles.list}>
           {filteredCategories.map((note) => (
             <li
               key={note}
-              className={classNames('MonthReport__list-item', {
-                'not-work': note.startsWith(isNotWork)
+              className={classNames(styles.listItem, {
+                [styles.notWork]: note.startsWith(isNotWork),
               })}
             >
-              <p className="MonthReport__list-item__title">{note}</p>
-              <p className="MonthReport__list-item__value">
-                {`${getHours(intervals[note]).toFixed(1)}h`}
-              </p>
+              <p className={styles.listItemTitle}>{note}</p>
+              <p className={styles.listItemValue}>{`${getHours(intervals[note]).toFixed(1)}h`}</p>
             </li>
           ))}
-          <li className="MonthReport__list-item">
-            <p className="MonthReport__list-item__title">TOTAL:</p>
-            <p className="MonthReport__list-item__value">
-              {`${getHours(totalMinusNotWork).toFixed(1)}h`}
-            </p>
+          <li className={styles.listItem}>
+            <p className={styles.listItemTitle}>TOTAL:</p>
+            <p className={styles.listItemValue}>{`${getHours(totalMinusNotWork).toFixed(1)}h`}</p>
           </li>
         </ul>
       </div>
@@ -111,7 +113,7 @@ class MonthReport extends Component {
 
 MonthReport.propTypes = {
   className: PropTypes.string,
-  intervals: customTypes.intervals.isRequired
+  intervals: customTypes.intervals.isRequired,
 };
 
 export default MonthReport;

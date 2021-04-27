@@ -7,6 +7,8 @@ import Button from '../button/button.jsx';
 import * as customPropTypes from '../../constants/propTypes';
 import firebaseApi from '../../utils/firebaseApi';
 
+import styles from './userMenu.module.css';
+
 const garavatarUrl = 'https://www.gravatar.com/avatar';
 
 class UserMenu extends React.Component {
@@ -36,17 +38,17 @@ class UserMenu extends React.Component {
     return (
       <form
         data-testid="user-menu"
-        className={classNames('pure-form pure-form-stacked user-menu', className)}
+        className={classNames('pure-form pure-form-stacked', styles.container, className)}
         onSubmit={this.preventDefault}
       >
-        <div className="user-menu__row">
-          <img alt="avatar" className="profile-image" src={photoURL} />
-          <Button className="user-menu__log-out" theme="link" onClick={firebaseApi.logout}>
+        <div className={styles.row}>
+          <img alt="avatar" className={styles.profileImage} src={photoURL} />
+          <Button className={styles.logOut} theme="link" onClick={firebaseApi.logout}>
             Logga ut
           </Button>
         </div>
-        <fieldset className="user-menu__fieldset">
-          <label className="user-menu__label">
+        <fieldset className={styles.fieldset}>
+          <label className={styles.label}>
             Visa notifiering
             <input
               checked={displayNotifications}
@@ -55,7 +57,7 @@ class UserMenu extends React.Component {
               type="checkbox"
             />
           </label>
-          <label className="user-menu__label">
+          <label className={styles.label}>
             Visa tidigare intervall
             <input
               checked={displayPreviousIntervals}
@@ -64,7 +66,7 @@ class UserMenu extends React.Component {
               type="checkbox"
             />
           </label>
-          <label className="user-menu__label">
+          <label className={styles.label}>
             Visa månadsrapport
             <input
               checked={displayMonthReport}
@@ -73,7 +75,7 @@ class UserMenu extends React.Component {
               type="checkbox"
             />
           </label>
-          <label className="user-menu__label">
+          <label className={styles.label}>
             Full arbetsvecka (h)
             <input
               value={hoursInWeek}
@@ -89,14 +91,14 @@ class UserMenu extends React.Component {
           onClick={this.saveUserSettings}
           text="Spara inställningar"
         />
-        <fieldset className="user-menu__fieldset">
+        <fieldset className={styles.fieldset}>
           {updatePasswordError && <p style={{ whiteSpace: 'normal' }}>{updatePasswordError}</p>}
-          <div className="user-menu__change-pass">
-            <label htmlFor="oldPassword" className="user-menu__change-pass__label">
+          <div className={styles.changePass}>
+            <label htmlFor="oldPassword" className={styles.changePassLabel}>
               <input
                 onKeyDown={this.preventDefault}
                 autoComplete="old-password"
-                className="user-menu__change-pass__input"
+                className={styles.changePassInput}
                 ref={(node) => {
                   this.oldPass = node;
                 }}
@@ -105,11 +107,11 @@ class UserMenu extends React.Component {
                 id="oldPassword"
               />
             </label>
-            <label htmlFor="newPassword" className="user-menu__change-pass__label">
+            <label htmlFor="newPassword" className={styles.changePassLabel}>
               <input
                 onKeyDown={this.preventDefault}
                 autoComplete="new-password"
-                className="user-menu__change-pass__input"
+                className={styles.changePassInput}
                 ref={(node) => {
                   this.newPass = node;
                 }}
@@ -120,7 +122,7 @@ class UserMenu extends React.Component {
             </label>
             <Button
               theme={updatePasswordSuccess ? 'success' : 'default'}
-              className="user-menu__change-pass__btn pure-button-primary"
+              className={classNames('pure-button-primary', styles.changePassBtn)}
               isLoading={isSavingUserPassword}
               onClick={this.updateUserPassword}
               text={updatePasswordSuccess ? '👍' : 'Ändra'}
