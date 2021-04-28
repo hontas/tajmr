@@ -1,4 +1,4 @@
-import lolex from 'lolex';
+import fakeTimers from '@sinonjs/fake-timers';
 
 import {
   isSameWeek,
@@ -11,7 +11,7 @@ import {
   isCurrentWeek,
   getWorkDaysInMonth,
   startOfDay,
-  endOfDay
+  endOfDay,
 } from './time';
 
 describe('time', () => {
@@ -45,12 +45,15 @@ describe('time', () => {
     });
 
     test('should handle weeks over months', () => {
-      expect(isSameWeek(new Date('2016-04-03T07:00:00'), new Date('2016-03-28T07:00:00'))).toBe(true);
+      expect(isSameWeek(new Date('2016-04-03T07:00:00'), new Date('2016-03-28T07:00:00'))).toBe(
+        true
+      );
     });
   });
 
   describe('#getWeekDay', () => {
-    test('should return localised weekday', () => { // as not supported by node? :(
+    test('should return localised weekday', () => {
+      // as not supported by node? :(
       expect(getWeekday(new Date('2016-04-04T07:00:00'))).toBe('mån');
     });
   });
@@ -72,7 +75,7 @@ describe('time', () => {
     let clock;
 
     beforeAll(() => {
-      clock = lolex.install({ now: new Date(2017, 8, 15) });
+      clock = fakeTimers.install({ now: new Date(2017, 8, 15) });
     });
 
     afterAll(() => {
@@ -155,14 +158,14 @@ describe('time', () => {
     test('should return two timestamps', () => {
       expect(getDayRange()).toEqual({
         startTime: expect.any(Number),
-        endTime: expect.any(Number)
+        endTime: expect.any(Number),
       });
     });
 
     test('should return startTime and endTime for that day', () => {
       expect(getDayRange(+startDate)).toEqual({
         startTime: +startOfDay(dateString),
-        endTime: +endOfDay(dateString)
+        endTime: +endOfDay(dateString),
       });
     });
   });
@@ -180,28 +183,28 @@ describe('time', () => {
     test('should return two timestamps', () => {
       expect(getWeek(0)).toEqual({
         startTime: expect.any(Number),
-        endTime: expect.any(Number)
+        endTime: expect.any(Number),
       });
     });
 
     test('should return startTime and endTime for that week', () => {
       expect(getWeek(+startDate)).toEqual({
         startTime: +startDate,
-        endTime: +endDate
+        endTime: +endDate,
       });
     });
 
     test('should calculate week from timestamp within week', () => {
       expect(getWeek(+middleOfWeek)).toEqual({
         startTime: +startDate,
-        endTime: +endDate
+        endTime: +endDate,
       });
     });
 
     test('should calculate week from timestamp within weekend', () => {
       expect(getWeek(+endOfWeek)).toEqual({
         startTime: +startDate,
-        endTime: +endDate
+        endTime: +endDate,
       });
     });
   });
@@ -219,38 +222,38 @@ describe('time', () => {
     test('should return two timestamps', () => {
       expect(getMonth(0)).toEqual({
         startTime: expect.any(Number),
-        endTime: expect.any(Number)
+        endTime: expect.any(Number),
       });
     });
 
     test('should return startTime and endTime for that month', () => {
       expect(getMonth(+startDate)).toEqual({
         startTime: +startDate,
-        endTime: +endDate
+        endTime: +endDate,
       });
     });
 
     test('should calculate month from timestamp within', () => {
       expect(getMonth(+middleOfMonth)).toEqual({
         startTime: +startDate,
-        endTime: +endDate
+        endTime: +endDate,
       });
     });
 
     test('should calculate month from timestamp within', () => {
       expect(getMonth(+endOfMonth)).toEqual({
         startTime: +startDate,
-        endTime: +endDate
+        endTime: +endDate,
       });
     });
   });
 
   describe('#getWorkDaysInMonth', () => {
     test('should calculate all working days in a month', () => {
-      const september = getMonth(+(new Date('Sep 5, 2017')));
-      const october = getMonth(+(new Date('Oct 1, 2017')));
-      const november = getMonth(+(new Date('Nov 1, 2017')));
-      const december = getMonth(+(new Date('Dec 1, 2017')));
+      const september = getMonth(+new Date('Sep 5, 2017'));
+      const october = getMonth(+new Date('Oct 1, 2017'));
+      const november = getMonth(+new Date('Nov 1, 2017'));
+      const december = getMonth(+new Date('Dec 1, 2017'));
 
       expect(getWorkDaysInMonth(september)).toBe(21);
       expect(getWorkDaysInMonth(october)).toBe(22);
@@ -261,7 +264,7 @@ describe('time', () => {
 
   describe('#createWorkWeek', () => {
     test('should create an array representing a week', () => {
-      const v44 = +(new Date('Nov 2, 2017'));
+      const v44 = +new Date('Nov 2, 2017');
       const workWeek = createWorkWeek(v44);
       expect(Array.isArray(workWeek)).toBe(true);
       expect(workWeek).toHaveLength(7);
@@ -272,7 +275,7 @@ describe('time', () => {
         { isWeekEnd: false, date: '2/11', weekday: 'torsdag' },
         { isWeekEnd: false, date: '3/11', weekday: 'fredag' },
         { isWeekEnd: true, date: '4/11', weekday: 'lördag' },
-        { isWeekEnd: true, date: '5/11', weekday: 'söndag' }
+        { isWeekEnd: true, date: '5/11', weekday: 'söndag' },
       ]);
     });
   });
