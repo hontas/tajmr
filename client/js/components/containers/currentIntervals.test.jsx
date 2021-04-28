@@ -1,6 +1,7 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
+import { render /* screen */ } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 import createStore from '../../redux/createStore';
 import CurrentIntervals from './currentIntervals.jsx';
@@ -21,10 +22,13 @@ describe('PreviousIntervals', () => {
   });
 
   test('should render', () => {
-    mount(
+    render(
       <Provider store={store}>
         <CurrentIntervals />
       </Provider>
     );
+
+    // TODO: assert intervals rendered
+    // expect(screen.getByRole('heading')).toHaveTextContent('Welcome, John Doe')
   });
 });

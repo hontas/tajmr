@@ -1,6 +1,7 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
+import { render /* screen */ } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 import createStore from '../../redux/createStore';
 import PreviousIntervals from './previousIntervals.jsx';
@@ -17,7 +18,7 @@ describe('PreviousIntervals', () => {
     const { userSettings } = store.getState();
     const updatedUserSettings = {
       ...userSettings,
-      displayPreviousIntervals: true
+      displayPreviousIntervals: true,
     };
     store.dispatch(updateSettings(updatedUserSettings));
     store.dispatch(intervalsFetched(intervals));
@@ -28,10 +29,13 @@ describe('PreviousIntervals', () => {
   });
 
   test('should render', () => {
-    mount(
+    render(
       <Provider store={store}>
         <PreviousIntervals />
       </Provider>
     );
+
+    // TODO: assert intervals rendered
+    // expect(screen.getByRole('heading')).toHaveTextContent('Welcome, John Doe')
   });
 });
