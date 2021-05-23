@@ -30,7 +30,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1;
+  flex: 1 0 14px; /* min height 14px */
   font-size: smaller;
   opacity: 0;
   margin: 0;
@@ -47,5 +47,7 @@
 .total {
   position: absolute;
   bottom: 0px;
+  margin: 0;
+  min-height: 20px;
   width: 100%;
 }

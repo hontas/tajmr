@@ -9,23 +9,31 @@ import styles from './weekStatsItem.module.css';
 const getDuration = (timestamp) => getTimeString(timestamp, { isDuration: true });
 
 const WeekDayItem = ({ weekday, total, date, intervals = [] }) => {
-  const barHeight = getHours(total) * 10; // 10 hours = 100px;
+  // 10 hours = 100px; minimum 20px
+  const barHeight = total > 0 ? Math.max(getHours(total) * 10, 20) : 0;
   const style = {
     height: `${barHeight}px`,
   };
-  const totalTime = intervals.reduce((res, { timespan }) => res + timespan, 0);
 
   return (
     <div className={styles.container}>
       <div className={styles.bar} style={style} tabIndex="-1" data-testid="week-stats-item">
-        {intervals.map(({ timespan, note, notWork }) => (
-          <div className={classNames(styles.item, { [styles.notWork]: notWork })} key={timespan}>
-            <p className={styles.info}>{`${getDuration(timespan)} ${note}`}</p>
-          </div>
-        ))}
-        {totalTime > 0 && (
+        {intervals.map(({ timespan, note, notWork }) => {
+          const flexBasis = Math.round((timespan / total) * barHeight * 2) / 2;
+
+          return (
+            <div
+              className={classNames(styles.item, { [styles.notWork]: notWork })}
+              style={{ flexBasis: `${flexBasis}px` }}
+              key={timespan}
+            >
+              <p className={styles.info}>{`${getDuration(timespan)} ${note}`}</p>
+            </div>
+          );
+        })}
+        {total > 0 && (
           <p className={styles.total} style={{ lineHeight: `${barHeight}px` }}>
-            {getDuration(totalTime)}
+            {getDuration(total)}
           </p>
         )}
       </div>
