@@ -5,7 +5,7 @@ const USER_UPDATE_SETTINGS = 'USER_UPDATE_SETTINGS';
 export function updateSettings(settings) {
   return {
     type: USER_UPDATE_SETTINGS,
-    settings
+    settings,
   };
 }
 
@@ -15,7 +15,7 @@ const initialState = {
   displayNotifications: false,
   displayPreviousIntervals: false,
   displayName: '',
-  hoursInWeek: 40
+  hoursInWeek: 40,
 };
 
 export default function reducer(state = initialState, action) {
@@ -24,12 +24,12 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         ...action.settings,
-        updatedAt: Date.now()
+        updatedAt: Date.now(),
       };
     case USER_LOGGED_OUT:
       return {
         ...initialState,
-        updatedAt: Date.now()
+        updatedAt: Date.now(),
       };
     default:
       return state;

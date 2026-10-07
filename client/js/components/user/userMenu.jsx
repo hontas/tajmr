@@ -21,12 +21,8 @@ class UserMenu extends React.Component {
 
   render() {
     const { userSettings, user, className } = this.props;
-    const {
-      displayMonthReport,
-      displayNotifications,
-      displayPreviousIntervals,
-      hoursInWeek,
-    } = userSettings;
+    const { displayMonthReport, displayNotifications, displayPreviousIntervals, hoursInWeek } =
+      userSettings;
     const {
       isSavingUserSettings,
       isSavingUserPassword,

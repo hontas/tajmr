@@ -6,7 +6,5 @@ export const isActive = (interval) => !isComplete(interval);
 
 const sum = (res, curr) => res + curr;
 
-export const getIntervalSum = (intervals) => intervals
-  .filter(isComplete)
-  .map(getTimeInterval)
-  .reduce(sum, 0);
+export const getIntervalSum = (intervals) =>
+  intervals.filter(isComplete).map(getTimeInterval).reduce(sum, 0);

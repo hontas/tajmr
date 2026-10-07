@@ -1,5 +1,5 @@
 const initialState = {
-  initialized: false
+  initialized: false,
 };
 
 const firebaseInit = 'firebase/INITIALIZED';
@@ -10,10 +10,12 @@ export function initialized() {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case firebaseInit: return {
-      ...state,
-      initialized: true
-    };
-    default: return state;
+    case firebaseInit:
+      return {
+        ...state,
+        initialized: true,
+      };
+    default:
+      return state;
   }
 }

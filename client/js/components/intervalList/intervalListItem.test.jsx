@@ -16,7 +16,9 @@ const interval = {
 const setup = (props = {}) => {
   const onUpdate = jest.fn();
   const onDelete = jest.fn();
-  render(<IntervalListItem interval={interval} onUpdate={onUpdate} onDelete={onDelete} {...props} />);
+  render(
+    <IntervalListItem interval={interval} onUpdate={onUpdate} onDelete={onDelete} {...props} />
+  );
   return { onUpdate, onDelete };
 };
 
@@ -24,7 +26,9 @@ describe('IntervalListItem', () => {
   test('shows start and end time, note and notWork state', () => {
     setup();
 
-    expect(screen.getByTestId('interval-from-input')).toHaveValue(getTimeString(interval.startTime));
+    expect(screen.getByTestId('interval-from-input')).toHaveValue(
+      getTimeString(interval.startTime)
+    );
     expect(screen.getByTestId('interval-end-input')).toHaveValue(getTimeString(interval.endTime));
     expect(screen.getByTestId('interval-not-work-checkbox')).not.toBeChecked();
   });
