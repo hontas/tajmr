@@ -146,12 +146,16 @@ describe('firebaseApi', () => {
       expect(query.endAt).toHaveBeenCalled();
     });
 
-    // BUG (see issue #11): a user without intervals gets `null` from firebase and
-    // `Object.keys(null)` throws.
-    test('BUG: fetchIntervalsForUser rejects when the user has no intervals', async () => {
+    test('fetchIntervalsForUser resolves to an empty object when there are no intervals', async () => {
       query.once.mockResolvedValue(snapshot(null));
 
-      await expect(api.fetchIntervalsForUser()).rejects.toThrow(TypeError);
+      await expect(api.fetchIntervalsForUser()).resolves.toEqual({});
+    });
+
+    test('fetchIntervalsInWeek resolves to an empty object when there are no intervals', async () => {
+      query.once.mockResolvedValue(snapshot(null));
+
+      await expect(api.fetchIntervalsInWeek(Date.UTC(2021, 3, 7))).resolves.toEqual({});
     });
 
     test('getUserSettings reads users/{uid}', async () => {

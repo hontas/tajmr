@@ -196,14 +196,9 @@ export default function intervalsReducer(state = initialState, action) {
         isSaving: true,
       };
 
+    // add and update are both upserts: the thunk's success handler and the Firebase listener
+    // report the same interval, so whichever arrives second must not create a duplicate
     case INTERVAL_ADD:
-      return {
-        ...state,
-        updatedAt: Date.now(),
-        isSaving: false,
-        items: [...state.items, action.interval],
-      };
-
     case INTERVAL_UPDATED:
     case INTERVAL_COMPLETE: {
       const items = state.items.filter(({ id }) => action.interval.id !== id);
