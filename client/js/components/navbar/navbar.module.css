@@ -93,6 +93,12 @@
   transition-delay: 50ms;
 }
 
+.rightActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @supports (-webkit-overflow-scrolling: touch) {
   .navbar {
     padding-top: max(0.5em, env(safe-area-inset-top));

@@ -11,6 +11,7 @@ import * as customPropTypes from '../../constants/propTypes';
 import * as SpinKit from '../spinkit/spinkit.jsx';
 
 import styles from './navbar.module.css';
+import { NotificationButton } from '../button/notificationButton.jsx';
 
 function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, dispatch }) {
   const [showUserMenu, setShowUserMenu] = React.useState(false);
@@ -57,7 +58,8 @@ function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, disp
         )}
 
         {user && (
-          <>
+          <div className={styles.rightActions}>
+            <NotificationButton />
             <Button
               ref={userMenuToggle}
               className={styles.menuBtn}
@@ -83,7 +85,7 @@ function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, disp
                 [styles.userMenuActive]: showUserMenu,
               })}
             />
-          </>
+          </div>
         )}
       </div>
     </nav>
