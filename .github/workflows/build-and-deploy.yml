@@ -14,6 +14,10 @@ jobs:
   build-and-deploy:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    # SENTRY_AUTH_TOKEN is an environment secret: only this job on main can read it
+    environment:
+      name: production
+      url: https://hontas.github.io/tajmr/
     env:
       CYPRESS_INSTALL_BINARY: 0
     steps:
