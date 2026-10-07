@@ -34,18 +34,15 @@ function validate(schema, data) {
     return { errors: `Missing required properties "${missingRequired.join(', ')}"` };
   }
 
-  const typeErrors = keys
-    .filter((prop) => data[prop])
-    .reduce((acc, prop) => {
-      const type = data[prop];
-      const validType = properties[prop];
+  const typeErrors = keys.reduce((acc, prop) => {
+    const expectedType = properties[prop];
+    const actualType = typeof data[prop];
 
-      if (!validType) return acc; // no type validation for this prop
-      // eslint-disable-next-line valid-typeof
-      if (typeof type === validType) return acc;
+    if (!expectedType) return acc; // no type validation for this prop
+    if (actualType === expectedType) return acc;
 
-      return [...acc, `"${prop}" should be "${validType}" but is ${type}`];
-    }, []);
+    return [...acc, `"${prop}" should be "${expectedType}" but is ${actualType}`];
+  }, []);
 
   if (typeErrors.length) {
     return { errors: typeErrors.join('\n') };

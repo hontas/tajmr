@@ -49,9 +49,7 @@ describe('interValidator', () => {
     });
 
     test('requires createdAt, startTime and user', () => {
-      expect(validateInterval({})).toBe(
-        'Missing required properties "createdAt, startTime, user"'
-      );
+      expect(validateInterval({})).toBe('Missing required properties "createdAt, startTime, user"');
     });
 
     test('rejects extraneous keys', () => {
@@ -61,17 +59,32 @@ describe('interValidator', () => {
     });
   });
 
-  // BUG (see issue #11): falsy values are never type-checked, and the message prints the
-  // value where it should print the type. These tests pin the current behaviour.
-  describe('known bugs', () => {
-    test('BUG: falsy values of the wrong type pass validation', () => {
-      expect(validateNewInterval({ startTime: 1000, note: 0 })).toBeUndefined();
-      expect(validateNewInterval({ startTime: 1000, endTime: '' })).toBeUndefined();
+  describe('type checks', () => {
+    test('falsy values of the wrong type are rejected', () => {
+      expect(validateNewInterval({ startTime: 1000, note: 0 })).toMatch(
+        /"note" should be "string"/
+      );
+      expect(validateNewInterval({ startTime: 1000, endTime: '' })).toMatch(
+        /"endTime" should be "number"/
+      );
+      expect(validateNewInterval({ startTime: 1000, notWork: 0 })).toMatch(
+        /"notWork" should be "boolean"/
+      );
     });
 
-    test('BUG: type error message prints the value instead of the type', () => {
+    test('falsy values of the right type are accepted', () => {
+      expect(validateNewInterval({ startTime: 1000, note: '', notWork: false })).toBeUndefined();
+    });
+
+    test('the message names the expected and actual type, never the value', () => {
       expect(validateNewInterval({ startTime: '1000' })).toBe(
-        '"startTime" should be "number" but is 1000'
+        '"startTime" should be "number" but is string'
+      );
+    });
+
+    test('all type errors are reported', () => {
+      expect(validateNewInterval({ startTime: '1', note: 5 })).toBe(
+        '"startTime" should be "number" but is string\n"note" should be "string" but is number'
       );
     });
   });

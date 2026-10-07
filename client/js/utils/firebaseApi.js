@@ -77,7 +77,7 @@ const api = {
       .startAt(startTime)
       .endAt(endTime)
       .once('value')
-      .then((snapshot) => snapshot.val())
+      .then((snapshot) => snapshot.val() || {}) // null when there are no intervals
       .then(filterByUser);
   },
 
@@ -85,7 +85,7 @@ const api = {
     return api.intervals
       .orderByChild('startTime')
       .once('value')
-      .then((snapshot) => snapshot.val())
+      .then((snapshot) => snapshot.val() || {}) // null when there are no intervals
       .then(filterByUser);
   },
 

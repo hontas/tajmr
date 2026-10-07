@@ -56,16 +56,70 @@ describe('Login', () => {
     expect(firebaseApi.login).not.toHaveBeenCalled();
   });
 
-  // BUG: both resolve and reject handlers are `resetMessage`, so a failed login shows no
-  // error to the user. Pinned so a fix is a conscious change.
-  test('BUG: a failed login does not show an error message', async () => {
-    firebaseApi.login.mockRejectedValue(new Error('wrong password'));
+  test('shows the error message when login fails', async () => {
+    firebaseApi.login.mockRejectedValue(new Error('The password is invalid'));
     render(<Login />);
     typeCredentials('me@example.com', 'bad');
 
     fireEvent.click(screen.getByRole('button', { name: 'Log in' }));
 
-    await waitFor(() => expect(firebaseApi.login).toHaveBeenCalled());
-    expect(screen.queryByText(/wrong password/)).not.toBeInTheDocument();
+    expect(await screen.findByText(/The password is invalid/)).toBeInTheDocument();
+  });
+
+  test('clears a previous error when trying again', async () => {
+    firebaseApi.login.mockRejectedValueOnce(new Error('The password is invalid'));
+    render(<Login />);
+    typeCredentials('me@example.com', 'bad');
+    fireEvent.click(screen.getByRole('button', { name: 'Log in' }));
+    await screen.findByText(/The password is invalid/);
+
+    firebaseApi.login.mockReturnValue(new Promise(() => {})); // never settles
+    fireEvent.click(screen.getByRole('button', { name: 'Log in' }));
+
+    await waitFor(() =>
+      expect(screen.queryByText(/The password is invalid/)).not.toBeInTheDocument()
+    );
+  });
+
+  test('shows a loading state while logging in', async () => {
+    firebaseApi.login.mockReturnValue(new Promise(() => {})); // never settles
+    render(<Login />);
+    typeCredentials('me@example.com', 'secret');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Log in' }));
+
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Log in' })).toBeInTheDocument());
+    // SpinKit renders inside the button while loading
+    expect(screen.getByRole('button', { name: 'Log in' }).children.length).toBeGreaterThan(0);
+  });
+
+  test('stops the loading state again after a failed login', async () => {
+    firebaseApi.login.mockRejectedValue(new Error('nope'));
+    render(<Login />);
+    typeCredentials('me@example.com', 'bad');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Log in' }));
+
+    await screen.findByText(/nope/);
+    expect(screen.getByRole('button', { name: 'Log in' }).children).toHaveLength(0);
+  });
+
+  test('confirms when the password reset email was sent', async () => {
+    render(<Login />);
+    typeCredentials('me@example.com', '');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Forgot password' }));
+
+    expect(await screen.findByText(/Password reset email sent/)).toBeInTheDocument();
+  });
+
+  test('shows the error message when the password reset fails', async () => {
+    firebaseApi.sendPasswordResetEmail.mockRejectedValue(new Error('There is no user record'));
+    render(<Login />);
+    typeCredentials('nobody@example.com', '');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Forgot password' }));
+
+    expect(await screen.findByText(/There is no user record/)).toBeInTheDocument();
   });
 });

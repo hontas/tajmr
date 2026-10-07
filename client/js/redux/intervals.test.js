@@ -70,14 +70,13 @@ describe('intervals reducer', () => {
     expect(state.isSaving).toBe(false);
   });
 
-  // BUG (see issue #11): adding the same id twice (thunk success + Firebase child_added)
-  // creates a duplicate. This pins the current behaviour.
-  test('BUG: INTERVAL_ADD with an existing id creates a duplicate', () => {
+  // The thunk's success handler and the Firebase listener can both report the same interval.
+  test('INTERVAL_ADD with an existing id replaces it instead of duplicating', () => {
     const state = reducer(
-      { ...initial(), items: [{ id: 'a' }] },
-      intervalAdded({ id: 'a' })
+      { ...initial(), items: [{ id: 'a', note: 'old' }] },
+      intervalAdded({ id: 'a', note: 'new' })
     );
-    expect(state.items).toEqual([{ id: 'a' }, { id: 'a' }]);
+    expect(state.items).toEqual([{ id: 'a', note: 'new' }]);
   });
 
   test('INTERVAL_UPDATED replaces the item with the same id (moved last)', () => {

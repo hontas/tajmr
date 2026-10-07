@@ -8,26 +8,34 @@ const Login = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
   const [message, setMessage] = useState('');
+  const [notice, setNotice] = useState('');
   const emailInput = useRef(null);
   const passwordInput = useRef(null);
 
-  const resetMessage = () => setMessage('');
+  const resetMessages = () => {
+    setMessage('');
+    setNotice('');
+  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    setIsLoggingIn(false);
-    firebaseApi
-      .login(emailInput.current.value, passwordInput.current.value)
-      .then(resetMessage, resetMessage)
-      .finally(() => setIsLoggingIn(false));
+    resetMessages();
+    setIsLoggingIn(true);
+    // on success the app swaps this component out, so only the failure path resets the state
+    firebaseApi.login(emailInput.current.value, passwordInput.current.value).catch((error) => {
+      setMessage(error.message);
+      setIsLoggingIn(false);
+    });
   };
 
   const forgotPassword = (evt) => {
     evt.preventDefault();
+    resetMessages();
     setIsResetting(true);
     firebaseApi
       .sendPasswordResetEmail(emailInput.current.value)
-      .then(resetMessage, resetMessage)
+      .then(() => setNotice('Password reset email sent'))
+      .catch((error) => setMessage(error.message))
       .finally(() => setIsResetting(false));
   };
 
@@ -40,6 +48,7 @@ const Login = () => {
             {message}
           </p>
         )}
+        {notice && <p>{notice}</p>}
         <label aria-label="email">
           <input type="email" autoComplete="email" ref={emailInput} />
         </label>
