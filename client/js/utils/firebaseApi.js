@@ -115,7 +115,6 @@ const api = {
       .on('child_added', (snapshot) => {
         const interval = snapshot.val();
         const userId = auth.currentUser && auth.currentUser.uid;
-        console.log('child_added!!!!', interval); // eslint-disable-line no-console
 
         if (interval.user !== userId) return;
 
@@ -126,13 +125,11 @@ const api = {
     api.intervals.on('child_changed', (snapshot) => {
       const interval = snapshot.val();
       const id = snapshot.key;
-      console.log('child_changed', interval, id); // eslint-disable-line no-console
       api.emit(intervalUpdated({ ...interval, id }));
     });
 
     api.intervals.on('child_removed', (snapshot) => {
       const id = snapshot.key;
-      console.log('child_removed', id); // eslint-disable-line no-console
       api.emit(intervalRemoved(id));
     });
   }

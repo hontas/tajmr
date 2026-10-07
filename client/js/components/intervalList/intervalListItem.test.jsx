@@ -58,12 +58,13 @@ describe('IntervalListItem', () => {
   test('an invalid time is not pushed', () => {
     const { onUpdate } = setup();
     const input = screen.getByTestId('interval-from-input');
-    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    const logSpy = jest.spyOn(console, 'log');
 
     fireEvent.change(input, { target: { value: '25:99' } });
     fireEvent.blur(input);
 
     expect(onUpdate).not.toHaveBeenCalled();
+    expect(logSpy).not.toHaveBeenCalled();
     logSpy.mockRestore();
   });
 

@@ -4,10 +4,12 @@ describe('interValidator', () => {
   let logSpy;
 
   beforeEach(() => {
-    logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    logSpy = jest.spyOn(console, 'log');
   });
 
   afterEach(() => {
+    // interval contents must never end up in the console
+    expect(logSpy).not.toHaveBeenCalled();
     logSpy.mockRestore();
   });
 

@@ -62,10 +62,8 @@ function validate(schema, data) {
 const createValidator = (schema) => (interval) => {
   const { errors } = validate(schema, interval);
 
-  if (errors) {
-    console.log('Interval validation failed for', interval, errors);
-    return errors;
-  }
+  if (errors) return errors;
+  return undefined;
 };
 export const validateInterval = createValidator(intervalSchema);
 export const validateNewInterval = createValidator(newIntervalSchema);
