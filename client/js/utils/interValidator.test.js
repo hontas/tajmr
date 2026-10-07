@@ -49,9 +49,7 @@ describe('interValidator', () => {
     });
 
     test('requires createdAt, startTime and user', () => {
-      expect(validateInterval({})).toBe(
-        'Missing required properties "createdAt, startTime, user"'
-      );
+      expect(validateInterval({})).toBe('Missing required properties "createdAt, startTime, user"');
     });
 
     test('rejects extraneous keys', () => {
@@ -63,7 +61,9 @@ describe('interValidator', () => {
 
   describe('type checks', () => {
     test('falsy values of the wrong type are rejected', () => {
-      expect(validateNewInterval({ startTime: 1000, note: 0 })).toMatch(/"note" should be "string"/);
+      expect(validateNewInterval({ startTime: 1000, note: 0 })).toMatch(
+        /"note" should be "string"/
+      );
       expect(validateNewInterval({ startTime: 1000, endTime: '' })).toMatch(
         /"endTime" should be "number"/
       );
