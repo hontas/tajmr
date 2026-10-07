@@ -94,7 +94,7 @@ class UserMenu extends React.Component {
         <fieldset className={styles.fieldset}>
           {updatePasswordError && <p style={{ whiteSpace: 'normal' }}>{updatePasswordError}</p>}
           <div className={styles.changePass}>
-            <label htmlFor="oldPassword" className={styles.changePassLabel}>
+            <div className={styles.changePassLabel}>
               <input
                 onKeyDown={this.preventDefault}
                 autoComplete="old-password"
@@ -104,10 +104,11 @@ class UserMenu extends React.Component {
                 }}
                 type="password"
                 placeholder="Nuvarande lösenord"
+                aria-label="Nuvarande lösenord"
                 id="oldPassword"
               />
-            </label>
-            <label htmlFor="newPassword" className={styles.changePassLabel}>
+            </div>
+            <div className={styles.changePassLabel}>
               <input
                 onKeyDown={this.preventDefault}
                 autoComplete="new-password"
@@ -117,9 +118,10 @@ class UserMenu extends React.Component {
                 }}
                 type="password"
                 placeholder="Nytt lösenord"
+                aria-label="Nytt lösenord"
                 id="newPassword"
               />
-            </label>
+            </div>
             <Button
               theme={updatePasswordSuccess ? 'success' : 'default'}
               className={classNames('pure-button-primary', styles.changePassBtn)}

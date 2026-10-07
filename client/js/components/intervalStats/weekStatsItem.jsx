@@ -54,7 +54,13 @@ WeekDayItem.propTypes = {
   weekday: PropTypes.string.isRequired,
   total: PropTypes.number,
   date: PropTypes.string.isRequired,
-  intervals: PropTypes.arrayOf(PropTypes.object),
+  intervals: PropTypes.arrayOf(
+    PropTypes.shape({
+      timespan: PropTypes.number.isRequired,
+      note: PropTypes.string,
+      notWork: PropTypes.bool,
+    })
+  ),
 };
 
 export default WeekDayItem;
