@@ -4,6 +4,7 @@ import '@testing-library/jest-dom';
 
 import UserMenu from './userMenu.jsx';
 import firebaseApi from '../../utils/firebaseApi';
+import { NotificationContext } from '../../context/Notification.jsx';
 
 jest.mock('../../utils/firebaseApi', () => ({
   __esModule: true,
@@ -119,6 +120,28 @@ describe('UserMenu', () => {
       fireEvent.click(screen.getByRole('button', { name: 'Ändra' }));
 
       expect(await screen.findByText('Wrong password')).toBeInTheDocument();
+    });
+  });
+  describe('notifications toggle', () => {
+    const renderWithContext = (ctx, settings = { ...userSettings, displayNotifications: false }) =>
+      render(
+        <NotificationContext.Provider value={ctx}>
+          <UserMenu user={user} userSettings={settings} updateSettings={jest.fn()} />
+        </NotificationContext.Provider>
+      );
+
+    test('asks for browser permission when switched on and permission can be requested', () => {
+      const requestPermission = jest.fn();
+      renderWithContext({ canRequest: true, requestPermission });
+      fireEvent.click(screen.getByLabelText('Visa notifiering'));
+      expect(requestPermission).toHaveBeenCalledTimes(1);
+    });
+
+    test('does not ask again when permission is already decided', () => {
+      const requestPermission = jest.fn();
+      renderWithContext({ canRequest: false, requestPermission });
+      fireEvent.click(screen.getByLabelText('Visa notifiering'));
+      expect(requestPermission).not.toHaveBeenCalled();
     });
   });
 });

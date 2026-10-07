@@ -6,6 +6,7 @@ import Button from '../button/button.jsx';
 
 import * as customPropTypes from '../../constants/propTypes';
 import firebaseApi from '../../utils/firebaseApi';
+import { NotificationContext } from '../../context/Notification.jsx';
 
 import styles from './userMenu.module.css';
 
@@ -48,7 +49,7 @@ class UserMenu extends React.Component {
             Visa notifiering
             <input
               checked={displayNotifications}
-              onChange={this.handleChange('displayNotifications')}
+              onChange={this.handleNotificationsChange}
               style={{ float: 'right' }}
               type="checkbox"
             />
@@ -169,6 +170,14 @@ class UserMenu extends React.Component {
     };
   }
 
+  handleNotificationsChange = (evt) => {
+    this.handleChange('displayNotifications')(evt);
+    // Ask for browser permission at the moment the user opts in (a user gesture)
+    if (evt.target.checked && this.context?.canRequest) {
+      this.context.requestPermission();
+    }
+  };
+
   saveUserSettings = (evt) => {
     evt.preventDefault();
     const { user, userSettings } = this.props;
@@ -179,6 +188,8 @@ class UserMenu extends React.Component {
     });
   };
 }
+
+UserMenu.contextType = NotificationContext;
 
 UserMenu.propTypes = {
   className: PropTypes.string,

@@ -2,16 +2,19 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 // Notification.permission reports "default" where the Permissions API reports "prompt"
 const normalize = (state) => (state === 'default' ? 'prompt' : state);
-const isSupported = typeof Notification !== 'undefined';
+const checkSupported = () => typeof Notification !== 'undefined';
 
 export const useNotificationPermission = () => {
-  const [permission, setPermission] = useState(isSupported ? normalize(Notification.permission) : 'denied');
+  const isSupported = checkSupported();
+  const [permission, setPermission] = useState(
+    isSupported ? normalize(Notification.permission) : 'denied'
+  );
 
   const requestPermission = useCallback(async () => {
     if (!isSupported) return;
     const permissionStatus = await Notification.requestPermission();
     setPermission(normalize(permissionStatus));
-  }, []);
+  }, [isSupported]);
 
   useEffect(() => {
     if (!isSupported || !navigator.permissions?.query) return undefined;
@@ -34,16 +37,17 @@ export const useNotificationPermission = () => {
       cancelled = true;
       status?.removeEventListener('change', onChange);
     };
-  }, []);
+  }, [isSupported]);
 
   return useMemo(
     () => ({
       permission,
+      supported: isSupported,
       granted: permission === 'granted',
       denied: permission === 'denied',
       canRequest: permission === 'prompt',
       requestPermission,
     }),
-    [permission, requestPermission]
+    [permission, isSupported, requestPermission]
   );
 };

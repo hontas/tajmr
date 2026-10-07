@@ -7,14 +7,18 @@ import notify from '../../utils/notification';
 
 import styles from './digitalClock.module.css';
 
-const DigitalClock = ({ from, elapsed }) => {
+const DigitalClock = ({ from, elapsed, notificationsEnabled }) => {
   const time = from ? Date.now() - from + elapsed : elapsed;
   const { hours, minutes } = getTimePartsFromElapsedTime(time);
   const timestring = getTimeString(time, { isDuration: true });
+  const isFullHour = Boolean(from && hours && minutes === 0);
 
-  if (from && hours && minutes === 0) {
-    notify(`Nu har du jobbat i ${hours} timmar.`);
-  }
+  // The clock re-renders every 30s, so key on the hour to notify once per full hour
+  React.useEffect(() => {
+    if (isFullHour && notificationsEnabled) {
+      notify(`Nu har du jobbat i ${hours} timmar.`);
+    }
+  }, [isFullHour, hours, notificationsEnabled]);
 
   return (
     <div className={styles.container}>
@@ -26,6 +30,11 @@ const DigitalClock = ({ from, elapsed }) => {
 DigitalClock.propTypes = {
   elapsed: PropTypes.number.isRequired,
   from: PropTypes.number.isRequired,
+  notificationsEnabled: PropTypes.bool,
+};
+
+DigitalClock.defaultProps = {
+  notificationsEnabled: false,
 };
 
 export default RenderEvery(thirtySeconds)(DigitalClock);

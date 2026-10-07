@@ -8,7 +8,8 @@ describe('notify', () => {
     jest.useFakeTimers();
     close = jest.fn();
     NotificationMock = jest.fn(() => ({ close }));
-    NotificationMock.requestPermission = jest.fn(() => Promise.resolve('granted'));
+    NotificationMock.permission = 'granted';
+    NotificationMock.requestPermission = jest.fn();
     window.Notification = NotificationMock;
   });
 
@@ -30,12 +31,20 @@ describe('notify', () => {
     expect(close).toHaveBeenCalledTimes(1);
   });
 
-  test('does nothing when permission is denied', async () => {
-    NotificationMock.requestPermission.mockResolvedValue('denied');
+  test.each(['denied', 'default'])('does nothing when permission is %s', async (permission) => {
+    NotificationMock.permission = permission;
 
     await notify('Hello');
 
     expect(NotificationMock).not.toHaveBeenCalled();
+  });
+
+  test('never asks for permission itself', async () => {
+    NotificationMock.permission = 'default';
+
+    await notify('Hello');
+
+    expect(NotificationMock.requestPermission).not.toHaveBeenCalled();
   });
 
   test('does nothing when notifications are not supported', async () => {
