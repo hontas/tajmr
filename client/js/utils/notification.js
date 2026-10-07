@@ -1,23 +1,16 @@
 const fiveSeconds = 5000;
+const title = 'tajmr';
 
-function spawnNotification(body, icon, title) {
-  const options = {
-    body,
-    icon,
-    tag: title
-  };
-  return new Notification(title, options);
-}
+export default async function notify(message) {
+  if (!('Notification' in window)) return;
 
-module.exports = (message) => {
-  if ('Notification' in window === false) return;
+  const permission = await Notification.requestPermission();
+  if (permission !== 'granted') return;
 
-  Notification.requestPermission((permission) => {
-    if (permission === 'granted') {
-      const notification = spawnNotification(message, 'icons/apple-touch-icon.png', 'tajmr');
-      setTimeout(() => {
-        notification.close();
-      }, fiveSeconds);
-    }
+  const notification = new Notification(title, {
+    body: message,
+    icon: 'icons/apple-touch-icon.png',
+    tag: title,
   });
-};
+  setTimeout(() => notification.close(), fiveSeconds);
+}
