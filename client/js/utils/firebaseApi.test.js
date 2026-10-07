@@ -186,10 +186,14 @@ describe('firebaseApi', () => {
   describe('init listeners', () => {
     let logSpy;
     beforeEach(() => {
-      logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+      logSpy = jest.spyOn(console, 'log');
       query.on.mockReset();
     });
-    afterEach(() => logSpy.mockRestore());
+    afterEach(() => {
+      // other users' intervals must never end up in the console
+      expect(logSpy).not.toHaveBeenCalled();
+      logSpy.mockRestore();
+    });
 
     const handlers = () =>
       Object.fromEntries(query.on.mock.calls.map(([event, handler]) => [event, handler]));

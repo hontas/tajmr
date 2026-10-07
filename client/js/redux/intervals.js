@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/react';
+
 import firebaseApi from '../utils/firebaseApi';
 import { validateInterval, validateNewInterval } from '../utils/interValidator';
 
@@ -117,7 +119,7 @@ export function fetchIntervalsForUser() {
       .then(filterBadApples)
       .then(({ intervals }) => dispatch(intervalsFetched(intervals)))
       .catch((error) => {
-        console.log('[fetchIntervalsForUser]', error);
+        Sentry.captureException(error);
         dispatch(intervalsFetched({}));
       });
   };
@@ -131,12 +133,18 @@ function filterBadApples(intervals) {
     const value = intervals[key];
     const errors = validateInterval(value);
     if (errors) {
-      console.log('Invalid interval', value, errors);
       damagedIntervals[key] = value;
     } else {
       validIntervals[key] = value;
     }
   });
+  const damagedKeys = Object.keys(damagedIntervals);
+  if (damagedKeys.length) {
+    // ids only, never interval contents
+    Sentry.captureMessage(
+      `Ignored ${damagedKeys.length} invalid interval(s): ${damagedKeys.join(', ')}`
+    );
+  }
   return { intervals: validIntervals, damagedIntervals };
 }
 

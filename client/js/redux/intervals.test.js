@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/react';
 import reducer, {
   intervalAdded,
   intervalUpdated,
@@ -15,6 +16,7 @@ import reducer, {
 import createStore from './createStore';
 import firebaseApi from '../utils/firebaseApi';
 
+jest.mock('@sentry/react', () => ({ captureException: jest.fn(), captureMessage: jest.fn() }));
 jest.mock('../utils/firebaseApi', () => ({
   __esModule: true,
   default: {
@@ -126,11 +128,15 @@ describe('intervals thunks', () => {
 
   beforeEach(() => {
     store = createStore();
-    logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    logSpy = jest.spyOn(console, 'log');
     jest.clearAllMocks();
   });
 
-  afterEach(() => logSpy.mockRestore());
+  afterEach(() => {
+    // interval contents must never end up in the console
+    expect(logSpy).not.toHaveBeenCalled();
+    logSpy.mockRestore();
+  });
 
   const items = () => store.getState().intervals.items;
 
@@ -219,11 +225,35 @@ describe('intervals thunks', () => {
       expect(store.getState().intervals.isFetching).toBe(false);
     });
 
-    test('falls back to an empty list when the fetch fails', async () => {
-      firebaseApi.fetchIntervalsForUser.mockRejectedValue(new Error('offline'));
+    test('reports ignored invalid intervals to Sentry by id only', async () => {
+      firebaseApi.fetchIntervalsForUser.mockResolvedValue({
+        good: { ...saved },
+        bad: { startTime: 'not a number', note: 'secret note' },
+      });
 
       await store.dispatch(fetchIntervalsForUser());
 
+      expect(Sentry.captureMessage).toHaveBeenCalledTimes(1);
+      const [message] = Sentry.captureMessage.mock.calls[0];
+      expect(message).toContain('bad');
+      expect(message).not.toContain('secret note');
+    });
+
+    test('does not report to Sentry when all intervals are valid', async () => {
+      firebaseApi.fetchIntervalsForUser.mockResolvedValue({ good: { ...saved } });
+
+      await store.dispatch(fetchIntervalsForUser());
+
+      expect(Sentry.captureMessage).not.toHaveBeenCalled();
+    });
+
+    test('falls back to an empty list when the fetch fails', async () => {
+      const error = new Error('offline');
+      firebaseApi.fetchIntervalsForUser.mockRejectedValue(error);
+
+      await store.dispatch(fetchIntervalsForUser());
+
+      expect(Sentry.captureException).toHaveBeenCalledWith(error);
       expect(items()).toEqual([]);
       expect(store.getState().intervals.isFetching).toBe(false);
     });

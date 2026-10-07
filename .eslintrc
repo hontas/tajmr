@@ -10,6 +10,7 @@
   "rules": {
     "arrow-body-style": 1,
     "consistent-return": 1,
+    "no-console": 2,
     "no-use-before-define": ["error", "nofunc"],
     "import/extensions": [2, "always", { "js": "never" }],
     "import/no-extraneous-dependencies": [
