@@ -1,28 +1,40 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
+// Notification.permission reports "default" where the Permissions API reports "prompt"
+const normalize = (state) => (state === 'default' ? 'prompt' : state);
+const isSupported = typeof Notification !== 'undefined';
+
 export const useNotificationPermission = () => {
-  const [permission, setPermission] = useState(Notification.permission);
-  console.log('permission', permission);
+  const [permission, setPermission] = useState(isSupported ? normalize(Notification.permission) : 'denied');
 
   const requestPermission = useCallback(async () => {
+    if (!isSupported) return;
     const permissionStatus = await Notification.requestPermission();
-    setPermission(permissionStatus);
-  }, []);
-
-  const checkNotificationStatus = useCallback(async () => {
-    const permissionStatus = await navigator.permissions.query({ name: 'notifications' });
-    console.log('permissionStatus', permissionStatus);
-    setPermission(permissionStatus.state);
-
-    if (permissionStatus.state === 'prompt') {
-      // can ask for permission with user gesture
-      // requestPermission()
-    }
+    setPermission(normalize(permissionStatus));
   }, []);
 
   useEffect(() => {
-    checkNotificationStatus();
-  }, [permission]);
+    if (!isSupported || !navigator.permissions?.query) return undefined;
+
+    let status;
+    let cancelled = false;
+    const onChange = () => setPermission(normalize(status.state));
+
+    navigator.permissions
+      .query({ name: 'notifications' })
+      .then((result) => {
+        if (cancelled) return;
+        status = result;
+        onChange();
+        status.addEventListener('change', onChange);
+      })
+      .catch(() => {});
+
+    return () => {
+      cancelled = true;
+      status?.removeEventListener('change', onChange);
+    };
+  }, []);
 
   return useMemo(
     () => ({
@@ -32,6 +44,6 @@ export const useNotificationPermission = () => {
       canRequest: permission === 'prompt',
       requestPermission,
     }),
-    []
+    [permission, requestPermission]
   );
 };

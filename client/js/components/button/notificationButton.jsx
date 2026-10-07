@@ -4,7 +4,6 @@ import { useNotificationContext } from '../../context/Notification.jsx';
 
 export const NotificationButton = () => {
   const { granted, denied, canRequest, requestPermission } = useNotificationContext();
-  console.log('granted, denied, canRequest', granted, denied, canRequest);
 
   if (denied) {
     return null;
