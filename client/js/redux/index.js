@@ -13,5 +13,5 @@ export default combineReducers({
   intervals,
   version,
   user,
-  app
+  app,
 });

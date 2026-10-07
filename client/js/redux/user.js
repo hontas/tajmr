@@ -1,4 +1,4 @@
-export const USER_LOGGED_IN = 'USER_LOGGED_IN';
+const USER_LOGGED_IN = 'USER_LOGGED_IN';
 export const USER_LOGGED_OUT = 'USER_LOGGED_OUT';
 
 /**
@@ -7,7 +7,7 @@ export const USER_LOGGED_OUT = 'USER_LOGGED_OUT';
 
 export function userLoggedOut() {
   return {
-    type: USER_LOGGED_OUT
+    type: USER_LOGGED_OUT,
   };
 }
 

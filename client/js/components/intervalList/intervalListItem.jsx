@@ -68,21 +68,25 @@ class IntervalListItem extends React.Component {
     );
   }
 
-  onChecked = (prop) => ({ target: { checked } }) => {
-    const { interval, onUpdate } = this.props;
-    onUpdate({
-      ...interval,
-      [prop]: checked,
-    });
-  };
+  onChecked =
+    (prop) =>
+    ({ target: { checked } }) => {
+      const { interval, onUpdate } = this.props;
+      onUpdate({
+        ...interval,
+        [prop]: checked,
+      });
+    };
 
-  updateProp = (prop) => ({ target: { value } }) => {
-    const { interval, onUpdate } = this.props;
-    onUpdate({
-      ...interval,
-      [prop]: value,
-    });
-  };
+  updateProp =
+    (prop) =>
+    ({ target: { value } }) => {
+      const { interval, onUpdate } = this.props;
+      onUpdate({
+        ...interval,
+        [prop]: value,
+      });
+    };
 
   remove = () => {
     const { onDelete, interval } = this.props;

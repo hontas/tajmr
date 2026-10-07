@@ -1,0 +1,5 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": ["cypress/integration/**/*.js", "cypress/support/index.js"],
+  "project": ["client/**/*.{js,jsx}", "cypress/**/*.js"]
+}

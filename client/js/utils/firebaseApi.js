@@ -11,7 +11,7 @@ const config = {
   databaseURL: 'https://tajmr.firebaseio.com',
   projectId: 'firebase-tajmr',
   storageBucket: 'firebase-tajmr.appspot.com',
-  messagingSenderId: '784102119013'
+  messagingSenderId: '784102119013',
 };
 firebase.initializeApp(config);
 const database = firebase.database();
@@ -46,16 +46,13 @@ const api = {
   intervals: database.ref().child('intervals'),
 
   createInterval(data) {
-    const id = database
-      .ref()
-      .child('intervals')
-      .push().key;
+    const id = database.ref().child('intervals').push().key;
     const user = api.getCurrentUserId();
     return api.updateInterval({
       ...data,
       id,
       user,
-      createdAt: Date.now()
+      createdAt: Date.now(),
     });
   },
 
@@ -132,7 +129,7 @@ const api = {
       const id = snapshot.key;
       api.emit(intervalRemoved(id));
     });
-  }
+  },
 };
 
 function filterByUser(intervals) {

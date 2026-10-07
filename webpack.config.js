@@ -8,7 +8,6 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const SentryWebpackPlugin = require('@sentry/webpack-plugin');
-// const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const pkg = require('./package.json');
 require('dotenv').config();
 
@@ -174,7 +173,6 @@ if (isProduction) {
       include: 'client',
       ignoreFile: '.gitignore',
     })
-    // new BundleAnalyzerPlugin()
   );
 } else {
   config.plugins.push(new webpack.HotModuleReplacementPlugin());

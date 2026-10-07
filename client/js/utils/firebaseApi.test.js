@@ -14,7 +14,11 @@ jest.mock('firebase/app', () => {
   const mockRefs = {};
   const mockRef = (path) => {
     if (!mockRefs[path]) {
-      mockRefs[path] = { set: jest.fn(() => Promise.resolve()), remove: jest.fn(() => Promise.resolve()), once: jest.fn() };
+      mockRefs[path] = {
+        set: jest.fn(() => Promise.resolve()),
+        remove: jest.fn(() => Promise.resolve()),
+        once: jest.fn(),
+      };
     }
     return mockRefs[path];
   };
@@ -100,7 +104,13 @@ describe('firebaseApi', () => {
         createdAt: 9999,
         updatedAt: 9999,
       });
-      expect(result).toEqual({ startTime: 1, note: 'n', user: 'me', createdAt: 9999, id: 'new-id' });
+      expect(result).toEqual({
+        startTime: 1,
+        note: 'n',
+        user: 'me',
+        createdAt: 9999,
+        id: 'new-id',
+      });
     });
 
     test('updateInterval sets updatedAt and resolves without it', async () => {
@@ -180,7 +190,10 @@ describe('firebaseApi', () => {
 
       await api.updateUserPassword('old', 'new');
 
-      expect(firebase.auth.EmailAuthProvider.credential).toHaveBeenCalledWith('me@example.com', 'old');
+      expect(firebase.auth.EmailAuthProvider.credential).toHaveBeenCalledWith(
+        'me@example.com',
+        'old'
+      );
       expect(auth.currentUser.reauthenticateWithCredential).toHaveBeenCalledWith('credential');
       expect(auth.currentUser.updatePassword).toHaveBeenCalledWith('new');
       expect(calls).toEqual(['reauth', 'update']);

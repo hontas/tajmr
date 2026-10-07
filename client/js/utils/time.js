@@ -1,7 +1,20 @@
-export const months = ['januari', 'februari', 'mars', 'april', 'maj', 'juni', 'juli', 'augusti', 'september', 'oktober', 'november', 'december']; // eslint-disable-line max-len
-export const weekDays = ['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag', 'söndag'];
+export const months = [
+  'januari',
+  'februari',
+  'mars',
+  'april',
+  'maj',
+  'juni',
+  'juli',
+  'augusti',
+  'september',
+  'oktober',
+  'november',
+  'december',
+]; // eslint-disable-line max-len
+const weekDays = ['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag', 'söndag'];
 export const oneHour = 1000 * 60 * 60;
-export const oneDay = oneHour * 24;
+const oneDay = oneHour * 24;
 export const oneWeek = oneDay * 7;
 
 const local = 'sv-SE';
@@ -9,7 +22,7 @@ const intl = {
   durationOffset: oneHour, // because date 0 = 01:00:00 1970
   time: new Intl.DateTimeFormat(local, { hour: '2-digit', minute: '2-digit' }),
   weekDay: new Intl.DateTimeFormat(local, { weekday: 'short' }),
-  date: new Intl.DateTimeFormat(local, { month: 'numeric', day: 'numeric' })
+  date: new Intl.DateTimeFormat(local, { month: 'numeric', day: 'numeric' }),
 };
 
 export function getTimeString(date, options = {}) {
@@ -33,20 +46,20 @@ export function getHours(timestamp) {
 export function getDayRange(timestamp) {
   return {
     startTime: +startOfDay(timestamp),
-    endTime: +endOfDay(timestamp)
+    endTime: +endOfDay(timestamp),
   };
 }
 
 export function getWeek(timestamp) {
   const weekStart = new Date(timestamp);
   const dayOffset = weekStart.getDay() || 7;
-  weekStart.setDate((weekStart.getDate() - dayOffset) + 1); // because sunday is 0 which sucks
+  weekStart.setDate(weekStart.getDate() - dayOffset + 1); // because sunday is 0 which sucks
   weekStart.setHours(0);
   weekStart.setMinutes(0);
-  const weekEnd = +weekStart + (oneDay * 7);
+  const weekEnd = +weekStart + oneDay * 7;
   return {
     startTime: +weekStart,
-    endTime: weekEnd
+    endTime: weekEnd,
   };
 }
 
@@ -57,13 +70,11 @@ export function createWorkWeek(timestamp = Date.now()) {
   d.setDate(firstDay ? firstDate - (firstDay - 1) : firstDate - 6);
   const monday = d.getTime();
 
-  return weekDays
-    .slice(1, 8)
-    .map((weekday, delta) => ({
-      isWeekEnd: delta > 4,
-      weekday,
-      date: getDate(new Date(monday + (oneDay * delta)))
-    }));
+  return weekDays.slice(1, 8).map((weekday, delta) => ({
+    isWeekEnd: delta > 4,
+    weekday,
+    date: getDate(new Date(monday + oneDay * delta)),
+  }));
 }
 
 export function getMonth(timestamp) {
@@ -78,7 +89,7 @@ export function getMonth(timestamp) {
   monthEnd.setDate(0);
   return {
     startTime: +monthStart,
-    endTime: +monthEnd
+    endTime: +monthEnd,
   };
 }
 
@@ -88,11 +99,19 @@ export function getWorkDaysInMonth({ startTime, endTime }) {
   const startDay = startDate.getDay();
   const endDay = endDate.getDay();
 
-  if (startDay === 0) { startDate.setDate(startDate.getDate() + 1); }
-  if (startDay === 6) { startDate.setDate(startDate.getDate() + 2); }
+  if (startDay === 0) {
+    startDate.setDate(startDate.getDate() + 1);
+  }
+  if (startDay === 6) {
+    startDate.setDate(startDate.getDate() + 2);
+  }
 
-  if (endDay === 0) { endDate.setDate(endDate.getDate() - 2); }
-  if (endDay === 6) { endDate.setDate(endDate.getDate() - 1); }
+  if (endDay === 0) {
+    endDate.setDate(endDate.getDate() - 2);
+  }
+  if (endDay === 6) {
+    endDate.setDate(endDate.getDate() - 1);
+  }
 
   const totalDays = endDate.getDate() - (startDate.getDate() - 1);
   const holidays = Math.floor((totalDays + startDate.getDay()) / 7) * 2;
@@ -104,11 +123,11 @@ export function getWeekNumber(timestamp) {
   const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
   // Set to nearest Thursday: current date + 4 - current day number
   // Make Sunday's day number 7
-  d.setUTCDate((d.getUTCDate() + 4) - (d.getUTCDay() || 7));
+  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
   // Get first day of year
   const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
   // Calculate full weeks to nearest Thursday
-  return Math.ceil((((d - yearStart) / oneDay) + 1) / 7);
+  return Math.ceil(((d - yearStart) / oneDay + 1) / 7);
 }
 
 export function zeroPad(num) {
@@ -119,15 +138,6 @@ export function getTimePartsFromElapsedTime(timestamp) {
   const hours = Math.floor(timestamp / 1000 / 3600);
   const minutes = Math.floor(timestamp / 1000 / 60) % 60;
   const seconds = Math.floor(timestamp / 1000) % 60;
-
-  return { hours, minutes, seconds };
-}
-
-export function getTimePartsFromTimestamp(timestamp) {
-  const date = new Date(timestamp);
-  const hours = zeroPad(date.getHours());
-  const minutes = zeroPad(date.getMinutes());
-  const seconds = zeroPad(date.getSeconds());
 
   return { hours, minutes, seconds };
 }
@@ -146,21 +156,6 @@ export function endOfDay(date) {
   newDate.setMinutes(59);
   newDate.setSeconds(59);
   return newDate;
-}
-
-export function subtractDays(date, days = 0) {
-  const newDate = new Date(date);
-  newDate.setDate(newDate.getDate() - days);
-  return newDate;
-}
-
-const sameYear = (a, b) => a.getFullYear() === b.getFullYear();
-const sameMonth = (a, b) => a.getMonth() === b.getMonth();
-const sameDay = (a, b) => a.getDate() === b.getDate();
-
-export function isToday(date) {
-  const today = new Date();
-  return sameYear(today, date) && sameMonth(today, date) && sameDay(today, date);
 }
 
 export function isSameWeek(date1, date2) {

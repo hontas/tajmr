@@ -15,7 +15,7 @@ const ProgressBarTimeWrapper = ({ intervals, max }) => {
 
   ProgressBarTimeWrapper.propTypes = {
     intervals: customPropTypes.intervals.isRequired,
-    max: PropTypes.number.isRequired
+    max: PropTypes.number.isRequired,
   };
 
   ProgressBarTimeWrapper.displayName = getDisplayName(ProgressBar);

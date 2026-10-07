@@ -47,7 +47,11 @@ describe('Application', () => {
   });
 
   test('shows the work button for a logged-in user', async () => {
-    setup(initialized(), userLoggedIn({ uid: 'u1', email: 'me@example.com' }), intervalsFetched({}));
+    setup(
+      initialized(),
+      userLoggedIn({ uid: 'u1', email: 'me@example.com' }),
+      intervalsFetched({})
+    );
 
     expect(await screen.findByTestId('user-menu-toggle')).toBeInTheDocument();
     expect(screen.queryByTestId('login-form')).not.toBeInTheDocument();

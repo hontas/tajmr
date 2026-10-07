@@ -15,7 +15,5 @@ npm run dev
 ```
 
 ## deploy
-- Gh-pages deployable like:
-```shell
-npm run deploy
-```
+Deployed to GitHub Pages (`gh-pages` branch) by the **Build and Deploy** workflow. Run it manually from
+the Actions tab; it only runs on `main`, lints and tests first, then builds and publishes.
