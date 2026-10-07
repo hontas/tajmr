@@ -10,11 +10,6 @@ export const interval = PropTypes.shape({
 
 export const intervals = PropTypes.arrayOf(interval);
 
-export const children = PropTypes.oneOfType([
-  PropTypes.element,
-  PropTypes.arrayOf(PropTypes.element),
-]);
-
 export const userSettings = PropTypes.shape({
   displayNotifications: PropTypes.bool.isRequired,
   displayPreviousIntervals: PropTypes.bool.isRequired,

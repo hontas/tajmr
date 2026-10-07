@@ -14,28 +14,6 @@ export function Wave({ className = '', color = 'currentColor', size = '1em' }) {
   );
 }
 
-export function FadingCircle({ className = '', color = 'currentColor', size = '1em' }) {
-  return (
-    <div
-      className={`sk-circle-fade ${className}`}
-      style={{ '--sk-color': color, '--sk-size': size }}
-    >
-      <div className="sk-circle-fade-dot" />
-      <div className="sk-circle-fade-dot" />
-      <div className="sk-circle-fade-dot" />
-      <div className="sk-circle-fade-dot" />
-      <div className="sk-circle-fade-dot" />
-      <div className="sk-circle-fade-dot" />
-      <div className="sk-circle-fade-dot" />
-      <div className="sk-circle-fade-dot" />
-      <div className="sk-circle-fade-dot" />
-      <div className="sk-circle-fade-dot" />
-      <div className="sk-circle-fade-dot" />
-      <div className="sk-circle-fade-dot" />
-    </div>
-  );
-}
-
 export function Bounce({ className = '', color = 'currentColor', size = '1em' }) {
   return (
     <div className={`sk-bounce ${className}`} style={{ '--sk-color': color, '--sk-size': size }}>
@@ -53,4 +31,3 @@ const SpinKitPropTypes = {
 
 Wave.propTypes = SpinKitPropTypes;
 Bounce.propTypes = SpinKitPropTypes;
-FadingCircle.propTypes = SpinKitPropTypes;

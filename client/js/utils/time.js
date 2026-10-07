@@ -12,18 +12,9 @@ export const months = [
   'november',
   'december',
 ]; // eslint-disable-line max-len
-export const weekDays = [
-  'söndag',
-  'måndag',
-  'tisdag',
-  'onsdag',
-  'torsdag',
-  'fredag',
-  'lördag',
-  'söndag',
-];
+const weekDays = ['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag', 'söndag'];
 export const oneHour = 1000 * 60 * 60;
-export const oneDay = oneHour * 24;
+const oneDay = oneHour * 24;
 export const oneWeek = oneDay * 7;
 
 const local = 'sv-SE';
@@ -151,15 +142,6 @@ export function getTimePartsFromElapsedTime(timestamp) {
   return { hours, minutes, seconds };
 }
 
-export function getTimePartsFromTimestamp(timestamp) {
-  const date = new Date(timestamp);
-  const hours = zeroPad(date.getHours());
-  const minutes = zeroPad(date.getMinutes());
-  const seconds = zeroPad(date.getSeconds());
-
-  return { hours, minutes, seconds };
-}
-
 export function startOfDay(date) {
   const newDate = new Date(date || Date.now());
   newDate.setHours(0);
@@ -174,21 +156,6 @@ export function endOfDay(date) {
   newDate.setMinutes(59);
   newDate.setSeconds(59);
   return newDate;
-}
-
-export function subtractDays(date, days = 0) {
-  const newDate = new Date(date);
-  newDate.setDate(newDate.getDate() - days);
-  return newDate;
-}
-
-const sameYear = (a, b) => a.getFullYear() === b.getFullYear();
-const sameMonth = (a, b) => a.getMonth() === b.getMonth();
-const sameDay = (a, b) => a.getDate() === b.getDate();
-
-export function isToday(date) {
-  const today = new Date();
-  return sameYear(today, date) && sameMonth(today, date) && sameDay(today, date);
 }
 
 export function isSameWeek(date1, date2) {
