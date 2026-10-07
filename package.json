@@ -3,6 +3,8 @@
   "version": "1.0.6",
   "description": "Record time sometime",
   "scripts": {
+    "format": "prettier --write \"client/**/*.{js,jsx,css}\" \"cypress/**/*.js\" \"test/*.js\" \"*.js\"",
+    "format:check": "prettier --check \"client/**/*.{js,jsx,css}\" \"cypress/**/*.js\" \"test/*.js\" \"*.js\"",
     "lint": "eslint --ignore-path .gitignore --ext .js,.jsx .",
     "test": "jest --notify",
     "tdd": "npm run test -- --watch",

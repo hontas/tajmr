@@ -28,6 +28,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint
+      - run: npm run format:check
       - run: npm test -- --ci --coverage
       - name: Build (development mode)
         run: npx webpack
