@@ -35,6 +35,24 @@ jobs:
     env:
       CYPRESS_INSTALL_BINARY: 0
     steps:
+      # First, so a missing setting fails in seconds and not after install, lint and the tests.
+      # vite.config.mjs checks the same names when the build runs with SENTRY_UPLOAD=true.
+      - name: Check the Sentry settings
+        env:
+          SENTRY_DSN: ${{ vars.SENTRY_DSN }}
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: |
+          missing=""
+          for name in SENTRY_DSN SENTRY_ORG SENTRY_PROJECT SENTRY_AUTH_TOKEN; do
+            if [ -z "${!name}" ]; then missing="$missing $name"; fi
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::Missing Sentry settings:$missing (repository variables, and the SENTRY_AUTH_TOKEN secret on the production environment)"
+            exit 1
+          fi
+
       - name: Checkout 🛎️
         uses: actions/checkout@v7
 

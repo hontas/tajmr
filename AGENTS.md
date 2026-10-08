@@ -71,7 +71,8 @@ Data (Firebase Realtime Database): `userIntervals/{uid}/{id}` (a user's interval
 
 - Local dev, tests and `npm run verify` need no environment variables. The deploy workflow sets
   `SENTRY_UPLOAD=true` plus `SENTRY_DSN`, `SENTRY_AUTH_TOKEN`, `SENTRY_ORG` and `SENTRY_PROJECT` for the build, which
-  then emits hidden source maps and uploads them to Sentry; the build fails if a credential is missing.
+  then emits hidden source maps and uploads them to Sentry. The first step of the deploy job checks that all
+  four are set and fails at once if not (the build checks them too).
   The workflow deletes the `.map` files before publishing, so the original source is never served.
   `.env.example` only documents the variables (`.env` is gitignored).
 - The Firebase web config is committed in `utils/firebaseApi.js` (public by design; it is not a secret).
