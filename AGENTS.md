@@ -74,6 +74,9 @@ and security rules (#14), so don't build on the flat model.
   The workflow deletes the `.map` files before publishing, so the original source is never served.
   `.env.example` only documents the variables (`.env` is gitignored).
 - The Firebase web config is committed in `utils/firebaseApi.js` (public by design; it is not a secret).
+- Database security rules live in `database.rules.json` (+ `firebase.json`). They are **not** deployed by the
+  workflow: the owner deploys them with `firebase deploy --only database --project <id>` or pastes them in
+  the console. The rules are the access control; never rely on client-side filtering.
 - **Build and Deploy** (runs on pushes to `main` that touch app source, dependencies or build config, and
   manually via `workflow_dispatch`; `main` only): such a merged PR goes live, so hold the merge of anything
   that needs a manual step first (e.g. a data migration). The file list is the `paths` filter in the
