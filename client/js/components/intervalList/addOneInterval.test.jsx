@@ -5,8 +5,8 @@ import '@testing-library/jest-dom';
 import AddOneInterval from './addOneInterval.jsx';
 
 const setup = (props = {}) => {
-  const onAdd = jest.fn(() => Promise.resolve());
-  const onCancel = jest.fn();
+  const onAdd = vi.fn(() => Promise.resolve());
+  const onCancel = vi.fn();
   render(<AddOneInterval fullDay={8} onAdd={onAdd} onCancel={onCancel} {...props} />);
   return { onAdd, onCancel };
 };
@@ -48,7 +48,7 @@ describe('AddOneInterval', () => {
 
   test('shows an error when onAdd rejects', async () => {
     // The app's thunks reject with strings; the Error component only renders strings.
-    setup({ onAdd: jest.fn(() => Promise.reject('Saving failed')) }); // eslint-disable-line prefer-promise-reject-errors
+    setup({ onAdd: vi.fn(() => Promise.reject('Saving failed')) }); // eslint-disable-line prefer-promise-reject-errors
 
     fireEvent.click(screen.getByTestId('add-one-interval-save-btn'));
 

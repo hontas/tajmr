@@ -5,14 +5,14 @@ import '@testing-library/jest-dom';
 import UpdatePrompt from './updatePrompt.jsx';
 import registerServiceWorker from '../../register-sw';
 
-jest.mock('../../register-sw', () => ({ __esModule: true, default: jest.fn() }));
+vi.mock('../../register-sw', () => ({ __esModule: true, default: vi.fn() }));
 
 describe('UpdatePrompt', () => {
   let update;
   let onNeedRefresh;
 
   beforeEach(() => {
-    update = jest.fn(() => Promise.resolve());
+    update = vi.fn(() => Promise.resolve());
     registerServiceWorker.mockImplementation((options) => {
       ({ onNeedRefresh } = options);
       return update;

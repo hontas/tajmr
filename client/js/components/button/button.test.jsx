@@ -6,7 +6,7 @@ import Button from './button.jsx';
 
 describe('Button', () => {
   test('renders text and children and calls onClick', () => {
-    const onClick = jest.fn();
+    const onClick = vi.fn();
     render(
       <Button text="Save" onClick={onClick}>
         <span>icon</span>
@@ -28,7 +28,7 @@ describe('Button', () => {
   });
 
   test('does not call onClick when disabled', () => {
-    const onClick = jest.fn();
+    const onClick = vi.fn();
     render(<Button text="a" disabled onClick={onClick} />);
 
     fireEvent.click(screen.getByRole('button'));

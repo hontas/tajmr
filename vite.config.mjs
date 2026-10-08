@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite-plus';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -39,6 +40,34 @@ export default defineConfig(({ command, isPreview }) => {
     css: {
       // pure-css.min.css still carries IE-only hacks (`*zoom`), which the CSS minifier rejects
       lightningcss: { errorRecovery: true },
+    },
+    resolve: {
+      alias: {
+        // provided by vite-plugin-pwa at build time
+        ...(process.env.VITEST && {
+          'virtual:pwa-register': fileURLToPath(
+            new URL('./test/pwaRegisterStub.js', import.meta.url)
+          ),
+        }),
+      },
+    },
+    test: {
+      // the app's Vite root is client/, but scripts/ has tests too
+      root: fileURLToPath(new URL('.', import.meta.url)),
+      environment: 'jsdom',
+      // describe, test, expect and vi without imports, like Jest
+      globals: true,
+      // the timezone the tests run in (see test/setupTimezone.js)
+      globalSetup: ['./test/setupTimezone.js'],
+      css: { modules: { classNameStrategy: 'non-scoped' } },
+      include: ['client/js/**/*.test.{js,jsx}', 'scripts/**/*.test.js'],
+      coverage: {
+        provider: 'v8',
+        include: ['client/js/**/*.{js,jsx}'],
+        exclude: ['client/js/**/*.test.{js,jsx}'],
+        // Baseline: ratchet up as coverage improves, never down. Enforced with `--coverage` (CI).
+        thresholds: { statements: 75, branches: 60, functions: 70, lines: 75 },
+      },
     },
     build: {
       outDir: '../dist',

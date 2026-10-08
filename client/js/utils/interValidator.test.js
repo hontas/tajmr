@@ -4,7 +4,7 @@ describe('interValidator', () => {
   let logSpy;
 
   beforeEach(() => {
-    logSpy = jest.spyOn(console, 'log');
+    logSpy = vi.spyOn(console, 'log');
   });
 
   afterEach(() => {

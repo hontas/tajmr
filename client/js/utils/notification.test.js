@@ -5,16 +5,20 @@ describe('notify', () => {
   let NotificationMock;
 
   beforeEach(() => {
-    jest.useFakeTimers();
-    close = jest.fn();
-    NotificationMock = jest.fn(() => ({ close }));
-    NotificationMock.requestPermission = jest.fn(() => Promise.resolve('granted'));
+    vi.useFakeTimers();
+    close = vi.fn();
+    // called with `new`, so it has to be a function, not an arrow function
+    // eslint-disable-next-line prefer-arrow-callback
+    NotificationMock = vi.fn(function Notification() {
+      return { close };
+    });
+    NotificationMock.requestPermission = vi.fn(() => Promise.resolve('granted'));
     window.Notification = NotificationMock;
   });
 
   afterEach(() => {
     delete window.Notification;
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   test('shows a notification when permission is granted and closes it after 5 seconds', async () => {
@@ -26,7 +30,7 @@ describe('notify', () => {
       tag: 'tajmr',
     });
     expect(close).not.toHaveBeenCalled();
-    jest.advanceTimersByTime(5000);
+    vi.advanceTimersByTime(5000);
     expect(close).toHaveBeenCalledTimes(1);
   });
 

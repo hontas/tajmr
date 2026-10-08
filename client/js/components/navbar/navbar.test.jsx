@@ -9,9 +9,9 @@ import { initialized } from '../../redux/app';
 import { userLoggedIn } from '../../redux/user';
 import { intervalsFetched, requestIntervalUpdate } from '../../redux/intervals';
 
-jest.mock('../../utils/firebaseApi', () => ({
+vi.mock('../../utils/firebaseApi', () => ({
   __esModule: true,
-  default: { logout: jest.fn(), saveUserData: jest.fn(), updateUserPassword: jest.fn() },
+  default: { logout: vi.fn(), saveUserData: vi.fn(), updateUserPassword: vi.fn() },
 }));
 
 const setup = (...actions) => {

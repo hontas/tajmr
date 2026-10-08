@@ -2,21 +2,21 @@ import firebase from 'firebase/app';
 
 import api from './firebaseApi';
 
-// `jest.mock` factories may only reference variables prefixed with `mock`.
-jest.mock('firebase/app', () => {
+// `vi.mock` factories may only reference variables prefixed with `mock`.
+vi.mock('firebase/app', () => {
   const mockNodes = {};
   const mockNode = (path) => {
     if (!mockNodes[path]) {
       const node = {
-        set: jest.fn(() => Promise.resolve()),
-        remove: jest.fn(() => Promise.resolve()),
-        once: jest.fn(),
-        on: jest.fn((event, handler) => handler), // like firebase, returns the callback
-        off: jest.fn(),
-        push: jest.fn(() => ({ key: 'new-id' })),
+        set: vi.fn(() => Promise.resolve()),
+        remove: vi.fn(() => Promise.resolve()),
+        once: vi.fn(),
+        on: vi.fn((event, handler) => handler), // like firebase, returns the callback
+        off: vi.fn(),
+        push: vi.fn(() => ({ key: 'new-id' })),
       };
       ['orderByChild', 'startAt', 'endAt'].forEach((method) => {
-        node[method] = jest.fn(() => node);
+        node[method] = vi.fn(() => node);
       });
       mockNodes[path] = node;
     }
@@ -24,41 +24,43 @@ jest.mock('firebase/app', () => {
   };
   const mockAuth = {
     currentUser: { uid: 'me', email: 'me@example.com' },
-    signInWithEmailAndPassword: jest.fn(() => Promise.resolve('signed-in')),
-    sendPasswordResetEmail: jest.fn(() => Promise.resolve()),
-    signOut: jest.fn(() => Promise.resolve()),
+    signInWithEmailAndPassword: vi.fn(() => Promise.resolve('signed-in')),
+    sendPasswordResetEmail: vi.fn(() => Promise.resolve()),
+    signOut: vi.fn(() => Promise.resolve()),
   };
-  const mockDatabase = { ref: jest.fn((path) => mockNode(path)) };
+  const mockDatabase = { ref: vi.fn((path) => mockNode(path)) };
 
   const mockFirebase = {
-    initializeApp: jest.fn(),
-    database: jest.fn(() => mockDatabase),
+    initializeApp: vi.fn(),
+    database: vi.fn(() => mockDatabase),
     auth: Object.assign(
-      jest.fn(() => mockAuth),
-      { EmailAuthProvider: { credential: jest.fn(() => 'credential') } }
+      vi.fn(() => mockAuth),
+      { EmailAuthProvider: { credential: vi.fn(() => 'credential') } }
     ),
     mockHandles: { nodes: mockNodes, node: mockNode, auth: mockAuth, database: mockDatabase },
   };
   return { __esModule: true, default: mockFirebase };
 });
-jest.mock('firebase/auth', () => ({}));
-jest.mock('firebase/database', () => ({}));
+vi.mock('firebase/auth', () => ({}));
+vi.mock('firebase/database', () => ({}));
 
+// the app is initialised when firebaseApi is imported; mock call history is cleared before each test
+const initializeAppCalls = firebase.initializeApp.mock.calls.length;
 const { nodes, node, auth, database } = firebase.mockHandles;
 const snapshot = (value, key) => ({ val: () => value, key });
 const me = () => node('userIntervals/me');
 
 describe('firebaseApi', () => {
   beforeEach(() => {
-    jest.spyOn(Date, 'now').mockReturnValue(9999);
+    vi.spyOn(Date, 'now').mockReturnValue(9999);
     Object.keys(nodes).forEach((path) => delete nodes[path]);
     auth.currentUser = { uid: 'me', email: 'me@example.com' };
   });
 
-  afterEach(() => jest.restoreAllMocks());
+  afterEach(() => vi.restoreAllMocks());
 
   test('initialises firebase once', () => {
-    expect(firebase.initializeApp).toHaveBeenCalledTimes(1);
+    expect(initializeAppCalls).toBe(1);
   });
 
   describe('auth', () => {
@@ -80,8 +82,8 @@ describe('firebaseApi', () => {
 
   describe('subscribe / emit', () => {
     test('emit calls every subscriber with the action', () => {
-      const a = jest.fn();
-      const b = jest.fn();
+      const a = vi.fn();
+      const b = vi.fn();
       api.subscribe(a);
       api.subscribe(b);
 
@@ -184,11 +186,11 @@ describe('firebaseApi', () => {
   describe('updateUserPassword', () => {
     test('reauthenticates before changing the password', async () => {
       const calls = [];
-      auth.currentUser.reauthenticateWithCredential = jest.fn(() => {
+      auth.currentUser.reauthenticateWithCredential = vi.fn(() => {
         calls.push('reauth');
         return Promise.resolve();
       });
-      auth.currentUser.updatePassword = jest.fn(() => {
+      auth.currentUser.updatePassword = vi.fn(() => {
         calls.push('update');
         return Promise.resolve();
       });

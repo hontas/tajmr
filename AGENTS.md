@@ -6,7 +6,7 @@ source of truth; `CLAUDE.md` only imports it. Don't duplicate it elsewhere.
 ## What this is
 
 **tajmr**: a small time-recording PWA ("press play, press pause, add a note"). React + Redux +
-Firebase (Auth + Realtime Database), built with Vite, tested with Jest + React Testing Library,
+Firebase (Auth + Realtime Database), built with Vite, tested with Vitest (via Vite+) + React Testing Library,
 deployed to GitHub Pages. UI text is Swedish. The default branch is `main`.
 
 ## Commands
@@ -18,7 +18,7 @@ Use the Node version in `.nvmrc`, then `npm ci` for a clean install that matches
 | --- | --- |
 | `npm run dev` | dev server with hot reload |
 | `npm run verify` | **everything the PR check runs**: lint, format check, knip, tests with coverage (also in other timezones), production build. Run before pushing |
-| `npm test` | Jest (add `-- --watch` or use `npm run tdd`); `npm run test:timezones` reruns it in other timezones |
+| `npm test` | Vitest, one run (`npm run tdd` to watch); `npm run test:timezones` reruns it in other timezones |
 | `npm run lint` / `npm run format` | ESLint (airbnb) / Prettier (writes) |
 | `npm run knip` | unused files, exports and dependencies |
 | `npm run build` | production build; the Sentry source map upload only runs when `SENTRY_UPLOAD=true` (deploy workflow, see below) |
@@ -52,12 +52,11 @@ Data (Firebase Realtime Database): `userIntervals/{uid}/{id}` (a user's interval
   timezone, so `npm run test:timezones` (part of `verify`) reruns them in UTC, New York and Kolkata. Build
   dates with the local constructor (`new Date(y, m, d)`), never `'2018-03-14'` (parsed as UTC).
 - Tests named `BUG: ...` pin known wrong behaviour on purpose; the fixing PR flips them.
-- Coverage has a global threshold in `jest.config.js`. Raise it when coverage improves, never lower it.
+- Coverage has a global threshold in `vite.config.mjs`. Raise it when coverage improves, never lower it.
 - `data-testid` attributes are used by the Cypress specs; don't rename them casually.
 - Browser support: the latest 2 versions of major browsers, including iOS Safari (the app is installed
   as a PWA on iPhone). No polyfills. The build uses Vite's default target (Chrome 111, Safari 16.4 and
-  up), which covers that with room to spare; `browserslist` in `package.json` only feeds Babel for Jest
-  and goes away with it.
+  up), which covers that with room to spare.
 - Keep it simple: no new dependency, abstraction or config without a concrete need.
 
 ## Workflow
