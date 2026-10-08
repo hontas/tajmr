@@ -8,6 +8,7 @@ import Hamburger from '../icons/Hamburger.jsx';
 import UserMenu from '../user/userMenu.jsx';
 import * as userSettingActions from '../../redux/userSettings';
 import * as customPropTypes from '../../constants/propTypes';
+import { getDateTimeString } from '../../utils/time';
 import * as SpinKit from '../spinkit/spinkit.jsx';
 
 import styles from './navbar.module.css';
@@ -42,7 +43,7 @@ function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, disp
       <div className={styles.inner} ref={navBarInnerRef}>
         <h1 className={classNames('pure-menu-heading', styles.brand)}>TajmR</h1>
         <span className={styles.version}>
-          <small>{`${process.env.RELEASE} - ${process.env.BUILD_TIME}`}</small>
+          <small>{`${process.env.RELEASE} - ${getDateTimeString(process.env.BUILD_TIME)}`}</small>
         </span>
         {isLoading && (
           <div

@@ -149,11 +149,8 @@ const config = {
       filename: isProduction ? '[name].[contenthash].css' : '[name].css',
     }),
     new webpack.DefinePlugin({
-      'process.env.BUILD_TIME': JSON.stringify(
-        new Intl.DateTimeFormat('sv-SE', { dateStyle: 'medium', timeStyle: 'short' }).format(
-          new Date()
-        )
-      ),
+      // an instant (ISO string); the app formats it in the viewer's timezone, not the build machine's
+      'process.env.BUILD_TIME': JSON.stringify(new Date().toISOString()),
       'process.env.RELEASE': JSON.stringify(release),
     }),
     new WorkboxPlugin.GenerateSW({

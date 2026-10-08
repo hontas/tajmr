@@ -12,6 +12,10 @@ import {
   getWorkDaysInMonth,
   startOfDay,
   endOfDay,
+  getDurationString,
+  getDateTimeString,
+  getTimeString,
+  addMonths,
 } from './time';
 
 describe('time', () => {
@@ -120,14 +124,15 @@ describe('time', () => {
       expect(startOfDay()).toBeInstanceOf(Date);
     });
 
-    it('should have hours, minutes, seconds set to 0', () => {
-      const date = startOfDay('2018-03-14');
+    it('should have hours, minutes, seconds and milliseconds set to 0', () => {
+      const date = startOfDay(new Date(2018, 2, 14, 13, 45, 30, 500));
       expect(date.getFullYear()).toBe(2018);
       expect(date.getMonth()).toBe(2); // 0-based
       expect(date.getDate()).toBe(14);
       expect(date.getHours()).toBe(0);
       expect(date.getMinutes()).toBe(0);
       expect(date.getSeconds()).toBe(0);
+      expect(date.getMilliseconds()).toBe(0);
     });
   });
 
@@ -136,20 +141,20 @@ describe('time', () => {
       expect(endOfDay()).toBeInstanceOf(Date);
     });
 
-    it('should have hours, minutes, seconds set to 0', () => {
-      const date = endOfDay('2018-03-14');
+    it('should be the last millisecond of the day', () => {
+      const date = endOfDay(new Date(2018, 2, 14, 13, 45, 30, 500));
       expect(date.getFullYear()).toBe(2018);
       expect(date.getMonth()).toBe(2); // 0-based
       expect(date.getDate()).toBe(14);
       expect(date.getHours()).toBe(23);
       expect(date.getMinutes()).toBe(59);
       expect(date.getSeconds()).toBe(59);
+      expect(date.getMilliseconds()).toBe(999);
     });
   });
 
   describe('#getDayRange', () => {
-    const dateString = '2018-03-18';
-    const startDate = new Date(dateString);
+    const startDate = new Date(2018, 2, 18, 12);
 
     test('should return an object', () => {
       expect(typeof getDayRange()).toBe('object');
@@ -164,8 +169,8 @@ describe('time', () => {
 
     test('should return startTime and endTime for that day', () => {
       expect(getDayRange(+startDate)).toEqual({
-        startTime: +startOfDay(dateString),
-        endTime: +endOfDay(dateString),
+        startTime: +new Date(2018, 2, 18, 0, 0, 0, 0),
+        endTime: +new Date(2018, 2, 18, 23, 59, 59, 999),
       });
     });
   });
@@ -211,7 +216,7 @@ describe('time', () => {
 
   describe('#getMonth', () => {
     const startDate = new Date('Sep 1, 2017');
-    const endDate = new Date('Sep 30, 2017 23:59');
+    const endDate = new Date(2017, 8, 30, 23, 59, 59, 999);
     const middleOfMonth = new Date('Sep 27, 2017 14:53');
     const endOfMonth = new Date('Sep 30, 2017 11:30');
 
@@ -277,6 +282,144 @@ describe('time', () => {
         { isWeekEnd: true, date: '4/11', weekday: 'lördag' },
         { isWeekEnd: true, date: '5/11', weekday: 'söndag' },
       ]);
+    });
+  });
+
+  describe('durations', () => {
+    const minute = 60 * 1000;
+    const hour = 60 * minute;
+
+    test('are formatted as HH:mm from the elapsed time, whatever the timezone', () => {
+      expect(getDurationString(0)).toBe('00:00');
+      expect(getDurationString(90 * minute)).toBe('01:30');
+      expect(getDurationString(3 * hour)).toBe('03:00');
+      expect(getDurationString(8 * hour + 5 * minute)).toBe('08:05');
+    });
+
+    test('ignore seconds', () => {
+      expect(getDurationString(59 * 1000)).toBe('00:00');
+      expect(getDurationString(minute + 59 * 1000)).toBe('00:01');
+    });
+
+    test('can be longer than a day', () => {
+      expect(getDurationString(25 * hour)).toBe('25:00');
+      expect(getDurationString(100 * hour + 7 * minute)).toBe('100:07');
+    });
+
+    test('are never negative (clock skew)', () => {
+      expect(getDurationString(-5 * minute)).toBe('00:00');
+    });
+  });
+
+  describe('#getTimeString', () => {
+    test('is the local clock time as HH:mm', () => {
+      expect(getTimeString(new Date(2021, 3, 7, 9, 5).getTime())).toBe('09:05');
+      expect(getTimeString(new Date(2021, 3, 7, 23, 59).getTime())).toBe('23:59');
+    });
+  });
+
+  describe('#getDateTimeString', () => {
+    test('formats an instant in the local timezone, not the one it was created in', () => {
+      const instant = new Date('2026-10-08T13:29:00.000Z');
+      const hh = String(instant.getHours()).padStart(2, '0');
+      const mm = String(instant.getMinutes()).padStart(2, '0');
+
+      expect(getDateTimeString(instant.toISOString())).toBe(
+        `${instant.getDate()} okt. 2026 ${hh}:${mm}`
+      );
+    });
+
+    test('is empty for a missing or invalid value', () => {
+      expect(getDateTimeString(undefined)).toBe('');
+      expect(getDateTimeString('not a date')).toBe('');
+    });
+  });
+
+  // These loop over a whole year so that whichever DST rules the timezone running the tests has
+  // are exercised (`npm run test:timezones` runs them in several).
+  describe('day, week and month boundaries', () => {
+    const local = (y, m, d, h = 0, min = 0, s = 0, ms = 0) => new Date(y, m, d, h, min, s, ms);
+    const mondays2026 = Array.from({ length: 53 }, (_, i) => local(2025, 11, 29 + i * 7));
+
+    test('startOfDay / endOfDay are the first and last millisecond of every day', () => {
+      for (let i = 0; i < 365; i += 1) {
+        const noon = local(2026, 0, 1 + i, 12, 34, 56, 789);
+        expect(+startOfDay(noon)).toBe(+local(2026, 0, 1 + i));
+        expect(+endOfDay(noon)).toBe(+local(2026, 0, 1 + i, 23, 59, 59, 999));
+      }
+    });
+
+    test('a week runs from local Monday 00:00 to the next local Monday 00:00', () => {
+      mondays2026.forEach((monday, i) => {
+        const nextMonday = mondays2026[i + 1] || local(2027, 0, 4);
+        [
+          monday,
+          local(2025, 11, 29 + i * 7, 15, 20, 10, 5),
+          local(2025, 11, 29 + i * 7 + 6, 23, 59, 59, 999),
+        ].forEach((timestamp) => {
+          expect(getWeek(+timestamp)).toEqual({
+            startTime: +monday,
+            endTime: +nextMonday,
+          });
+        });
+      });
+    });
+
+    test('a month runs from local midnight on the 1st to the last millisecond of its last day', () => {
+      for (let month = 0; month < 12; month += 1) {
+        const lastDay = local(2026, month + 1, 0).getDate();
+        const expected = {
+          startTime: +local(2026, month, 1),
+          endTime: +local(2026, month, lastDay, 23, 59, 59, 999),
+        };
+        // every day of the month, including the 29th-31st (the next month can be shorter)
+        for (let day = 1; day <= lastDay; day += 1) {
+          expect(getMonth(+local(2026, month, day, 13, 30))).toEqual(expected);
+        }
+      }
+    });
+
+    test('a work week lists the right dates, also in weeks with a DST change', () => {
+      mondays2026.forEach((monday) => {
+        const dates = createWorkWeek(
+          +local(monday.getFullYear(), monday.getMonth(), monday.getDate() + 2, 12)
+        ).map((day) => day.date);
+        const expected = Array.from({ length: 7 }, (_, delta) => {
+          const day = local(monday.getFullYear(), monday.getMonth(), monday.getDate() + delta);
+          return `${day.getDate()}/${day.getMonth() + 1}`;
+        });
+        expect(dates).toEqual(expected);
+      });
+    });
+  });
+
+  describe('#addMonths', () => {
+    test('moves by whole months and keeps the day and time', () => {
+      const result = addMonths(new Date(2026, 9, 8, 13, 45), 1);
+      expect(+result).toBe(+new Date(2026, 10, 8, 13, 45));
+      expect(+addMonths(new Date(2026, 9, 8, 13, 45), -1)).toBe(+new Date(2026, 8, 8, 13, 45));
+    });
+
+    test('crosses year boundaries', () => {
+      expect(+addMonths(new Date(2026, 11, 15), 1)).toBe(+new Date(2027, 0, 15));
+      expect(+addMonths(new Date(2026, 0, 15), -1)).toBe(+new Date(2025, 11, 15));
+    });
+
+    test('lands in the right month when the day does not exist there (clamps to its last day)', () => {
+      expect(+addMonths(new Date(2026, 9, 31), 1)).toBe(+new Date(2026, 10, 30)); // Oct 31 -> Nov 30
+      expect(+addMonths(new Date(2026, 2, 31), -1)).toBe(+new Date(2026, 1, 28)); // Mar 31 -> Feb 28
+      expect(+addMonths(new Date(2028, 0, 30), 1)).toBe(+new Date(2028, 1, 29)); // leap year
+    });
+
+    test('moves exactly one month from any day of the year', () => {
+      for (let i = 0; i < 365; i += 1) {
+        const date = new Date(2026, 0, 1 + i, 12);
+        [1, -1].forEach((step) => {
+          const result = addMonths(date, step);
+          const expectedMonth = (date.getMonth() + step + 12) % 12;
+          expect(result.getMonth()).toBe(expectedMonth);
+        });
+      }
     });
   });
 });
