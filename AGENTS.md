@@ -55,7 +55,9 @@ Data (Firebase Realtime Database): `userIntervals/{uid}/{id}` (a user's interval
 - Coverage has a global threshold in `jest.config.js`. Raise it when coverage improves, never lower it.
 - `data-testid` attributes are used by the Cypress specs; don't rename them casually.
 - Browser support: the latest 2 versions of major browsers, including iOS Safari (the app is installed
-  as a PWA on iPhone). No polyfills.
+  as a PWA on iPhone). No polyfills. The build uses Vite's default target (Chrome 111, Safari 16.4 and
+  up), which covers that with room to spare; `browserslist` in `package.json` only feeds Babel for Jest
+  and goes away with it.
 - Keep it simple: no new dependency, abstraction or config without a concrete need.
 
 ## Workflow

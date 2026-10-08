@@ -1,5 +1,4 @@
 import { readFileSync } from 'node:fs';
-import browserslist from 'browserslist';
 import { defineConfig } from 'vite-plus';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -7,19 +6,6 @@ import { sentryVitePlugin } from '@sentry/vite-plugin';
 
 const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
 const themeColor = '#1f8dd6';
-
-// Vite ignores `browserslist` in package.json, so turn it into build targets (the lowest version
-// of each browser, e.g. ['chrome153', 'ios26.6', 'safari26.6'])
-const targetNames = { chrome: 'chrome', safari: 'safari', ios_saf: 'ios' };
-const lowestVersions = {};
-browserslist().forEach((entry) => {
-  const [browser, version] = entry.split(' ');
-  const name = targetNames[browser];
-  if (name && !(parseFloat(version) >= parseFloat(lowestVersions[name]))) {
-    lowestVersions[name] = version;
-  }
-});
-const buildTarget = Object.entries(lowestVersions).map(([name, version]) => `${name}${version}`);
 
 export default defineConfig(({ command, isPreview }) => {
   // `vite preview` serves the production build, so it needs the production base too
@@ -54,10 +40,25 @@ export default defineConfig(({ command, isPreview }) => {
     build: {
       outDir: '../dist',
       emptyOutDir: true,
-      target: buildTarget,
       // hidden: emitted for the Sentry upload without being referenced from the bundles. The deploy
       // workflow deletes the .map files afterwards so the original source is not published.
       sourcemap: uploadSourceMaps ? 'hidden' : false,
+      rolldownOptions: {
+        output: {
+          // big, rarely changing libraries get their own files, so a release that only changes app
+          // code doesn't make returning users download them again
+          codeSplitting: {
+            groups: [
+              { name: 'firebase', test: /node_modules[\\/](@firebase|firebase)[\\/]/ },
+              { name: 'sentry', test: /node_modules[\\/]@sentry[\\/]/ },
+              {
+                name: 'react',
+                test: /node_modules[\\/](react|react-dom|scheduler|react-redux|redux|redux-thunk)[\\/]/,
+              },
+            ],
+          },
+        },
+      },
     },
     plugins: [
       react(),

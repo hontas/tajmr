@@ -68,7 +68,6 @@
     "@testing-library/react": "^11.2.6",
     "@vite-pwa/assets-generator": "^2.0.0",
     "@vitejs/plugin-react": "^6.1.2",
-    "browserslist": "^4.29.3",
     "cypress": "^6.6.0",
     "eslint": "^7.22.0",
     "eslint-config-airbnb": "^18.0.1",
