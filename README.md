@@ -10,9 +10,22 @@ tajmr
 ![Tajmr](tajmr.png)
 
 ## dev
+Use the Node version in `.nvmrc`.
+
 ```shell
+npm ci
 npm run dev
 ```
+
+Run `npm run verify` before pushing: it runs what the PR check runs (lint, format check, knip, tests with
+coverage). See [AGENTS.md](AGENTS.md) for the project layout, conventions and workflow.
+
+## environment
+Local development and tests need no environment variables. The production build uploads source maps
+to Sentry using `SENTRY_AUTH_TOKEN`, `SENTRY_ORG` and `SENTRY_PROJECT`, which the deploy workflow injects
+at build time: `SENTRY_AUTH_TOKEN` is a secret on the `production` environment, `SENTRY_ORG` and
+`SENTRY_PROJECT` are repository variables. `.env.example` only documents them. The Firebase web config is committed in
+`client/js/utils/firebaseApi.js` (public by design).
 
 ## deploy
 Deployed to GitHub Pages (source: GitHub Actions) by the **Build and Deploy** workflow. Run it manually
