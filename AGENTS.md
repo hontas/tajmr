@@ -17,11 +17,11 @@ Use the Node version in `.nvmrc`, then `npm ci` for a clean install that matches
 | Command | What it does |
 | --- | --- |
 | `npm run dev` | dev server with hot reload |
-| `npm run verify` | **everything the PR check runs**: lint, format check, knip, tests with coverage. Run before pushing |
+| `npm run verify` | **everything the PR check runs**: lint, format check, knip, tests with coverage, production build. Run before pushing |
 | `npm test` | Jest (add `-- --watch` or use `npm run tdd`) |
 | `npm run lint` / `npm run format` | ESLint (airbnb) / Prettier (writes) |
 | `npm run knip` | unused files, exports and dependencies |
-| `npm run build` | production build (normally run by CI; the Sentry env vars are injected there, see below) |
+| `npm run build` | production build; the Sentry source map upload only runs when `SENTRY_AUTH_TOKEN` is set (deploy workflow, see below) |
 
 `npm run e2e` (Cypress) logs in with a hard-coded test account against the **live Firebase project**. Do
 not run it unless asked.

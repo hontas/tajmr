@@ -17,7 +17,7 @@ jobs:
   lint-and-test:
     runs-on: ubuntu-latest
     env:
-      # Only needed for e2e and production builds, neither runs in this job
+      # Cypress (e2e) and the Sentry source map upload are not part of this job
       CYPRESS_INSTALL_BINARY: 0
       SENTRYCLI_SKIP_DOWNLOAD: 1
     steps:
@@ -28,5 +28,3 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run verify
-      - name: Build (development mode)
-        run: npx webpack
