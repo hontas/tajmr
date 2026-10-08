@@ -5,13 +5,14 @@ source of truth; `CLAUDE.md` only imports it. Don't duplicate it elsewhere.
 
 ## What this is
 
-**tajmr**: a small time-recording PWA ("press play, press pause, add a note"). React 17 + Redux +
+**tajmr**: a small time-recording PWA ("press play, press pause, add a note"). React + Redux +
 Firebase (Auth + Realtime Database), built with webpack, tested with Jest + React Testing Library,
 deployed to GitHub Pages. UI text is Swedish. The default branch is `main`.
 
 ## Commands
 
-Use the Node version in `.nvmrc`, then `npm ci` (never `npm install` unless changing dependencies).
+Use the Node version in `.nvmrc`, then `npm ci` for a clean install that matches `package-lock.json` exactly
+(what CI does). Use `npm install <package>` only to add or change a dependency, and commit the lockfile.
 
 | Command | What it does |
 | --- | --- |
