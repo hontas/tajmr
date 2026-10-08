@@ -10,6 +10,10 @@ coverage/
 .env*
 !.env.example
 
+# Firebase service account keys (credentials, never commit)
+*firebase-adminsdk*.json
+serviceAccount*.json
+
 # cypress.io
 cypress/videos
 cypress/screenshots
