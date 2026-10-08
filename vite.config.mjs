@@ -28,6 +28,21 @@ export default defineConfig(({ command, isPreview }) => {
   }
 
   return {
+    // Oxfmt (`vp fmt`), same options as the Prettier setup it replaced
+    fmt: {
+      singleQuote: true,
+      arrowParens: 'always',
+      printWidth: 100,
+      sortPackageJson: false,
+      // vendored styles and generated output
+      ignorePatterns: [
+        'client/styles/pure-css.min.css',
+        'client/styles/normalize.css',
+        'dist/',
+        'coverage/',
+        'package-lock.json',
+      ],
+    },
     root: 'client',
     base,
     define: {
