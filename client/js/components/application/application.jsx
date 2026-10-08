@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import UpdatePrompt from '../updatePrompt/updatePrompt.jsx';
 import Loader from './Loader.jsx';
 
 import styles from './application.module.css';
@@ -18,6 +19,7 @@ const Login = React.lazy(() => import('../auth/login.jsx'));
 function Application({ initialized, user }) {
   return (
     <div className={styles.application}>
+      <UpdatePrompt />
       <React.Suspense fallback={<Loader />}>
         {initialized ? (
           <>

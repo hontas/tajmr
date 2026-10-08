@@ -1,0 +1,56 @@
+.toast {
+  position: fixed;
+  left: max(0.75em, env(safe-area-inset-left));
+  right: max(0.75em, env(safe-area-inset-right));
+  bottom: calc(0.75em + env(safe-area-inset-bottom));
+  max-width: 28em;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5em 1em;
+  padding: 0.75em 1em;
+  background: var(--primary-color-dark);
+  color: var(--text-color-primary);
+  border: 1px solid var(--text-color-light);
+  border-radius: 4px;
+  box-shadow: 0 0.25em 1em var(--primary-color-dark-hazy);
+  z-index: 100;
+  animation: slide-up 0.25s ease-out;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5em;
+  margin-left: auto;
+}
+
+.toast .update {
+  background: var(--text-color-primary);
+  color: var(--primary-color-dark);
+}
+
+.toast .later {
+  color: var(--text-color-secondary);
+}
+
+/* the footer is fixed to the bottom on wide screens */
+@media screen and (min-width: 1024px) {
+  .toast {
+    bottom: 5em;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(1em);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    animation: none;
+  }
+}

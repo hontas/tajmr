@@ -63,12 +63,15 @@ export default defineConfig(({ command, isPreview }) => {
     plugins: [
       react(),
       VitePWA({
-        // the app registers the worker itself (register-sw.js), under the name earlier deploys used,
-        // so browsers with the old worker installed pick up this one
+        // a new version waits until the user accepts it (UpdatePrompt, register-sw.js). The worker
+        // keeps the name earlier deploys used, so browsers with the old worker pick up this one
+        registerType: 'prompt',
         injectRegister: false,
         filename: 'service-worker.js',
         manifestFilename: 'manifest.json',
-        workbox: { clientsClaim: true, skipWaiting: true },
+        // the first install takes control of the open page right away (so it works offline at once);
+        // updates still wait for the user, because `skipWaiting` is only called from the prompt
+        workbox: { clientsClaim: true },
         // icons and <head> links are generated at build time (see pwa-assets.config.mjs)
         pwaAssets: { config: true },
         manifest: {
