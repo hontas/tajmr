@@ -159,6 +159,8 @@ const config = {
     new WorkboxPlugin.GenerateSW({
       clientsClaim: true,
       skipWaiting: true,
+      // generated files only; keeps `.map` files out of the site (see SENTRY_UPLOAD below)
+      sourcemap: false,
     }),
   ],
   stats: {
@@ -171,14 +173,25 @@ const config = {
 };
 
 if (isProduction) {
-  // Only the deploy workflow has the token; PR builds still run the full production build without it
-  if (process.env.SENTRY_AUTH_TOKEN) {
+  // Only the deploy workflow sets SENTRY_UPLOAD. PR builds run the same production build without it.
+  if (process.env.SENTRY_UPLOAD === 'true') {
+    const missing = ['SENTRY_AUTH_TOKEN', 'SENTRY_ORG', 'SENTRY_PROJECT'].filter(
+      (name) => !process.env[name]
+    );
+    if (missing.length) {
+      throw new Error(`SENTRY_UPLOAD is set but ${missing.join(', ')} is missing`);
+    }
+
+    // Emit source maps without referencing them from the bundles; the deploy workflow deletes
+    // the .map files after the upload so the original source is not published with the site
+    config.devtool = 'hidden-source-map';
     config.plugins.push(
       new SentryWebpackPlugin({
         // must equal Sentry.init({ release }) in app.js, or Sentry can't match events to uploads
         release,
-        include: 'client',
-        ignoreFile: '.gitignore',
+        include: paths.public,
+        // the site is served from a sub path, so artifact urls must include it
+        urlPrefix: `~${publicPath}`,
       })
     );
   }

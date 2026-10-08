@@ -21,9 +21,9 @@ Run `npm run verify` before pushing: it runs what the PR check runs (lint, forma
 coverage, production build). See [AGENTS.md](AGENTS.md) for the project layout, conventions and workflow.
 
 ## environment
-Local development and tests need no environment variables. The production build uploads source maps
-to Sentry using `SENTRY_AUTH_TOKEN`, `SENTRY_ORG` and `SENTRY_PROJECT`, which the deploy workflow injects
-at build time: `SENTRY_AUTH_TOKEN` is a secret on the `production` environment, `SENTRY_ORG` and
+Local development and tests need no environment variables. The deploy build (`SENTRY_UPLOAD=true`) uploads
+source maps to Sentry using `SENTRY_AUTH_TOKEN`, `SENTRY_ORG` and `SENTRY_PROJECT`, which the deploy workflow
+injects at build time (it fails if one is missing, and removes the maps before publishing): `SENTRY_AUTH_TOKEN` is a secret on the `production` environment, `SENTRY_ORG` and
 `SENTRY_PROJECT` are repository variables. `.env.example` only documents them. The Firebase web config is committed in
 `client/js/utils/firebaseApi.js` (public by design).
 
