@@ -19,16 +19,27 @@ export const oneWeek = oneDay * 7;
 
 const local = 'sv-SE';
 const intl = {
-  durationOffset: oneHour, // because date 0 = 01:00:00 1970
   time: new Intl.DateTimeFormat(local, { hour: '2-digit', minute: '2-digit' }),
   weekDay: new Intl.DateTimeFormat(local, { weekday: 'short' }),
   date: new Intl.DateTimeFormat(local, { month: 'numeric', day: 'numeric' }),
+  dateTime: new Intl.DateTimeFormat(local, { dateStyle: 'medium', timeStyle: 'short' }),
 };
 
-export function getTimeString(date, options = {}) {
-  const { isDuration } = options;
-  const timestamp = isDuration ? date - intl.durationOffset : date;
+// Clock time of a timestamp in the viewer's timezone, e.g. 09:05
+export function getTimeString(timestamp) {
   return intl.time.format(timestamp);
+}
+
+// Elapsed time as HH:mm. Plain arithmetic: a duration has no timezone.
+export function getDurationString(elapsed) {
+  const { hours, minutes } = getTimePartsFromElapsedTime(Math.max(0, elapsed));
+  return `${zeroPad(hours)}:${zeroPad(minutes)}`;
+}
+
+// Date and time of an instant (timestamp or ISO string) in the viewer's timezone, e.g. 8 okt. 2026 15:29
+export function getDateTimeString(value) {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? '' : intl.dateTime.format(date);
 }
 
 export function getWeekday(date) {
@@ -50,43 +61,54 @@ export function getDayRange(timestamp) {
   };
 }
 
+// Monday 00:00 to the next Monday 00:00, local time (a week with a DST change is not 7 * 24h long)
 export function getWeek(timestamp) {
   const weekStart = new Date(timestamp);
+  weekStart.setHours(0, 0, 0, 0);
   const dayOffset = weekStart.getDay() || 7;
   weekStart.setDate(weekStart.getDate() - dayOffset + 1); // because sunday is 0 which sucks
-  weekStart.setHours(0);
-  weekStart.setMinutes(0);
-  const weekEnd = +weekStart + oneDay * 7;
+  const weekEnd = new Date(weekStart);
+  weekEnd.setDate(weekEnd.getDate() + 7);
   return {
     startTime: +weekStart,
-    endTime: weekEnd,
+    endTime: +weekEnd,
   };
 }
 
 export function createWorkWeek(timestamp = Date.now()) {
-  const d = new Date(timestamp);
-  const firstDate = d.getDate();
-  const firstDay = d.getDay();
-  d.setDate(firstDay ? firstDate - (firstDay - 1) : firstDate - 6);
-  const monday = d.getTime();
+  const monday = new Date(timestamp);
+  const firstDate = monday.getDate();
+  const firstDay = monday.getDay();
+  monday.setDate(firstDay ? firstDate - (firstDay - 1) : firstDate - 6);
 
-  return weekDays.slice(1, 8).map((weekday, delta) => ({
-    isWeekEnd: delta > 4,
-    weekday,
-    date: getDate(new Date(monday + oneDay * delta)),
-  }));
+  return weekDays.slice(1, 8).map((weekday, delta) => {
+    const day = new Date(monday);
+    day.setDate(monday.getDate() + delta); // calendar days, not 24h steps
+    return {
+      isWeekEnd: delta > 4,
+      weekday,
+      date: getDate(day),
+    };
+  });
 }
 
+// Moves a date by whole months, keeping the time of day. If the day doesn't exist in the target month
+// (31 Oct + 1 month) it becomes that month's last day (30 Nov) instead of spilling into the next one.
+export function addMonths(date, delta) {
+  const result = new Date(date);
+  const day = result.getDate();
+  result.setDate(1);
+  result.setMonth(result.getMonth() + delta);
+  const lastDay = new Date(result.getFullYear(), result.getMonth() + 1, 0).getDate();
+  result.setDate(Math.min(day, lastDay));
+  return result;
+}
+
+// First millisecond of the month to its last, local time
 export function getMonth(timestamp) {
-  const monthStart = new Date(timestamp);
-  monthStart.setDate(1);
-  monthStart.setHours(0);
-  monthStart.setMinutes(0);
-  const monthEnd = new Date(timestamp);
-  monthEnd.setHours(23);
-  monthEnd.setMinutes(59);
-  monthEnd.setMonth(monthEnd.getMonth() + 1);
-  monthEnd.setDate(0);
+  const date = new Date(timestamp);
+  const monthStart = new Date(date.getFullYear(), date.getMonth(), 1);
+  const monthEnd = new Date(date.getFullYear(), date.getMonth() + 1, 0, 23, 59, 59, 999);
   return {
     startTime: +monthStart,
     endTime: +monthEnd,
@@ -144,17 +166,13 @@ export function getTimePartsFromElapsedTime(timestamp) {
 
 export function startOfDay(date) {
   const newDate = new Date(date || Date.now());
-  newDate.setHours(0);
-  newDate.setMinutes(0);
-  newDate.setSeconds(0);
+  newDate.setHours(0, 0, 0, 0);
   return newDate;
 }
 
 export function endOfDay(date) {
   const newDate = new Date(date || Date.now());
-  newDate.setHours(23);
-  newDate.setMinutes(59);
-  newDate.setSeconds(59);
+  newDate.setHours(23, 59, 59, 999);
   return newDate;
 }
 

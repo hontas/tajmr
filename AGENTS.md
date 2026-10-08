@@ -17,8 +17,8 @@ Use the Node version in `.nvmrc`, then `npm ci` for a clean install that matches
 | Command | What it does |
 | --- | --- |
 | `npm run dev` | dev server with hot reload |
-| `npm run verify` | **everything the PR check runs**: lint, format check, knip, tests with coverage, production build. Run before pushing |
-| `npm test` | Jest (add `-- --watch` or use `npm run tdd`) |
+| `npm run verify` | **everything the PR check runs**: lint, format check, knip, tests with coverage (also in other timezones), production build. Run before pushing |
+| `npm test` | Jest (add `-- --watch` or use `npm run tdd`); `npm run test:timezones` reruns it in other timezones |
 | `npm run lint` / `npm run format` | ESLint (airbnb) / Prettier (writes) |
 | `npm run knip` | unused files, exports and dependencies |
 | `npm run build` | production build; the Sentry source map upload only runs when `SENTRY_UPLOAD=true` (deploy workflow, see below) |
@@ -48,8 +48,9 @@ and security rules (#14), so don't build on the flat model.
 - Match the surrounding code. Prettier + airbnb ESLint are enforced; `no-console` is an error.
 - Never log interval data (notes, times) or any user data. Report errors to Sentry, ids only.
 - Tests live next to the code (`*.test.js[x]`). Mock `utils/firebaseApi`; never hit real Firebase in tests.
-- Tests run in `Europe/Stockholm` (`test/setupTimezone.js`): duration formatting currently assumes
-  Swedish time (known bug, #24). Don't remove the pin without fixing that.
+- Tests run in `Europe/Stockholm` by default (`test/setupTimezone.js`); code must not depend on the
+  timezone, so `npm run test:timezones` (part of `verify`) reruns them in UTC, New York and Kolkata. Build
+  dates with the local constructor (`new Date(y, m, d)`), never `'2018-03-14'` (parsed as UTC).
 - Tests named `BUG: ...` pin known wrong behaviour on purpose; the fixing PR flips them.
 - Coverage has a global threshold in `jest.config.js`. Raise it when coverage improves, never lower it.
 - `data-testid` attributes are used by the Cypress specs; don't rename them casually.

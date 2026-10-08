@@ -78,4 +78,18 @@ describe('MonthReport', () => {
     expect(screen.getByText(/mars 2021/)).toBeInTheDocument();
     expect(row('TOTAL:')).toHaveTextContent('0.0h');
   });
+
+  test('navigates month by month on the 31st, when the neighbouring month is shorter', () => {
+    jest.setSystemTime(new Date(2021, 4, 31, 12)); // May 31
+    renderReport();
+
+    fireEvent.click(screen.getByRole('button', { name: '◀︎' }));
+    expect(screen.getByText(/april 2021/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '▶︎' }));
+    expect(screen.getByText(/maj 2021/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '▶︎' }));
+    expect(screen.getByText(/juni 2021/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '▶︎' }));
+    expect(screen.getByText(/juli 2021/)).toBeInTheDocument();
+  });
 });

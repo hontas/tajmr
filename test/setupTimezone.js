@@ -1,5 +1,5 @@
-// The app formats durations assuming Swedish time (see `durationOffset` in utils/time.js),
-// so tests must run in that timezone regardless of the machine they run on.
+// Tests default to Swedish time so results are the same on every machine. Set TZ to run the suite in
+// another timezone (`npm run test:timezones` does): the code must not depend on the timezone.
 module.exports = async () => {
-  process.env.TZ = 'Europe/Stockholm';
+  process.env.TZ = process.env.TZ || 'Europe/Stockholm';
 };

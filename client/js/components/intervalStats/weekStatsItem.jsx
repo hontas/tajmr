@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { getHours, getTimeString } from '../../utils/time';
+import { getHours, getDurationString } from '../../utils/time';
 
 import styles from './weekStatsItem.module.css';
-
-const getDuration = (timestamp) => getTimeString(timestamp, { isDuration: true });
 
 const WeekDayItem = ({ weekday, total, date, intervals = [] }) => {
   // 10 hours = 100px; minimum 20px
@@ -27,13 +25,13 @@ const WeekDayItem = ({ weekday, total, date, intervals = [] }) => {
               style={{ flexBasis: `${flexBasis}px` }}
               key={timespan}
             >
-              <p className={styles.info}>{`${getDuration(timespan)} ${note}`}</p>
+              <p className={styles.info}>{`${getDurationString(timespan)} ${note}`}</p>
             </div>
           );
         })}
         {total > 0 && (
           <p className={styles.total} style={{ lineHeight: `${barHeight}px` }}>
-            {getDuration(total)}
+            {getDurationString(total)}
           </p>
         )}
       </div>

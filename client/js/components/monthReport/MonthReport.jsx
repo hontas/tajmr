@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import Button from '../button/button.jsx';
 import * as customTypes from '../../constants/propTypes';
-import { getMonth, getHours, months } from '../../utils/time';
+import { getMonth, getHours, months, addMonths } from '../../utils/time';
 
 import styles from './MonthReport.module.css';
 
@@ -79,17 +79,11 @@ class MonthReport extends Component {
   };
 
   lastMonth = () => {
-    const { referenceDate } = this.state;
-    const newRefDate = new Date(referenceDate);
-    newRefDate.setMonth(referenceDate.getMonth() - 1);
-    this.setState({ referenceDate: newRefDate });
+    this.setState(({ referenceDate }) => ({ referenceDate: addMonths(referenceDate, -1) }));
   };
 
   nextMonth = () => {
-    const { referenceDate } = this.state;
-    const newRefDate = new Date(referenceDate);
-    newRefDate.setMonth(referenceDate.getMonth() + 1);
-    this.setState({ referenceDate: newRefDate });
+    this.setState(({ referenceDate }) => ({ referenceDate: addMonths(referenceDate, 1) }));
   };
 
   getGroupedIntervalsBy = (key) =>
