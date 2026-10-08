@@ -17,7 +17,8 @@ export default defineConfig(({ command, isPreview }) => {
   const uploadSourceMaps = command === 'build' && process.env.SENTRY_UPLOAD === 'true';
 
   if (uploadSourceMaps) {
-    const missing = ['SENTRY_AUTH_TOKEN', 'SENTRY_ORG', 'SENTRY_PROJECT'].filter(
+    // the deploy build has to report to Sentry, so a missing value fails it
+    const missing = ['SENTRY_DSN', 'SENTRY_AUTH_TOKEN', 'SENTRY_ORG', 'SENTRY_PROJECT'].filter(
       (name) => !process.env[name]
     );
     if (missing.length) {
@@ -32,6 +33,8 @@ export default defineConfig(({ command, isPreview }) => {
       // an instant (ISO string); the app formats it in the viewer's timezone, not the build machine's
       'process.env.BUILD_TIME': JSON.stringify(new Date().toISOString()),
       'process.env.RELEASE': JSON.stringify(release),
+      // public (it ships in the bundle); without it Sentry stays off, e.g. in dev and in tests
+      'process.env.SENTRY_DSN': JSON.stringify(process.env.SENTRY_DSN || ''),
     },
     css: {
       // pure-css.min.css still carries IE-only hacks (`*zoom`), which the CSS minifier rejects
@@ -92,15 +95,11 @@ export default defineConfig(({ command, isPreview }) => {
           org: process.env.SENTRY_ORG,
           project: process.env.SENTRY_PROJECT,
           telemetry: false,
-          // the 6.x SDK can't use debug ids, so match uploads to events by release and url
-          sourcemaps: { disable: true },
-          release: {
-            // must equal Sentry.init({ release }) in app.jsx, or Sentry can't match events to uploads
-            name: release,
-            inject: false,
-            // the site is served from a sub path, so artifact urls must include it
-            uploadLegacySourcemaps: { paths: ['dist'], urlPrefix: `~${base}` },
-          },
+          // each bundle and its source map get the same debug id, which is how Sentry matches them
+          // to events; the maps are deleted after the upload so the original source isn't published
+          sourcemaps: { filesToDeleteAfterUpload: ['dist/**/*.map'] },
+          // must equal Sentry.init({ release }) in app.jsx, so events are grouped under this release
+          release: { name: release },
         }),
     ],
   };

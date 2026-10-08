@@ -66,6 +66,7 @@ jobs:
           APP_VERSION: ${{ steps.version.outputs.version }}
           # Sentry source map upload (see vite.config.mjs); the build fails if a value is missing
           SENTRY_UPLOAD: true
+          SENTRY_DSN: ${{ vars.SENTRY_DSN }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ vars.SENTRY_ORG }}
           SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
