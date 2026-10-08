@@ -8,6 +8,7 @@ tmp/
 coverage/
 .tern-project
 .env*
+!.env.example
 
 # cypress.io
 cypress/videos
