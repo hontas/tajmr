@@ -36,7 +36,7 @@ jobs:
       CYPRESS_INSTALL_BINARY: 0
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # Calendar version: YYYY.MM.DD, plus .N from the second deploy of the same (UTC) day.
       # Counted from the v* tags, which the tag job creates after a successful deploy.
@@ -50,7 +50,7 @@ jobs:
           echo "Deploying version $version"
           echo "version=$version" >> "$GITHUB_OUTPUT"
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -77,7 +77,7 @@ jobs:
           if [ -n "$(find public -name '*.map')" ]; then echo "source maps left in public/"; exit 1; fi
 
       - name: Upload site artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: public
 
@@ -93,7 +93,7 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages 🚀
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
   # Only after a successful deploy, so failed deploys don't use up a version number.
   # The tags also mark which commit each deploy came from (handy for rollbacks).
@@ -103,7 +103,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Tag the deployed commit
         env:
           VERSION: ${{ needs.build.outputs.version }}
