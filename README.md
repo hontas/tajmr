@@ -29,8 +29,8 @@ injects at build time (it fails if one is missing, and removes the maps before p
 
 ## deploy
 Deployed to GitHub Pages (source: GitHub Actions) by the **Build and Deploy** workflow. It runs on every
-merge to `main` (docs-only changes are skipped) and can also be run manually from the Actions tab; it only
-runs on `main`. The `build` job lints, tests and builds (in the
+merge to `main` that changes app source, dependencies or build config (see the `paths` filter in the
+workflow), and can also be run manually from the Actions tab; it only runs on `main`. The `build` job lints, tests and builds (in the
 `production` environment, which holds `SENTRY_AUTH_TOKEN`), then the `deploy` job publishes the
 artifact to the `github-pages` environment. Each deploy gets a calendar version (`YYYY.MM.DD`, then
 `YYYY.MM.DD.2`, ...) that shows in the navbar, is the Sentry release, and is tagged `v<version>` after a

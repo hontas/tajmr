@@ -1,11 +1,19 @@
 name: Build and Deploy
 
 on:
-  # every merge to main goes live, except docs-only changes
+  # every merge to main that can change the built site goes live. If you add a new file that
+  # affects the build (config, tooling), add it here too.
   push:
     branches: [main]
-    paths-ignore:
-      - '**.md'
+    paths:
+      - 'client/**'
+      - '!client/**/*.test.*'
+      - package.json
+      - package-lock.json
+      - webpack.config.js
+      - babel.config.js
+      - .nvmrc
+      - .github/workflows/build-and-deploy.yml
   # manual run, e.g. to redeploy after changing a setting
   workflow_dispatch:
 
