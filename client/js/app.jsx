@@ -19,12 +19,14 @@ import {
 import Application from './components/application/application.jsx';
 import './register-sw';
 
-Sentry.init({
-  dsn: 'https://a359f82382f84f2d85c9a876827f8e1a@o327083.ingest.sentry.io/1836574',
-  integrations: [Sentry.browserTracingIntegration()],
-  release: process.env.RELEASE,
-  tracesSampleRate: 0.2,
-});
+if (process.env.SENTRY_DSN) {
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    integrations: [Sentry.browserTracingIntegration()],
+    release: process.env.RELEASE,
+    tracesSampleRate: 0.2,
+  });
+}
 
 export const store = createStore(); // eslint-disable-line
 firebaseApi.subscribe((action) => store.dispatch(action));

@@ -17,7 +17,8 @@ export default defineConfig(({ command, isPreview }) => {
   const uploadSourceMaps = command === 'build' && process.env.SENTRY_UPLOAD === 'true';
 
   if (uploadSourceMaps) {
-    const missing = ['SENTRY_AUTH_TOKEN', 'SENTRY_ORG', 'SENTRY_PROJECT'].filter(
+    // the deploy build has to report to Sentry, so a missing value fails it
+    const missing = ['SENTRY_DSN', 'SENTRY_AUTH_TOKEN', 'SENTRY_ORG', 'SENTRY_PROJECT'].filter(
       (name) => !process.env[name]
     );
     if (missing.length) {
@@ -32,6 +33,8 @@ export default defineConfig(({ command, isPreview }) => {
       // an instant (ISO string); the app formats it in the viewer's timezone, not the build machine's
       'process.env.BUILD_TIME': JSON.stringify(new Date().toISOString()),
       'process.env.RELEASE': JSON.stringify(release),
+      // public (it ships in the bundle); without it Sentry stays off, e.g. in dev and in tests
+      'process.env.SENTRY_DSN': JSON.stringify(process.env.SENTRY_DSN || ''),
     },
     css: {
       // pure-css.min.css still carries IE-only hacks (`*zoom`), which the CSS minifier rejects
