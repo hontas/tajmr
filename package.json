@@ -3,19 +3,19 @@
   "version": "0.0.0",
   "description": "Record time sometime",
   "scripts": {
-    "format": "prettier --write \"client/**/*.{js,jsx,css}\" \"cypress/**/*.js\" \"test/*.js\" \"*.js\"",
-    "format:check": "prettier --check \"client/**/*.{js,jsx,css}\" \"cypress/**/*.js\" \"test/*.js\" \"*.js\"",
+    "format": "prettier --write \"client/**/*.{js,jsx,css}\" \"cypress/**/*.js\" \"test/*.js\" \"*.{js,mjs}\"",
+    "format:check": "prettier --check \"client/**/*.{js,jsx,css}\" \"cypress/**/*.js\" \"test/*.js\" \"*.{js,mjs}\"",
     "knip": "knip",
-    "lint": "eslint --ignore-path .gitignore --ext .js,.jsx .",
+    "lint": "eslint --ignore-path .gitignore --ext .js,.jsx,.mjs .",
     "test": "jest --notify",
     "test:timezones": "for tz in UTC America/New_York Asia/Kolkata; do TZ=$tz jest --ci || exit 1; done",
     "verify": "npm run lint && npm run format:check && npm run knip && jest --ci --coverage && npm run test:timezones && npm run build",
     "tdd": "npm run test -- --watch",
     "e2e": "npx cypress open",
-    "prebuild": "rm -rf public && mkdir public",
-    "build": "NODE_ENV=production webpack",
-    "predev": "npm run prebuild",
-    "dev": "webpack serve"
+    "build": "vp build",
+    "dev": "vp dev",
+    "preview": "vp preview",
+    "postbuild": "test -f dist/pwa-192x192.png -a -f dist/pwa-512x512.png -a -f dist/apple-touch-icon-180x180.png -a -f dist/favicon.ico || { echo 'PWA icons are missing from dist/ (see the icon plugin warnings above)'; exit 1; }"
   },
   "husky": {
     "hooks": {
@@ -37,7 +37,8 @@
   "license": "ISC",
   "browserslist": [
     "last 2 Chrome versions",
-    "safari 14"
+    "last 2 Safari versions",
+    "last 2 iOS versions"
   ],
   "dependencies": {
     "@sentry/react": "^6.2.5",
@@ -61,15 +62,13 @@
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/preset-env": "^7.6.2",
     "@babel/preset-react": "^7.0.0",
-    "@sentry/webpack-plugin": "^1.9.3",
+    "@sentry/vite-plugin": "^5.4.1",
     "@sinonjs/fake-timers": "^6.0.1",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.6",
-    "babel-loader": "^8.0.6",
-    "css-loader": "^5.2.4",
-    "css-minimizer-webpack-plugin": "^2.0.0",
+    "@vite-pwa/assets-generator": "^2.0.0",
+    "@vitejs/plugin-react": "^6.1.2",
     "cypress": "^6.6.0",
-    "dotenv": "^8.2.0",
     "eslint": "^7.22.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^10.1.8",
@@ -78,24 +77,14 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "favicons": "^6.2.1",
-    "favicons-webpack-plugin": "^5.0.2",
-    "html-webpack-plugin": "^5.3.1",
     "husky": "^6.0.0",
     "jest": "^26.6.3",
     "knip": "^6.40.0",
     "lint-staged": "^10.5.4",
     "md5": "^2.2.1",
-    "mini-css-extract-plugin": "^1.5.0",
     "prettier": "^2.2.1",
-    "style-loader": "^2.0.0",
-    "stylus": "^0.64.0",
-    "stylus-loader": "^5.0.0",
-    "terser-webpack-plugin": "^5.1.1",
-    "webpack": "^5.25.0",
-    "webpack-cli": "^4.5.0",
-    "webpack-dev-server": "^3.11.2",
-    "webpack-pwa-manifest": "^4.3.0",
-    "workbox-webpack-plugin": "^6.1.1"
+    "vite-plugin-pwa": "^2.0.0",
+    "vite-plus": "^1.1.0",
+    "workbox-build": "^7.4.1"
   }
 }

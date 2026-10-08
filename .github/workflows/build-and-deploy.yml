@@ -10,8 +10,8 @@ on:
       - '!client/**/*.test.*'
       - package.json
       - package-lock.json
-      - webpack.config.js
-      - babel.config.js
+      - vite.config.mjs
+      - pwa-assets.config.mjs
       - .nvmrc
       - .github/workflows/build-and-deploy.yml
   # manual run, e.g. to redeploy after changing a setting
@@ -62,9 +62,9 @@ jobs:
       - name: Build 🔧
         run: npm run build
         env:
-          # navbar + Sentry release (see webpack.config.js)
+          # navbar + Sentry release (see vite.config.mjs)
           APP_VERSION: ${{ steps.version.outputs.version }}
-          # Sentry source map upload (see webpack.config.js); the build fails if a value is missing
+          # Sentry source map upload (see vite.config.mjs); the build fails if a value is missing
           SENTRY_UPLOAD: true
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ vars.SENTRY_ORG }}
@@ -73,13 +73,13 @@ jobs:
       # The maps were uploaded to Sentry during the build; never publish the original source
       - name: Remove source maps from the site
         run: |
-          find public -name '*.map' -delete
-          if [ -n "$(find public -name '*.map')" ]; then echo "source maps left in public/"; exit 1; fi
+          find dist -name '*.map' -delete
+          if [ -n "$(find dist -name '*.map')" ]; then echo "source maps left in dist/"; exit 1; fi
 
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v5
         with:
-          path: public
+          path: dist
 
   deploy:
     needs: build

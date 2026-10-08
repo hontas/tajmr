@@ -39,5 +39,12 @@
         "assert": "either"
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      // ESM-only packages with `exports` maps, which eslint-plugin-import 2.x can't resolve
+      "files": ["vite.config.mjs", "pwa-assets.config.mjs"],
+      "rules": { "import/no-unresolved": 0, "import/extensions": 0 }
+    }
+  ]
 }
