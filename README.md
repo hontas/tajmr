@@ -15,5 +15,7 @@ npm run dev
 ```
 
 ## deploy
-Deployed to GitHub Pages (`gh-pages` branch) by the **Build and Deploy** workflow. Run it manually from
-the Actions tab; it only runs on `main`, lints and tests first, then builds and publishes.
+Deployed to GitHub Pages (source: GitHub Actions) by the **Build and Deploy** workflow. Run it manually
+from the Actions tab; it only runs on `main`. The `build` job lints, tests and builds (in the
+`production` environment, which holds `SENTRY_AUTH_TOKEN`), then the `deploy` job publishes the
+artifact to the `github-pages` environment.
