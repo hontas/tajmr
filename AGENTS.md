@@ -39,9 +39,9 @@ client/js/
     interValidator.js  validation of intervals before they are written / after they are read
 ```
 
-Data (Firebase Realtime Database): `intervals/{id}` (flat, each with a `user` field) and
-`users/{uid}` (settings). The client filters intervals by user; this is being replaced by per-user paths
-and security rules (#14), so don't build on the flat model.
+Data (Firebase Realtime Database): `userIntervals/{uid}/{id}` (a user's intervals) and `users/{uid}`
+(settings); the rules in `database.rules.json` let a user touch only their own paths. The old flat
+`intervals/{id}` node is no longer used by the client and is deleted at the end of #14.
 
 ## Conventions
 

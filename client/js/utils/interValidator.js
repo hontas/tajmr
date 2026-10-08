@@ -6,10 +6,9 @@ const intervalSchema = {
     endTime: 'number',
     notWork: 'boolean',
     note: 'string',
-    user: 'string',
     id: 'string',
   },
-  required: ['createdAt', 'startTime', 'user'],
+  required: ['createdAt', 'startTime'],
 };
 
 const newIntervalSchema = {

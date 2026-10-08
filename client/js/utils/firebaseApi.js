@@ -43,47 +43,35 @@ const api = {
 
   ref: firebase,
 
-  intervals: database.ref().child('intervals'),
-
-  createInterval(data) {
-    const id = database.ref().child('intervals').push().key;
-    const user = api.getCurrentUserId();
-    return api.updateInterval({
-      ...data,
-      id,
-      user,
-      createdAt: Date.now(),
-    });
+  // Intervals live under the signed-in user: userIntervals/<uid>/<id>. The database rules only let
+  // a user touch their own path, so nothing here filters by user.
+  async createInterval(data) {
+    const id = intervalsRef().push().key;
+    return api.updateInterval({ ...data, id, createdAt: Date.now() });
   },
 
-  updateInterval({ id, ...interval }) {
-    return database
-      .ref(`intervals/${id}`)
-      .set({ ...interval, updatedAt: Date.now() })
-      .then(() => ({ ...interval, id }));
+  async updateInterval({ id, ...interval }) {
+    await intervalRef(id).set({ ...interval, updatedAt: Date.now() });
+    return { ...interval, id };
   },
 
-  removeInterval(id) {
-    return database.ref(`intervals/${id}`).remove();
+  async removeInterval(id) {
+    return intervalRef(id).remove();
   },
 
-  fetchIntervalsInWeek(timestamp = Date.now()) {
+  async fetchIntervalsInWeek(timestamp = Date.now()) {
     const { startTime, endTime } = getWeek(timestamp);
-    return api.intervals
+    const snapshot = await intervalsRef()
       .orderByChild('startTime')
       .startAt(startTime)
       .endAt(endTime)
-      .once('value')
-      .then((snapshot) => snapshot.val() || {}) // null when there are no intervals
-      .then(filterByUser);
+      .once('value');
+    return snapshot.val() || {}; // null when there are no intervals
   },
 
-  fetchIntervalsForUser() {
-    return api.intervals
-      .orderByChild('startTime')
-      .once('value')
-      .then((snapshot) => snapshot.val() || {}) // null when there are no intervals
-      .then(filterByUser);
+  async fetchIntervalsForUser() {
+    const snapshot = await intervalsRef().orderByChild('startTime').once('value');
+    return snapshot.val() || {}; // null when there are no intervals
   },
 
   getCurrentUserId() {
@@ -105,41 +93,45 @@ const api = {
     return database.ref(`users/${userId}`).set(data);
   },
 
-  init({ intervalAdded, intervalRemoved, intervalUpdated }) {
-    api.intervals
-      .orderByChild('startTime')
-      .startAt(Date.now())
-      .on('child_added', (snapshot) => {
-        const interval = snapshot.val();
-        const userId = auth.currentUser && auth.currentUser.uid;
+  // Reports changes made on other devices as redux actions. Returns a function that stops listening.
+  listen({ intervalAdded, intervalRemoved, intervalUpdated }) {
+    const uid = api.getCurrentUserId();
+    if (!uid) return () => {};
 
-        if (interval.user !== userId) return;
+    const ref = database.ref(`userIntervals/${uid}`);
+    const upcoming = ref.orderByChild('startTime').startAt(Date.now());
+    const toInterval = (snapshot) => ({ ...snapshot.val(), id: snapshot.key });
 
-        const id = snapshot.key;
-        api.emit(intervalAdded({ ...interval, id }));
-      });
+    const onAdded = upcoming.on('child_added', (snapshot) =>
+      api.emit(intervalAdded(toInterval(snapshot)))
+    );
+    const onChanged = ref.on('child_changed', (snapshot) =>
+      api.emit(intervalUpdated(toInterval(snapshot)))
+    );
+    const onRemoved = ref.on('child_removed', (snapshot) =>
+      api.emit(intervalRemoved(snapshot.key))
+    );
 
-    api.intervals.on('child_changed', (snapshot) => {
-      const interval = snapshot.val();
-      const id = snapshot.key;
-      api.emit(intervalUpdated({ ...interval, id }));
-    });
-
-    api.intervals.on('child_removed', (snapshot) => {
-      const id = snapshot.key;
-      api.emit(intervalRemoved(id));
-    });
+    return () => {
+      upcoming.off('child_added', onAdded);
+      ref.off('child_changed', onChanged);
+      ref.off('child_removed', onRemoved);
+    };
   },
 };
 
-function filterByUser(intervals) {
-  const userId = auth.currentUser && auth.currentUser.uid;
-  return Object.keys(intervals).reduce((res, id) => {
-    if (intervals[id].user === userId) {
-      return { [id]: intervals[id], ...res };
-    }
-    return res;
-  }, {});
+function requireUserId() {
+  const uid = api.getCurrentUserId();
+  if (!uid) throw new Error('Not signed in');
+  return uid;
+}
+
+function intervalsRef() {
+  return database.ref(`userIntervals/${requireUserId()}`);
+}
+
+function intervalRef(id) {
+  return database.ref(`userIntervals/${requireUserId()}/${id}`);
 }
 
 export default api;

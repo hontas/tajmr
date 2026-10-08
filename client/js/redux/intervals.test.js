@@ -28,7 +28,7 @@ jest.mock('../utils/firebaseApi', () => ({
 }));
 
 const validNew = { startTime: 1000, endTime: 2000, note: 'work' };
-const saved = { createdAt: 1, startTime: 1000, user: 'u1' };
+const saved = { createdAt: 1, startTime: 1000 };
 
 describe('intervals reducer', () => {
   beforeEach(() => jest.spyOn(Date, 'now').mockReturnValue(5000));

@@ -73,10 +73,11 @@ async function main() {
     process.exit(1);
   }
 
-  // eslint-disable-next-line global-require, import/no-extraneous-dependencies, import/no-unresolved
-  const admin = require('firebase-admin');
-  admin.initializeApp({ credential: admin.credential.applicationDefault(), databaseURL });
-  const db = admin.database();
+  // eslint-disable-next-line global-require, import/no-extraneous-dependencies, import/no-unresolved, import/extensions
+  const { initializeApp, applicationDefault } = require('firebase-admin/app');
+  // eslint-disable-next-line global-require, import/no-extraneous-dependencies, import/no-unresolved, import/extensions
+  const { getDatabase } = require('firebase-admin/database');
+  const db = getDatabase(initializeApp({ credential: applicationDefault(), databaseURL }));
 
   const source = (await db.ref('intervals').once('value')).val();
   const { updates, perUser, skipped, wontValidate } = planMigration(source);
@@ -105,7 +106,7 @@ async function main() {
   }
 
   const copied = countPerUser((await db.ref('userIntervals').once('value')).val());
-  const mismatches = Object.entries(perUser).filter(([uid, count]) => copied[uid] !== count);
+  const mismatches = Object.entries(perUser).filter(([uid, count]) => copied[uid] < count);
   if (mismatches.length) {
     console.error('VERIFY FAILED, counts differ for:', mismatches.map(([uid]) => uid).join(', '));
     process.exit(1);

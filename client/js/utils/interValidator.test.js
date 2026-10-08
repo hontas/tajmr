@@ -41,15 +41,21 @@ describe('interValidator', () => {
   });
 
   describe('validateInterval', () => {
-    const valid = { createdAt: 1, startTime: 2, user: 'u1' };
+    const valid = { createdAt: 1, startTime: 2 };
 
     test('returns undefined for a valid interval', () => {
       expect(validateInterval(valid)).toBeUndefined();
       expect(validateInterval({ ...valid, id: 'abc', updatedAt: 3, endTime: 4 })).toBeUndefined();
     });
 
-    test('requires createdAt, startTime and user', () => {
-      expect(validateInterval({})).toBe('Missing required properties "createdAt, startTime, user"');
+    test('requires createdAt and startTime', () => {
+      expect(validateInterval({})).toBe('Missing required properties "createdAt, startTime"');
+    });
+
+    test('does not accept the old user field (intervals live under the user now)', () => {
+      expect(validateInterval({ ...valid, user: 'u1' })).toBe(
+        'Not supported extraneous keys [user]'
+      );
     });
 
     test('rejects extraneous keys', () => {

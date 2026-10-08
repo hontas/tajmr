@@ -4,26 +4,23 @@ import api from './firebaseApi';
 
 // `jest.mock` factories may only reference variables prefixed with `mock`.
 jest.mock('firebase/app', () => {
-  const mockQuery = {};
-  ['orderByChild', 'startAt', 'endAt'].forEach((method) => {
-    mockQuery[method] = jest.fn(() => mockQuery);
-  });
-  mockQuery.once = jest.fn();
-  mockQuery.on = jest.fn();
-
-  const mockRefs = {};
-  const mockRef = (path) => {
-    if (!mockRefs[path]) {
-      mockRefs[path] = {
+  const mockNodes = {};
+  const mockNode = (path) => {
+    if (!mockNodes[path]) {
+      const node = {
         set: jest.fn(() => Promise.resolve()),
         remove: jest.fn(() => Promise.resolve()),
         once: jest.fn(),
+        on: jest.fn((event, handler) => handler), // like firebase, returns the callback
+        off: jest.fn(),
+        push: jest.fn(() => ({ key: 'new-id' })),
       };
+      ['orderByChild', 'startAt', 'endAt'].forEach((method) => {
+        node[method] = jest.fn(() => node);
+      });
+      mockNodes[path] = node;
     }
-    return mockRefs[path];
-  };
-  const mockRoot = {
-    child: jest.fn(() => Object.assign(mockQuery, { push: jest.fn(() => ({ key: 'new-id' })) })),
+    return mockNodes[path];
   };
   const mockAuth = {
     currentUser: { uid: 'me', email: 'me@example.com' },
@@ -31,7 +28,7 @@ jest.mock('firebase/app', () => {
     sendPasswordResetEmail: jest.fn(() => Promise.resolve()),
     signOut: jest.fn(() => Promise.resolve()),
   };
-  const mockDatabase = { ref: jest.fn((path) => (path ? mockRef(path) : mockRoot)) };
+  const mockDatabase = { ref: jest.fn((path) => mockNode(path)) };
 
   const mockFirebase = {
     initializeApp: jest.fn(),
@@ -40,20 +37,22 @@ jest.mock('firebase/app', () => {
       jest.fn(() => mockAuth),
       { EmailAuthProvider: { credential: jest.fn(() => 'credential') } }
     ),
-    mockHandles: { query: mockQuery, refs: mockRefs, auth: mockAuth, database: mockDatabase },
+    mockHandles: { nodes: mockNodes, node: mockNode, auth: mockAuth, database: mockDatabase },
   };
   return { __esModule: true, default: mockFirebase };
 });
 jest.mock('firebase/auth', () => ({}));
 jest.mock('firebase/database', () => ({}));
 
-const { query, refs, auth } = firebase.mockHandles;
-const snapshot = (value) => ({ val: () => value });
+const { nodes, node, auth, database } = firebase.mockHandles;
+const snapshot = (value, key) => ({ val: () => value, key });
+const me = () => node('userIntervals/me');
 
 describe('firebaseApi', () => {
   beforeEach(() => {
     jest.spyOn(Date, 'now').mockReturnValue(9999);
-    query.once.mockReset();
+    Object.keys(nodes).forEach((path) => delete nodes[path]);
+    auth.currentUser = { uid: 'me', email: 'me@example.com' };
   });
 
   afterEach(() => jest.restoreAllMocks());
@@ -93,84 +92,90 @@ describe('firebaseApi', () => {
     });
   });
 
-  describe('writes', () => {
-    test('createInterval writes under a generated id with user and createdAt', async () => {
+  describe('writes (always under the signed-in user)', () => {
+    test('createInterval writes userIntervals/<uid>/<new id> with createdAt and updatedAt, no user field', async () => {
       const result = await api.createInterval({ startTime: 1, note: 'n' });
 
-      expect(refs['intervals/new-id'].set).toHaveBeenCalledWith({
+      expect(node('userIntervals/me/new-id').set).toHaveBeenCalledWith({
         startTime: 1,
         note: 'n',
-        user: 'me',
         createdAt: 9999,
         updatedAt: 9999,
       });
-      expect(result).toEqual({
-        startTime: 1,
-        note: 'n',
-        user: 'me',
-        createdAt: 9999,
-        id: 'new-id',
-      });
+      expect(result).toEqual({ startTime: 1, note: 'n', createdAt: 9999, id: 'new-id' });
     });
 
     test('updateInterval sets updatedAt and resolves without it', async () => {
       const result = await api.updateInterval({ id: 'i1', startTime: 5 });
 
-      expect(refs['intervals/i1'].set).toHaveBeenCalledWith({ startTime: 5, updatedAt: 9999 });
+      expect(node('userIntervals/me/i1').set).toHaveBeenCalledWith({
+        startTime: 5,
+        updatedAt: 9999,
+      });
       expect(result).toEqual({ id: 'i1', startTime: 5 });
     });
 
-    test('removeInterval removes the path', async () => {
+    test('removeInterval removes the interval of the user', async () => {
       await api.removeInterval('i1');
-      expect(refs['intervals/i1'].remove).toHaveBeenCalled();
+      expect(node('userIntervals/me/i1').remove).toHaveBeenCalled();
     });
 
     test('saveUserData writes to users/{id}', async () => {
       await api.saveUserData('u1', { hoursInWeek: 30 });
-      expect(refs['users/u1'].set).toHaveBeenCalledWith({ hoursInWeek: 30 });
+      expect(node('users/u1').set).toHaveBeenCalledWith({ hoursInWeek: 30 });
+    });
+
+    test('rejects (without touching the database) when nobody is signed in', async () => {
+      auth.currentUser = null;
+
+      await expect(api.createInterval({ startTime: 1 })).rejects.toThrow('Not signed in');
+      await expect(api.updateInterval({ id: 'i1', startTime: 1 })).rejects.toThrow('Not signed in');
+      await expect(api.removeInterval('i1')).rejects.toThrow('Not signed in');
+      await expect(api.fetchIntervalsForUser()).rejects.toThrow('Not signed in');
+      expect(Object.keys(nodes)).toEqual([]);
     });
   });
 
-  describe('fetching', () => {
-    const data = {
-      mine: { user: 'me', startTime: 1 },
-      theirs: { user: 'someone-else', startTime: 2 },
-    };
+  describe('fetching (only ever reads the signed-in users own path)', () => {
+    const data = { a: { startTime: 1 }, b: { startTime: 2 } };
 
-    test('fetchIntervalsForUser keeps only the current user intervals', async () => {
-      query.once.mockResolvedValue(snapshot(data));
+    test('fetchIntervalsForUser returns the users intervals ordered by startTime', async () => {
+      me().once.mockResolvedValue(snapshot(data));
 
-      await expect(api.fetchIntervalsForUser()).resolves.toEqual({
-        mine: { user: 'me', startTime: 1 },
-      });
-      expect(query.orderByChild).toHaveBeenCalledWith('startTime');
+      await expect(api.fetchIntervalsForUser()).resolves.toEqual(data);
+      expect(me().orderByChild).toHaveBeenCalledWith('startTime');
     });
 
-    test('fetchIntervalsInWeek queries a week range and filters by user', async () => {
-      query.once.mockResolvedValue(snapshot(data));
+    test('fetchIntervalsInWeek queries the week range', async () => {
+      me().once.mockResolvedValue(snapshot(data));
 
-      await expect(api.fetchIntervalsInWeek(Date.UTC(2021, 3, 7))).resolves.toEqual({
-        mine: { user: 'me', startTime: 1 },
-      });
-      expect(query.startAt).toHaveBeenCalled();
-      expect(query.endAt).toHaveBeenCalled();
+      await expect(api.fetchIntervalsInWeek(new Date(2021, 3, 7, 12).getTime())).resolves.toEqual(
+        data
+      );
+      expect(me().startAt).toHaveBeenCalledWith(+new Date(2021, 3, 5));
+      expect(me().endAt).toHaveBeenCalledWith(+new Date(2021, 3, 12));
     });
 
-    test('fetchIntervalsForUser resolves to an empty object when there are no intervals', async () => {
-      query.once.mockResolvedValue(snapshot(null));
+    test('a user without intervals gets an empty object', async () => {
+      me().once.mockResolvedValue(snapshot(null));
 
       await expect(api.fetchIntervalsForUser()).resolves.toEqual({});
+      await expect(api.fetchIntervalsInWeek(Date.UTC(2021, 3, 7))).resolves.toEqual({});
     });
 
-    test('fetchIntervalsInWeek resolves to an empty object when there are no intervals', async () => {
-      query.once.mockResolvedValue(snapshot(null));
+    test('never reads the shared intervals node or another users path', async () => {
+      me().once.mockResolvedValue(snapshot(data));
 
-      await expect(api.fetchIntervalsInWeek(Date.UTC(2021, 3, 7))).resolves.toEqual({});
+      await api.fetchIntervalsForUser();
+      await api.fetchIntervalsInWeek();
+
+      expect(Object.keys(nodes)).toEqual(['userIntervals/me']);
+      expect(database.ref).not.toHaveBeenCalledWith('intervals');
     });
 
     test('getUserSettings reads users/{uid}', async () => {
       const snap = snapshot({ hoursInWeek: 20 });
-      refs['users/me'] = { once: jest.fn(() => Promise.resolve(snap)) };
+      node('users/me').once.mockResolvedValue(snap);
 
       await expect(api.getUserSettings({ uid: 'me' })).resolves.toBe(snap);
     });
@@ -200,59 +205,59 @@ describe('firebaseApi', () => {
     });
   });
 
-  describe('init listeners', () => {
-    let logSpy;
-    beforeEach(() => {
-      logSpy = jest.spyOn(console, 'log');
-      query.on.mockReset();
-    });
-    afterEach(() => {
-      // other users' intervals must never end up in the console
-      expect(logSpy).not.toHaveBeenCalled();
-      logSpy.mockRestore();
-    });
-
+  describe('listen', () => {
+    const actions = {
+      intervalAdded: (i) => ({ type: 'added', i }),
+      intervalUpdated: (i) => ({ type: 'updated', i }),
+      intervalRemoved: (id) => ({ type: 'removed', id }),
+    };
     const handlers = () =>
-      Object.fromEntries(query.on.mock.calls.map(([event, handler]) => [event, handler]));
-    const snap = (key, value) => ({ key, val: () => value });
+      Object.fromEntries(me().on.mock.calls.map(([event, handler]) => [event, handler]));
 
-    test('emits actions for added (own only), changed and removed intervals', () => {
+    test('emits actions for added, changed and removed intervals of the user', () => {
       const emitted = [];
       api.subscribe((action) => emitted.push(action));
-      const actions = {
-        intervalAdded: (i) => ({ type: 'added', i }),
-        intervalUpdated: (i) => ({ type: 'updated', i }),
-        intervalRemoved: (id) => ({ type: 'removed', id }),
-      };
 
-      api.init(actions);
+      api.listen(actions);
       const { child_added: added, child_changed: changed, child_removed: removed } = handlers();
-
-      added(snap('a1', { user: 'me', startTime: 1 }));
-      added(snap('a2', { user: 'other', startTime: 1 }));
-      changed(snap('c1', { user: 'me' }));
-      removed(snap('r1'));
+      added(snapshot({ startTime: 1 }, 'a1'));
+      changed(snapshot({ startTime: 2 }, 'c1'));
+      removed(snapshot(null, 'r1'));
 
       expect(emitted).toEqual([
-        { type: 'added', i: { user: 'me', startTime: 1, id: 'a1' } },
-        { type: 'updated', i: { user: 'me', id: 'c1' } },
+        { type: 'added', i: { startTime: 1, id: 'a1' } },
+        { type: 'updated', i: { startTime: 2, id: 'c1' } },
         { type: 'removed', id: 'r1' },
       ]);
     });
 
-    // BUG (see issue #14): changed/removed events are emitted for every user's intervals.
-    test('BUG: child_changed is emitted even for other users intervals', () => {
-      const emitted = [];
-      api.subscribe((action) => emitted.push(action));
-      api.init({
-        intervalAdded: jest.fn(),
-        intervalUpdated: (i) => ({ type: 'updated', i }),
-        intervalRemoved: jest.fn(),
+    test('only listens on the users own path, and only for new intervals when added', () => {
+      api.listen(actions);
+
+      expect(Object.keys(nodes)).toEqual(['userIntervals/me']);
+      expect(me().orderByChild).toHaveBeenCalledWith('startTime');
+      expect(me().startAt).toHaveBeenCalledWith(9999);
+    });
+
+    test('returns a function that detaches the same handlers', () => {
+      const stop = api.listen(actions);
+      const registered = Object.fromEntries(me().on.mock.calls);
+
+      stop();
+
+      expect(me().off).toHaveBeenCalledTimes(3);
+      Object.entries(registered).forEach(([event, handler]) => {
+        expect(me().off).toHaveBeenCalledWith(event, handler);
       });
+    });
 
-      handlers().child_changed(snap('x', { user: 'other' }));
+    test('does nothing when nobody is signed in', () => {
+      auth.currentUser = null;
 
-      expect(emitted).toContainEqual({ type: 'updated', i: { user: 'other', id: 'x' } });
+      const stop = api.listen(actions);
+
+      expect(Object.keys(nodes)).toEqual([]);
+      expect(() => stop()).not.toThrow();
     });
   });
 });
