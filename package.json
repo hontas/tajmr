@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "description": "Record time sometime",
   "scripts": {
-    "format": "prettier --write \"client/**/*.{js,jsx,css}\" \"cypress/**/*.js\" \"test/*.js\" \"*.{js,mjs}\"",
-    "format:check": "prettier --check \"client/**/*.{js,jsx,css}\" \"cypress/**/*.js\" \"test/*.js\" \"*.{js,mjs}\"",
+    "format": "vp fmt \"client/**/*.{js,jsx,css}\" \"cypress/**/*.js\" \"test/*.js\" \"*.{js,mjs}\"",
+    "format:check": "vp fmt --check \"client/**/*.{js,jsx,css}\" \"cypress/**/*.js\" \"test/*.js\" \"*.{js,mjs}\"",
     "knip": "knip",
     "lint": "eslint --ignore-path .gitignore --ext .js,.jsx,.mjs .",
     "test": "jest --notify",
@@ -80,9 +80,11 @@
     "knip": "^6.40.0",
     "lint-staged": "^10.5.4",
     "md5": "^2.2.1",
-    "prettier": "^2.2.1",
     "vite-plugin-pwa": "^2.0.0",
-    "vite-plus": "^1.1.0",
+    "vite-plus": "1.1.0",
     "workbox-build": "^7.4.1"
+  },
+  "overrides": {
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.1.0"
   }
 }

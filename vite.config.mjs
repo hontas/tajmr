@@ -18,7 +18,7 @@ export default defineConfig(({ command, isPreview }) => {
 
   if (uploadSourceMaps) {
     const missing = ['SENTRY_AUTH_TOKEN', 'SENTRY_ORG', 'SENTRY_PROJECT'].filter(
-      (name) => !process.env[name]
+      (name) => !process.env[name],
     );
     if (missing.length) {
       throw new Error(`SENTRY_UPLOAD is set but ${missing.join(', ')} is missing`);
@@ -26,6 +26,19 @@ export default defineConfig(({ command, isPreview }) => {
   }
 
   return {
+    fmt: {
+      singleQuote: true,
+      arrowParens: 'always',
+      printWidth: 100,
+      sortPackageJson: false,
+      ignorePatterns: [
+        'client/styles/pure-css.min.css',
+        'client/styles/normalize.css',
+        'public/',
+        'coverage/',
+        'package-lock.json',
+      ],
+    },
     root: 'client',
     base,
     define: {
