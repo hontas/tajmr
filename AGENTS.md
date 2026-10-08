@@ -73,7 +73,10 @@ and security rules (#14), so don't build on the flat model.
   The workflow deletes the `.map` files before publishing, so the original source is never served.
   `.env.example` only documents the variables (`.env` is gitignored).
 - The Firebase web config is committed in `utils/firebaseApi.js` (public by design; it is not a secret).
-- **Build and Deploy** (`workflow_dispatch`, `main` only): the `build` job runs in the `production`
+- **Build and Deploy** (runs on pushes to `main` that touch app source, dependencies or build config, and
+  manually via `workflow_dispatch`; `main` only): such a merged PR goes live, so hold the merge of anything
+  that needs a manual step first (e.g. a data migration). The file list is the `paths` filter in the
+  workflow; add new build-affecting files there. The `build` job runs in the `production`
   environment (holds the `SENTRY_AUTH_TOKEN` secret), uploads the site as a Pages artifact; the `deploy`
   job publishes it via `actions/deploy-pages`. In GitHub: `SENTRY_AUTH_TOKEN` = environment secret on
   `production`; `SENTRY_ORG` / `SENTRY_PROJECT` = repository variables.
