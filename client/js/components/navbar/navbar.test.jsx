@@ -4,6 +4,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import Navbar from './navbar.jsx';
+import { NotificationProvider } from '../../context/Notification.jsx';
 import createStore from '../../redux/createStore';
 import { initialized } from '../../redux/app';
 import { userLoggedIn } from '../../redux/user';
@@ -19,7 +20,9 @@ const setup = (...actions) => {
   actions.forEach((action) => store.dispatch(action));
   render(
     <Provider store={store}>
-      <Navbar />
+      <NotificationProvider>
+        <Navbar />
+      </NotificationProvider>
     </Provider>
   );
   return store;

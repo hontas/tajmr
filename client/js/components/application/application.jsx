@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Loader from './Loader.jsx';
 
 import styles from './application.module.css';
+import { NotificationProvider } from '../../context/Notification.jsx';
 
 const Navbar = React.lazy(() => import(/* webpackChunkName: "Navbar" */ '../navbar/navbar.jsx'));
 const Footer = React.lazy(() => import(/* webpackChunkName: "Footer" */ '../footer/footer.jsx'));
@@ -20,7 +21,7 @@ function Application({ initialized, user }) {
     <div className={styles.application}>
       <React.Suspense fallback={<Loader />}>
         {initialized ? (
-          <>
+          <NotificationProvider>
             <Navbar />
             <main className={styles.main}>
               {user ? (
@@ -33,7 +34,7 @@ function Application({ initialized, user }) {
               )}
             </main>
             <Footer />
-          </>
+          </NotificationProvider>
         ) : (
           <Loader />
         )}
