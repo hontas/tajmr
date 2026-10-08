@@ -16,11 +16,25 @@ jobs:
     runs-on: ubuntu-latest
     # SENTRY_AUTH_TOKEN is an environment secret: only this job on main can read it
     environment: production
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     env:
       CYPRESS_INSTALL_BINARY: 0
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
+
+      # Calendar version: YYYY.MM.DD, plus .N from the second deploy of the same (UTC) day.
+      # Counted from the v* tags, which the tag job creates after a successful deploy.
+      - name: Compute version
+        id: version
+        run: |
+          git fetch --tags --force --quiet origin
+          today=$(date -u +%Y.%m.%d)
+          count=$(git tag --list "v${today}" "v${today}.*" | wc -l)
+          if [ "$count" -eq 0 ]; then version="$today"; else version="${today}.$((count + 1))"; fi
+          echo "Deploying version $version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
 
       - uses: actions/setup-node@v4
         with:
@@ -34,6 +48,8 @@ jobs:
       - name: Build 🔧
         run: npm run build
         env:
+          # navbar + Sentry release (see webpack.config.js)
+          APP_VERSION: ${{ steps.version.outputs.version }}
           # Sentry source map upload (see webpack.config.js)
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ vars.SENTRY_ORG }}
@@ -57,3 +73,19 @@ jobs:
       - name: Deploy to GitHub Pages 🚀
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # Only after a successful deploy, so failed deploys don't use up a version number.
+  # The tags also mark which commit each deploy came from (handy for rollbacks).
+  tag:
+    needs: [build, deploy]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tag the deployed commit
+        env:
+          VERSION: ${{ needs.build.outputs.version }}
+        run: |
+          git tag "v${VERSION}" "$GITHUB_SHA"
+          git push origin "v${VERSION}"

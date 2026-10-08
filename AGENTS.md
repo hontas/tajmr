@@ -75,3 +75,7 @@ and security rules (#14), so don't build on the flat model.
   environment (holds the `SENTRY_AUTH_TOKEN` secret), uploads the site as a Pages artifact; the `deploy`
   job publishes it via `actions/deploy-pages`. In GitHub: `SENTRY_AUTH_TOKEN` = environment secret on
   `production`; `SENTRY_ORG` / `SENTRY_PROJECT` = repository variables.
+- **Versions** are calendar versions computed by the deploy workflow: `YYYY.MM.DD` (UTC), plus `.N` from the
+  second deploy of the same day. They show in the navbar, are the Sentry release (`tajmr@<version>`) and
+  are tagged `v<version>` on the deployed commit after a successful deploy. `package.json`'s `version` is
+  not used; local builds report `dev`.
