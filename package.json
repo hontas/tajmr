@@ -1,6 +1,6 @@
 {
   "name": "tajmr",
-  "version": "1.0.6",
+  "version": "0.0.0",
   "description": "Record time sometime",
   "scripts": {
     "format": "prettier --write \"client/**/*.{js,jsx,css}\" \"cypress/**/*.js\" \"test/*.js\" \"*.js\"",

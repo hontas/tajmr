@@ -11,6 +11,9 @@ const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 const pkg = require('./package.json');
 require('dotenv').config();
 
+// Set by the deploy workflow (calendar version, e.g. 2026.10.08 or 2026.10.08.2)
+const release = `${pkg.name}@${process.env.APP_VERSION || 'dev'}`;
+
 const isProduction = process.env.NODE_ENV === 'production';
 const publicPath = isProduction ? '/tajmr/' : '/';
 const themeColor = '#1f8dd6';
@@ -151,7 +154,7 @@ const config = {
           new Date()
         )
       ),
-      'process.env.RELEASE': JSON.stringify(`${pkg.name}@${pkg.version}`),
+      'process.env.RELEASE': JSON.stringify(release),
     }),
     new WorkboxPlugin.GenerateSW({
       clientsClaim: true,
@@ -172,6 +175,8 @@ if (isProduction) {
   if (process.env.SENTRY_AUTH_TOKEN) {
     config.plugins.push(
       new SentryWebpackPlugin({
+        // must equal Sentry.init({ release }) in app.js, or Sentry can't match events to uploads
+        release,
         include: 'client',
         ignoreFile: '.gitignore',
       })
