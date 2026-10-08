@@ -34,7 +34,8 @@ describe('AddOneInterval', () => {
     const added = onAdd.mock.calls[0][0];
     expect(added).toMatchObject({ note: '' });
     expect(typeof added.startTime).toBe('number');
-    expect(added.endTime - added.startTime).toBe(8 * 60 * 60 * 1000);
+    // start and end are built from two separate `new Date()` calls, so allow for a few ms of drift
+    expect(Math.abs(added.endTime - added.startTime - 8 * 60 * 60 * 1000)).toBeLessThan(1000);
   });
 
   test('cancel calls onCancel', () => {
