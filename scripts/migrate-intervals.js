@@ -61,7 +61,7 @@ function countPerUser(userIntervals) {
     Object.entries(userIntervals || {}).map(([uid, intervals]) => [
       uid,
       Object.keys(intervals).length,
-    ])
+    ]),
   );
 }
 
@@ -90,7 +90,7 @@ async function main() {
   console.log(
     `  copied but the new rules would reject writes to them: ${wontValidate.length} ${wontValidate
       .slice(0, 20)
-      .join(', ')}`
+      .join(', ')}`,
   );
 
   if (!write) {
@@ -112,7 +112,7 @@ async function main() {
     process.exit(1);
   }
   console.log(
-    `VERIFIED: userIntervals holds at least the ${total} copied intervals for every user.`
+    `VERIFIED: userIntervals holds at least the ${total} copied intervals for every user.`,
   );
 }
 
@@ -124,6 +124,6 @@ if (require.main === module) {
     (error) => {
       console.error(error.message);
       process.exit(1);
-    }
+    },
   );
 }

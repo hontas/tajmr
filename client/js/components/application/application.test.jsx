@@ -27,7 +27,7 @@ const setup = (...actions) => {
   render(
     <Provider store={store}>
       <Application />
-    </Provider>
+    </Provider>,
   );
   return store;
 };
@@ -51,7 +51,7 @@ describe('Application', () => {
     setup(
       initialized(),
       userLoggedIn({ uid: 'u1', email: 'me@example.com' }),
-      intervalsFetched({})
+      intervalsFetched({}),
     );
 
     expect(await screen.findByTestId('user-menu-toggle')).toBeInTheDocument();

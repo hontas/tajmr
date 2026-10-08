@@ -8,11 +8,11 @@ import styles from './application.module.css';
 
 const Navbar = React.lazy(() => import(/* webpackChunkName: "Navbar" */ '../navbar/navbar.jsx'));
 const Footer = React.lazy(() => import(/* webpackChunkName: "Footer" */ '../footer/footer.jsx'));
-const CurrentIntervals = React.lazy(() =>
-  import(/* webpackChunkName: "CurrentIntervals" */ '../containers/currentIntervals.jsx')
+const CurrentIntervals = React.lazy(
+  () => import(/* webpackChunkName: "CurrentIntervals" */ '../containers/currentIntervals.jsx'),
 );
-const PreviousIntervals = React.lazy(() =>
-  import(/* webpackChunkName: "PreviousIntervals" */ '../containers/previousIntervals.jsx')
+const PreviousIntervals = React.lazy(
+  () => import(/* webpackChunkName: "PreviousIntervals" */ '../containers/previousIntervals.jsx'),
 );
 const Login = React.lazy(() => import('../auth/login.jsx'));
 

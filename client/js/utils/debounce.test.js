@@ -36,7 +36,7 @@ describe('debounce', () => {
         seen = this;
       },
       10,
-      thisArg
+      thisArg,
     )();
 
     vi.advanceTimersByTime(10);

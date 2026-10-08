@@ -48,7 +48,7 @@ describe('intervals reducer', () => {
   test('INTERVALS_FETCHED maps an id keyed object to a list with ids', () => {
     const state = reducer(
       initial(),
-      intervalsFetched({ a: { startTime: 1 }, b: { startTime: 2 } })
+      intervalsFetched({ a: { startTime: 1 }, b: { startTime: 2 } }),
     );
     expect(state.isFetching).toBe(false);
     expect(state.items).toEqual([
@@ -64,7 +64,7 @@ describe('intervals reducer', () => {
   test('INTERVAL_ADD appends the interval', () => {
     const state = reducer(
       { ...initial(), isSaving: true, items: [{ id: 'a' }] },
-      intervalAdded({ id: 'b' })
+      intervalAdded({ id: 'b' }),
     );
     expect(state.items).toEqual([{ id: 'a' }, { id: 'b' }]);
     expect(state.isSaving).toBe(false);
@@ -74,7 +74,7 @@ describe('intervals reducer', () => {
   test('INTERVAL_ADD with an existing id replaces it instead of duplicating', () => {
     const state = reducer(
       { ...initial(), items: [{ id: 'a', note: 'old' }] },
-      intervalAdded({ id: 'a', note: 'new' })
+      intervalAdded({ id: 'a', note: 'new' }),
     );
     expect(state.items).toEqual([{ id: 'a', note: 'new' }]);
   });
@@ -82,7 +82,7 @@ describe('intervals reducer', () => {
   test('INTERVAL_UPDATED replaces the item with the same id (moved last)', () => {
     const state = reducer(
       { ...initial(), items: [{ id: 'a', note: 'old' }, { id: 'b' }] },
-      intervalUpdated({ id: 'a', note: 'new' })
+      intervalUpdated({ id: 'a', note: 'new' }),
     );
     expect(state.items).toEqual([{ id: 'b' }, { id: 'a', note: 'new' }]);
     expect(state.isSaving).toBe(false);
@@ -96,7 +96,7 @@ describe('intervals reducer', () => {
   test('INTERVAL_REMOVE removes by id', () => {
     const state = reducer(
       { ...initial(), items: [{ id: 'a' }, { id: 'b' }] },
-      intervalRemoved('a')
+      intervalRemoved('a'),
     );
     expect(state.items).toEqual([{ id: 'b' }]);
   });
@@ -152,7 +152,7 @@ describe('intervals thunks', () => {
 
     test('rejects and stores the error for an invalid new interval', async () => {
       await expect(store.dispatch(attemptUpdate({ note: 'no start' }))).rejects.toMatch(
-        /Missing required properties/
+        /Missing required properties/,
       );
 
       expect(firebaseApi.createInterval).not.toHaveBeenCalled();
@@ -171,7 +171,7 @@ describe('intervals thunks', () => {
 
     test('rejects an invalid existing interval', async () => {
       await expect(store.dispatch(attemptUpdate({ id: 'e1', startTime: 1 }))).rejects.toMatch(
-        /Missing required properties/
+        /Missing required properties/,
       );
       expect(firebaseApi.updateInterval).not.toHaveBeenCalled();
     });

@@ -14,11 +14,11 @@ import { testIds, animationDuration } from '../constants';
 // -- This is a parent command --
 // Cypress.Commands.add("login", (email, password) => { ... })
 Cypress.Commands.add('getByTestId', { prevSubject: 'optional' }, (withinSubject, testId) =>
-  cy.get(`[data-testid="${testId}"]`, { withinSubject })
+  cy.get(`[data-testid="${testId}"]`, { withinSubject }),
 );
 
 Cypress.Commands.add('waitUntilSaved', () =>
-  cy.getByTestId('saving-intervals-container').should('not.exist')
+  cy.getByTestId('saving-intervals-container').should('not.exist'),
 );
 
 Cypress.Commands.add('login', () => {

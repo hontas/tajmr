@@ -78,7 +78,7 @@ export const attemptRemove = (id) => (dispatch) => {
     .removeInterval(id)
     .then(() => dispatch(intervalRemoved(id)))
     .catch((err) =>
-      dispatch(intervalUpdateFailed(`Could not remove interval with id: ${id}. ${err}`))
+      dispatch(intervalUpdateFailed(`Could not remove interval with id: ${id}. ${err}`)),
     );
 };
 
@@ -142,7 +142,7 @@ function filterBadApples(intervals) {
   if (damagedKeys.length) {
     // ids only, never interval contents
     Sentry.captureMessage(
-      `Ignored ${damagedKeys.length} invalid interval(s): ${damagedKeys.join(', ')}`
+      `Ignored ${damagedKeys.length} invalid interval(s): ${damagedKeys.join(', ')}`,
     );
   }
   return { intervals: validIntervals, damagedIntervals };

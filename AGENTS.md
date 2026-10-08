@@ -19,7 +19,7 @@ Use the Node version in `.nvmrc`, then `npm ci` for a clean install that matches
 | `npm run dev` | dev server with hot reload |
 | `npm run verify` | **everything the PR check runs**: lint, format check, knip, tests with coverage (also in other timezones), production build. Run before pushing |
 | `npm test` | Vitest, one run (`npm run tdd` to watch); `npm run test:timezones` reruns it in other timezones |
-| `npm run lint` / `npm run format` | ESLint (airbnb) / Prettier (writes) |
+| `npm run lint` / `npm run format` | ESLint (airbnb) / Oxfmt via `vp fmt` (writes) |
 | `npm run knip` | unused files, exports and dependencies |
 | `npm run build` | production build; the Sentry source map upload only runs when `SENTRY_UPLOAD=true` (deploy workflow, see below) |
 
@@ -45,7 +45,7 @@ Data (Firebase Realtime Database): `userIntervals/{uid}/{id}` (a user's interval
 
 ## Conventions
 
-- Match the surrounding code. Prettier + airbnb ESLint are enforced; `no-console` is an error.
+- Match the surrounding code. Oxfmt (Prettier style, options in `vite.config.mjs`) + airbnb ESLint are enforced; `no-console` is an error.
 - Never log interval data (notes, times) or any user data. Report errors to Sentry, ids only.
 - Tests live next to the code (`*.test.js[x]`). Mock `utils/firebaseApi`; never hit real Firebase in tests.
 - Tests run in `Europe/Stockholm` by default (`test/setupTimezone.js`); code must not depend on the

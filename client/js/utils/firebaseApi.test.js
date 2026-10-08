@@ -35,7 +35,7 @@ vi.mock('firebase/app', () => {
     database: vi.fn(() => mockDatabase),
     auth: Object.assign(
       vi.fn(() => mockAuth),
-      { EmailAuthProvider: { credential: vi.fn(() => 'credential') } }
+      { EmailAuthProvider: { credential: vi.fn(() => 'credential') } },
     ),
     mockHandles: { nodes: mockNodes, node: mockNode, auth: mockAuth, database: mockDatabase },
   };
@@ -152,7 +152,7 @@ describe('firebaseApi', () => {
       me().once.mockResolvedValue(snapshot(data));
 
       await expect(api.fetchIntervalsInWeek(new Date(2021, 3, 7, 12).getTime())).resolves.toEqual(
-        data
+        data,
       );
       expect(me().startAt).toHaveBeenCalledWith(+new Date(2021, 3, 5));
       expect(me().endAt).toHaveBeenCalledWith(+new Date(2021, 3, 12));
@@ -199,7 +199,7 @@ describe('firebaseApi', () => {
 
       expect(firebase.auth.EmailAuthProvider.credential).toHaveBeenCalledWith(
         'me@example.com',
-        'old'
+        'old',
       );
       expect(auth.currentUser.reauthenticateWithCredential).toHaveBeenCalledWith('credential');
       expect(auth.currentUser.updatePassword).toHaveBeenCalledWith('new');

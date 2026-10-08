@@ -25,7 +25,7 @@ const userSettings = {
 const setup = (props = {}) => {
   const updateSettings = vi.fn();
   render(
-    <UserMenu user={user} userSettings={userSettings} updateSettings={updateSettings} {...props} />
+    <UserMenu user={user} userSettings={userSettings} updateSettings={updateSettings} {...props} />,
   );
   return { updateSettings };
 };
@@ -40,7 +40,7 @@ describe('UserMenu', () => {
   test('uses a gravatar url based on the email when the user has no photo', () => {
     setup();
     expect(screen.getByAltText('avatar').getAttribute('src')).toMatch(
-      /^https:\/\/www\.gravatar\.com\/avatar\/[0-9a-f]{32}$/
+      /^https:\/\/www\.gravatar\.com\/avatar\/[0-9a-f]{32}$/,
     );
   });
 
@@ -79,7 +79,7 @@ describe('UserMenu', () => {
 
     expect(firebaseApi.saveUserData).toHaveBeenCalledWith('u1', userSettings);
     await waitFor(() =>
-      expect(screen.getByRole('button', { name: 'Spara inställningar' })).toBeEnabled()
+      expect(screen.getByRole('button', { name: 'Spara inställningar' })).toBeEnabled(),
     );
   });
 

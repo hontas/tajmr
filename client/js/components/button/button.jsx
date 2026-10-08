@@ -19,14 +19,14 @@ const Button = React.forwardRef(
       block,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const classes = classNames(
       'pure-button',
       styles.button,
       styles[theme],
       { [styles.block]: block },
-      className
+      className,
     );
 
     return (
@@ -36,7 +36,7 @@ const Button = React.forwardRef(
         {isLoading && <SpinKit.Bounce size="15px" />}
       </button>
     );
-  }
+  },
 );
 
 Button.defaultProps = {

@@ -51,7 +51,7 @@ describe('Login', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Forgot password' }));
 
     await waitFor(() =>
-      expect(firebaseApi.sendPasswordResetEmail).toHaveBeenCalledWith('me@example.com')
+      expect(firebaseApi.sendPasswordResetEmail).toHaveBeenCalledWith('me@example.com'),
     );
     expect(firebaseApi.login).not.toHaveBeenCalled();
   });
@@ -77,7 +77,7 @@ describe('Login', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Log in' }));
 
     await waitFor(() =>
-      expect(screen.queryByText(/The password is invalid/)).not.toBeInTheDocument()
+      expect(screen.queryByText(/The password is invalid/)).not.toBeInTheDocument(),
     );
   });
 

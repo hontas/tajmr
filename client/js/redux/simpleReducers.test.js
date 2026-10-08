@@ -41,7 +41,7 @@ describe('userSettings reducer', () => {
   test('merges settings and bumps updatedAt', () => {
     const state = userSettingsReducer(
       undefined,
-      updateSettings({ hoursInWeek: 36, displayName: 'Pontus' })
+      updateSettings({ hoursInWeek: 36, displayName: 'Pontus' }),
     );
     expect(state).toMatchObject({ hoursInWeek: 36, displayName: 'Pontus', updatedAt: 1234 });
     expect(state.displayNotifications).toBe(false);

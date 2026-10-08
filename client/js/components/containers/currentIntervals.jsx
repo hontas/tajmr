@@ -46,10 +46,10 @@ class CurrentIntervals extends React.Component {
     const week = getWeek(timestamp);
     const month = getMonth(timestamp);
     const weekIntervals = intervals.filter(
-      ({ startTime }) => startTime > week.startTime && startTime < week.endTime
+      ({ startTime }) => startTime > week.startTime && startTime < week.endTime,
     );
     const monthIntervals = intervals.filter(
-      ({ startTime }) => startTime > month.startTime && startTime < month.endTime
+      ({ startTime }) => startTime > month.startTime && startTime < month.endTime,
     );
 
     return (
