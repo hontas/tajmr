@@ -1,12 +1,5 @@
 {
   "rules": {
-    "intervals": {
-      ".read": "auth != null",
-      ".indexOn": ["user"],
-      "$interval_id": {
-        ".write": "auth != null"
-      }
-    },
     "userIntervals": {
       "$uid": {
         ".read": "auth != null && auth.uid === $uid",

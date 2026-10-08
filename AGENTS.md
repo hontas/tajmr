@@ -41,7 +41,7 @@ client/js/
 
 Data (Firebase Realtime Database): `userIntervals/{uid}/{id}` (a user's intervals) and `users/{uid}`
 (settings); the rules in `database.rules.json` let a user touch only their own paths. The old flat
-`intervals/{id}` node is no longer used by the client and is deleted at the end of #14.
+`intervals/{id}` node is denied by the rules (nothing else is readable) and is deleted at the end of #14.
 
 ## Conventions
 
