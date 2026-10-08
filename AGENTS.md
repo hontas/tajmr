@@ -71,7 +71,7 @@ Data (Firebase Realtime Database): `userIntervals/{uid}/{id}` (a user's interval
 ## Environment and deploy
 
 - Local dev, tests and `npm run verify` need no environment variables. The deploy workflow sets
-  `SENTRY_UPLOAD=true` plus `SENTRY_AUTH_TOKEN`, `SENTRY_ORG` and `SENTRY_PROJECT` for the build, which
+  `SENTRY_UPLOAD=true` plus `SENTRY_DSN`, `SENTRY_AUTH_TOKEN`, `SENTRY_ORG` and `SENTRY_PROJECT` for the build, which
   then emits hidden source maps and uploads them to Sentry; the build fails if a credential is missing.
   The workflow deletes the `.map` files before publishing, so the original source is never served.
   `.env.example` only documents the variables (`.env` is gitignored).
@@ -85,7 +85,8 @@ Data (Firebase Realtime Database): `userIntervals/{uid}/{id}` (a user's interval
   workflow; add new build-affecting files there. The `build` job runs in the `production`
   environment (holds the `SENTRY_AUTH_TOKEN` secret), uploads the site as a Pages artifact; the `deploy`
   job publishes it via `actions/deploy-pages`. In GitHub: `SENTRY_AUTH_TOKEN` = environment secret on
-  `production`; `SENTRY_ORG` / `SENTRY_PROJECT` = repository variables.
+  `production`; `SENTRY_ORG` / `SENTRY_PROJECT` / `SENTRY_DSN` = repository variables (the DSN is public; it ships in the
+  bundle, and without it Sentry stays off, which is the case in dev and in tests).
 - **Versions** are calendar versions computed by the deploy workflow: `YYYY.MM.DD` (UTC), plus `.N` from the
   second deploy of the same day. They show in the navbar, are the Sentry release (`tajmr@<version>`) and
   are tagged `v<version>` on the deployed commit after a successful deploy. `package.json`'s `version` is
