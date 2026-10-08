@@ -12,9 +12,9 @@
     "verify": "npm run lint && npm run format:check && npm run knip && jest --ci --coverage && npm run test:timezones && npm run build",
     "tdd": "npm run test -- --watch",
     "e2e": "npx cypress open",
-    "build": "vite build",
-    "dev": "vite",
-    "preview": "vite preview"
+    "build": "vp build",
+    "dev": "vp dev",
+    "preview": "vp preview"
   },
   "husky": {
     "hooks": {
@@ -80,8 +80,8 @@
     "lint-staged": "^10.5.4",
     "md5": "^2.2.1",
     "prettier": "^2.2.1",
-    "vite": "^8.3.4",
     "vite-plugin-pwa": "^2.0.0",
+    "vite-plus": "^1.1.0",
     "workbox-build": "^7.4.1"
   }
 }
