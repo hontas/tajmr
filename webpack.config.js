@@ -168,12 +168,15 @@ const config = {
 };
 
 if (isProduction) {
-  config.plugins.push(
-    new SentryWebpackPlugin({
-      include: 'client',
-      ignoreFile: '.gitignore',
-    })
-  );
+  // Only the deploy workflow has the token; PR builds still run the full production build without it
+  if (process.env.SENTRY_AUTH_TOKEN) {
+    config.plugins.push(
+      new SentryWebpackPlugin({
+        include: 'client',
+        ignoreFile: '.gitignore',
+      })
+    );
+  }
 } else {
   config.plugins.push(new webpack.HotModuleReplacementPlugin());
   config.devtool = 'eval-source-map';

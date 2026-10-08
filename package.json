@@ -8,7 +8,7 @@
     "knip": "knip",
     "lint": "eslint --ignore-path .gitignore --ext .js,.jsx .",
     "test": "jest --notify",
-    "verify": "npm run lint && npm run format:check && npm run knip && jest --ci --coverage",
+    "verify": "npm run lint && npm run format:check && npm run knip && jest --ci --coverage && npm run build",
     "tdd": "npm run test -- --watch",
     "e2e": "npx cypress open",
     "prebuild": "rm -rf public && mkdir public",
