@@ -21,7 +21,7 @@ Use the Node version in `.nvmrc`, then `npm ci` for a clean install that matches
 | `npm test` | Jest (add `-- --watch` or use `npm run tdd`) |
 | `npm run lint` / `npm run format` | ESLint (airbnb) / Prettier (writes) |
 | `npm run knip` | unused files, exports and dependencies |
-| `npm run build` | production build; the Sentry source map upload only runs when `SENTRY_AUTH_TOKEN` is set (deploy workflow, see below) |
+| `npm run build` | production build; the Sentry source map upload only runs when `SENTRY_UPLOAD=true` (deploy workflow, see below) |
 
 `npm run e2e` (Cypress) logs in with a hard-coded test account against the **live Firebase project**. Do
 not run it unless asked.
@@ -67,9 +67,11 @@ and security rules (#14), so don't build on the flat model.
 
 ## Environment and deploy
 
-- Local dev, tests and `npm run verify` need no environment variables. `SENTRY_AUTH_TOKEN`,
-  `SENTRY_ORG` and `SENTRY_PROJECT` are injected at build time by the deploy workflow for the source map
-  upload; `.env.example` only documents them (`.env` is gitignored).
+- Local dev, tests and `npm run verify` need no environment variables. The deploy workflow sets
+  `SENTRY_UPLOAD=true` plus `SENTRY_AUTH_TOKEN`, `SENTRY_ORG` and `SENTRY_PROJECT` for the build, which
+  then emits hidden source maps and uploads them to Sentry; the build fails if a credential is missing.
+  The workflow deletes the `.map` files before publishing, so the original source is never served.
+  `.env.example` only documents the variables (`.env` is gitignored).
 - The Firebase web config is committed in `utils/firebaseApi.js` (public by design; it is not a secret).
 - **Build and Deploy** (`workflow_dispatch`, `main` only): the `build` job runs in the `production`
   environment (holds the `SENTRY_AUTH_TOKEN` secret), uploads the site as a Pages artifact; the `deploy`

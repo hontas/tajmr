@@ -50,10 +50,17 @@ jobs:
         env:
           # navbar + Sentry release (see webpack.config.js)
           APP_VERSION: ${{ steps.version.outputs.version }}
-          # Sentry source map upload (see webpack.config.js)
+          # Sentry source map upload (see webpack.config.js); the build fails if a value is missing
+          SENTRY_UPLOAD: true
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ vars.SENTRY_ORG }}
           SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
+
+      # The maps were uploaded to Sentry during the build; never publish the original source
+      - name: Remove source maps from the site
+        run: |
+          find public -name '*.map' -delete
+          if [ -n "$(find public -name '*.map')" ]; then echo "source maps left in public/"; exit 1; fi
 
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
