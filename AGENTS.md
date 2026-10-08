@@ -6,7 +6,7 @@ source of truth; `CLAUDE.md` only imports it. Don't duplicate it elsewhere.
 ## What this is
 
 **tajmr**: a small time-recording PWA ("press play, press pause, add a note"). React + Redux +
-Firebase (Auth + Realtime Database), built with webpack, tested with Jest + React Testing Library,
+Firebase (Auth + Realtime Database), built with Vite, tested with Jest + React Testing Library,
 deployed to GitHub Pages. UI text is Swedish. The default branch is `main`.
 
 ## Commands
@@ -30,7 +30,7 @@ not run it unless asked.
 
 ```
 client/js/
-  app.js            bootstrap: Sentry, store, Firebase auth listener
+  app.jsx           bootstrap: Sentry, store, Firebase auth listener
   components/<x>/   one folder per feature: <x>.jsx, <x>.module.css, <x>.test.jsx
   redux/            one module per slice (actions + reducer + thunks): intervals, user, userSettings, app
   utils/
