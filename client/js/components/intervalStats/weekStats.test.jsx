@@ -15,7 +15,7 @@ const userSettings = {
 };
 
 const setup = (props = {}) => {
-  const fetchIntervalsInWeek = jest.fn();
+  const fetchIntervalsInWeek = vi.fn();
   render(
     <WeekStats
       intervals={[]}
@@ -30,11 +30,11 @@ const setup = (props = {}) => {
 
 describe('WeekStats', () => {
   beforeEach(() => {
-    jest.useFakeTimers('modern');
-    jest.setSystemTime(new Date(2021, 3, 7, 18));
+    vi.useFakeTimers('modern');
+    vi.setSystemTime(new Date(2021, 3, 7, 18));
   });
 
-  afterEach(() => jest.useRealTimers());
+  afterEach(() => vi.useRealTimers());
 
   test('shows the work week (Mon-Fri) when there are no intervals', () => {
     setup();

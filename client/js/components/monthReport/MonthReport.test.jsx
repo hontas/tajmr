@@ -24,11 +24,11 @@ const intervals = [
 
 describe('MonthReport', () => {
   beforeEach(() => {
-    jest.useFakeTimers('modern');
-    jest.setSystemTime(new Date(2021, 3, 15, 12));
+    vi.useFakeTimers('modern');
+    vi.setSystemTime(new Date(2021, 3, 15, 12));
   });
 
-  afterEach(() => jest.useRealTimers());
+  afterEach(() => vi.useRealTimers());
 
   const renderReport = () => render(<MonthReport intervals={intervals} />);
   const row = (title) => screen.getByText(title, { selector: 'p' }).closest('li');
@@ -80,7 +80,7 @@ describe('MonthReport', () => {
   });
 
   test('navigates month by month on the 31st, when the neighbouring month is shorter', () => {
-    jest.setSystemTime(new Date(2021, 4, 31, 12)); // May 31
+    vi.setSystemTime(new Date(2021, 4, 31, 12)); // May 31
     renderReport();
 
     fireEvent.click(screen.getByRole('button', { name: '◀︎' }));

@@ -9,15 +9,15 @@ import { initialized } from '../../redux/app';
 import { userLoggedIn } from '../../redux/user';
 import { intervalsFetched } from '../../redux/intervals';
 
-jest.mock('../../utils/firebaseApi', () => ({
+vi.mock('../../utils/firebaseApi', () => ({
   __esModule: true,
   default: {
-    login: jest.fn(),
-    logout: jest.fn(),
-    sendPasswordResetEmail: jest.fn(),
-    saveUserData: jest.fn(),
-    updateUserPassword: jest.fn(),
-    fetchIntervalsInWeek: jest.fn(() => Promise.resolve({})),
+    login: vi.fn(),
+    logout: vi.fn(),
+    sendPasswordResetEmail: vi.fn(),
+    saveUserData: vi.fn(),
+    updateUserPassword: vi.fn(),
+    fetchIntervalsInWeek: vi.fn(() => Promise.resolve({})),
   },
 }));
 
@@ -43,7 +43,8 @@ describe('Application', () => {
     setup(initialized());
 
     expect(await screen.findByTestId('login-form')).toBeInTheDocument();
-    expect(screen.getByText('TajmR')).toBeInTheDocument();
+    // the navbar is lazy loaded
+    expect(await screen.findByText('TajmR')).toBeInTheDocument();
   });
 
   test('shows the work button for a logged-in user', async () => {

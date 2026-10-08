@@ -5,12 +5,12 @@ import '@testing-library/jest-dom';
 import UserMenu from './userMenu.jsx';
 import firebaseApi from '../../utils/firebaseApi';
 
-jest.mock('../../utils/firebaseApi', () => ({
+vi.mock('../../utils/firebaseApi', () => ({
   __esModule: true,
   default: {
-    logout: jest.fn(),
-    saveUserData: jest.fn(),
-    updateUserPassword: jest.fn(),
+    logout: vi.fn(),
+    saveUserData: vi.fn(),
+    updateUserPassword: vi.fn(),
   },
 }));
 
@@ -23,7 +23,7 @@ const userSettings = {
 };
 
 const setup = (props = {}) => {
-  const updateSettings = jest.fn();
+  const updateSettings = vi.fn();
   render(
     <UserMenu user={user} userSettings={userSettings} updateSettings={updateSettings} {...props} />
   );
@@ -32,7 +32,7 @@ const setup = (props = {}) => {
 
 describe('UserMenu', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     firebaseApi.saveUserData.mockResolvedValue();
     firebaseApi.updateUserPassword.mockResolvedValue();
   });

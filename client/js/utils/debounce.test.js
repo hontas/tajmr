@@ -1,11 +1,11 @@
 import debounce from './debounce';
 
 describe('debounce', () => {
-  beforeEach(() => jest.useFakeTimers());
-  afterEach(() => jest.useRealTimers());
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
 
   test('calls fn once after the timeout with the last arguments', () => {
-    const fn = jest.fn();
+    const fn = vi.fn();
     const debounced = debounce(fn, 100);
 
     debounced('a');
@@ -13,18 +13,18 @@ describe('debounce', () => {
     debounced('c');
     expect(fn).not.toHaveBeenCalled();
 
-    jest.advanceTimersByTime(100);
+    vi.advanceTimersByTime(100);
     expect(fn).toHaveBeenCalledTimes(1);
     expect(fn).toHaveBeenCalledWith('c');
   });
 
   test('uses 400ms as default timeout', () => {
-    const fn = jest.fn();
+    const fn = vi.fn();
     debounce(fn)();
 
-    jest.advanceTimersByTime(399);
+    vi.advanceTimersByTime(399);
     expect(fn).not.toHaveBeenCalled();
-    jest.advanceTimersByTime(1);
+    vi.advanceTimersByTime(1);
     expect(fn).toHaveBeenCalledTimes(1);
   });
 
@@ -39,7 +39,7 @@ describe('debounce', () => {
       thisArg
     )();
 
-    jest.advanceTimersByTime(10);
+    vi.advanceTimersByTime(10);
     expect(seen).toBe(thisArg);
   });
 });

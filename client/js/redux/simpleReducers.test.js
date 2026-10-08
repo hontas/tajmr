@@ -24,8 +24,8 @@ describe('user reducer', () => {
 });
 
 describe('userSettings reducer', () => {
-  beforeEach(() => jest.spyOn(Date, 'now').mockReturnValue(1234));
-  afterEach(() => jest.restoreAllMocks());
+  beforeEach(() => vi.spyOn(Date, 'now').mockReturnValue(1234));
+  afterEach(() => vi.restoreAllMocks());
 
   test('has sensible defaults', () => {
     expect(userSettingsReducer(undefined, { type: '@@INIT' })).toEqual({

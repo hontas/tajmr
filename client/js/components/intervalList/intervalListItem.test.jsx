@@ -14,8 +14,8 @@ const interval = {
 };
 
 const setup = (props = {}) => {
-  const onUpdate = jest.fn();
-  const onDelete = jest.fn();
+  const onUpdate = vi.fn();
+  const onDelete = vi.fn();
   render(
     <IntervalListItem interval={interval} onUpdate={onUpdate} onDelete={onDelete} {...props} />
   );
@@ -62,7 +62,7 @@ describe('IntervalListItem', () => {
   test('an invalid time is not pushed', () => {
     const { onUpdate } = setup();
     const input = screen.getByTestId('interval-from-input');
-    const logSpy = jest.spyOn(console, 'log');
+    const logSpy = vi.spyOn(console, 'log');
 
     fireEvent.change(input, { target: { value: '25:99' } });
     fireEvent.blur(input);

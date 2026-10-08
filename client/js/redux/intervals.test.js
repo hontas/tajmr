@@ -16,14 +16,14 @@ import reducer, {
 import createStore from './createStore';
 import firebaseApi from '../utils/firebaseApi';
 
-jest.mock('@sentry/react', () => ({ captureException: jest.fn(), captureMessage: jest.fn() }));
-jest.mock('../utils/firebaseApi', () => ({
+vi.mock('@sentry/react', () => ({ captureException: vi.fn(), captureMessage: vi.fn() }));
+vi.mock('../utils/firebaseApi', () => ({
   __esModule: true,
   default: {
-    createInterval: jest.fn(),
-    updateInterval: jest.fn(),
-    removeInterval: jest.fn(),
-    fetchIntervalsForUser: jest.fn(),
+    createInterval: vi.fn(),
+    updateInterval: vi.fn(),
+    removeInterval: vi.fn(),
+    fetchIntervalsForUser: vi.fn(),
   },
 }));
 
@@ -31,8 +31,8 @@ const validNew = { startTime: 1000, endTime: 2000, note: 'work' };
 const saved = { createdAt: 1, startTime: 1000 };
 
 describe('intervals reducer', () => {
-  beforeEach(() => jest.spyOn(Date, 'now').mockReturnValue(5000));
-  afterEach(() => jest.restoreAllMocks());
+  beforeEach(() => vi.spyOn(Date, 'now').mockReturnValue(5000));
+  afterEach(() => vi.restoreAllMocks());
 
   const initial = () => reducer(undefined, { type: '@@INIT' });
 
@@ -127,8 +127,8 @@ describe('intervals thunks', () => {
 
   beforeEach(() => {
     store = createStore();
-    logSpy = jest.spyOn(console, 'log');
-    jest.clearAllMocks();
+    logSpy = vi.spyOn(console, 'log');
+    vi.clearAllMocks();
   });
 
   afterEach(() => {

@@ -5,11 +5,11 @@ import '@testing-library/jest-dom';
 import Login from './login.jsx';
 import firebaseApi from '../../utils/firebaseApi';
 
-jest.mock('../../utils/firebaseApi', () => ({
+vi.mock('../../utils/firebaseApi', () => ({
   __esModule: true,
   default: {
-    login: jest.fn(),
-    sendPasswordResetEmail: jest.fn(),
+    login: vi.fn(),
+    sendPasswordResetEmail: vi.fn(),
   },
 }));
 
@@ -20,7 +20,7 @@ const typeCredentials = (email, password) => {
 
 describe('Login', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     firebaseApi.login.mockResolvedValue({});
     firebaseApi.sendPasswordResetEmail.mockResolvedValue();
   });
