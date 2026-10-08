@@ -30,12 +30,15 @@ Sentry.init({
 
 export const store = createStore(); // eslint-disable-line
 firebaseApi.subscribe((action) => store.dispatch(action));
-firebaseApi.init({ intervalAdded, intervalRemoved, intervalUpdated });
+let stopListening = () => {};
 firebaseApi.auth.onAuthStateChanged((user) => {
+  stopListening();
+  stopListening = () => {};
   store.dispatch(appActions.initialized());
   if (user) {
     store.dispatch(userActions.userLoggedIn(user));
     store.dispatch(fetchIntervalsForUser());
+    stopListening = firebaseApi.listen({ intervalAdded, intervalRemoved, intervalUpdated });
     firebaseApi
       .getUserSettings(user)
       .then((settings) => store.dispatch(userSettingsActions.updateSettings(settings.val())));
