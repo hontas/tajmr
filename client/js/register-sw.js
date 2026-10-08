@@ -1,36 +1,30 @@
-/* eslint-disable no-console */
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    if (process.env.NODE_ENV !== 'production') return;
+import { registerSW } from 'virtual:pwa-register';
 
-    navigator.serviceWorker
-      .register('service-worker.js')
-      .then((reg) => {
-        // eslint-disable-next-line no-param-reassign
-        reg.onupdatefound = function onupdatefound() {
-          const installingWorker = reg.installing;
+const reload = () => window.location.reload();
 
-          installingWorker.onstatechange = function onstatechange() {
-            switch (installingWorker.state) {
-              case 'installed':
-                if (navigator.serviceWorker.controller) {
-                  console.log('New or updated content is available.');
-                } else {
-                  console.log('Content is now available offline!');
-                }
-                break;
+// Registers the service worker (production only). A new version waits until the function this
+// returns is called, which is the user's decision; `onNeedRefresh` fires when one is waiting.
+export default function registerServiceWorker({ onNeedRefresh }) {
+  if (!('serviceWorker' in navigator) || process.env.NODE_ENV !== 'production') {
+    return () => Promise.resolve();
+  }
 
-              case 'redundant':
-                console.error('The installing service worker became redundant.');
-                break;
-              default:
-                console.log(`Unhandled worker state: ${installingWorker.state}`);
-            }
-          };
-        };
-      })
-      .catch((e) => {
-        console.error('Error during service worker registration:', e);
+  const updateServiceWorker = registerSW({
+    onNeedRefresh,
+    // the reload is done below: the worker library skips it when the page had no worker at first
+    // load, and then the page would keep running the old code after the user accepted
+    onNeedReload: () => {},
+    onRegisteredSW(url, registration) {
+      if (!registration) return;
+      // An installed PWA is rarely reloaded, so look for a new version whenever the app comes back
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') registration.update();
       });
+    },
   });
+
+  return () => {
+    navigator.serviceWorker.addEventListener('controllerchange', reload, { once: true });
+    return updateServiceWorker(true);
+  };
 }

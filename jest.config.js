@@ -2,6 +2,7 @@ module.exports = {
   globalSetup: '<rootDir>/test/setupTimezone.js',
   moduleNameMapper: {
     '^.+\\.(css|styl)$': '<rootDir>/client/styles/CSSStub.js',
+    '^virtual:pwa-register$': '<rootDir>/test/pwaRegisterStub.js',
   },
   setupFilesAfterEnv: [],
   collectCoverageFrom: ['client/js/**/*.{js,jsx}', '!client/js/**/*.test.{js,jsx}'],
