@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import thunkMiddleware from 'redux-thunk';
+import { thunk as thunkMiddleware } from 'redux-thunk';
 import reducers from '.';
 
 // oxlint-disable-next-line no-underscore-dangle -- the Redux DevTools global

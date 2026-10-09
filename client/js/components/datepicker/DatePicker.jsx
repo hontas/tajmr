@@ -9,7 +9,7 @@ import Calendar from '../icons/Calendar.jsx';
 
 import styles from './DatePicker.module.css';
 
-const DatePicker = ({ className, date, onDayClick, buttonTitle }) => {
+const DatePicker = ({ className = '', date = null, onDayClick, buttonTitle = '' }) => {
   const [showDateInput, setShowDateInput] = useState();
   const datePicker = useRef();
   const handleOutsideClick = useRef(null);
@@ -60,12 +60,6 @@ const DatePicker = ({ className, date, onDayClick, buttonTitle }) => {
       )}
     </div>
   );
-};
-
-DatePicker.defaultProps = {
-  className: '',
-  buttonTitle: '',
-  date: null,
 };
 
 DatePicker.propTypes = {
