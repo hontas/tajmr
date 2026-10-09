@@ -68,7 +68,8 @@ describe('planMigration', () => {
 
   test('never puts interval contents in the report fields', () => {
     const report = planMigration({ a: interval({ user: 'u1', note: 'secret note' }) });
-    const { updates, ...summary } = report;
+    const summary = { ...report };
+    delete summary.updates;
 
     expect(JSON.stringify(summary)).not.toContain('secret note');
   });

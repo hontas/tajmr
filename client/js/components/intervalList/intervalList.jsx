@@ -10,7 +10,8 @@ function sortBy(array, prop) {
   return array.slice().sort((a, b) => b[prop] - a[prop]);
 }
 
-const IntervalList = ({ intervals, onDelete, onUpdate, notes = [], ...props }) => (
+const emptyNotes = [];
+const IntervalList = ({ intervals, onDelete, onUpdate, notes = emptyNotes, ...props }) => (
   <ul {...props} className={styles.container}>
     {sortBy(intervals, 'startTime').map((interval) => (
       <IntervalListItem

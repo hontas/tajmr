@@ -1,7 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
 
 import Navbar from './navbar.jsx';
 import createStore from '../../redux/createStore';

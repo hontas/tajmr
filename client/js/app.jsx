@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import * as Sentry from '@sentry/react';
 
-import '../styles/critical.css';
 import firebaseApi from './utils/firebaseApi';
 import createStore from './redux/createStore';
 import * as userActions from './redux/user';
@@ -17,7 +16,6 @@ import {
   reset as intervalReset,
 } from './redux/intervals';
 import Application from './components/application/application.jsx';
-import './register-sw';
 
 if (process.env.SENTRY_DSN) {
   Sentry.init({

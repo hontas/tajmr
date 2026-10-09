@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes, * as customPropTypes from '../../constants/propTypes';
 
-import RenderEvery, { thirtySeconds } from '../hoc/RenderEvery.jsx';
+import useNow from '../../hooks/useNow';
 import ProgressBar from '../ui-elements/progressBar.jsx';
 import WeekStatsItem from './weekStatsItem.jsx';
 import Button from '../button/button.jsx';
@@ -19,8 +19,7 @@ import styles from './weekStats.module.css';
 
 class WeekStats extends React.Component {
   render() {
-    const { intervals, timestamp, userSettings } = this.props;
-    const now = Date.now();
+    const { intervals, timestamp, userSettings, now } = this.props;
     // get startTime from first entry in intervals with default value
     const intervalSum = intervals
       .map(({ startTime, endTime }) => (endTime || now) - startTime)
@@ -38,7 +37,7 @@ class WeekStats extends React.Component {
           </Button>
         </h3>
         <div className={classNames(styles.bars)}>
-          {mashUpWeekAndIntervals(intervals, timestamp).map((day) => (
+          {mashUpWeekAndIntervals(intervals, timestamp, now).map((day) => (
             <WeekStatsItem key={day.weekday} {...day} />
           ))}
         </div>
@@ -63,17 +62,18 @@ WeekStats.propTypes = {
   intervals: customPropTypes.intervals.isRequired,
   userSettings: customPropTypes.userSettings.isRequired,
   timestamp: PropTypes.number.isRequired,
+  now: PropTypes.number.isRequired,
 };
 
-export const WeekStatsTimeWrapper = RenderEvery(thirtySeconds)(WeekStats);
+export const WeekStatsTimeWrapper = (props) => <WeekStats {...props} now={useNow()} />;
 export default WeekStats;
 
-function groupByWeekDay(intervals) {
+function groupByWeekDay(intervals, now) {
   return intervals.reduce((hashMap, { startTime, endTime, notWork, note }) => {
     const date = new Date(startTime);
     const dateString = getDate(date);
     const weekDay = getWeekday(date);
-    const timespan = (endTime || Date.now()) - startTime;
+    const timespan = (endTime || now) - startTime;
     const current = hashMap[dateString] || {
       total: 0,
       weekDay,
@@ -92,8 +92,8 @@ function groupByWeekDay(intervals) {
   }, {});
 }
 
-function mashUpWeekAndIntervals(intervals, timestamp) {
-  const intervalHash = groupByWeekDay(intervals);
+function mashUpWeekAndIntervals(intervals, timestamp, now) {
+  const intervalHash = groupByWeekDay(intervals, now);
 
   return createWorkWeek(timestamp)
     .map((day) => ({

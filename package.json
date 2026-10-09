@@ -6,7 +6,7 @@
     "format": "vp fmt \"client/**/*.{js,jsx,css}\" \"cypress/**/*.js\" \"test/*.js\" \"*.{js,mjs}\"",
     "format:check": "vp fmt --check \"client/**/*.{js,jsx,css}\" \"cypress/**/*.js\" \"test/*.js\" \"*.{js,mjs}\"",
     "knip": "knip",
-    "lint": "eslint --ignore-path .gitignore --ext .js,.jsx,.mjs .",
+    "lint": "vp lint",
     "test": "vp test run",
     "test:timezones": "for tz in UTC America/New_York Asia/Kolkata; do TZ=$tz vp test run || exit 1; done",
     "verify": "npm run lint && npm run format:check && npm run knip && vp test run --coverage && npm run test:timezones && npm run build",
@@ -25,8 +25,7 @@
   },
   "lint-staged": {
     "*.{js,jsx}": [
-      "eslint --fix",
-      "git add"
+      "vp lint --fix"
     ]
   },
   "author": "Pontus Lundin <lundin.pontus@gmail.com> (https://github.com/hontas)",
@@ -49,9 +48,6 @@
     "spinkit": "^2.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.2",
-    "@babel/eslint-parser": "^7.13.14",
-    "@babel/preset-react": "^7.0.0",
     "@sentry/vite-plugin": "^5.4.1",
     "@sinonjs/fake-timers": "^6.0.1",
     "@testing-library/jest-dom": "^5.12.0",
@@ -60,14 +56,6 @@
     "@vitejs/plugin-react": "^6.1.2",
     "@vitest/coverage-v8": "^5.0.3",
     "cypress": "^6.6.0",
-    "eslint": "^7.22.0",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-cypress": "^2.7.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.16.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^6.0.0",
     "jsdom": "^29.1.1",
     "knip": "^6.40.0",

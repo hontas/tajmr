@@ -40,9 +40,7 @@ export default () => {
     <footer className={styles.footer}>
       <span>
         {'Built with '}
-        <span className={styles.emoji} role="img" aria-label="heart">
-          ❤
-        </span>
+        <span className={styles.emoji}>❤</span>
         {' by '}
         <a className="animated" href="https://github.com/hontas">
           hontas

@@ -6,7 +6,9 @@ import { getHours, getDurationString } from '../../utils/time';
 
 import styles from './weekStatsItem.module.css';
 
-const WeekDayItem = ({ weekday, total, date, intervals = [] }) => {
+const emptyIntervals = [];
+
+const WeekDayItem = ({ weekday, total, date, intervals = emptyIntervals }) => {
   // 10 hours = 100px; minimum 20px
   const barHeight = total > 0 ? Math.max(getHours(total) * 10, 20) : 0;
   const style = {

@@ -16,7 +16,7 @@ export default function UpdatePrompt() {
   if (!updateAvailable) return null;
 
   return (
-    <div className={styles.toast} role="status" data-testid="update-prompt">
+    <output className={styles.toast} data-testid="update-prompt">
       <span className={styles.message}>En ny version av appen finns</span>
       <div className={styles.actions}>
         <Button
@@ -27,6 +27,6 @@ export default function UpdatePrompt() {
         />
         <Button className={styles.update} text="Uppdatera" onClick={() => update.current(true)} />
       </div>
-    </div>
+    </output>
   );
 }

@@ -93,7 +93,7 @@ class UserMenu extends React.Component {
             <div className={styles.changePassLabel}>
               <input
                 onKeyDown={this.preventDefault}
-                autoComplete="old-password"
+                autoComplete="current-password"
                 className={styles.changePassInput}
                 ref={(node) => {
                   this.oldPass = node;

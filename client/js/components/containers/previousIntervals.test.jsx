@@ -1,14 +1,12 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { render /* screen */ } from '@testing-library/react';
-import '@testing-library/jest-dom';
 
 import createStore from '../../redux/createStore';
 import PreviousIntervals from './previousIntervals.jsx';
 import { intervalsFetched } from '../../redux/intervals';
 import { updateSettings } from '../../redux/userSettings';
-
-const { intervals } = require('../../../../test/test-data.json');
+import { intervals } from '../../../../test/test-data.json';
 
 describe('PreviousIntervals', () => {
   let store;
@@ -29,13 +27,12 @@ describe('PreviousIntervals', () => {
   });
 
   test('should render', () => {
-    render(
+    const { container } = render(
       <Provider store={store}>
         <PreviousIntervals />
       </Provider>,
     );
 
-    // TODO: assert intervals rendered
-    // expect(screen.getByRole('heading')).toHaveTextContent('Welcome, John Doe')
+    expect(container).not.toBeEmptyDOMElement();
   });
 });

@@ -1,5 +1,4 @@
 import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite-plus';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -28,13 +27,11 @@ export default defineConfig(({ command, isPreview }) => {
   }
 
   return {
-    // Oxfmt (`vp fmt`), same options as the Prettier setup it replaced
     fmt: {
       singleQuote: true,
       arrowParens: 'always',
       printWidth: 100,
       sortPackageJson: false,
-      // vendored styles and generated output
       ignorePatterns: [
         'client/styles/pure-css.min.css',
         'client/styles/normalize.css',
@@ -43,65 +40,70 @@ export default defineConfig(({ command, isPreview }) => {
         'package-lock.json',
       ],
     },
-    root: 'client',
+    lint: {
+      plugins: ['react', 'jsx-a11y', 'import', 'vitest'],
+      // correctness, suspicious, pedantic, perf, style, restriction, nursery
+      categories: {
+        correctness: 'error',
+        perf: 'error',
+        suspicious: 'error',
+      },
+      env: { browser: true, node: true, vitest: true },
+      // `process.env.X` is replaced at build time (see `define` below)
+      globals: { process: 'readonly' },
+      ignorePatterns: ['dist/**', 'coverage/**'],
+      rules: {
+        'no-console': 'error',
+        eqeqeq: 'error',
+        'no-var': 'error',
+        'prefer-const': 'error',
+        // catches imports that were meant to have a binding; firebase/auth and /database register
+        // themselves, until the modular SDK (step 5 of #15)
+        'import/no-unassigned-import': ['error', { allow: ['firebase/*'] }],
+      },
+      overrides: [
+        {
+          files: ['cypress/**'],
+          env: { mocha: true },
+          globals: { cy: 'readonly', Cypress: 'readonly' },
+        },
+      ],
+    },
     base,
     define: {
-      // an instant (ISO string); the app formats it in the viewer's timezone, not the build machine's
       'process.env.BUILD_TIME': JSON.stringify(new Date().toISOString()),
       'process.env.RELEASE': JSON.stringify(release),
-      // public (it ships in the bundle); without it Sentry stays off, e.g. in dev and in tests
       'process.env.SENTRY_DSN': JSON.stringify(process.env.SENTRY_DSN || ''),
     },
     css: {
-      // pure-css.min.css still carries IE-only hacks (`*zoom`), which the CSS minifier rejects
+      // the vendored Pure.css 0.6 (2014) carries IE-only hacks (`*zoom`) that the CSS minifier rejects
       lightningcss: { errorRecovery: true },
     },
-    resolve: {
-      alias: {
-        // provided by vite-plugin-pwa at build time
-        ...(process.env.VITEST && {
-          'virtual:pwa-register': fileURLToPath(
-            new URL('./test/pwaRegisterStub.js', import.meta.url),
-          ),
-        }),
-      },
-    },
     test: {
-      // the app's Vite root is client/, but scripts/ has tests too
-      root: fileURLToPath(new URL('.', import.meta.url)),
       environment: 'jsdom',
       // describe, test, expect and vi without imports, like Jest
       globals: true,
-      // the timezone the tests run in (see test/setupTimezone.js)
-      globalSetup: ['./test/setupTimezone.js'],
-      css: { modules: { classNameStrategy: 'non-scoped' } },
-      include: ['client/js/**/*.test.{js,jsx}', 'scripts/**/*.test.js'],
+      setupFiles: ['./test/setup.js'],
+      // Swedish time unless TZ is set (`npm run test:timezones` does), so results match on every machine
+      env: { TZ: process.env.TZ || 'Europe/Stockholm' },
       coverage: {
-        provider: 'v8',
         include: ['client/js/**/*.{js,jsx}'],
-        exclude: ['client/js/**/*.test.{js,jsx}'],
         // Baseline: ratchet up as coverage improves, never down. Enforced with `--coverage` (CI).
         thresholds: { statements: 75, branches: 60, functions: 70, lines: 75 },
       },
     },
     build: {
-      outDir: '../dist',
-      emptyOutDir: true,
       // hidden: emitted for the Sentry upload without being referenced from the bundles. The deploy
       // workflow deletes the .map files afterwards so the original source is not published.
       sourcemap: uploadSourceMaps ? 'hidden' : false,
       rolldownOptions: {
         output: {
-          // big, rarely changing libraries get their own files, so a release that only changes app
-          // code doesn't make returning users download them again
+          // libraries in their own files (Firebase is the biggest), so a release that only changes
+          // app code doesn't make returning users download them again
           codeSplitting: {
             groups: [
               { name: 'firebase', test: /node_modules[\\/](@firebase|firebase)[\\/]/ },
-              { name: 'sentry', test: /node_modules[\\/]@sentry[\\/]/ },
-              {
-                name: 'react',
-                test: /node_modules[\\/](react|react-dom|scheduler|react-redux|redux|redux-thunk)[\\/]/,
-              },
+              { name: 'vendor', test: /node_modules/ },
             ],
           },
         },

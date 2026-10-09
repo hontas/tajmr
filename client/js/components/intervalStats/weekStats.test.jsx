@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
 
 import WeekStats from './weekStats.jsx';
 import { oneWeek } from '../../utils/time';
@@ -20,6 +19,7 @@ const setup = (props = {}) => {
     <WeekStats
       intervals={[]}
       timestamp={wednesday}
+      now={Date.now()}
       userSettings={userSettings}
       fetchIntervalsInWeek={fetchIntervalsInWeek}
       {...props}

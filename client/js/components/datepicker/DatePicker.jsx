@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import DayPicker from 'react-day-picker';
 import classNames from 'classnames';
+// oxlint-disable-next-line import/no-unassigned-import -- the stylesheet of the component below
 import 'react-day-picker/lib/style.css';
 
 // 📅
