@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import DayPicker from 'react-day-picker';
+import { DayPicker } from 'react-day-picker';
 import classNames from 'classnames';
 // oxlint-disable-next-line import/no-unassigned-import -- the stylesheet of the component below
-import 'react-day-picker/lib/style.css';
+import 'react-day-picker/style.css';
 
 import Calendar from '../icons/Calendar.jsx';
 
@@ -50,10 +50,11 @@ const DatePicker = ({ className, date, onDayClick, buttonTitle }) => {
       {date && showDateInput && (
         <DayPicker
           className={styles.calendar}
-          initialMonth={new Date(date)}
+          mode="single"
+          defaultMonth={new Date(date)}
           showOutsideDays
-          firstDayOfWeek={1}
-          selectedDays={new Date(date)}
+          weekStartsOn={1}
+          selected={new Date(date)}
           onDayClick={onDayClick}
         />
       )}

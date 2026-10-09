@@ -20,7 +20,7 @@ npm run dev
 ```
 
 Run `npm run verify` before pushing: it runs what the PR check runs (lint, format check, knip, tests with
-coverage, production build). See [AGENTS.md](AGENTS.md) for the project layout, conventions and workflow.
+coverage, production build). See [AGENTS.md](AGENTS.md) for the conventions and workflow.
 
 ## environment
 

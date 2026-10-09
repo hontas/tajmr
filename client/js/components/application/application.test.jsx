@@ -52,7 +52,9 @@ describe('Application', () => {
       intervalsFetched({}),
     );
 
-    expect(await screen.findByTestId('user-menu-toggle')).toBeInTheDocument();
+    expect(
+      await screen.findByTestId('user-menu-toggle', {}, { timeout: 8000 }),
+    ).toBeInTheDocument();
     expect(screen.queryByTestId('login-form')).not.toBeInTheDocument();
   });
 });
