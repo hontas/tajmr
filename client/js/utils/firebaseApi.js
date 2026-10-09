@@ -12,6 +12,7 @@ const config = {
   storageBucket: 'firebase-tajmr.appspot.com',
   messagingSenderId: '784102119013',
 };
+// Initialize Firebase
 firebase.initializeApp(config);
 const database = firebase.database();
 const auth = firebase.auth();

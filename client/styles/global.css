@@ -1,3 +1,4 @@
+/* the little of a reset we rely on */
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -54,6 +55,7 @@ a:active {
   color: var(--text-color-light);
 }
 
+/* animated underline on hover */
 a.animated {
   position: relative;
   display: inline-block;

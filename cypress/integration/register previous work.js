@@ -46,6 +46,7 @@ context('previous work', () => {
 
     cy.waitUntilSaved();
 
+    // when saved
     cy.getByTestId(testIds.addPrevIntervalForm).should('not.exist');
     cy.getByTestId(testIds.currentIntervals).children().should('have.length', 1);
     cy.getByTestId(testIds.intervalFromInput).should('have.value', fromTime);
