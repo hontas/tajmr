@@ -20,7 +20,6 @@ import styles from './weekStats.module.css';
 class WeekStats extends React.Component {
   render() {
     const { intervals, timestamp, userSettings, now } = this.props;
-    // get startTime from first entry in intervals with default value
     const intervalSum = intervals
       .map(({ startTime, endTime }) => (endTime || now) - startTime)
       .reduce((res, curr) => res + curr, 0);

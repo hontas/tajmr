@@ -42,7 +42,6 @@ describe('Application', () => {
     setup(initialized());
 
     expect(await screen.findByTestId('login-form')).toBeInTheDocument();
-    // the navbar is lazy loaded
     expect(await screen.findByText('TajmR')).toBeInTheDocument();
   });
 

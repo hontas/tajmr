@@ -5,7 +5,6 @@ import WeekStats from './weekStats.jsx';
 import { oneWeek } from '../../utils/time';
 
 const hour = 60 * 60 * 1000;
-// Wednesday 7 April 2021
 const wednesday = new Date(2021, 3, 7, 9).getTime();
 const userSettings = {
   displayNotifications: false,

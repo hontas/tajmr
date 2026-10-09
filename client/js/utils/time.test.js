@@ -57,7 +57,6 @@ describe('time', () => {
 
   describe('#getWeekDay', () => {
     test('should return localised weekday', () => {
-      // as not supported by node? :(
       expect(getWeekday(new Date('2016-04-04T07:00:00'))).toBe('mån');
     });
   });
@@ -335,8 +334,7 @@ describe('time', () => {
     });
   });
 
-  // These loop over a whole year so that whichever DST rules the timezone running the tests has
-  // are exercised (`npm run test:timezones` runs them in several).
+  // loop over a whole year so the DST rules of any timezone are exercised
   describe('day, week and month boundaries', () => {
     const local = (y, m, d, h = 0, min = 0, s = 0, ms = 0) => new Date(y, m, d, h, min, s, ms);
     const mondays2026 = Array.from({ length: 53 }, (_, i) => local(2025, 11, 29 + i * 7));

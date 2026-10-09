@@ -33,7 +33,7 @@ describe('Navbar', () => {
 
     test('shows the release and the build time in the viewer timezone', () => {
       process.env.RELEASE = 'tajmr@2026.10.08';
-      process.env.BUILD_TIME = '2026-10-08T13:29:00.000Z'; // an instant, as embedded by the build
+      process.env.BUILD_TIME = '2026-10-08T13:29:00.000Z';
       const built = new Date(process.env.BUILD_TIME);
       const hhmm = `${String(built.getHours()).padStart(2, '0')}:${String(
         built.getMinutes(),

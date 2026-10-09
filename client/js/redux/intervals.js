@@ -140,7 +140,6 @@ function filterBadApples(intervals) {
   });
   const damagedKeys = Object.keys(damagedIntervals);
   if (damagedKeys.length) {
-    // ids only, never interval contents
     Sentry.captureMessage(
       `Ignored ${damagedKeys.length} invalid interval(s): ${damagedKeys.join(', ')}`,
     );
@@ -196,8 +195,8 @@ export default function intervalsReducer(state = initialState, action) {
         isSaving: true,
       };
 
-    // add and update are both upserts: the thunk's success handler and the Firebase listener
-    // report the same interval, so whichever arrives second must not create a duplicate
+    // add and update are upserts: the success handler and the Firebase listener
+    // report the same interval, so the second must not create a duplicate
     case INTERVAL_ADD:
     case INTERVAL_UPDATED:
     case INTERVAL_COMPLETE: {

@@ -72,7 +72,7 @@ describe('Login', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Log in' }));
     await screen.findByText(/The password is invalid/);
 
-    firebaseApi.login.mockReturnValue(new Promise(() => {})); // never settles
+    firebaseApi.login.mockReturnValue(new Promise(() => {}));
     fireEvent.click(screen.getByRole('button', { name: 'Log in' }));
 
     await waitFor(() =>
@@ -81,14 +81,13 @@ describe('Login', () => {
   });
 
   test('shows a loading state while logging in', async () => {
-    firebaseApi.login.mockReturnValue(new Promise(() => {})); // never settles
+    firebaseApi.login.mockReturnValue(new Promise(() => {}));
     render(<Login />);
     typeCredentials('me@example.com', 'secret');
 
     fireEvent.click(screen.getByRole('button', { name: 'Log in' }));
 
     await waitFor(() => expect(screen.getByRole('button', { name: 'Log in' })).toBeInTheDocument());
-    // SpinKit renders inside the button while loading
     expect(screen.getByRole('button', { name: 'Log in' }).children.length).toBeGreaterThan(0);
   });
 

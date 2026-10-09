@@ -5,7 +5,6 @@ import classNames from 'classnames';
 // oxlint-disable-next-line import/no-unassigned-import -- the stylesheet of the component below
 import 'react-day-picker/lib/style.css';
 
-// 📅
 import Calendar from '../icons/Calendar.jsx';
 
 import styles from './DatePicker.module.css';
