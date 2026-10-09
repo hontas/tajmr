@@ -1,5 +1,5 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import { StoreProvider } from '../../hooks/useStore';
 import { render, screen } from '@testing-library/react';
 
 import Application from './application.jsx';
@@ -24,9 +24,9 @@ const setup = (...actions) => {
   const store = createStore();
   actions.forEach((action) => store.dispatch(action));
   render(
-    <Provider store={store}>
+    <StoreProvider store={store}>
       <Application />
-    </Provider>,
+    </StoreProvider>,
   );
   return store;
 };

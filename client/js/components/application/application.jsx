@@ -1,6 +1,5 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector } from '../../hooks/useStore';
 import UpdatePrompt from '../updatePrompt/updatePrompt.jsx';
 import Loader from './Loader.jsx';
 
@@ -16,7 +15,10 @@ const PreviousIntervals = React.lazy(
 );
 const Login = React.lazy(() => import('../auth/login.jsx'));
 
-function Application({ initialized, user }) {
+function Application() {
+  const user = useSelector((state) => state.user);
+  const initialized = useSelector((state) => state.app.initialized);
+
   return (
     <div className={styles.application}>
       <UpdatePrompt />
@@ -44,16 +46,4 @@ function Application({ initialized, user }) {
   );
 }
 
-Application.propTypes = {
-  user: PropTypes.shape({
-    uid: PropTypes.string.isRequired,
-  }),
-  initialized: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = ({ user, app }) => ({
-  user,
-  initialized: app.initialized,
-});
-
-export default connect(mapStateToProps)(Application);
+export default Application;

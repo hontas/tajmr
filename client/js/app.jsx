@@ -1,6 +1,5 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { Provider } from 'react-redux';
 import * as Sentry from '@sentry/react';
 
 import firebaseApi from './utils/firebaseApi';
@@ -16,6 +15,7 @@ import {
   reset as intervalReset,
 } from './redux/intervals';
 import Application from './components/application/application.jsx';
+import { StoreProvider } from './hooks/useStore';
 
 if (process.env.SENTRY_DSN) {
   Sentry.init({
@@ -47,9 +47,9 @@ firebaseApi.auth.onAuthStateChanged((user) => {
 });
 
 const App = () => (
-  <Provider store={store}>
+  <StoreProvider store={store}>
     <Application />
-  </Provider>
+  </StoreProvider>
 );
 
 createRoot(document.getElementById('root')).render(<App />);

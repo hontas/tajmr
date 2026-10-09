@@ -1,5 +1,5 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import { StoreProvider } from '../../hooks/useStore';
 import { render /* screen */ } from '@testing-library/react';
 
 import createStore from '../../redux/createStore';
@@ -28,9 +28,9 @@ describe('PreviousIntervals', () => {
 
   test('should render', () => {
     const { container } = render(
-      <Provider store={store}>
+      <StoreProvider store={store}>
         <PreviousIntervals />
-      </Provider>,
+      </StoreProvider>,
     );
 
     expect(container).not.toBeEmptyDOMElement();

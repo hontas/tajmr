@@ -1,5 +1,5 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import { StoreProvider } from '../../hooks/useStore';
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import Navbar from './navbar.jsx';
@@ -17,9 +17,9 @@ const setup = (...actions) => {
   const store = createStore();
   actions.forEach((action) => store.dispatch(action));
   render(
-    <Provider store={store}>
+    <StoreProvider store={store}>
       <Navbar />
-    </Provider>,
+    </StoreProvider>,
   );
   return store;
 };

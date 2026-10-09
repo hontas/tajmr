@@ -1,5 +1,5 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import { StoreProvider } from '../../hooks/useStore';
 import { render, screen } from '@testing-library/react';
 
 import IntervalStats from './intervalStats.jsx';
@@ -13,9 +13,9 @@ const renderWith = (intervals) => {
   const store = createStore();
   store.dispatch(intervalsFetched(intervals));
   return render(
-    <Provider store={store}>
+    <StoreProvider store={store}>
       <IntervalStats />
-    </Provider>,
+    </StoreProvider>,
   );
 };
 

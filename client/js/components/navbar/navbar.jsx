@@ -1,19 +1,23 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 import Button from '../button/button.jsx';
 import Hamburger from '../icons/Hamburger.jsx';
 import UserMenu from '../user/userMenu.jsx';
 import * as userSettingActions from '../../redux/userSettings';
-import * as customPropTypes from '../../constants/propTypes';
+import { useDispatch, useSelector } from '../../hooks/useStore';
 import { getDateTimeString } from '../../utils/time';
 import * as SpinKit from '../spinkit/spinkit.jsx';
 
 import styles from './navbar.module.css';
 
-function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, dispatch }) {
+function Navbar() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const isFetching = useSelector((state) => state.intervals.isFetching);
+  const isSaving = useSelector((state) => state.intervals.isSaving);
+  const userSettings = useSelector((state) => state.userSettings);
+  const appInitialized = useSelector((state) => state.app.initialized);
   const [showUserMenu, setShowUserMenu] = React.useState(false);
   const navBarInnerRef = React.useRef(null);
   const isLoading = appInitialized && (isSaving || isFetching);
@@ -89,25 +93,4 @@ function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, disp
   );
 }
 
-Navbar.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  isSaving: PropTypes.bool.isRequired,
-  appInitialized: PropTypes.bool.isRequired,
-  userSettings: customPropTypes.userSettings.isRequired,
-  user: PropTypes.shape({
-    uid: PropTypes.string.isRequired,
-  }),
-};
-
-function mapStateToProps({ intervals, userSettings, user, app }) {
-  return {
-    user,
-    isFetching: intervals.isFetching,
-    isSaving: intervals.isSaving,
-    userSettings,
-    appInitialized: app.initialized,
-  };
-}
-
-export default connect(mapStateToProps)(Navbar);
+export default Navbar;

@@ -1,11 +1,22 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import { thunk as thunkMiddleware } from 'redux-thunk';
-import reducers from '.';
+import rootReducer from '.';
 
-// oxlint-disable-next-line no-underscore-dangle -- the Redux DevTools global
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const composed = composeEnhancers(applyMiddleware(thunkMiddleware));
+export default function createStore(initialState = {}) {
+  let state = rootReducer(initialState, { type: 'INIT' });
+  const listeners = new Set();
 
-export default function storeCreator(initialState = {}) {
-  return createStore(reducers, initialState, composed);
+  const store = {
+    getState: () => state,
+    dispatch(action) {
+      if (typeof action === 'function') return action(store.dispatch, store.getState);
+      state = rootReducer(state, action);
+      listeners.forEach((listener) => listener());
+      return action;
+    },
+    subscribe(listener) {
+      listeners.add(listener);
+      return () => listeners.delete(listener);
+    },
+  };
+
+  return store;
 }
