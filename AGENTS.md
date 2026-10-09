@@ -34,6 +34,11 @@ Do not run `npm run e2e` (Cypress) unless asked: it logs in with a hard-coded te
   `structuredClone`, `<dialog>`, CSS features, ...) in the browsers above (MDN / caniuse). Only reach for a
   package or custom code when the Web API can't do the job, and say why in the PR.
 - Keep it simple: no new dependency, abstraction or config without a concrete need.
+- **No comments by default.** Rename the function or variable instead. Add a comment only when a name
+  can't explain code that would otherwise look wrong or make no sense, and then make it as short and
+  direct as possible.
+- **Docs describe the current state only**: no history, no "used to" or "removed in", here and in
+  comments, unless the user asks for it. The history is in git and the issues.
 
 ## Workflow
 
@@ -57,7 +62,7 @@ Do not run `npm run e2e` (Cypress) unless asked: it logs in with a hard-coded te
 - Database security rules (`database.rules.json`) are **not** deployed by the workflow: the owner deploys
   them (`firebase deploy --only database --project <id>`) or pastes them in the console. The rules are the
   access control; never rely on client-side filtering. Data lives under `userIntervals/{uid}/{id}` and
-  `users/{uid}`; the old flat `intervals/{id}` node is denied and is deleted at the end of #14.
+  `users/{uid}`.
 - Sentry: the deploy build needs `SENTRY_DSN`, `SENTRY_ORG`, `SENTRY_PROJECT` (repository variables) and
   `SENTRY_AUTH_TOKEN` (secret on the `production` environment), and fails at once if one is missing.
   Without the DSN Sentry stays off, as in dev and tests. Source maps are uploaded and deleted before
