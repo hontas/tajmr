@@ -58,6 +58,14 @@ describe('IntervalListItem', () => {
     expect(onUpdate.mock.calls[0][0].startTime).toBe(new Date(2021, 3, 7, 8, 15).getTime());
   });
 
+  test('picking another day moves the start and keeps the time of day', () => {
+    const { onUpdate } = setup();
+
+    fireEvent.change(screen.getByLabelText('from date'), { target: { value: '2022-01-31' } });
+
+    expect(onUpdate.mock.calls[0][0].startTime).toBe(new Date(2022, 0, 31, 9, 0).getTime());
+  });
+
   test('an invalid time is not pushed', () => {
     const { onUpdate } = setup();
     const input = screen.getByTestId('interval-from-input');

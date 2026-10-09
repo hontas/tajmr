@@ -1,72 +1,33 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { DayPicker } from 'react-day-picker';
 import classNames from 'classnames';
-// oxlint-disable-next-line import/no-unassigned-import -- the stylesheet of the component below
-import 'react-day-picker/style.css';
 
 import Calendar from '../icons/Calendar.jsx';
+import { toDateInputValue, fromDateInputValue } from '../../utils/time';
 
 import styles from './DatePicker.module.css';
 
-const DatePicker = ({ className = '', date = null, onDayClick, buttonTitle = '' }) => {
-  const [showDateInput, setShowDateInput] = useState();
-  const datePicker = useRef();
-  const handleOutsideClick = useRef(null);
-  const classes = classNames(styles.container, className, {
-    [styles.disabled]: !date,
-    [styles.showPicker]: showDateInput,
-  });
-
-  const toggleDateInput = (evt) => {
-    evt.preventDefault();
-    setShowDateInput(!showDateInput);
-
-    if (!showDateInput && !handleOutsideClick.current) {
-      const clickHandler = ({ target }) => {
-        if (datePicker?.current.contains(target) === false) {
-          setShowDateInput(false);
-          document.removeEventListener('click', clickHandler);
-        }
-      };
-      handleOutsideClick.current = clickHandler;
-      document.addEventListener('click', clickHandler, false);
-    } else {
-      document.removeEventListener('click', handleOutsideClick.current);
-      handleOutsideClick.current = null;
-    }
-  };
-
-  return (
-    <div className={classes} ref={datePicker}>
-      <button
-        type="button"
-        className={styles.calendarBtn}
-        title={buttonTitle}
-        onClick={toggleDateInput}
-      >
-        <Calendar />
-      </button>
-      {date && showDateInput && (
-        <DayPicker
-          className={styles.calendar}
-          mode="single"
-          defaultMonth={new Date(date)}
-          showOutsideDays
-          weekStartsOn={1}
-          selected={new Date(date)}
-          onDayClick={onDayClick}
-        />
-      )}
-    </div>
-  );
-};
+const DatePicker = ({ className = '', date = null, onChange, buttonTitle = '' }) => (
+  <div className={classNames(styles.container, className, { [styles.disabled]: !date })}>
+    <Calendar />
+    <input
+      type="date"
+      className={styles.input}
+      title={buttonTitle}
+      aria-label={buttonTitle}
+      disabled={!date}
+      value={date ? toDateInputValue(date) : ''}
+      onClick={(evt) => evt.currentTarget.showPicker?.()}
+      onChange={({ target }) => target.value && onChange(fromDateInputValue(target.value))}
+    />
+  </div>
+);
 
 DatePicker.propTypes = {
   className: PropTypes.string,
   buttonTitle: PropTypes.string,
   date: PropTypes.number,
-  onDayClick: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default DatePicker;

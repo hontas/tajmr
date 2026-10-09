@@ -47,6 +47,16 @@ export function getDate(date) {
   return intl.date.format(date);
 }
 
+export function toDateInputValue(timestamp) {
+  const date = new Date(timestamp);
+  return `${date.getFullYear()}-${zeroPad(date.getMonth() + 1)}-${zeroPad(date.getDate())}`;
+}
+
+export function fromDateInputValue(value) {
+  const [year, month, day] = value.split('-').map(Number);
+  return new Date(year, month - 1, day);
+}
+
 export function getHours(timestamp) {
   return timestamp / oneHour;
 }
