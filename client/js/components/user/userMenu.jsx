@@ -1,5 +1,5 @@
 import md5 from 'md5';
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Button from '../button/button.jsx';
@@ -11,174 +11,154 @@ import styles from './userMenu.module.css';
 
 const garavatarUrl = 'https://www.gravatar.com/avatar';
 
-class UserMenu extends React.Component {
-  state = {
-    isSavingUserSettings: false,
-    isSavingUserPassword: false,
-    updatePasswordError: null,
-    updatePasswordSuccess: false,
+const preventDefault = (evt) => {
+  if (evt.type === 'keydown' && evt.key !== 'Enter') return;
+  evt.preventDefault();
+};
+
+const UserMenu = ({ userSettings, user, className, updateSettings }) => {
+  const { displayMonthReport, displayNotifications, displayPreviousIntervals, hoursInWeek } =
+    userSettings;
+  const [isSavingUserSettings, setIsSavingUserSettings] = useState(false);
+  const [isSavingUserPassword, setIsSavingUserPassword] = useState(false);
+  const [updatePasswordError, setUpdatePasswordError] = useState(null);
+  const [updatePasswordSuccess, setUpdatePasswordSuccess] = useState(false);
+  const oldPass = useRef(null);
+  const newPass = useRef(null);
+  const photoURL = user && (user.photoURL || `${garavatarUrl}/${md5(user.email)}`);
+
+  const handleChange =
+    (prop, transform = (x) => x) =>
+    ({ target }) => {
+      const value = target.type === 'checkbox' ? target.checked : transform(target.value);
+      updateSettings(prop, value);
+    };
+
+  const saveUserSettings = (evt) => {
+    evt.preventDefault();
+    setIsSavingUserSettings(true);
+
+    firebaseApi.saveUserData(user.uid, userSettings).then(() => {
+      setIsSavingUserSettings(false);
+    });
   };
 
-  render() {
-    const { userSettings, user, className } = this.props;
-    const { displayMonthReport, displayNotifications, displayPreviousIntervals, hoursInWeek } =
-      userSettings;
-    const {
-      isSavingUserSettings,
-      isSavingUserPassword,
-      updatePasswordError,
-      updatePasswordSuccess,
-    } = this.state;
-    const photoURL = user && (user.photoURL || `${garavatarUrl}/${md5(user.email)}`);
-
-    return (
-      <form
-        data-testid="user-menu"
-        className={classNames(styles.container, className)}
-        onSubmit={this.preventDefault}
-      >
-        <div className={styles.row}>
-          <img alt="avatar" className={styles.profileImage} src={photoURL} />
-          <Button className={styles.logOut} theme="link" onClick={firebaseApi.logout}>
-            Logga ut
-          </Button>
-        </div>
-        <fieldset className={styles.fieldset}>
-          <label className={styles.label}>
-            Visa notifiering
-            <input
-              checked={displayNotifications}
-              onChange={this.handleChange('displayNotifications')}
-              style={{ float: 'right' }}
-              type="checkbox"
-            />
-          </label>
-          <label className={styles.label}>
-            Visa tidigare intervall
-            <input
-              checked={displayPreviousIntervals}
-              onChange={this.handleChange('displayPreviousIntervals')}
-              style={{ float: 'right' }}
-              type="checkbox"
-            />
-          </label>
-          <label className={styles.label}>
-            Visa månadsrapport
-            <input
-              checked={displayMonthReport}
-              onChange={this.handleChange('displayMonthReport')}
-              style={{ float: 'right' }}
-              type="checkbox"
-            />
-          </label>
-          <label className={styles.label}>
-            Full arbetsvecka (h)
-            <input
-              value={hoursInWeek}
-              onChange={this.handleChange('hoursInWeek', Number)}
-              style={{ float: 'right', width: '100px' }}
-              type="number"
-            />
-          </label>
-        </fieldset>
-        <Button
-          theme="accent"
-          isLoading={isSavingUserSettings}
-          onClick={this.saveUserSettings}
-          text="Spara inställningar"
-        />
-        <fieldset className={styles.fieldset}>
-          {updatePasswordError && <p style={{ whiteSpace: 'normal' }}>{updatePasswordError}</p>}
-          <div className={styles.changePass}>
-            <div className={styles.changePassLabel}>
-              <input
-                onKeyDown={this.preventDefault}
-                autoComplete="current-password"
-                className={styles.changePassInput}
-                ref={(node) => {
-                  this.oldPass = node;
-                }}
-                type="password"
-                placeholder="Nuvarande lösenord"
-                aria-label="Nuvarande lösenord"
-                id="oldPassword"
-              />
-            </div>
-            <div className={styles.changePassLabel}>
-              <input
-                onKeyDown={this.preventDefault}
-                autoComplete="new-password"
-                className={styles.changePassInput}
-                ref={(node) => {
-                  this.newPass = node;
-                }}
-                type="password"
-                placeholder="Nytt lösenord"
-                aria-label="Nytt lösenord"
-                id="newPassword"
-              />
-            </div>
-            <Button
-              theme={updatePasswordSuccess ? 'success' : 'accent'}
-              className={styles.changePassBtn}
-              isLoading={isSavingUserPassword}
-              onClick={this.updateUserPassword}
-              text={updatePasswordSuccess ? '👍' : 'Ändra'}
-            />
-          </div>
-        </fieldset>
-      </form>
-    );
-  }
-
-  preventDefault = (evt) => {
-    if (evt.type === 'keydown' && evt.key !== 'Enter') return;
+  const updateUserPassword = (evt) => {
     evt.preventDefault();
-  };
+    setIsSavingUserPassword(true);
 
-  updateUserPassword = (evt) => {
-    evt.preventDefault();
-    const oldPass = this.oldPass.value;
-    const newPass = this.newPass.value;
-    this.setState({ isSavingUserPassword: true });
-
-    const handleResponse = ({ message }) =>
-      this.setState({
-        isSavingUserPassword: false,
-        updatePasswordError: message,
-        updatePasswordSuccess: !message,
-      });
+    const handleResponse = ({ message }) => {
+      setIsSavingUserPassword(false);
+      setUpdatePasswordError(message);
+      setUpdatePasswordSuccess(!message);
+    };
 
     firebaseApi
-      .updateUserPassword(oldPass, newPass)
+      .updateUserPassword(oldPass.current.value, newPass.current.value)
       .then(() => {
         handleResponse({ message: '' });
-        setTimeout(() => this.setState({ updatePasswordSuccess: false }), 2000);
-        this.oldPass.value = '';
-        this.newPass.value = '';
+        setTimeout(() => setUpdatePasswordSuccess(false), 2000);
+        oldPass.current.value = '';
+        newPass.current.value = '';
       })
       .catch(handleResponse);
   };
 
-  handleChange(prop, transform = (x) => x) {
-    const { updateSettings } = this.props;
-
-    return ({ target }) => {
-      const value = target.type === 'checkbox' ? target.checked : transform(target.value);
-      updateSettings(prop, value);
-    };
-  }
-
-  saveUserSettings = (evt) => {
-    evt.preventDefault();
-    const { user, userSettings } = this.props;
-    this.setState({ isSavingUserSettings: true });
-
-    firebaseApi.saveUserData(user.uid, userSettings).then(() => {
-      this.setState({ isSavingUserSettings: false });
-    });
-  };
-}
+  return (
+    <form
+      data-testid="user-menu"
+      className={classNames(styles.container, className)}
+      onSubmit={preventDefault}
+    >
+      <div className={styles.row}>
+        <img alt="avatar" className={styles.profileImage} src={photoURL} />
+        <Button className={styles.logOut} theme="link" onClick={firebaseApi.logout}>
+          Logga ut
+        </Button>
+      </div>
+      <fieldset className={styles.fieldset}>
+        <label className={styles.label}>
+          Visa notifiering
+          <input
+            checked={displayNotifications}
+            onChange={handleChange('displayNotifications')}
+            style={{ float: 'right' }}
+            type="checkbox"
+          />
+        </label>
+        <label className={styles.label}>
+          Visa tidigare intervall
+          <input
+            checked={displayPreviousIntervals}
+            onChange={handleChange('displayPreviousIntervals')}
+            style={{ float: 'right' }}
+            type="checkbox"
+          />
+        </label>
+        <label className={styles.label}>
+          Visa månadsrapport
+          <input
+            checked={displayMonthReport}
+            onChange={handleChange('displayMonthReport')}
+            style={{ float: 'right' }}
+            type="checkbox"
+          />
+        </label>
+        <label className={styles.label}>
+          Full arbetsvecka (h)
+          <input
+            value={hoursInWeek}
+            onChange={handleChange('hoursInWeek', Number)}
+            style={{ float: 'right', width: '100px' }}
+            type="number"
+          />
+        </label>
+      </fieldset>
+      <Button
+        theme="accent"
+        isLoading={isSavingUserSettings}
+        onClick={saveUserSettings}
+        text="Spara inställningar"
+      />
+      <fieldset className={styles.fieldset}>
+        {updatePasswordError && <p style={{ whiteSpace: 'normal' }}>{updatePasswordError}</p>}
+        <div className={styles.changePass}>
+          <div className={styles.changePassLabel}>
+            <input
+              onKeyDown={preventDefault}
+              autoComplete="current-password"
+              className={styles.changePassInput}
+              ref={oldPass}
+              type="password"
+              placeholder="Nuvarande lösenord"
+              aria-label="Nuvarande lösenord"
+              id="oldPassword"
+            />
+          </div>
+          <div className={styles.changePassLabel}>
+            <input
+              onKeyDown={preventDefault}
+              autoComplete="new-password"
+              className={styles.changePassInput}
+              ref={newPass}
+              type="password"
+              placeholder="Nytt lösenord"
+              aria-label="Nytt lösenord"
+              id="newPassword"
+            />
+          </div>
+          <Button
+            theme={updatePasswordSuccess ? 'success' : 'accent'}
+            className={styles.changePassBtn}
+            isLoading={isSavingUserPassword}
+            onClick={updateUserPassword}
+            text={updatePasswordSuccess ? '👍' : 'Ändra'}
+          />
+        </div>
+      </fieldset>
+    </form>
+  );
+};
 
 UserMenu.propTypes = {
   className: PropTypes.string,
