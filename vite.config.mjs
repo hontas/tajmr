@@ -28,13 +28,11 @@ export default defineConfig(({ command, isPreview }) => {
   }
 
   return {
-    // Oxfmt (`vp fmt`), same options as the Prettier setup it replaced
     fmt: {
       singleQuote: true,
       arrowParens: 'always',
       printWidth: 100,
       sortPackageJson: false,
-      // vendored styles and generated output
       ignorePatterns: [
         'client/styles/pure-css.min.css',
         'client/styles/normalize.css',
@@ -43,11 +41,14 @@ export default defineConfig(({ command, isPreview }) => {
         'package-lock.json',
       ],
     },
-    // Oxlint (`vp lint`): the default correctness rules plus the suspicious category, for the
-    // plugins we use. Everything else is Oxfmt's job; a few exceptions have an inline reason.
     lint: {
       plugins: ['react', 'jsx-a11y', 'import'],
-      categories: { correctness: 'error', suspicious: 'error' },
+      // correctness, suspicious, pedantic, perf, style, restriction, nursery
+      categories: {
+        correctness: 'error',
+        perf: 'error',
+        suspicious: 'error',
+      },
       env: { browser: true, es2022: true },
       // `process.env.X` is replaced at build time (see `define` below)
       globals: { process: 'readonly' },
@@ -87,10 +88,8 @@ export default defineConfig(({ command, isPreview }) => {
     root: 'client',
     base,
     define: {
-      // an instant (ISO string); the app formats it in the viewer's timezone, not the build machine's
       'process.env.BUILD_TIME': JSON.stringify(new Date().toISOString()),
       'process.env.RELEASE': JSON.stringify(release),
-      // public (it ships in the bundle); without it Sentry stays off, e.g. in dev and in tests
       'process.env.SENTRY_DSN': JSON.stringify(process.env.SENTRY_DSN || ''),
     },
     css: {
