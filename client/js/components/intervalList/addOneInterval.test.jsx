@@ -33,7 +33,7 @@ describe('AddOneInterval', () => {
     const added = onAdd.mock.calls[0][0];
     expect(added).toMatchObject({ note: '' });
     expect(typeof added.startTime).toBe('number');
-    // start and end are built from two separate `new Date()` calls, so allow for a few ms of drift
+    // start and end come from two `new Date()` calls, so allow a few ms of drift
     expect(Math.abs(added.endTime - added.startTime - 8 * 60 * 60 * 1000)).toBeLessThan(1000);
   });
 
@@ -47,7 +47,7 @@ describe('AddOneInterval', () => {
 
   test('shows an error when onAdd rejects', async () => {
     // The app's thunks reject with strings; the Error component only renders strings.
-    setup({ onAdd: vi.fn(() => Promise.reject('Saving failed')) }); // eslint-disable-line prefer-promise-reject-errors
+    setup({ onAdd: vi.fn(() => Promise.reject('Saving failed')) });
 
     fireEvent.click(screen.getByTestId('add-one-interval-save-btn'));
 

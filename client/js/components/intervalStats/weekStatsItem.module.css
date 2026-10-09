@@ -30,7 +30,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1 0 14px; /* min height 14px */
+  flex: 1 0 14px;
   font-size: smaller;
   opacity: 0;
   margin: 0;

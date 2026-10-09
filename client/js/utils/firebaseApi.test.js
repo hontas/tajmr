@@ -11,7 +11,7 @@ vi.mock('firebase/app', () => {
         set: vi.fn(() => Promise.resolve()),
         remove: vi.fn(() => Promise.resolve()),
         once: vi.fn(),
-        on: vi.fn((event, handler) => handler), // like firebase, returns the callback
+        on: vi.fn((event, handler) => handler),
         off: vi.fn(),
         push: vi.fn(() => ({ key: 'new-id' })),
       };

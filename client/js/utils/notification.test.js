@@ -8,7 +8,6 @@ describe('notify', () => {
     vi.useFakeTimers();
     close = vi.fn();
     // called with `new`, so it has to be a function, not an arrow function
-    // eslint-disable-next-line prefer-arrow-callback
     NotificationMock = vi.fn(function Notification() {
       return { close };
     });

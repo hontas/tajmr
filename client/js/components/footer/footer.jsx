@@ -11,13 +11,9 @@ export default () => {
   const installPWA = async () => {
     if (!beforeInstallEvent) return;
 
-    // show spinner on install button
     setInstallingPWA(true);
-    // Show the browser install prompt
     beforeInstallEvent.prompt();
-    // Wait for the user to accept or dismiss the install prompt
     const { outcome } = await beforeInstallEvent.userChoice;
-    // If the prompt was accepted, hide the install button
     if (outcome === 'accepted') {
       setBeforeInstallEvent(null);
     }
@@ -27,7 +23,6 @@ export default () => {
   function onBeforeInstall(event) {
     // Prevent the mini-infobar from appearing on mobile
     event.preventDefault();
-    // Stash the event so it can be triggered later.
     setBeforeInstallEvent(event);
   }
 

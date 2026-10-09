@@ -37,7 +37,7 @@ function validate(schema, data) {
     const expectedType = properties[prop];
     const actualType = typeof data[prop];
 
-    if (!expectedType) return acc; // no type validation for this prop
+    if (!expectedType) return acc;
     if (actualType === expectedType) return acc;
 
     return [...acc, `"${prop}" should be "${expectedType}" but is ${actualType}`];

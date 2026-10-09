@@ -70,7 +70,6 @@ describe('intervals reducer', () => {
     expect(state.isSaving).toBe(false);
   });
 
-  // The thunk's success handler and the Firebase listener can both report the same interval.
   test('INTERVAL_ADD with an existing id replaces it instead of duplicating', () => {
     const state = reducer(
       { ...initial(), items: [{ id: 'a', note: 'old' }] },
@@ -132,7 +131,6 @@ describe('intervals thunks', () => {
   });
 
   afterEach(() => {
-    // interval contents must never end up in the console
     const logged = logSpy.mock.calls.length > 0;
     logSpy.mockRestore();
     if (logged) throw new Error('interval contents were logged to the console');

@@ -4,7 +4,6 @@ import 'firebase/database';
 
 import { getWeek } from './time';
 
-// Initialize Firebase
 const config = {
   apiKey: 'AIzaSyDXVqvULyVze_vLoV6QFTsqwirITCj3Ai8',
   authDomain: 'tajmr.firebaseapp.com',
@@ -43,8 +42,8 @@ const api = {
 
   ref: firebase,
 
-  // Intervals live under the signed-in user: userIntervals/<uid>/<id>. The database rules only let
-  // a user touch their own path, so nothing here filters by user.
+  // the database rules restrict each user to their own path,
+  // so nothing here filters by user
   async createInterval(data) {
     const id = intervalsRef().push().key;
     return api.updateInterval({ ...data, id, createdAt: Date.now() });
@@ -93,7 +92,6 @@ const api = {
     return database.ref(`users/${userId}`).set(data);
   },
 
-  // Reports changes made on other devices as redux actions. Returns a function that stops listening.
   listen({ intervalAdded, intervalRemoved, intervalUpdated }) {
     const uid = api.getCurrentUserId();
     if (!uid) return () => {};

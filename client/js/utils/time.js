@@ -11,7 +11,7 @@ export const months = [
   'oktober',
   'november',
   'december',
-]; // eslint-disable-line max-len
+];
 const weekDays = ['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag', 'söndag'];
 export const oneHour = 1000 * 60 * 60;
 const oneDay = oneHour * 24;
@@ -25,18 +25,15 @@ const intl = {
   dateTime: new Intl.DateTimeFormat(local, { dateStyle: 'medium', timeStyle: 'short' }),
 };
 
-// Clock time of a timestamp in the viewer's timezone, e.g. 09:05
 export function getTimeString(timestamp) {
   return intl.time.format(timestamp);
 }
 
-// Elapsed time as HH:mm. Plain arithmetic: a duration has no timezone.
 export function getDurationString(elapsed) {
   const { hours, minutes } = getTimePartsFromElapsedTime(Math.max(0, elapsed));
   return `${zeroPad(hours)}:${zeroPad(minutes)}`;
 }
 
-// Date and time of an instant (timestamp or ISO string) in the viewer's timezone, e.g. 8 okt. 2026 15:29
 export function getDateTimeString(value) {
   const date = new Date(value);
   return Number.isNaN(date.getTime()) ? '' : intl.dateTime.format(date);
@@ -61,12 +58,12 @@ export function getDayRange(timestamp) {
   };
 }
 
-// Monday 00:00 to the next Monday 00:00, local time (a week with a DST change is not 7 * 24h long)
+// a week with a DST change is not 7 * 24h long
 export function getWeek(timestamp) {
   const weekStart = new Date(timestamp);
   weekStart.setHours(0, 0, 0, 0);
   const dayOffset = weekStart.getDay() || 7;
-  weekStart.setDate(weekStart.getDate() - dayOffset + 1); // because sunday is 0 which sucks
+  weekStart.setDate(weekStart.getDate() - dayOffset + 1);
   const weekEnd = new Date(weekStart);
   weekEnd.setDate(weekEnd.getDate() + 7);
   return {
@@ -92,8 +89,7 @@ export function createWorkWeek(timestamp = Date.now()) {
   });
 }
 
-// Moves a date by whole months, keeping the time of day. If the day doesn't exist in the target month
-// (31 Oct + 1 month) it becomes that month's last day (30 Nov) instead of spilling into the next one.
+// the day clamps to the last day of the target month (31 Oct + 1 month = 30 Nov)
 export function addMonths(date, delta) {
   const result = new Date(date);
   const day = result.getDate();
@@ -104,7 +100,6 @@ export function addMonths(date, delta) {
   return result;
 }
 
-// First millisecond of the month to its last, local time
 export function getMonth(timestamp) {
   const date = new Date(timestamp);
   const monthStart = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -143,12 +138,8 @@ export function getWorkDaysInMonth({ startTime, endTime }) {
 export function getWeekNumber(timestamp) {
   const date = new Date(timestamp);
   const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-  // Set to nearest Thursday: current date + 4 - current day number
-  // Make Sunday's day number 7
   d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-  // Get first day of year
   const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  // Calculate full weeks to nearest Thursday
   return Math.ceil(((d - yearStart) / oneDay + 1) / 7);
 }
 
@@ -182,7 +173,6 @@ export function isSameWeek(date1, date2) {
   const timestampDiff = Math.abs(date1 - date2);
 
   if (timestampDiff < oneWeek) {
-    // less than 7 days apart
     const dates = [new Date(date1), new Date(date2)]
       .map((d) => ({ day: d.getDay(), date: d.getDate(), timestamp: d.getTime() }))
       .sort((a, b) => a.timestamp - b.timestamp);
@@ -191,7 +181,6 @@ export function isSameWeek(date1, date2) {
       return false;
     }
     if (dates[0].day && !dates[1].day) {
-      // date[1] is next sunday
       return true;
     }
     if (dates[0].day === dates[1].day) {

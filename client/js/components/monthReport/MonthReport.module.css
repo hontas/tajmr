@@ -25,13 +25,13 @@
 }
 
 .filter {
-  background-color: var(--primary-color-dark-translucent); /*0.25*/
+  background-color: var(--primary-color-dark-translucent);
   color: rgba(255, 255, 255, 0.5);
   margin-bottom: 0.25em;
 }
 
 .filterActive {
-  background-color: var(--primary-color-dark-hazy); /*0.75*/
+  background-color: var(--primary-color-dark-hazy);
   color: rgba(255, 255, 255, 0.9);
 }
 
@@ -52,7 +52,7 @@
 }
 
 .notWork {
-  background-color: var(--danger-color-hazy); /*0.75*/
+  background-color: var(--danger-color-hazy);
 }
 
 .listItemTitle,

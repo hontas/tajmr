@@ -26,7 +26,7 @@ if (process.env.SENTRY_DSN) {
   });
 }
 
-export const store = createStore(); // eslint-disable-line
+export const store = createStore();
 firebaseApi.subscribe((action) => store.dispatch(action));
 let stopListening = () => {};
 firebaseApi.auth.onAuthStateChanged((user) => {

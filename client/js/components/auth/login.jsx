@@ -21,7 +21,7 @@ const Login = () => {
     evt.preventDefault();
     resetMessages();
     setIsLoggingIn(true);
-    // on success the app swaps this component out, so only the failure path resets the state
+    // on success this component is replaced, so only failure resets the state
     firebaseApi.login(emailInput.current.value, passwordInput.current.value).catch((error) => {
       setMessage(error.message);
       setIsLoggingIn(false);
