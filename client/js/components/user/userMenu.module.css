@@ -4,7 +4,25 @@
   padding: 1em 2em;
 }
 .container input:not([type='checkbox']) {
+  display: block;
+  box-sizing: border-box;
+  margin: 0.25em 0;
+  padding: 0.5em 0.6em;
+  vertical-align: middle;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 3px #ddd;
   color: #333;
+}
+
+.container input:not([type='checkbox']):focus {
+  outline: 0;
+  border-color: #129fea;
+}
+
+.container input:not([type='checkbox']):focus:invalid {
+  border-color: #e9322d;
+  color: #b94a48;
 }
 
 .container input[type='number'] {
@@ -12,20 +30,9 @@
 }
 
 .fieldset {
-  margin-top: 0.5em;
-}
-
-.container .pure-menu-link {
-  color: whitesmoke;
-}
-
-.container .pure-button {
-  display: grid;
-  width: 100%;
-}
-
-.container .pure-button-primary {
-  margin-bottom: 0.5em;
+  margin: 0;
+  padding: 0.35em 0 0.75em;
+  border: 0;
 }
 
 .profileImage {
@@ -44,7 +51,8 @@
 }
 
 .label {
-  display: flex !important;
+  display: flex;
+  margin: 0.25em 0;
   align-items: center;
   padding: 0.25em 0;
   justify-content: space-between;
@@ -71,4 +79,11 @@
 
 .changePass .changePassBtn {
   border-radius: 0 2px 2px 0;
+}
+
+@media (max-width: 480px) {
+  .container input:not([type='checkbox']),
+  .label {
+    margin-bottom: 0.3em;
+  }
 }

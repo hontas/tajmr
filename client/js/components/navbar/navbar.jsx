@@ -37,11 +37,9 @@ function Navbar({ user, isSaving, isFetching, appInitialized, userSettings, disp
   };
 
   return (
-    <nav
-      className={classNames('pure-menu', 'pure-menu-horizontal', 'pure-menu-fixed', styles.navbar)}
-    >
+    <nav className={styles.navbar}>
       <div className={styles.inner} ref={navBarInnerRef}>
-        <h1 className={classNames('pure-menu-heading', styles.brand)}>TajmR</h1>
+        <h1 className={styles.brand}>TajmR</h1>
         <span className={styles.version}>
           <small>{`${process.env.RELEASE} - ${getDateTimeString(process.env.BUILD_TIME)}`}</small>
         </span>

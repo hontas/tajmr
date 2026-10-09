@@ -75,10 +75,6 @@ export default defineConfig(({ command, isPreview }) => {
       'process.env.RELEASE': JSON.stringify(release),
       'process.env.SENTRY_DSN': JSON.stringify(process.env.SENTRY_DSN || ''),
     },
-    css: {
-      // the vendored Pure.css 0.6 (2014) carries IE-only hacks (`*zoom`) that the CSS minifier rejects
-      lightningcss: { errorRecovery: true },
-    },
     test: {
       environment: 'jsdom',
       // describe, test, expect and vi without imports, like Jest

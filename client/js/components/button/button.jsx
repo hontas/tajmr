@@ -21,13 +21,7 @@ const Button = React.forwardRef(
     },
     ref,
   ) => {
-    const classes = classNames(
-      'pure-button',
-      styles.button,
-      styles[theme],
-      { [styles.block]: block },
-      className,
-    );
+    const classes = classNames(styles.button, styles[theme], { [styles.block]: block }, className);
 
     return (
       <button ref={ref} {...rest} className={classes} type={type} disabled={disabled}>
@@ -53,7 +47,15 @@ Button.propTypes = {
   text: PropTypes.string,
   block: PropTypes.bool,
   type: PropTypes.oneOf(['button', 'submit']),
-  theme: PropTypes.oneOf(['default', 'primary', 'secondary', 'danger', 'success', 'link']),
+  theme: PropTypes.oneOf([
+    'default',
+    'primary',
+    'accent',
+    'secondary',
+    'danger',
+    'success',
+    'link',
+  ]),
   children: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element,

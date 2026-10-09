@@ -1,5 +1,12 @@
 .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  box-sizing: border-box;
+  width: 100%;
   background: var(--primary-color-dark);
+  white-space: nowrap;
 }
 
 .inner {
@@ -17,10 +24,15 @@
 }
 
 .brand {
+  display: inline-block;
+  padding: 0.5em 1em;
+  vertical-align: middle;
   color: var(--text-color-primary);
   font-size: 1.25em;
   line-height: 0.85em;
   margin: 0;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 .brand:focus ~ .version,
 .brand:hover ~ .version {
