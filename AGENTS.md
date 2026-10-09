@@ -38,7 +38,8 @@ Do not run `npm run e2e` (Cypress) unless asked: it logs in with a hard-coded te
 ## Workflow
 
 1. Work is tracked as GitHub issues; **one issue = one PR**, branched from `main`, linked with `Closes #n`.
-   PRs are merged by the owner, and CI (`lint-and-test`) must be green.
+   PRs are merged by the owner, and CI (`lint-and-test`) must be green. Fill in the PR template
+   (`.github/pull_request_template.md`) and keep the description short and in plain words.
 2. Tests first for bug fixes. Add or update tests with every behaviour change.
 3. Don't skip, disable or loosen tests, lint rules or the coverage threshold to get green. Fix the places
    instead of turning a rule off.
