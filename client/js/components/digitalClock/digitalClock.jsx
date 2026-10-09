@@ -8,6 +8,8 @@ import notify from '../../utils/notification';
 import styles from './digitalClock.module.css';
 
 const DigitalClock = ({ from, elapsed }) => {
+  // re-rendered every 30 seconds by RenderEvery; replaced by a hook in #76
+  // oxlint-disable-next-line react/purity
   const time = from ? Date.now() - from + elapsed : elapsed;
   const { hours, minutes } = getTimePartsFromElapsedTime(time);
   const timestring = getDurationString(time);

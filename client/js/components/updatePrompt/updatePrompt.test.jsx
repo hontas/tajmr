@@ -1,6 +1,5 @@
 import React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 
 import UpdatePrompt from './updatePrompt.jsx';
 import registerServiceWorker from '../../register-sw';

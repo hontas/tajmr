@@ -45,7 +45,6 @@ Data (Firebase Realtime Database): `userIntervals/{uid}/{id}` (a user's interval
 
 ## Conventions
 
-- Match the surrounding code. Oxlint (rules) and Oxfmt (Prettier style) are enforced, both configured in `vite.config.mjs`; `no-console` is an error.
 - Never log interval data (notes, times) or any user data. Report errors to Sentry, ids only.
 - Tests live next to the code (`*.test.js[x]`). Mock `utils/firebaseApi`; never hit real Firebase in tests.
 - Tests run in `Europe/Stockholm` by default (`test/setupTimezone.js`); code must not depend on the

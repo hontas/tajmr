@@ -9,8 +9,9 @@ describe('interValidator', () => {
 
   afterEach(() => {
     // interval contents must never end up in the console
-    expect(logSpy).not.toHaveBeenCalled();
+    const logged = logSpy.mock.calls.length > 0;
     logSpy.mockRestore();
+    if (logged) throw new Error('interval contents were logged to the console');
   });
 
   describe('validateNewInterval', () => {

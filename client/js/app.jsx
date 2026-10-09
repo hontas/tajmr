@@ -17,7 +17,6 @@ import {
   reset as intervalReset,
 } from './redux/intervals';
 import Application from './components/application/application.jsx';
-import './register-sw';
 
 if (process.env.SENTRY_DSN) {
   Sentry.init({

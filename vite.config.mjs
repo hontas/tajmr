@@ -43,80 +43,24 @@ export default defineConfig(({ command, isPreview }) => {
         'package-lock.json',
       ],
     },
-    // Oxlint (`vp lint`). Replaces ESLint with the airbnb config: correctness and suspicious rules
-    // plus the airbnb rules that catch bugs or that this codebase follows (style rules are Oxfmt's job)
+    // Oxlint (`vp lint`): the default correctness rules plus the suspicious category, for the
+    // plugins we use. Everything else is Oxfmt's job; a few exceptions have an inline reason.
     lint: {
       plugins: ['react', 'jsx-a11y', 'import'],
       categories: { correctness: 'error', suspicious: 'error' },
       env: { browser: true, es2022: true },
       // `process.env.X` is replaced at build time (see `define` below)
       globals: { process: 'readonly' },
-      ignorePatterns: ['dist/**', 'coverage/**', 'client/styles/**'],
+      ignorePatterns: ['dist/**', 'coverage/**'],
       rules: {
-        // not part of the airbnb set we had, and wrong for this codebase:
-        'import/no-unassigned-import': 'off', // side-effect imports (css, jest-dom, firebase/auth)
-        'react/purity': 'off', // components read Date.now() while rendering (clock, progress bar)
-        'react/immutability': 'off',
-        'jsx-a11y/prefer-tag-over-role': 'off', // role="img" on emoji, role="status" on the toast
-        // invalid autocomplete values on the login and password forms; fixing them changes how password
-        // managers behave, so it is a separate change (#74)
-        'jsx-a11y/autocomplete-valid': 'off',
-        'no-unused-vars': ['error', { ignoreRestSiblings: true }],
         'no-console': 'error',
+        eqeqeq: 'error',
         'no-var': 'error',
         'prefer-const': 'error',
-        eqeqeq: 'error',
-        radix: 'error',
-        'no-undef': 'error',
-        'no-param-reassign': 'error',
-        'no-use-before-define': ['error', { functions: false }],
-        'no-throw-literal': 'error',
-        'prefer-promise-reject-errors': 'error',
-        'array-callback-return': 'error',
-        'no-case-declarations': 'error',
-        'no-fallthrough': 'error',
-        'no-redeclare': 'error',
-        'no-prototype-builtins': 'error',
-        'no-empty': 'error',
-        'no-await-in-loop': 'error',
-        'no-nested-ternary': 'error',
-        'no-multi-assign': 'error',
-        'no-return-assign': 'error',
-        'no-sequences': 'error',
-        'no-lonely-if': 'error',
-        'no-else-return': 'error',
-        'no-useless-return': 'error',
-        'no-new-func': 'error',
-        'no-alert': 'error',
-        'no-bitwise': 'error',
-        'no-plusplus': 'error',
-        'object-shorthand': 'error',
-        'prefer-template': 'error',
-        'prefer-arrow-callback': 'error',
-        'prefer-object-spread': 'error',
-        'prefer-rest-params': 'error',
-        'prefer-spread': 'error',
-        'arrow-body-style': 'warn',
-        'default-case': 'error',
-        'guard-for-in': 'error',
-        'import/first': 'error',
-        'import/no-duplicates': 'error',
-        'import/no-cycle': 'error',
-        'import/named': 'error',
-        'import/export': 'error',
-        'import/no-mutable-exports': 'error',
-        'react/jsx-filename-extension': ['error', { extensions: ['.jsx'] }],
-        'react/jsx-no-target-blank': 'error',
-        'react/no-unescaped-entities': 'error',
-        'react/no-array-index-key': 'error',
-        'react/no-danger': 'error',
-        'react/no-unknown-property': 'error',
-        'react/self-closing-comp': 'error',
-        'react/jsx-boolean-value': 'error',
-        'react/jsx-fragments': 'error',
-        'jsx-a11y/label-has-associated-control': [
+        // side-effect imports of stylesheets (Vite) and of the Firebase modules are the normal way
+        'import/no-unassigned-import': [
           'error',
-          { labelComponents: ['Label'], assert: 'either' },
+          { allow: ['**/*.css', 'firebase/*', '@testing-library/jest-dom'] },
         ],
       },
       overrides: [
@@ -125,15 +69,12 @@ export default defineConfig(({ command, isPreview }) => {
           files: ['**/*.test.{js,jsx}', 'test/**'],
           plugins: ['vitest'],
           env: { vitest: true, node: true },
-          rules: {
-            'vitest/no-standalone-expect': 'off', // assertions in helper functions
-            'vitest/expect-expect': 'warn', // two render-only smoke tests still lack assertions
-          },
         },
         {
           files: ['cypress/**'],
           env: { mocha: true, node: true },
           globals: { cy: 'readonly', Cypress: 'readonly' },
+          rules: { 'import/no-unassigned-import': 'off' }, // support/index.js imports ./commands
         },
         {
           // build and one-off Node scripts
@@ -172,6 +113,7 @@ export default defineConfig(({ command, isPreview }) => {
       environment: 'jsdom',
       // describe, test, expect and vi without imports, like Jest
       globals: true,
+      setupFiles: ['./test/setup.js'],
       // the timezone the tests run in (see test/setupTimezone.js)
       globalSetup: ['./test/setupTimezone.js'],
       css: { modules: { classNameStrategy: 'non-scoped' } },

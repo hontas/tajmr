@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
 
 import IntervalListItem from './intervalListItem.jsx';
 import { getTimeString } from '../../utils/time';

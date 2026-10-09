@@ -44,7 +44,7 @@ const Login = () => {
       <form className={styles.authForm} onSubmit={handleSubmit} data-testid="login-form">
         {message && (
           <p className={styles.error}>
-            <span role="img">⚠</span>
+            <span aria-hidden="true">⚠</span>
             {message}
           </p>
         )}
@@ -53,7 +53,7 @@ const Login = () => {
           <input type="email" autoComplete="email" ref={emailInput} />
         </label>
         <label aria-label="password">
-          <input type="password" autoComplete="password" ref={passwordInput} />
+          <input type="password" autoComplete="current-password" ref={passwordInput} />
         </label>
         <Button block type="submit" onClick={handleSubmit} isLoading={isLoggingIn} theme="primary">
           Log in
