@@ -43,7 +43,7 @@ class IntervalListInput extends React.Component {
           buttonTitle={`${titlePrefix} date`}
           className={styles.date}
           date={timestamp}
-          onDayClick={this.handleDateChange}
+          onChange={this.handleDateChange}
         />
       </div>
     );
@@ -70,9 +70,7 @@ class IntervalListInput extends React.Component {
   handleDateChange = (value) => {
     const { timestamp, onUpdate } = this.props;
     const currentDate = new Date(timestamp);
-    const nextDate = new Date(value);
-    currentDate.setDate(nextDate.getDate());
-    currentDate.setMonth(nextDate.getMonth());
+    currentDate.setFullYear(value.getFullYear(), value.getMonth(), value.getDate());
 
     onUpdate({ target: { value: currentDate.getTime() } });
   };

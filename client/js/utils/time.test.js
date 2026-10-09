@@ -3,6 +3,8 @@ import fakeTimers from '@sinonjs/fake-timers';
 import {
   isSameWeek,
   getWeekday,
+  toDateInputValue,
+  fromDateInputValue,
   getWeekNumber,
   getDayRange,
   getWeek,
@@ -52,6 +54,17 @@ describe('time', () => {
       expect(isSameWeek(new Date('2016-04-03T07:00:00'), new Date('2016-03-28T07:00:00'))).toBe(
         true,
       );
+    });
+  });
+
+  describe('date input values', () => {
+    test('toDateInputValue gives the local date, also late in the evening', () => {
+      expect(toDateInputValue(new Date(2026, 9, 7, 23, 59).getTime())).toBe('2026-10-07');
+      expect(toDateInputValue(new Date(2026, 0, 1, 0, 0).getTime())).toBe('2026-01-01');
+    });
+
+    test('fromDateInputValue gives local midnight of that day', () => {
+      expect(+fromDateInputValue('2026-10-07')).toBe(+new Date(2026, 9, 7));
     });
   });
 
