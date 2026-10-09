@@ -23,8 +23,8 @@ Remove this section if there are no visual changes.
 -->
 
 | Before | After |
-| --- | --- |
-|  |  |
+| ------ | ----- |
+|        |       |
 
 ## What
 
