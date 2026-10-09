@@ -17,44 +17,39 @@ import {
 
 import styles from './weekStats.module.css';
 
-class WeekStats extends React.Component {
-  render() {
-    const { intervals, timestamp, userSettings, now } = this.props;
-    const intervalSum = intervals
-      .map(({ startTime, endTime }) => (endTime || now) - startTime)
-      .reduce((res, curr) => res + curr, 0);
+const WeekStats = ({ intervals, timestamp, userSettings, now, fetchIntervalsInWeek }) => {
+  const intervalSum = intervals
+    .map(({ startTime, endTime }) => (endTime || now) - startTime)
+    .reduce((res, curr) => res + curr, 0);
 
-    return (
-      <div className={styles.container}>
-        <h3 className={styles.title}>
-          <Button className={styles.button} onClick={this.lastWeek} data-testid="prev-week-btn">
-            ◀︎
-          </Button>
-          {intervals.length ? ` v.${getWeekNumber(timestamp)} ` : ` v.${getWeekNumber(now)} `}
-          <Button className={styles.button} onClick={this.nextWeek} data-testid="next-week-btn">
-            ▶︎
-          </Button>
-        </h3>
-        <div className={classNames(styles.bars)}>
-          {mashUpWeekAndIntervals(intervals, timestamp, now).map((day) => (
-            <WeekStatsItem key={day.weekday} {...day} />
-          ))}
-        </div>
-        <ProgressBar progress={getHours(intervalSum)} max={userSettings.hoursInWeek} />
+  return (
+    <div className={styles.container}>
+      <h3 className={styles.title}>
+        <Button
+          className={styles.button}
+          onClick={() => fetchIntervalsInWeek(timestamp - oneWeek)}
+          data-testid="prev-week-btn"
+        >
+          ◀︎
+        </Button>
+        {intervals.length ? ` v.${getWeekNumber(timestamp)} ` : ` v.${getWeekNumber(now)} `}
+        <Button
+          className={styles.button}
+          onClick={() => fetchIntervalsInWeek(timestamp + oneWeek)}
+          data-testid="next-week-btn"
+        >
+          ▶︎
+        </Button>
+      </h3>
+      <div className={classNames(styles.bars)}>
+        {mashUpWeekAndIntervals(intervals, timestamp, now).map((day) => (
+          <WeekStatsItem key={day.weekday} {...day} />
+        ))}
       </div>
-    );
-  }
-
-  lastWeek = () => {
-    const { fetchIntervalsInWeek, timestamp } = this.props;
-    fetchIntervalsInWeek(timestamp - oneWeek);
-  };
-
-  nextWeek = () => {
-    const { fetchIntervalsInWeek, timestamp } = this.props;
-    fetchIntervalsInWeek(timestamp + oneWeek);
-  };
-}
+      <ProgressBar progress={getHours(intervalSum)} max={userSettings.hoursInWeek} />
+    </div>
+  );
+};
 
 WeekStats.propTypes = {
   fetchIntervalsInWeek: PropTypes.func.isRequired,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -7,56 +7,32 @@ import { getTimeString } from '../../utils/time';
 
 import styles from './intervalListInput.module.css';
 
-function stateFromProps(props) {
-  const isActive = !props.timestamp;
-  const value = isActive ? 'active' : getTimeString(props.timestamp);
-  return { value, isActive, isValid: true, timestamp: props.timestamp };
-}
+const textFromTimestamp = (timestamp) => (timestamp ? getTimeString(timestamp) : 'active');
 
-class IntervalListInput extends React.Component {
-  static getDerivedStateFromProps(nextProps, lastState) {
-    if (nextProps.timestamp !== lastState.timestamp) {
-      return stateFromProps(nextProps);
-    }
-    return null;
+const IntervalListInput = ({
+  className = '',
+  dataTestId = '',
+  timestamp,
+  titlePrefix,
+  onUpdate,
+}) => {
+  const [value, setValue] = useState(textFromTimestamp(timestamp));
+  const [isValid, setIsValid] = useState(true);
+  const [lastTimestamp, setLastTimestamp] = useState(timestamp);
+  const isActive = !timestamp;
+
+  if (timestamp !== lastTimestamp) {
+    setLastTimestamp(timestamp);
+    setValue(textFromTimestamp(timestamp));
+    setIsValid(true);
   }
 
-  state = stateFromProps(this.props);
-
-  render() {
-    const { className, timestamp, titlePrefix, dataTestId } = this.props;
-    const { value, isActive, isValid } = this.state;
-
-    return (
-      <div className={classNames(styles.container, className, { [styles.error]: !isValid })}>
-        <input
-          type="text"
-          data-testid={dataTestId}
-          title={`${titlePrefix} time`}
-          className={styles.input}
-          disabled={isActive}
-          onBlur={this.validateAndPush}
-          onChange={this.handleChange}
-          value={value}
-        />
-        <DatePicker
-          buttonTitle={`${titlePrefix} date`}
-          className={styles.date}
-          date={timestamp}
-          onChange={this.handleDateChange}
-        />
-      </div>
-    );
-  }
-
-  validateAndPush = () => {
-    const { value } = this.state;
-    const { timestamp, onUpdate } = this.props;
-    const isValid = validateTimeString(value);
+  const validateAndPush = () => {
+    const valueIsValid = validateTimeString(value);
     const hasChanged = value !== getTimeString(timestamp);
 
     if (!hasChanged) return;
-    if (isValid) {
+    if (valueIsValid) {
       const [hours, minutes] = value.split(':');
       const date = new Date(timestamp);
 
@@ -64,31 +40,42 @@ class IntervalListInput extends React.Component {
       date.setMinutes(minutes);
       onUpdate({ target: { value: date.getTime() } });
     }
-    this.setState({ isValid });
+    setIsValid(valueIsValid);
   };
 
-  handleDateChange = (value) => {
-    const { timestamp, onUpdate } = this.props;
+  const handleDateChange = (nextDate) => {
     const currentDate = new Date(timestamp);
-    currentDate.setFullYear(value.getFullYear(), value.getMonth(), value.getDate());
+    currentDate.setFullYear(nextDate.getFullYear(), nextDate.getMonth(), nextDate.getDate());
 
     onUpdate({ target: { value: currentDate.getTime() } });
   };
 
-  handleChange = ({ target: { value } }) => {
-    this.setState({ value });
-  };
-}
+  return (
+    <div className={classNames(styles.container, className, { [styles.error]: !isValid })}>
+      <input
+        type="text"
+        data-testid={dataTestId}
+        title={`${titlePrefix} time`}
+        className={styles.input}
+        disabled={isActive}
+        onBlur={validateAndPush}
+        onChange={({ target }) => setValue(target.value)}
+        value={value}
+      />
+      <DatePicker
+        buttonTitle={`${titlePrefix} date`}
+        className={styles.date}
+        date={timestamp}
+        onChange={handleDateChange}
+      />
+    </div>
+  );
+};
 
 function validateTimeString(time) {
   const [hours, minutes] = time.split(':').map((v) => parseInt(v, 10));
   return hours >= 0 && hours < 24 && minutes >= 0 && minutes < 60 && /^\d{2}:\d{2}$/.test(time);
 }
-
-IntervalListInput.defaultProps = {
-  className: '',
-  dataTestId: '',
-};
 
 IntervalListInput.propTypes = {
   className: PropTypes.string,
