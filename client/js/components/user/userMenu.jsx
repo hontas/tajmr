@@ -34,7 +34,7 @@ class UserMenu extends React.Component {
     return (
       <form
         data-testid="user-menu"
-        className={classNames('pure-form pure-form-stacked', styles.container, className)}
+        className={classNames(styles.container, className)}
         onSubmit={this.preventDefault}
       >
         <div className={styles.row}>
@@ -82,7 +82,7 @@ class UserMenu extends React.Component {
           </label>
         </fieldset>
         <Button
-          className="pure-button-primary"
+          theme="accent"
           isLoading={isSavingUserSettings}
           onClick={this.saveUserSettings}
           text="Spara inställningar"
@@ -119,8 +119,8 @@ class UserMenu extends React.Component {
               />
             </div>
             <Button
-              theme={updatePasswordSuccess ? 'success' : 'default'}
-              className={classNames('pure-button-primary', styles.changePassBtn)}
+              theme={updatePasswordSuccess ? 'success' : 'accent'}
+              className={styles.changePassBtn}
               isLoading={isSavingUserPassword}
               onClick={this.updateUserPassword}
               text={updatePasswordSuccess ? '👍' : 'Ändra'}
