@@ -45,11 +45,8 @@ Do not run `npm run e2e` (Cypress) unless asked: it logs in with a hard-coded te
    instead of turning a rule off.
 4. **Any UI change includes at least one screenshot in the PR description**: mobile width (about 390×844,
    the app is used on an iPhone), plus a desktop one when the layout differs there. Show the changed
-   state, not just the page; one per state the change touches (dark/light, ...). Contributors drag the
-   image into the description. Agents can't upload through the API: render the page in headless Chromium,
-   commit the PNG to a side branch such as `claude/pr-screenshots` (never the PR branch), and link it as
-   `https://github.com/<owner>/<repo>/blob/<commit sha>/<path>.png?raw=true`. Say in the PR that the
-   branch can be deleted after merging.
+   state, not just the page; one per state the change touches (dark/light, ...). Keep the image files out
+   of the repo (use a temp folder and delete it afterwards).
 5. Never commit secrets or `.env`. Don't force-push to branches you didn't create.
 
 ## Deploy and data
