@@ -8,6 +8,8 @@ import { initialized } from '../../redux/app';
 import { userLoggedIn } from '../../redux/user';
 import { intervalsFetched } from '../../redux/intervals';
 
+vi.mock('../datepicker/DatePicker.jsx', () => ({ default: () => null }));
+
 vi.mock('../../utils/firebaseApi', () => ({
   __esModule: true,
   default: {
@@ -52,9 +54,7 @@ describe('Application', () => {
       intervalsFetched({}),
     );
 
-    expect(
-      await screen.findByTestId('user-menu-toggle', {}, { timeout: 8000 }),
-    ).toBeInTheDocument();
+    expect(await screen.findByTestId('user-menu-toggle')).toBeInTheDocument();
     expect(screen.queryByTestId('login-form')).not.toBeInTheDocument();
   });
 });
