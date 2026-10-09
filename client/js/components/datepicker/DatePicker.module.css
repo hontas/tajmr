@@ -9,7 +9,16 @@
   animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
   font-size: smaller;
   left: 0;
-  padding-top: 0.6em;
+  margin-top: 0.6em;
+  padding: 0.5em 1em 1em;
+  background: white;
+  color: #333;
+  --rdp-accent-color: #4a90e2;
+  --rdp-day-width: 30px;
+  --rdp-day-height: 30px;
+  --rdp-day_button-width: 30px;
+  --rdp-day_button-height: 30px;
+  --rdp-nav-height: 2rem;
   position: absolute;
   top: 2.6em;
   z-index: 10;
@@ -28,9 +37,14 @@
   }
 }
 
-.calendar :global .DayPicker-wrapper {
-  background: white;
-  color: #333;
+.calendar :global .rdp-caption_label {
+  font-size: 1em;
+  font-weight: normal;
+}
+
+.calendar :global .rdp-selected .rdp-day_button {
+  background: var(--rdp-accent-color);
+  color: white;
 }
 
 .calendarBtn {

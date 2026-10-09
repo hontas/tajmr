@@ -8,6 +8,8 @@ import { initialized } from '../../redux/app';
 import { userLoggedIn } from '../../redux/user';
 import { intervalsFetched } from '../../redux/intervals';
 
+vi.mock('../datepicker/DatePicker.jsx', () => ({ default: () => null }));
+
 vi.mock('../../utils/firebaseApi', () => ({
   __esModule: true,
   default: {
