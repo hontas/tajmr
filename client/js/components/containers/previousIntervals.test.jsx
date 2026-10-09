@@ -6,8 +6,7 @@ import createStore from '../../redux/createStore';
 import PreviousIntervals from './previousIntervals.jsx';
 import { intervalsFetched } from '../../redux/intervals';
 import { updateSettings } from '../../redux/userSettings';
-
-const { intervals } = require('../../../../test/test-data.json');
+import { intervals } from '../../../../test/test-data.json';
 
 describe('PreviousIntervals', () => {
   let store;

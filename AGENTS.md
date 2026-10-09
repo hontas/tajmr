@@ -47,7 +47,7 @@ Data (Firebase Realtime Database): `userIntervals/{uid}/{id}` (a user's interval
 
 - Never log interval data (notes, times) or any user data. Report errors to Sentry, ids only.
 - Tests live next to the code (`*.test.js[x]`). Mock `utils/firebaseApi`; never hit real Firebase in tests.
-- Tests run in `Europe/Stockholm` by default (`test/setupTimezone.js`); code must not depend on the
+- Tests run in `Europe/Stockholm` by default (`test.env` in `vite.config.mjs`); code must not depend on the
   timezone, so `npm run test:timezones` (part of `verify`) reruns them in UTC, New York and Kolkata. Build
   dates with the local constructor (`new Date(y, m, d)`), never `'2018-03-14'` (parsed as UTC).
 - Tests named `BUG: ...` pin known wrong behaviour on purpose; the fixing PR flips them.

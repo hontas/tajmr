@@ -5,8 +5,7 @@ import { render /* screen */ } from '@testing-library/react';
 import createStore from '../../redux/createStore';
 import CurrentIntervals from './currentIntervals.jsx';
 import { intervalsFetched } from '../../redux/intervals';
-
-const { intervals } = require('../../../../test/test-data.json');
+import { intervals } from '../../../../test/test-data.json';
 
 describe('PreviousIntervals', () => {
   let store;

@@ -1,5 +1,4 @@
 import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite-plus';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -42,14 +41,14 @@ export default defineConfig(({ command, isPreview }) => {
       ],
     },
     lint: {
-      plugins: ['react', 'jsx-a11y', 'import'],
+      plugins: ['react', 'jsx-a11y', 'import', 'vitest'],
       // correctness, suspicious, pedantic, perf, style, restriction, nursery
       categories: {
         correctness: 'error',
         perf: 'error',
         suspicious: 'error',
       },
-      env: { browser: true, es2022: true },
+      env: { browser: true, node: true, vitest: true },
       // `process.env.X` is replaced at build time (see `define` below)
       globals: { process: 'readonly' },
       ignorePatterns: ['dist/**', 'coverage/**'],
@@ -58,34 +57,17 @@ export default defineConfig(({ command, isPreview }) => {
         eqeqeq: 'error',
         'no-var': 'error',
         'prefer-const': 'error',
-        // side-effect imports of stylesheets (Vite) and of the Firebase modules are the normal way
-        'import/no-unassigned-import': [
-          'error',
-          { allow: ['**/*.css', 'firebase/*', '@testing-library/jest-dom'] },
-        ],
+        // side-effect imports (stylesheets, firebase/auth) are normal in a bundled app
+        'import/no-unassigned-import': 'off',
       },
       overrides: [
         {
-          // tests use describe/test/expect as globals (Vitest `globals: true`)
-          files: ['**/*.test.{js,jsx}', 'test/**'],
-          plugins: ['vitest'],
-          env: { vitest: true, node: true },
-        },
-        {
           files: ['cypress/**'],
-          env: { mocha: true, node: true },
+          env: { mocha: true },
           globals: { cy: 'readonly', Cypress: 'readonly' },
-          rules: { 'import/no-unassigned-import': 'off' }, // support/index.js imports ./commands
-        },
-        {
-          // build and one-off Node scripts
-          files: ['*.config.mjs', 'scripts/**'],
-          env: { node: true },
-          rules: { 'no-console': 'off' },
         },
       ],
     },
-    root: 'client',
     base,
     define: {
       'process.env.BUILD_TIME': JSON.stringify(new Date().toISOString()),
@@ -93,56 +75,34 @@ export default defineConfig(({ command, isPreview }) => {
       'process.env.SENTRY_DSN': JSON.stringify(process.env.SENTRY_DSN || ''),
     },
     css: {
-      // pure-css.min.css still carries IE-only hacks (`*zoom`), which the CSS minifier rejects
+      // the vendored Pure.css 0.6 (2014) carries IE-only hacks (`*zoom`) that the CSS minifier rejects
       lightningcss: { errorRecovery: true },
     },
-    resolve: {
-      alias: {
-        // provided by vite-plugin-pwa at build time
-        ...(process.env.VITEST && {
-          'virtual:pwa-register': fileURLToPath(
-            new URL('./test/pwaRegisterStub.js', import.meta.url),
-          ),
-        }),
-      },
-    },
     test: {
-      // the app's Vite root is client/, but scripts/ has tests too
-      root: fileURLToPath(new URL('.', import.meta.url)),
       environment: 'jsdom',
       // describe, test, expect and vi without imports, like Jest
       globals: true,
       setupFiles: ['./test/setup.js'],
-      // the timezone the tests run in (see test/setupTimezone.js)
-      globalSetup: ['./test/setupTimezone.js'],
-      css: { modules: { classNameStrategy: 'non-scoped' } },
-      include: ['client/js/**/*.test.{js,jsx}', 'scripts/**/*.test.js'],
+      // Swedish time unless TZ is set (`npm run test:timezones` does), so results match on every machine
+      env: { TZ: process.env.TZ || 'Europe/Stockholm' },
       coverage: {
-        provider: 'v8',
         include: ['client/js/**/*.{js,jsx}'],
-        exclude: ['client/js/**/*.test.{js,jsx}'],
         // Baseline: ratchet up as coverage improves, never down. Enforced with `--coverage` (CI).
         thresholds: { statements: 75, branches: 60, functions: 70, lines: 75 },
       },
     },
     build: {
-      outDir: '../dist',
-      emptyOutDir: true,
       // hidden: emitted for the Sentry upload without being referenced from the bundles. The deploy
       // workflow deletes the .map files afterwards so the original source is not published.
       sourcemap: uploadSourceMaps ? 'hidden' : false,
       rolldownOptions: {
         output: {
-          // big, rarely changing libraries get their own files, so a release that only changes app
-          // code doesn't make returning users download them again
+          // libraries in their own files (Firebase is the biggest), so a release that only changes
+          // app code doesn't make returning users download them again
           codeSplitting: {
             groups: [
               { name: 'firebase', test: /node_modules[\\/](@firebase|firebase)[\\/]/ },
-              { name: 'sentry', test: /node_modules[\\/]@sentry[\\/]/ },
-              {
-                name: 'react',
-                test: /node_modules[\\/](react|react-dom|scheduler|react-redux|redux|redux-thunk)[\\/]/,
-              },
+              { name: 'vendor', test: /node_modules/ },
             ],
           },
         },

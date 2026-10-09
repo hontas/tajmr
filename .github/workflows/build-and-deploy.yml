@@ -8,6 +8,8 @@ on:
     paths:
       - 'client/**'
       - '!client/**/*.test.*'
+      - index.html
+      - 'public/**'
       - package.json
       - package-lock.json
       - vite.config.mjs

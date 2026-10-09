@@ -9,5 +9,5 @@ export default defineConfig({
     maskable: { sizes: [] },
     apple: { sizes: [180], padding: 0 },
   },
-  images: ['client/public/icon.png'],
+  images: ['public/icon.png'],
 });
