@@ -69,6 +69,7 @@ export function intervalRemoved(id) {
 }
 
 /**
+ * Thunk Actions
  */
 
 export const attemptRemove = (id) => (dispatch) => {
