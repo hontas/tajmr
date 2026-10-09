@@ -56,7 +56,7 @@ Do not run `npm run e2e` (Cypress) unless asked: it logs in with a hard-coded te
 
 ## Deploy and data
 
-- **A merged PR goes live**: *Build and Deploy* runs on pushes to `main` that touch app source,
+- **A merged PR goes live**: _Build and Deploy_ runs on pushes to `main` that touch app source,
   dependencies or build config (the `paths` filter in the workflow; add new build-affecting files there).
   Hold the merge of anything that needs a manual step first, such as a data migration.
 - Database security rules (`database.rules.json`) are **not** deployed by the workflow: the owner deploys
