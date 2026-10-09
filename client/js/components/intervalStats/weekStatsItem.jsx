@@ -8,7 +8,7 @@ import styles from './weekStatsItem.module.css';
 
 const emptyIntervals = [];
 
-const WeekDayItem = ({ weekday, total, date, intervals = emptyIntervals }) => {
+const WeekDayItem = ({ weekday, total = 0, date, intervals = emptyIntervals }) => {
   // 10 hours = 100px; minimum 20px
   const barHeight = total > 0 ? Math.max(getHours(total) * 10, 20) : 0;
   const style = {
@@ -44,10 +44,6 @@ const WeekDayItem = ({ weekday, total, date, intervals = emptyIntervals }) => {
       </p>
     </div>
   );
-};
-
-WeekDayItem.defaultProps = {
-  total: 0,
 };
 
 WeekDayItem.propTypes = {

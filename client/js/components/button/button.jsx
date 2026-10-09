@@ -33,12 +33,6 @@ const Button = React.forwardRef(
   },
 );
 
-Button.defaultProps = {
-  text: null,
-  children: null,
-  isLoading: false,
-};
-
 Button.propTypes = {
   className: PropTypes.string,
   isLoading: PropTypes.bool,

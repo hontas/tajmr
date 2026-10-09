@@ -8,7 +8,7 @@ import { getIntervalSum } from '../../utils/intervals';
 
 import styles from './monthStats.module.css';
 
-const MonthStats = ({ hoursPerWeek, monthIntervals, timestamp }) => {
+const MonthStats = ({ hoursPerWeek = 40, monthIntervals, timestamp }) => {
   const month = getMonth(timestamp);
   const workedHoursInMonth = getIntervalSum(monthIntervals) / oneHour;
   const totalWorkHoursInMonth = (hoursPerWeek / 5) * getWorkDaysInMonth(month);
@@ -19,10 +19,6 @@ const MonthStats = ({ hoursPerWeek, monthIntervals, timestamp }) => {
       <ProgressBar progress={workedHoursInMonth} max={totalWorkHoursInMonth} />
     </div>
   );
-};
-
-MonthStats.defaultProps = {
-  hoursPerWeek: 40,
 };
 
 MonthStats.propTypes = {
