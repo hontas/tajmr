@@ -1,92 +1,70 @@
 # AGENTS.md
 
 Guidance for coding agents (Claude Code, Cursor, Codex, ...) and contributors. This file is the single
-source of truth; `CLAUDE.md` only imports it. Don't duplicate it elsewhere.
+source of truth; `CLAUDE.md` only imports it. Keep it lean: a line belongs here only if it prevents a
+mistake that the code, the config or the tools wouldn't. Delete a line when a tool starts enforcing it.
 
-## What this is
+**tajmr** is a small time-recording PWA (React, Redux, Firebase Auth + Realtime Database, Vite+). The UI
+text is Swedish. The default branch is `main`.
 
-**tajmr**: a small time-recording PWA ("press play, press pause, add a note"). React + Redux +
-Firebase (Auth + Realtime Database), built with Vite, tested with Vitest (via Vite+) + React Testing Library,
-deployed to GitHub Pages. UI text is Swedish. The default branch is `main`.
+## Before you push
 
-## Commands
+Run `npm run verify`: it is everything the PR check runs (lint, format, knip, tests with coverage, tests in
+other timezones, production build). Use the Node version in `.nvmrc` and `npm ci`; use `npm install` only
+to add or change a dependency, and commit the lockfile.
 
-Use the Node version in `.nvmrc`, then `npm ci` for a clean install that matches `package-lock.json` exactly
-(what CI does). Use `npm install <package>` only to add or change a dependency, and commit the lockfile.
+Do not run `npm run e2e` (Cypress) unless asked: it logs in with a hard-coded test account against the
+**live Firebase project**.
 
-| Command | What it does |
-| --- | --- |
-| `npm run dev` | dev server with hot reload |
-| `npm run verify` | **everything the PR check runs**: lint, format check, knip, tests with coverage (also in other timezones), production build. Run before pushing |
-| `npm test` | Vitest, one run (`npm run tdd` to watch); `npm run test:timezones` reruns it in other timezones |
-| `npm run lint` / `npm run format` | Oxlint via `vp lint` / Oxfmt via `vp fmt` (writes) |
-| `npm run knip` | unused files, exports and dependencies |
-| `npm run build` | production build; the Sentry source map upload only runs when `SENTRY_UPLOAD=true` (deploy workflow, see below) |
-
-`npm run e2e` (Cypress) logs in with a hard-coded test account against the **live Firebase project**. Do
-not run it unless asked.
-
-## Layout
-
-```
-client/js/
-  app.jsx           bootstrap: Sentry, store, Firebase auth listener
-  components/<x>/   one folder per feature: <x>.jsx, <x>.module.css, <x>.test.jsx
-  redux/            one module per slice (actions + reducer + thunks): intervals, user, userSettings, app
-  utils/
-    firebaseApi.js  ALL Firebase access (auth, reads, writes, realtime listeners); mock this in tests
-    time.js         ALL date/time logic; components never do date maths themselves
-    interValidator.js  validation of intervals before they are written / after they are read
-```
-
-Data (Firebase Realtime Database): `userIntervals/{uid}/{id}` (a user's intervals) and `users/{uid}`
-(settings); the rules in `database.rules.json` let a user touch only their own paths. The old flat
-`intervals/{id}` node is denied by the rules (nothing else is readable) and is deleted at the end of #14.
-
-## Conventions
+## Code rules
 
 - Never log interval data (notes, times) or any user data. Report errors to Sentry, ids only.
-- Tests live next to the code (`*.test.js[x]`). Mock `utils/firebaseApi`; never hit real Firebase in tests.
-- Tests run in `Europe/Stockholm` by default (`test.env` in `vite.config.mjs`); code must not depend on the
-  timezone, so `npm run test:timezones` (part of `verify`) reruns them in UTC, New York and Kolkata. Build
-  dates with the local constructor (`new Date(y, m, d)`), never `'2018-03-14'` (parsed as UTC).
-- Tests named `BUG: ...` pin known wrong behaviour on purpose; the fixing PR flips them.
-- Coverage has a global threshold in `vite.config.mjs`. Raise it when coverage improves, never lower it.
+- All Firebase access goes through `utils/firebaseApi.js`, all date maths through `utils/time.js`
+  (components never do date maths), validation of intervals through `utils/interValidator.js`.
+- Tests: mock `utils/firebaseApi`, never hit real Firebase. Tests run in `Europe/Stockholm`, but code must
+  not depend on the timezone (`verify` reruns them in UTC, New York and Kolkata): build dates with
+  `new Date(y, m, d)`, never `'2018-03-14'` (parsed as UTC).
+- Tests named `BUG: ...` pin known wrong behaviour on purpose; the PR that fixes it flips them.
 - `data-testid` attributes are used by the Cypress specs; don't rename them casually.
-- Browser support: the latest 2 versions of major browsers, including iOS Safari (the app is installed
-  as a PWA on iPhone). No polyfills. The build uses Vite's default target (Chrome 111, Safari 16.4 and
-  up), which covers that with room to spare.
+- Coverage thresholds are in `vite.config.mjs`. Raise them when coverage improves, never lower them.
+- Browser support: the latest 2 versions of major browsers, including iOS Safari (the app is installed as
+  a PWA on iPhone). No polyfills. Vite's default build target covers this.
+- **Web APIs first.** Before writing a custom implementation or adding a package, check whether the
+  platform already does it (`fetch`, `IntersectionObserver`, `Intl`, `URL`, IndexedDB, Web Locks,
+  `structuredClone`, `<dialog>`, CSS features, ...) in the browsers above (MDN / caniuse). Only reach for a
+  package or custom code when the Web API can't do the job, and say why in the PR.
 - Keep it simple: no new dependency, abstraction or config without a concrete need.
 
 ## Workflow
 
 1. Work is tracked as GitHub issues; **one issue = one PR**, branched from `main`, linked with `Closes #n`.
-2. Tests first for bug fixes (see the `BUG:` tests). Add or update tests with every behaviour change.
-3. Run `npm run verify` before pushing. CI (`lint-and-test`) must be green; PRs are merged by the owner.
-4. Don't skip, disable or loosen tests, lint rules or the coverage threshold to get green.
+   PRs are merged by the owner, and CI (`lint-and-test`) must be green.
+2. Tests first for bug fixes. Add or update tests with every behaviour change.
+3. Don't skip, disable or loosen tests, lint rules or the coverage threshold to get green. Fix the places
+   instead of turning a rule off.
+4. **Any UI change includes at least one screenshot in the PR description**: mobile width (about 390×844,
+   the app is used on an iPhone), plus a desktop one when the layout differs there. Show the changed
+   state, not just the page; one per state the change touches (dark/light, ...). Contributors drag the
+   image into the description. Agents can't upload through the API: render the page in headless Chromium,
+   commit the PNG to a side branch such as `claude/pr-screenshots` (never the PR branch), and link it as
+   `https://github.com/<owner>/<repo>/blob/<commit sha>/<path>.png?raw=true`. Say in the PR that the
+   branch can be deleted after merging.
 5. Never commit secrets or `.env`. Don't force-push to branches you didn't create.
 
-## Environment and deploy
+## Deploy and data
 
-- Local dev, tests and `npm run verify` need no environment variables. The deploy workflow sets
-  `SENTRY_UPLOAD=true` plus `SENTRY_DSN`, `SENTRY_AUTH_TOKEN`, `SENTRY_ORG` and `SENTRY_PROJECT` for the build, which
-  then emits hidden source maps and uploads them to Sentry. The first step of the deploy job checks that all
-  four are set and fails at once if not (the build checks them too).
-  The workflow deletes the `.map` files before publishing, so the original source is never served.
-  `.env.example` only documents the variables (`.env` is gitignored).
-- The Firebase web config is committed in `utils/firebaseApi.js` (public by design; it is not a secret).
-- Database security rules live in `database.rules.json` (+ `firebase.json`). They are **not** deployed by the
-  workflow: the owner deploys them with `firebase deploy --only database --project <id>` or pastes them in
-  the console. The rules are the access control; never rely on client-side filtering.
-- **Build and Deploy** (runs on pushes to `main` that touch app source, dependencies or build config, and
-  manually via `workflow_dispatch`; `main` only): such a merged PR goes live, so hold the merge of anything
-  that needs a manual step first (e.g. a data migration). The file list is the `paths` filter in the
-  workflow; add new build-affecting files there. The `build` job runs in the `production`
-  environment (holds the `SENTRY_AUTH_TOKEN` secret), uploads the site as a Pages artifact; the `deploy`
-  job publishes it via `actions/deploy-pages`. In GitHub: `SENTRY_AUTH_TOKEN` = environment secret on
-  `production`; `SENTRY_ORG` / `SENTRY_PROJECT` / `SENTRY_DSN` = repository variables (the DSN is public; it ships in the
-  bundle, and without it Sentry stays off, which is the case in dev and in tests).
-- **Versions** are calendar versions computed by the deploy workflow: `YYYY.MM.DD` (UTC), plus `.N` from the
-  second deploy of the same day. They show in the navbar, are the Sentry release (`tajmr@<version>`) and
-  are tagged `v<version>` on the deployed commit after a successful deploy. `package.json`'s `version` is
-  not used; local builds report `dev`.
+- **A merged PR goes live**: *Build and Deploy* runs on pushes to `main` that touch app source,
+  dependencies or build config (the `paths` filter in the workflow; add new build-affecting files there).
+  Hold the merge of anything that needs a manual step first, such as a data migration.
+- Database security rules (`database.rules.json`) are **not** deployed by the workflow: the owner deploys
+  them (`firebase deploy --only database --project <id>`) or pastes them in the console. The rules are the
+  access control; never rely on client-side filtering. Data lives under `userIntervals/{uid}/{id}` and
+  `users/{uid}`; the old flat `intervals/{id}` node is denied and is deleted at the end of #14.
+- Sentry: the deploy build needs `SENTRY_DSN`, `SENTRY_ORG`, `SENTRY_PROJECT` (repository variables) and
+  `SENTRY_AUTH_TOKEN` (secret on the `production` environment), and fails at once if one is missing.
+  Without the DSN Sentry stays off, as in dev and tests. Source maps are uploaded and deleted before
+  publishing, so the source is never served. `.env.example` documents the variables.
+- The Firebase web config in `utils/firebaseApi.js` is public by design; it is not a secret.
+- Versions are calendar versions (`YYYY.MM.DD`, plus `.N` from the second deploy of a day) computed by the
+  deploy workflow; they are the Sentry release and the `v<version>` tag. `package.json`'s `version` is not
+  used.
