@@ -24,6 +24,9 @@ export default defineConfig(({ command, isPreview }) => {
   }
 
   return {
+    staged: {
+      '*.{js,jsx,mjs,css}': 'vp check --fix',
+    },
     fmt: {
       singleQuote: true,
       arrowParens: 'always',

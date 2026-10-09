@@ -15,18 +15,8 @@
     "build": "vp build",
     "dev": "vp dev",
     "preview": "vp preview",
-    "postbuild": "test -f dist/pwa-192x192.png -a -f dist/pwa-512x512.png -a -f dist/apple-touch-icon-180x180.png -a -f dist/favicon.ico || { echo 'PWA icons are missing from dist/ (see the icon plugin warnings above)'; exit 1; }"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm test && npx cypress run"
-    }
-  },
-  "lint-staged": {
-    "*.{js,jsx}": [
-      "vp lint --fix"
-    ]
+    "postbuild": "test -f dist/pwa-192x192.png -a -f dist/pwa-512x512.png -a -f dist/apple-touch-icon-180x180.png -a -f dist/favicon.ico || { echo 'PWA icons are missing from dist/ (see the icon plugin warnings above)'; exit 1; }",
+    "prepare": "vp config"
   },
   "author": "Pontus Lundin <lundin.pontus@gmail.com> (https://github.com/hontas)",
   "repository": {
@@ -56,10 +46,8 @@
     "@vitejs/plugin-react": "^6.1.2",
     "@vitest/coverage-v8": "^5.0.3",
     "cypress": "^6.6.0",
-    "husky": "^6.0.0",
     "jsdom": "^29.1.1",
     "knip": "^6.40.0",
-    "lint-staged": "^10.5.4",
     "md5": "^2.2.1",
     "vite-plugin-pwa": "^2.0.0",
     "vite-plus": "^1.1.0",
