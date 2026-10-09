@@ -20,7 +20,7 @@ export default defineConfig(({ command, isPreview }) => {
   if (uploadSourceMaps) {
     // the deploy build has to report to Sentry, so a missing value fails it
     const missing = ['SENTRY_DSN', 'SENTRY_AUTH_TOKEN', 'SENTRY_ORG', 'SENTRY_PROJECT'].filter(
-      (name) => !process.env[name]
+      (name) => !process.env[name],
     );
     if (missing.length) {
       throw new Error(`SENTRY_UPLOAD is set but ${missing.join(', ')} is missing`);
@@ -28,6 +28,21 @@ export default defineConfig(({ command, isPreview }) => {
   }
 
   return {
+    // Oxfmt (`vp fmt`), same options as the Prettier setup it replaced
+    fmt: {
+      singleQuote: true,
+      arrowParens: 'always',
+      printWidth: 100,
+      sortPackageJson: false,
+      // vendored styles and generated output
+      ignorePatterns: [
+        'client/styles/pure-css.min.css',
+        'client/styles/normalize.css',
+        'dist/',
+        'coverage/',
+        'package-lock.json',
+      ],
+    },
     root: 'client',
     base,
     define: {
@@ -46,7 +61,7 @@ export default defineConfig(({ command, isPreview }) => {
         // provided by vite-plugin-pwa at build time
         ...(process.env.VITEST && {
           'virtual:pwa-register': fileURLToPath(
-            new URL('./test/pwaRegisterStub.js', import.meta.url)
+            new URL('./test/pwaRegisterStub.js', import.meta.url),
           ),
         }),
       },

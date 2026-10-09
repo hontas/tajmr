@@ -1,8 +1,0 @@
-# vendored styles
-client/styles/pure-css.min.css
-client/styles/normalize.css
-
-# generated
-public/
-coverage/
-package-lock.json

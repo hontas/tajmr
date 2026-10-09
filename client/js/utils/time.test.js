@@ -50,7 +50,7 @@ describe('time', () => {
 
     test('should handle weeks over months', () => {
       expect(isSameWeek(new Date('2016-04-03T07:00:00'), new Date('2016-03-28T07:00:00'))).toBe(
-        true
+        true,
       );
     });
   });
@@ -325,7 +325,7 @@ describe('time', () => {
       const mm = String(instant.getMinutes()).padStart(2, '0');
 
       expect(getDateTimeString(instant.toISOString())).toBe(
-        `${instant.getDate()} okt. 2026 ${hh}:${mm}`
+        `${instant.getDate()} okt. 2026 ${hh}:${mm}`,
       );
     });
 
@@ -382,7 +382,7 @@ describe('time', () => {
     test('a work week lists the right dates, also in weeks with a DST change', () => {
       mondays2026.forEach((monday) => {
         const dates = createWorkWeek(
-          +local(monday.getFullYear(), monday.getMonth(), monday.getDate() + 2, 12)
+          +local(monday.getFullYear(), monday.getMonth(), monday.getDate() + 2, 12),
         ).map((day) => day.date);
         const expected = Array.from({ length: 7 }, (_, delta) => {
           const day = local(monday.getFullYear(), monday.getMonth(), monday.getDate() + delta);

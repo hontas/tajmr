@@ -16,7 +16,7 @@ const renderWith = (intervals) => {
   return render(
     <Provider store={store}>
       <IntervalStats />
-    </Provider>
+    </Provider>,
   );
 };
 

@@ -10,7 +10,7 @@ describe('Button', () => {
     render(
       <Button text="Save" onClick={onClick}>
         <span>icon</span>
-      </Button>
+      </Button>,
     );
 
     const button = screen.getByRole('button', { name: /Save/ });

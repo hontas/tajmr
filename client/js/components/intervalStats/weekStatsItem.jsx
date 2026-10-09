@@ -57,7 +57,7 @@ WeekDayItem.propTypes = {
       timespan: PropTypes.number.isRequired,
       note: PropTypes.string,
       notWork: PropTypes.bool,
-    })
+    }),
   ),
 };
 

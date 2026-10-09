@@ -17,7 +17,7 @@ describe('interValidator', () => {
     test('returns undefined for a valid interval', () => {
       expect(validateNewInterval({ startTime: 1000 })).toBeUndefined();
       expect(
-        validateNewInterval({ startTime: 1000, endTime: 2000, note: 'x', notWork: true })
+        validateNewInterval({ startTime: 1000, endTime: 2000, note: 'x', notWork: true }),
       ).toBeUndefined();
     });
 
@@ -35,7 +35,7 @@ describe('interValidator', () => {
 
     test('rejects extraneous keys', () => {
       expect(validateNewInterval({ startTime: 1000, foo: 1 })).toBe(
-        'Not supported extraneous keys [foo]'
+        'Not supported extraneous keys [foo]',
       );
     });
   });
@@ -54,13 +54,13 @@ describe('interValidator', () => {
 
     test('does not accept the old user field (intervals live under the user now)', () => {
       expect(validateInterval({ ...valid, user: 'u1' })).toBe(
-        'Not supported extraneous keys [user]'
+        'Not supported extraneous keys [user]',
       );
     });
 
     test('rejects extraneous keys', () => {
       expect(validateInterval({ ...valid, extra: true })).toBe(
-        'Not supported extraneous keys [extra]'
+        'Not supported extraneous keys [extra]',
       );
     });
   });
@@ -68,13 +68,13 @@ describe('interValidator', () => {
   describe('type checks', () => {
     test('falsy values of the wrong type are rejected', () => {
       expect(validateNewInterval({ startTime: 1000, note: 0 })).toMatch(
-        /"note" should be "string"/
+        /"note" should be "string"/,
       );
       expect(validateNewInterval({ startTime: 1000, endTime: '' })).toMatch(
-        /"endTime" should be "number"/
+        /"endTime" should be "number"/,
       );
       expect(validateNewInterval({ startTime: 1000, notWork: 0 })).toMatch(
-        /"notWork" should be "boolean"/
+        /"notWork" should be "boolean"/,
       );
     });
 
@@ -84,13 +84,13 @@ describe('interValidator', () => {
 
     test('the message names the expected and actual type, never the value', () => {
       expect(validateNewInterval({ startTime: '1000' })).toBe(
-        '"startTime" should be "number" but is string'
+        '"startTime" should be "number" but is string',
       );
     });
 
     test('all type errors are reported', () => {
       expect(validateNewInterval({ startTime: '1', note: 5 })).toBe(
-        '"startTime" should be "number" but is string\n"note" should be "string" but is number'
+        '"startTime" should be "number" but is string\n"note" should be "string" but is number',
       );
     });
   });

@@ -100,7 +100,7 @@ class MonthReport extends Component {
     const { intervals } = this.props;
     const { startTime, endTime } = getMonth(referenceDate);
     return intervals.filter(
-      (interval) => interval.startTime > startTime && interval.startTime <= endTime
+      (interval) => interval.startTime > startTime && interval.startTime <= endTime,
     );
   };
 }

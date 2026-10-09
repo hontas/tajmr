@@ -103,13 +103,13 @@ const api = {
     const toInterval = (snapshot) => ({ ...snapshot.val(), id: snapshot.key });
 
     const onAdded = upcoming.on('child_added', (snapshot) =>
-      api.emit(intervalAdded(toInterval(snapshot)))
+      api.emit(intervalAdded(toInterval(snapshot))),
     );
     const onChanged = ref.on('child_changed', (snapshot) =>
-      api.emit(intervalUpdated(toInterval(snapshot)))
+      api.emit(intervalUpdated(toInterval(snapshot))),
     );
     const onRemoved = ref.on('child_removed', (snapshot) =>
-      api.emit(intervalRemoved(snapshot.key))
+      api.emit(intervalRemoved(snapshot.key)),
     );
 
     return () => {

@@ -20,7 +20,7 @@ const setup = (...actions) => {
   render(
     <Provider store={store}>
       <Navbar />
-    </Provider>
+    </Provider>,
   );
   return store;
 };
@@ -37,13 +37,13 @@ describe('Navbar', () => {
       process.env.BUILD_TIME = '2026-10-08T13:29:00.000Z'; // an instant, as embedded by the build
       const built = new Date(process.env.BUILD_TIME);
       const hhmm = `${String(built.getHours()).padStart(2, '0')}:${String(
-        built.getMinutes()
+        built.getMinutes(),
       ).padStart(2, '0')}`;
 
       setup();
 
       expect(
-        screen.getByText(`tajmr@2026.10.08 - ${built.getDate()} okt. 2026 ${hhmm}`)
+        screen.getByText(`tajmr@2026.10.08 - ${built.getDate()} okt. 2026 ${hhmm}`),
       ).toBeInTheDocument();
     });
   });

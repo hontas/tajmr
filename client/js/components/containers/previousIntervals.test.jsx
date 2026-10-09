@@ -32,7 +32,7 @@ describe('PreviousIntervals', () => {
     render(
       <Provider store={store}>
         <PreviousIntervals />
-      </Provider>
+      </Provider>,
     );
 
     // TODO: assert intervals rendered

@@ -23,7 +23,7 @@ const setup = (props = {}) => {
       userSettings={userSettings}
       fetchIntervalsInWeek={fetchIntervalsInWeek}
       {...props}
-    />
+    />,
   );
   return { fetchIntervalsInWeek };
 };
