@@ -19,6 +19,7 @@ const setup = (props = {}) => {
     <WeekStats
       intervals={[]}
       timestamp={wednesday}
+      now={Date.now()}
       userSettings={userSettings}
       fetchIntervalsInWeek={fetchIntervalsInWeek}
       {...props}

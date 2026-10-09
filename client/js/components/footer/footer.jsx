@@ -40,10 +40,7 @@ export default () => {
     <footer className={styles.footer}>
       <span>
         {'Built with '}
-        {/* oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- an emoji, not an image file */}
-        <span className={styles.emoji} role="img" aria-label="heart">
-          ❤
-        </span>
+        <span className={styles.emoji}>❤</span>
         {' by '}
         <a className="animated" href="https://github.com/hontas">
           hontas

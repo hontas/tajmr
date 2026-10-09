@@ -1,22 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import RenderEvery, { thirtySeconds } from '../hoc/RenderEvery.jsx';
+import useNow from '../../hooks/useNow';
 import { getTimePartsFromElapsedTime, getDurationString } from '../../utils/time';
 import notify from '../../utils/notification';
 
 import styles from './digitalClock.module.css';
 
 const DigitalClock = ({ from, elapsed }) => {
-  // re-rendered every 30 seconds by RenderEvery; replaced by a hook in #76
-  // oxlint-disable-next-line react/purity
-  const time = from ? Date.now() - from + elapsed : elapsed;
+  const now = useNow();
+  const time = from ? now - from + elapsed : elapsed;
   const { hours, minutes } = getTimePartsFromElapsedTime(time);
   const timestring = getDurationString(time);
 
-  if (from && hours && minutes === 0) {
-    notify(`Nu har du jobbat i ${hours} timmar.`);
-  }
+  const shouldNotify = Boolean(from && hours && minutes === 0);
+
+  useEffect(() => {
+    if (shouldNotify) notify(`Nu har du jobbat i ${hours} timmar.`);
+  }, [shouldNotify, hours]);
 
   return (
     <div className={styles.container}>
@@ -30,4 +31,4 @@ DigitalClock.propTypes = {
   from: PropTypes.number.isRequired,
 };
 
-export default RenderEvery(thirtySeconds)(DigitalClock);
+export default DigitalClock;
