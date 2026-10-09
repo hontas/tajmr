@@ -14,6 +14,7 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
+// oxlint-disable-next-line import/no-unassigned-import -- registers the custom commands
 import './commands';
 
 // Alternatively you can use CommonJS syntax:

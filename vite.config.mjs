@@ -57,8 +57,9 @@ export default defineConfig(({ command, isPreview }) => {
         eqeqeq: 'error',
         'no-var': 'error',
         'prefer-const': 'error',
-        // side-effect imports (stylesheets, firebase/auth) are normal in a bundled app
-        'import/no-unassigned-import': 'off',
+        // catches imports that were meant to have a binding; firebase/auth and /database register
+        // themselves, until the modular SDK (step 5 of #15)
+        'import/no-unassigned-import': ['error', { allow: ['firebase/*'] }],
       },
       overrides: [
         {

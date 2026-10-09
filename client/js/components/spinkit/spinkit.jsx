@@ -1,5 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+// oxlint-disable-next-line import/no-unassigned-import -- the stylesheet of the components below
 import 'spinkit/spinkit.min.css';
 
 export function Wave({ className = '', color = 'currentColor', size = '1em' }) {
