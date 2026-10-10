@@ -13,10 +13,18 @@ import Button from '#/components/button/button.tsx';
 import type { AppUser } from '#/store/user.ts';
 import type { UserSettingsState } from '#/store/userSettings.ts';
 import firebaseApi from '#/utils/firebaseApi.ts';
+import useNotificationPermission, {
+  type NotificationSupport,
+} from '#/hooks/useNotificationPermission.ts';
 
 import styles from './userMenu.module.css';
 
 const garavatarUrl = 'https://www.gravatar.com/avatar';
+
+const notificationHint: Partial<Record<NotificationSupport, string>> = {
+  denied: 'Notiser är blockerade i webbläsarens inställningar.',
+  unsupported: 'Notiser stöds inte här. På iPhone: lägg till appen på hemskärmen först.',
+};
 
 const identity = <T,>(value: T) => value;
 
@@ -39,6 +47,7 @@ const UserMenu = ({ userSettings, user, className, updateSettings }: UserMenuPro
   const [isSavingUserPassword, startSavingUserPassword] = useTransition();
   const [updatePasswordError, setUpdatePasswordError] = useState<string | null>(null);
   const [updatePasswordSuccess, setUpdatePasswordSuccess] = useState(false);
+  const { permission, requestPermission } = useNotificationPermission();
   const oldPass = useRef<HTMLInputElement>(null);
   const newPass = useRef<HTMLInputElement>(null);
   const photoURL = user && (user.photoURL || `${garavatarUrl}/${md5(user.email ?? '')}`);
@@ -48,6 +57,7 @@ const UserMenu = ({ userSettings, user, className, updateSettings }: UserMenuPro
     ({ target }: ChangeEvent<HTMLInputElement>) => {
       const value = target.type === 'checkbox' ? target.checked : transform(target.value);
       updateSettings(prop, value);
+      if (prop === 'displayNotifications' && value) requestPermission();
     };
 
   const saveUserSettings = (evt: SyntheticEvent) => {
@@ -97,6 +107,9 @@ const UserMenu = ({ userSettings, user, className, updateSettings }: UserMenuPro
             type="checkbox"
           />
         </label>
+        {displayNotifications && notificationHint[permission] && (
+          <p className={styles.hint}>{notificationHint[permission]}</p>
+        )}
         <label className={styles.label}>
           Visa tidigare intervall
           <input

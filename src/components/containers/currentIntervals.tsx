@@ -77,6 +77,7 @@ const CurrentIntervals = () => {
           <DigitalClock
             elapsed={intervalSum}
             from={activeInterval ? activeInterval.startTime : 0}
+            notificationsEnabled={userSettings.displayNotifications}
           />
           <ProgressBarTimeWrapper intervals={activeAndCurrentIntervals} max={hoursInWeek / 5} />
           <div className={styles.actionButtons}>
