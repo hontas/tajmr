@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import IntervalListItem from './intervalListItem.jsx';
-import { getTimeString } from '../../utils/time';
+import { getTimeString } from '#/utils/time.js';
 
 const interval = {
   id: 'i1',

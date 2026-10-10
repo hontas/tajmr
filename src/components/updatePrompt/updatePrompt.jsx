@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import Button from '../button/button.jsx';
-import registerServiceWorker from '../../register-sw';
+import Button from '#/components/button/button.jsx';
+import registerServiceWorker from '#/register-sw.js';
 
 import styles from './updatePrompt.module.css';
 

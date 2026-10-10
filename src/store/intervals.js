@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/react';
 
-import firebaseApi from '../utils/firebaseApi';
-import { validateInterval, validateNewInterval } from '../utils/interValidator';
+import firebaseApi from '#/utils/firebaseApi.js';
+import { validateInterval, validateNewInterval } from '#/utils/interValidator.js';
 
 const INTERVAL_ADD = 'INTERVAL_ADD';
 const INTERVAL_UPDATED = 'INTERVAL_UPDATED';

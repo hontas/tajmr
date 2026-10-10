@@ -2,9 +2,9 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 
 import Login from './login.jsx';
-import firebaseApi from '../../utils/firebaseApi';
+import firebaseApi from '#/utils/firebaseApi.js';
 
-vi.mock('../../utils/firebaseApi', () => ({
+vi.mock('#/utils/firebaseApi.js', () => ({
   __esModule: true,
   default: {
     login: vi.fn(),

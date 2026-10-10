@@ -1,8 +1,8 @@
 import React from 'react';
-import { useSelector } from '../../store/useStore';
+import { useSelector } from '#/store/useStore.jsx';
 
 import IntervalStatsItem from './intervalStatsItem.jsx';
-import { getTimePartsFromElapsedTime, getWeekday, zeroPad } from '../../utils/time';
+import { getTimePartsFromElapsedTime, getWeekday, zeroPad } from '#/utils/time.js';
 
 function getIntervalAndDate(interval) {
   const date = new Date(interval.startTime);

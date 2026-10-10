@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import DatePicker from '../datepicker/DatePicker.jsx';
-import { getTimeString } from '../../utils/time';
+import DatePicker from '#/components/datepicker/DatePicker.jsx';
+import { getTimeString } from '#/utils/time.js';
 
 import styles from './intervalListInput.module.css';
 

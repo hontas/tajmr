@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import WeekStats from './weekStats.jsx';
-import { oneWeek } from '../../utils/time';
+import { oneWeek } from '#/utils/time.js';
 
 const hour = 60 * 60 * 1000;
 const wednesday = new Date(2021, 3, 7, 9).getTime();

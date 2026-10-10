@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import Calendar from '../icons/Calendar.jsx';
-import { toDateInputValue, fromDateInputValue } from '../../utils/time';
+import Calendar from '#/components/icons/Calendar.jsx';
+import { toDateInputValue, fromDateInputValue } from '#/utils/time.js';
 
 import styles from './DatePicker.module.css';
 

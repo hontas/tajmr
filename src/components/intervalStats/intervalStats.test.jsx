@@ -1,10 +1,10 @@
 import React from 'react';
-import { StoreProvider } from '../../store/useStore';
+import { StoreProvider } from '#/store/useStore.jsx';
 import { render, screen } from '@testing-library/react';
 
 import IntervalStats from './intervalStats.jsx';
-import createStore from '../../store/createStore';
-import { intervalsFetched } from '../../store/intervals';
+import createStore from '#/store/createStore.js';
+import { intervalsFetched } from '#/store/intervals.js';
 
 const hour = 60 * 60 * 1000;
 const day = (d, h = 9) => new Date(2021, 3, d, h).getTime();

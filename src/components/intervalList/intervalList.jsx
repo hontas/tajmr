@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import * as customPropTypes from '../../constants/propTypes';
+import * as customPropTypes from '#/constants/propTypes.js';
 import IntervalListItem from './intervalListItem.jsx';
 
 import styles from './intervalList.module.css';

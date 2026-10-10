@@ -34,6 +34,7 @@ Do not run `npm run e2e` (Cypress) unless asked: it logs in with a hard-coded te
   `structuredClone`, `<dialog>`, CSS features, ...) in the browsers above (MDN / caniuse). Only reach for a
   package or custom code when the Web API can't do the job, and say why in the PR.
 - Keep it simple: no new dependency, abstraction or config without a concrete need.
+- Import across folders from the `src` root with `#/` (`#/utils/time.js`, `#/components/button/button.jsx`, with the file extension; `package.json` `imports`); use `./` only inside the same folder.
 - The React Compiler memoizes at build time: don't write `useMemo`, `useCallback` or `memo`. Keep components pure (no `Date.now()` or ref reads while rendering; use `useNow`), which the lint rules check.
 - **No comments by default.** Rename the function or variable instead. Add a comment only when a name
   can't explain code that would otherwise look wrong or make no sense, and then make it as short and

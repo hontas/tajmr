@@ -1,14 +1,14 @@
 import React from 'react';
-import { StoreProvider } from '../../store/useStore';
+import { StoreProvider } from '#/store/useStore.jsx';
 import { render, screen } from '@testing-library/react';
 
 import Application from './application.jsx';
-import createStore from '../../store/createStore';
-import { initialized } from '../../store/app';
-import { userLoggedIn } from '../../store/user';
-import { intervalsFetched } from '../../store/intervals';
+import createStore from '#/store/createStore.js';
+import { initialized } from '#/store/app.js';
+import { userLoggedIn } from '#/store/user.js';
+import { intervalsFetched } from '#/store/intervals.js';
 
-vi.mock('../../utils/firebaseApi', () => ({
+vi.mock('#/utils/firebaseApi.js', () => ({
   __esModule: true,
   default: {
     login: vi.fn(),
@@ -34,11 +34,11 @@ const setup = (...actions) => {
 describe('Application', () => {
   beforeAll(() =>
     Promise.all([
-      import('../navbar/navbar.jsx'),
-      import('../footer/footer.jsx'),
-      import('../containers/currentIntervals.jsx'),
-      import('../containers/previousIntervals.jsx'),
-      import('../auth/login.jsx'),
+      import('#/components/navbar/navbar.jsx'),
+      import('#/components/footer/footer.jsx'),
+      import('#/components/containers/currentIntervals.jsx'),
+      import('#/components/containers/previousIntervals.jsx'),
+      import('#/components/auth/login.jsx'),
     ]),
   );
 

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import firebaseApi from '../../utils/firebaseApi';
-import Button from '../button/button.jsx';
+import firebaseApi from '#/utils/firebaseApi.js';
+import Button from '#/components/button/button.jsx';
 
 import styles from './login.module.css';
 

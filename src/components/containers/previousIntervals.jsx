@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import * as Sentry from '@sentry/react';
 
-import IntervalList from '../intervalList/intervalList.jsx';
-import Button from '../button/button.jsx';
-import { attemptUpdate, attemptRemove } from '../../store/intervals';
-import { useDispatch, useSelector } from '../../store/useStore';
-import { getWeek, getMonth, startOfDay } from '../../utils/time';
-import { isComplete } from '../../utils/intervals';
-import { ErrorBoundaryFallback } from '../ErrorBoundaryFallback.jsx';
+import IntervalList from '#/components/intervalList/intervalList.jsx';
+import Button from '#/components/button/button.jsx';
+import { attemptUpdate, attemptRemove } from '#/store/intervals.js';
+import { useDispatch, useSelector } from '#/store/useStore.jsx';
+import { getWeek, getMonth, startOfDay } from '#/utils/time.js';
+import { isComplete } from '#/utils/intervals.js';
+import { ErrorBoundaryFallback } from '#/components/ErrorBoundaryFallback.jsx';
 
 import styles from './previousIntervals.module.css';
 

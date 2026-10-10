@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import Button from '../button/button.jsx';
+import Button from '#/components/button/button.jsx';
 
 import styles from './footer.module.css';
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Wave } from '../spinkit/spinkit.jsx';
+import { Wave } from '#/components/spinkit/spinkit.jsx';
 
 import styles from './application.module.css';
 

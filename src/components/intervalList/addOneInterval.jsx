@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import IntervalListItem from './intervalListItem.jsx';
-import Save from '../icons/Save.jsx';
-import Button from '../button/button.jsx';
-import Error from '../error/Error.jsx';
+import Save from '#/components/icons/Save.jsx';
+import Button from '#/components/button/button.jsx';
+import Error from '#/components/error/Error.jsx';
 
 import styles from './addOneInterval.module.css';
 
