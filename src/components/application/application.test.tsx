@@ -3,22 +3,17 @@ import { render, screen } from '@testing-library/react';
 
 import Application from './application.tsx';
 import type { Action } from '#/store/types.ts';
+import firebaseApi from '#/utils/firebaseApi.ts';
 import createStore from '#/store/createStore.ts';
 import { initialized } from '#/store/app.ts';
 import { userLoggedIn } from '#/store/user.ts';
 import { intervalsFetched } from '#/store/intervals.ts';
 
-vi.mock('#/utils/firebaseApi.ts', () => ({
-  __esModule: true,
-  default: {
-    login: vi.fn<() => void>(),
-    logout: vi.fn<() => void>(),
-    sendPasswordResetEmail: vi.fn<() => void>(),
-    saveUserData: vi.fn<() => void>(),
-    updateUserPassword: vi.fn<() => void>(),
-    fetchIntervalsInWeek: vi.fn<() => Promise<object>>(() => Promise.resolve({})),
-  },
-}));
+vi.mock(import('#/utils/firebaseApi.ts'));
+
+beforeEach(() => {
+  vi.mocked(firebaseApi.fetchIntervalsInWeek).mockResolvedValue({});
+});
 
 const setup = (...actions: Action[]) => {
   const store = createStore();

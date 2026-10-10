@@ -5,13 +5,7 @@ import type { UserCredential } from 'firebase/auth';
 import Login from './login.tsx';
 import firebaseApi from '#/utils/firebaseApi.ts';
 
-vi.mock('#/utils/firebaseApi.ts', () => ({
-  __esModule: true,
-  default: {
-    login: vi.fn<() => void>(),
-    sendPasswordResetEmail: vi.fn<() => void>(),
-  },
-}));
+vi.mock(import('#/utils/firebaseApi.ts'));
 
 const getInput = (type: string) => {
   const input = document.querySelector(`input[type=${type}]`);
