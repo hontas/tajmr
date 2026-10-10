@@ -31,7 +31,7 @@
     "@sentry/react": "^11.6.0",
     "@testing-library/dom": "^10.4.2",
     "classnames": "^2.2.6",
-    "firebase": "^8.4.2",
+    "firebase": "^13.0.0",
     "prop-types": "^15.7.2",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",

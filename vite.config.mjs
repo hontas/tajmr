@@ -51,8 +51,7 @@ export default defineConfig(({ command, isPreview }) => {
         eqeqeq: 'error',
         'no-var': 'error',
         'prefer-const': 'error',
-        // firebase/auth and firebase/database register themselves on import
-        'import/no-unassigned-import': ['error', { allow: ['firebase/*'] }],
+        'import/no-unassigned-import': 'error',
       },
       overrides: [
         {
