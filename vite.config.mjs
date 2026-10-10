@@ -36,6 +36,7 @@ export default defineConfig(({ command, isPreview }) => {
       ignorePatterns: ['dist/', 'coverage/', 'package-lock.json'],
     },
     lint: {
+      options: { typeAware: true, typeCheck: true },
       plugins: ['react', 'jsx-a11y', 'import', 'vitest'],
       categories: {
         correctness: 'error',

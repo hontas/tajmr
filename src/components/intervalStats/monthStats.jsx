@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import * as customPropTypes from '#/constants/propTypes.js';
 import ProgressBar from '#/components/ui-elements/progressBar.jsx';
 import { oneHour, getMonth, getWorkDaysInMonth } from '#/utils/time.js';
-import { getIntervalSum } from '#/utils/intervals.js';
+import { getIntervalSum } from '#/utils/intervals.ts';
 
 import styles from './monthStats.module.css';
 
