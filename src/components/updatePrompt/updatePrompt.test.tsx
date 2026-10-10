@@ -3,10 +3,7 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import UpdatePrompt from './updatePrompt.tsx';
 import registerServiceWorker from '#/register-sw.ts';
 
-vi.mock('#/register-sw.ts', () => ({
-  __esModule: true,
-  default: vi.fn<typeof registerServiceWorker>(),
-}));
+vi.mock(import('#/register-sw.ts'));
 
 describe('UpdatePrompt', () => {
   let update = vi.fn<() => Promise<void>>();

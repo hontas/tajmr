@@ -8,14 +8,7 @@ import { initialized } from '#/store/app.ts';
 import { userLoggedIn } from '#/store/user.ts';
 import { intervalsFetched, requestIntervalUpdate } from '#/store/intervals.ts';
 
-vi.mock('#/utils/firebaseApi.ts', () => ({
-  __esModule: true,
-  default: {
-    logout: vi.fn<() => void>(),
-    saveUserData: vi.fn<() => void>(),
-    updateUserPassword: vi.fn<() => void>(),
-  },
-}));
+vi.mock(import('#/utils/firebaseApi.ts'));
 
 const setup = (...actions: Action[]) => {
   const store = createStore();

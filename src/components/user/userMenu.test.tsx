@@ -6,14 +6,7 @@ import type { UserSettingsState } from '#/store/userSettings.ts';
 import UserMenu from './userMenu.tsx';
 import firebaseApi from '#/utils/firebaseApi.ts';
 
-vi.mock('#/utils/firebaseApi.ts', () => ({
-  __esModule: true,
-  default: {
-    logout: vi.fn<() => void>(),
-    saveUserData: vi.fn<() => void>(),
-    updateUserPassword: vi.fn<() => void>(),
-  },
-}));
+vi.mock(import('#/utils/firebaseApi.ts'));
 
 const user: AppUser = { uid: 'u1', email: 'me@example.com', photoURL: null };
 const userSettings: UserSettingsState = {
@@ -115,7 +108,7 @@ describe('UserMenu', () => {
     });
 
     test('shows the error message on failure', async () => {
-      vi.mocked(firebaseApi.updateUserPassword).mockRejectedValue({ message: 'Wrong password' });
+      vi.mocked(firebaseApi.updateUserPassword).mockRejectedValue(new Error('Wrong password'));
       setup();
       fill('bad', 'new');
 

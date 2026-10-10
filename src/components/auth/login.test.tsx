@@ -1,17 +1,11 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { act, render, screen, fireEvent, waitFor } from '@testing-library/react';
 
 import type { UserCredential } from 'firebase/auth';
 
 import Login from './login.tsx';
 import firebaseApi from '#/utils/firebaseApi.ts';
 
-vi.mock('#/utils/firebaseApi.ts', () => ({
-  __esModule: true,
-  default: {
-    login: vi.fn<() => void>(),
-    sendPasswordResetEmail: vi.fn<() => void>(),
-  },
-}));
+vi.mock(import('#/utils/firebaseApi.ts'));
 
 const getInput = (type: string) => {
   const input = document.querySelector(`input[type=${type}]`);
@@ -79,16 +73,19 @@ describe('Login', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Log in' }));
     await screen.findByText(/The password is invalid/);
 
-    vi.mocked(firebaseApi.login).mockReturnValue(new Promise(() => {}));
+    const login = Promise.withResolvers<UserCredential>();
+    vi.mocked(firebaseApi.login).mockReturnValue(login.promise);
     fireEvent.click(screen.getByRole('button', { name: 'Log in' }));
 
     await waitFor(() =>
       expect(screen.queryByText(/The password is invalid/)).not.toBeInTheDocument(),
     );
+    await act(async () => login.resolve({} as UserCredential));
   });
 
   test('shows a loading state while logging in', async () => {
-    vi.mocked(firebaseApi.login).mockReturnValue(new Promise(() => {}));
+    const login = Promise.withResolvers<UserCredential>();
+    vi.mocked(firebaseApi.login).mockReturnValue(login.promise);
     render(<Login />);
     typeCredentials('me@example.com', 'secret');
 
@@ -96,6 +93,7 @@ describe('Login', () => {
 
     await waitFor(() => expect(screen.getByRole('button', { name: 'Log in' })).toBeInTheDocument());
     expect(screen.getByRole('button', { name: 'Log in' }).children.length).toBeGreaterThan(0);
+    await act(async () => login.resolve({} as UserCredential));
   });
 
   test('stops the loading state again after a failed login', async () => {
@@ -106,7 +104,9 @@ describe('Login', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Log in' }));
 
     await screen.findByText(/nope/);
-    expect(screen.getByRole('button', { name: 'Log in' }).children).toHaveLength(0);
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: 'Log in' }).children).toHaveLength(0),
+    );
   });
 
   test('confirms when the password reset email was sent', async () => {

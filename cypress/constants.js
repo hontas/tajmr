@@ -5,7 +5,6 @@ export const testIds = {
   userMenuToggle: 'user-menu-toggle',
   userMenu: 'user-menu',
   loadingIntervals: 'loading-intervals-container',
-  currentIntervals: 'current-intervals-list',
   interval: 'interval-item',
   intervalFromInput: 'interval-from-input',
   intervalEndInput: 'interval-end-input',
@@ -19,5 +18,8 @@ export const testIds = {
   addPrevIntervalForm: 'add-previous-interval-form',
   prevWeekBtn: 'prev-week-btn',
   nextWeekBtn: 'next-week-btn',
+};
+export const lists = {
+  currentIntervals: 'Dagens intervall',
 };
 export const animationDuration = 500;

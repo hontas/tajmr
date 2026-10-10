@@ -19,19 +19,12 @@ import type { Interval, NewInterval } from '#/utils/interValidator.ts';
 import type { MockInstance } from 'vitest';
 import type { Action, Store } from './types.ts';
 
-vi.mock('@sentry/react', () => ({
-  captureException: vi.fn<(error: unknown) => void>(),
-  captureMessage: vi.fn<(message: string) => void>(),
+vi.mock(import('@sentry/react'), async (importOriginal) => ({
+  ...(await importOriginal()),
+  captureException: vi.fn<typeof Sentry.captureException>(),
+  captureMessage: vi.fn<typeof Sentry.captureMessage>(),
 }));
-vi.mock('#/utils/firebaseApi.ts', () => ({
-  __esModule: true,
-  default: {
-    createInterval: vi.fn<typeof firebaseApi.createInterval>(),
-    updateInterval: vi.fn<typeof firebaseApi.updateInterval>(),
-    removeInterval: vi.fn<typeof firebaseApi.removeInterval>(),
-    fetchIntervalsForUser: vi.fn<typeof firebaseApi.fetchIntervalsForUser>(),
-  },
-}));
+vi.mock(import('#/utils/firebaseApi.ts'));
 
 const validNew = { startTime: 1000, endTime: 2000, note: 'work' };
 const saved = { createdAt: 1, startTime: 1000 };

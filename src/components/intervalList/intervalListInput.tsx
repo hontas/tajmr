@@ -10,29 +10,22 @@ const textFromTimestamp = (timestamp?: number) => (timestamp ? getTimeString(tim
 
 interface IntervalListInputProps {
   className?: string;
-  dataTestId?: string;
+  'data-testid'?: string;
   titlePrefix?: string;
   timestamp?: number;
-  onUpdate: (evt: { target: { value: number } }) => void;
+  onUpdate: (timestamp: number) => void;
 }
 
 const IntervalListInput = ({
   className = '',
-  dataTestId = '',
+  'data-testid': testId,
   timestamp,
   titlePrefix,
   onUpdate,
 }: IntervalListInputProps) => {
   const [value, setValue] = useState(textFromTimestamp(timestamp));
   const [isValid, setIsValid] = useState(true);
-  const [lastTimestamp, setLastTimestamp] = useState(timestamp);
   const isActive = !timestamp;
-
-  if (timestamp !== lastTimestamp) {
-    setLastTimestamp(timestamp);
-    setValue(textFromTimestamp(timestamp));
-    setIsValid(true);
-  }
 
   const validateAndPush = () => {
     if (!timestamp) return;
@@ -46,7 +39,7 @@ const IntervalListInput = ({
 
       date.setHours(Number(hours));
       date.setMinutes(Number(minutes));
-      onUpdate({ target: { value: date.getTime() } });
+      onUpdate(date.getTime());
     }
     setIsValid(valueIsValid);
   };
@@ -56,14 +49,14 @@ const IntervalListInput = ({
     const currentDate = new Date(timestamp);
     currentDate.setFullYear(nextDate.getFullYear(), nextDate.getMonth(), nextDate.getDate());
 
-    onUpdate({ target: { value: currentDate.getTime() } });
+    onUpdate(currentDate.getTime());
   };
 
   return (
     <div className={classNames(styles.container, className, { [styles.error]: !isValid })}>
       <input
         type="text"
-        data-testid={dataTestId}
+        data-testid={testId}
         title={`${titlePrefix} time`}
         className={styles.input}
         disabled={isActive}

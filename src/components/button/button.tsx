@@ -1,4 +1,4 @@
-import { type ComponentProps, type MouseEventHandler } from 'react';
+import { type ComponentProps } from 'react';
 import classNames from 'classnames';
 
 import * as SpinKit from '#/components/spinkit/spinkit.tsx';
@@ -8,7 +8,6 @@ import styles from './button.module.css';
 type ButtonTheme = 'default' | 'primary' | 'accent' | 'secondary' | 'danger' | 'success' | 'link';
 
 interface ButtonProps extends Omit<ComponentProps<'button'>, 'type'> {
-  onClick: MouseEventHandler<HTMLButtonElement>;
   text?: string;
   isLoading?: boolean;
   block?: boolean;

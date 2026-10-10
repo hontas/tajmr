@@ -80,12 +80,7 @@ const CurrentIntervals = () => {
           />
           <ProgressBarTimeWrapper intervals={activeAndCurrentIntervals} max={hoursInWeek / 5} />
           <div className={styles.actionButtons}>
-            <WorkButton
-              data-testid="work-button"
-              activeInterval={!!activeInterval}
-              onClick={onClick}
-              isLoading={isLoading}
-            />
+            <WorkButton activeInterval={!!activeInterval} onClick={onClick} isLoading={isLoading} />
             <Button
               className={styles.prevWorkBtn}
               data-testid="register-previous-work-button"
@@ -97,7 +92,6 @@ const CurrentIntervals = () => {
           </div>
           {displayAddForm && (
             <AddOneInterval
-              data-testid="add-previous-interval-form"
               onAdd={(interval) => update(interval).then(() => setDisplayAddForm(false))}
               onCancel={() => setDisplayAddForm(false)}
               fullDay={hoursInDay}
@@ -105,7 +99,7 @@ const CurrentIntervals = () => {
             />
           )}
           <IntervalList
-            data-testid="current-intervals-list"
+            label="Dagens intervall"
             intervals={activeAndCurrentIntervals}
             onDelete={(id) => {
               if (id) dispatch(attemptRemove(id));

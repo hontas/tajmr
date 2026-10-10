@@ -1,5 +1,3 @@
-import { type ComponentProps } from 'react';
-
 import type { Interval } from '#/utils/interValidator.ts';
 import IntervalListItem, { type EditableInterval } from './intervalListItem.tsx';
 
@@ -11,7 +9,8 @@ function sortBy(array: Interval[], prop: 'startTime') {
 
 const emptyNotes: string[] = [];
 
-interface IntervalListProps extends ComponentProps<'ul'> {
+interface IntervalListProps {
+  label: string;
   intervals: Interval[];
   onDelete: (id: string | undefined) => void;
   onUpdate: (interval: EditableInterval) => void;
@@ -23,9 +22,9 @@ const IntervalList = ({
   onDelete,
   onUpdate,
   notes = emptyNotes,
-  ...props
+  label,
 }: IntervalListProps) => (
-  <ul {...props} className={styles.container}>
+  <ul aria-label={label} className={styles.container}>
     {sortBy(intervals, 'startTime').map((interval) => (
       <IntervalListItem
         key={interval.id}
