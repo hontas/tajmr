@@ -36,10 +36,12 @@ firebaseApi.onAuthStateChanged((user) => {
   if (user) {
     store.dispatch(userActions.userLoggedIn(user));
     store.dispatch(fetchIntervalsForUser());
-    stopListening = firebaseApi.listen({ intervalAdded, intervalRemoved, intervalUpdated });
-    firebaseApi
-      .getUserSettings(user)
-      .then((settings) => store.dispatch(userSettingsActions.updateSettings(settings.val())));
+    stopListening = firebaseApi.listen({
+      intervalAdded,
+      intervalRemoved,
+      intervalUpdated,
+      settingsChanged: userSettingsActions.updateSettings,
+    });
   } else {
     store.dispatch(userActions.userLoggedOut());
     store.dispatch(intervalReset());

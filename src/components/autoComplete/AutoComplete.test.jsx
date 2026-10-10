@@ -25,6 +25,23 @@ describe('AutoComplete', () => {
     expect(input).toHaveValue('planering');
   });
 
+  test('follows a new value from outside', () => {
+    const { rerender } = render(<AutoComplete dataTestId="note" onChange={vi.fn()} value="a" />);
+    rerender(<AutoComplete dataTestId="note" onChange={vi.fn()} value="b" />);
+
+    expect(screen.getByTestId('note')).toHaveValue('b');
+  });
+
+  test('does not overwrite what is being typed when a new value arrives', () => {
+    const { rerender } = render(<AutoComplete dataTestId="note" onChange={vi.fn()} value="a" />);
+    const input = screen.getByTestId('note');
+    fireEvent.focus(input);
+    fireEvent.change(input, { target: { value: 'abc' } });
+    rerender(<AutoComplete dataTestId="note" onChange={vi.fn()} value="b" />);
+
+    expect(input).toHaveValue('abc');
+  });
+
   test('suggests the notes that start with what is typed', () => {
     const { input } = setup();
     fireEvent.change(input, { target: { value: 'k' } });

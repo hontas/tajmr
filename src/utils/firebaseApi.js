@@ -23,6 +23,7 @@ import {
   onChildAdded,
   onChildChanged,
   onChildRemoved,
+  onValue,
 } from 'firebase/database';
 
 import { getWeek } from './time';
@@ -98,10 +99,6 @@ const api = {
     return auth.currentUser && auth.currentUser.uid;
   },
 
-  getUserSettings(user) {
-    return get(ref(database, `users/${user.uid}`));
-  },
-
   async updateUserPassword(oldPass, newPass) {
     const { currentUser } = auth;
     const credential = EmailAuthProvider.credential(currentUser.email, oldPass);
@@ -113,7 +110,7 @@ const api = {
     return set(ref(database, `users/${userId}`), data);
   },
 
-  listen({ intervalAdded, intervalRemoved, intervalUpdated }) {
+  listen({ intervalAdded, intervalRemoved, intervalUpdated, settingsChanged }) {
     const uid = api.getCurrentUserId();
     if (!uid) return () => {};
 
@@ -125,6 +122,9 @@ const api = {
       onChildAdded(upcoming, (snapshot) => api.emit(intervalAdded(toInterval(snapshot)))),
       onChildChanged(intervals, (snapshot) => api.emit(intervalUpdated(toInterval(snapshot)))),
       onChildRemoved(intervals, (snapshot) => api.emit(intervalRemoved(snapshot.key))),
+      onValue(ref(database, `users/${uid}`), (snapshot) =>
+        api.emit(settingsChanged(snapshot.val())),
+      ),
     ];
 
     return () => stopListening.forEach((stop) => stop());
