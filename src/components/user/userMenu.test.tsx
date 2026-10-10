@@ -35,14 +35,14 @@ describe('UserMenu', () => {
 
   test('uses a gravatar url based on the email when the user has no photo', () => {
     setup();
-    expect(screen.getByAltText('avatar').getAttribute('src')).toMatch(
+    expect(screen.getByAltText('Profilbild').getAttribute('src')).toMatch(
       /^https:\/\/www\.gravatar\.com\/avatar\/[0-9a-f]{32}$/,
     );
   });
 
   test('uses the photo url when present', () => {
     setup({ user: { ...user, photoURL: 'https://example.com/me.png' } });
-    expect(screen.getByAltText('avatar')).toHaveAttribute('src', 'https://example.com/me.png');
+    expect(screen.getByAltText('Profilbild')).toHaveAttribute('src', 'https://example.com/me.png');
   });
 
   test('reflects the current settings', () => {

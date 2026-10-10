@@ -60,14 +60,46 @@ describe('Navbar', () => {
     expect(screen.getByTestId('user-menu')).toBeInTheDocument();
   });
 
-  test('toggling the user menu locks and restores body scrolling', () => {
-    setup(initialized(), userLoggedIn({ uid: 'u1', email: 'me@example.com', photoURL: null }));
+  describe('menu dialog', () => {
+    const openMenu = () => {
+      setup(initialized(), userLoggedIn({ uid: 'u1', email: 'me@example.com', photoURL: null }));
+      fireEvent.click(screen.getByTestId('user-menu-toggle'));
+      return screen.getByTestId<HTMLDialogElement>('user-menu-dialog');
+    };
 
-    fireEvent.click(screen.getByTestId('user-menu-toggle'));
-    expect(document.body.style.overflow).toBe('hidden');
+    test('is closed until the toggle is clicked', () => {
+      setup(initialized(), userLoggedIn({ uid: 'u1', email: 'me@example.com', photoURL: null }));
+      expect(screen.getByTestId<HTMLDialogElement>('user-menu-dialog').open).toBe(false);
 
-    fireEvent.click(screen.getByTestId('user-menu-toggle'));
-    expect(document.body.style.overflow).toBe('');
+      fireEvent.click(screen.getByTestId('user-menu-toggle'));
+
+      expect(screen.getByTestId<HTMLDialogElement>('user-menu-dialog').open).toBe(true);
+    });
+
+    test('closes with the close button', () => {
+      const dialog = openMenu();
+
+      fireEvent.click(screen.getByTestId('user-menu-close'));
+
+      expect(dialog.open).toBe(false);
+    });
+
+    test('closes when the backdrop is clicked, not when the menu is', () => {
+      const dialog = openMenu();
+
+      fireEvent.click(screen.getByTestId('user-menu'));
+      expect(dialog.open).toBe(true);
+
+      fireEvent.click(dialog);
+      expect(dialog.open).toBe(false);
+    });
+
+    test('names the toggle and the dialog in Swedish', () => {
+      openMenu();
+
+      expect(screen.getByRole('button', { name: 'Öppna menyn' })).toBeInTheDocument();
+      expect(screen.getByRole('dialog', { name: 'Meny' })).toBeInTheDocument();
+    });
   });
 
   test('shows a fetching indicator while intervals load', () => {

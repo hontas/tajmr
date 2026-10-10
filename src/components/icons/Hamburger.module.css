@@ -4,13 +4,13 @@
   background-color: currentColor;
   width: 100%;
   height: 0.2em;
-  transition: transform 0.2s;
 }
 
 .hamburger {
   position: relative;
   display: block;
 }
+
 .hamburger:before,
 .hamburger:after {
   position: absolute;
@@ -18,17 +18,7 @@
   margin-top: -0.6em;
   content: ' ';
 }
+
 .hamburger:after {
   margin-top: 0.6em;
-}
-
-.active {
-  transform: rotate(-45deg);
-}
-.active:before {
-  margin-top: 0;
-}
-.active:after {
-  transform: rotate(90deg);
-  margin-top: 0;
 }

@@ -7,7 +7,6 @@ import {
   type KeyboardEvent,
   type SyntheticEvent,
 } from 'react';
-import classNames from 'classnames';
 import Button from '#/components/button/button.tsx';
 
 import type { AppUser } from '#/store/user.ts';
@@ -26,13 +25,12 @@ const preventDefault = (evt: SyntheticEvent) => {
 };
 
 interface UserMenuProps {
-  className?: string;
   updateSettings: (prop: string, value: boolean | number | string) => void;
   user: AppUser;
   userSettings: UserSettingsState;
 }
 
-const UserMenu = ({ userSettings, user, className, updateSettings }: UserMenuProps) => {
+const UserMenu = ({ userSettings, user, updateSettings }: UserMenuProps) => {
   const { displayMonthReport, displayNotifications, displayPreviousIntervals, hoursInWeek } =
     userSettings;
   const [isSavingUserSettings, startSavingUserSettings] = useTransition();
@@ -76,13 +74,9 @@ const UserMenu = ({ userSettings, user, className, updateSettings }: UserMenuPro
   };
 
   return (
-    <form
-      data-testid="user-menu"
-      className={classNames(styles.container, className)}
-      onSubmit={preventDefault}
-    >
+    <form data-testid="user-menu" className={styles.container} onSubmit={preventDefault}>
       <div className={styles.row}>
-        <img alt="avatar" className={styles.profileImage} src={photoURL} />
+        <img alt="Profilbild" className={styles.profileImage} src={photoURL} />
         <Button className={styles.logOut} theme="link" onClick={firebaseApi.logout}>
           Logga ut
         </Button>

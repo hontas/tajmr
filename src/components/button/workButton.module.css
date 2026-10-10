@@ -1,12 +1,24 @@
 .workButton {
   border-radius: 0;
   display: grid;
-  font-size: 1.5em;
-  width: 100%;
+  flex: 1;
+  min-width: 0;
+  font-size: 1.25em;
+  font-weight: 500;
 }
 
-@supports (-webkit-overflow-scrolling: touch) {
+.workButton.idle {
+  background: var(--text-color-light);
+  color: var(--primary-color-dark);
+}
+
+.workButton.active {
+  background: var(--success-color-dark);
+  color: var(--text-color-primary);
+}
+
+@media screen and (min-width: 480px) {
   .workButton {
-    padding-left: max(1em, env(safe-area-inset-left));
+    font-size: 1.5em;
   }
 }

@@ -50,23 +50,25 @@ const AddOneInterval = ({ notes, onCancel, onAdd, fullDay }: AddOneIntervalProps
           onUpdate={onUpdate}
           notes={notes}
         />
-        <Button
-          className={styles.saveBtn}
-          data-testid="add-one-interval-save-btn"
-          type="submit"
-          theme="primary"
-          onClick={handleClickSubmit}
-        >
-          <Save size={16} />
-        </Button>
-        <Button
-          className={styles.cancelBtn}
-          data-testid="add-one-interval-cancel-btn"
-          theme="primary"
-          onClick={onCancel}
-        >
-          ╳
-        </Button>
+        <div className={styles.actions}>
+          <Button
+            className={styles.saveBtn}
+            data-testid="add-one-interval-save-btn"
+            type="submit"
+            theme="primary"
+          >
+            <Save size={16} />
+            Spara
+          </Button>
+          <Button
+            className={styles.cancelBtn}
+            data-testid="add-one-interval-cancel-btn"
+            theme="primary"
+            onClick={onCancel}
+          >
+            Avbryt
+          </Button>
+        </div>
       </form>
       {error && <Error error={error} />}
     </>

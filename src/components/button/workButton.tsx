@@ -1,4 +1,5 @@
 import { type MouseEventHandler } from 'react';
+import classNames from 'classnames';
 
 import Button from './button.tsx';
 import styles from './workButton.module.css';
@@ -17,7 +18,7 @@ const WorkButton = ({ isLoading = false, activeInterval, onClick, ...props }: Wo
       {...props}
       data-testid="work-button"
       theme="primary"
-      className={styles.workButton}
+      className={classNames(styles.workButton, activeInterval ? styles.active : styles.idle)}
       onClick={onClick}
       text={buttonText}
       disabled={isLoading}
