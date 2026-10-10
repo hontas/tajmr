@@ -10,7 +10,7 @@ text is Swedish. The default branch is `main`.
 ## Before you push
 
 Run `npm run verify`: it is everything the PR check runs (lint, format, knip, tests with coverage, tests in
-other timezones, production build). Use the Node version in `.nvmrc` and `npm ci`; use `npm install` only
+other timezones, production build). Use the Node version in `.node-version` and `npm ci`; use `npm install` only
 to add or change a dependency, and commit the lockfile.
 
 Do not run `npm run e2e` (Cypress) unless asked: it logs in with a hard-coded test account against the
