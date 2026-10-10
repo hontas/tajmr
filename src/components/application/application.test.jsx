@@ -32,6 +32,16 @@ const setup = (...actions) => {
 };
 
 describe('Application', () => {
+  beforeAll(() =>
+    Promise.all([
+      import('../navbar/navbar.jsx'),
+      import('../footer/footer.jsx'),
+      import('../containers/currentIntervals.jsx'),
+      import('../containers/previousIntervals.jsx'),
+      import('../auth/login.jsx'),
+    ]),
+  );
+
   test('shows the loader until the app is initialised', () => {
     setup();
     expect(screen.getByTestId('app-init')).toBeInTheDocument();

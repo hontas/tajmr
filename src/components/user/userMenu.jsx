@@ -11,6 +11,8 @@ import styles from './userMenu.module.css';
 
 const garavatarUrl = 'https://www.gravatar.com/avatar';
 
+const identity = (value) => value;
+
 const preventDefault = (evt) => {
   if (evt.type === 'keydown' && evt.key !== 'Enter') return;
   evt.preventDefault();
@@ -28,7 +30,7 @@ const UserMenu = ({ userSettings, user, className, updateSettings }) => {
   const photoURL = user && (user.photoURL || `${garavatarUrl}/${md5(user.email)}`);
 
   const handleChange =
-    (prop, transform = (x) => x) =>
+    (prop, transform = identity) =>
     ({ target }) => {
       const value = target.type === 'checkbox' ? target.checked : transform(target.value);
       updateSettings(prop, value);

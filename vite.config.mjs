@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { defineConfig } from 'vite-plus';
-import react from '@vitejs/plugin-react';
+import react, { reactCompilerPreset } from '@vitejs/plugin-react';
+import babel from '@rolldown/plugin-babel';
 import { VitePWA } from 'vite-plugin-pwa';
 import { sentryVitePlugin } from '@sentry/vite-plugin';
 
@@ -95,6 +96,7 @@ export default defineConfig(({ command, isPreview }) => {
     },
     plugins: [
       react(),
+      babel({ presets: [reactCompilerPreset()] }),
       VitePWA({
         // a new version waits until the user accepts it (UpdatePrompt); keep the file name so
         // browsers with the old worker pick up the new one

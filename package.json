@@ -35,6 +35,8 @@
     "spinkit": "^2.0.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.29.7",
+    "@rolldown/plugin-babel": "^0.2.4",
     "@sentry/vite-plugin": "^5.4.1",
     "@sinonjs/fake-timers": "^6.0.1",
     "@testing-library/jest-dom": "^5.12.0",
@@ -42,6 +44,7 @@
     "@vite-pwa/assets-generator": "^2.0.0",
     "@vitejs/plugin-react": "^6.1.2",
     "@vitest/coverage-v8": "^5.0.3",
+    "babel-plugin-react-compiler": "^1.0.0",
     "cypress": "^6.6.0",
     "jsdom": "^29.1.1",
     "knip": "^6.40.0",
