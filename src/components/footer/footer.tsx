@@ -41,9 +41,9 @@ export default () => {
   return (
     <footer className={styles.footer}>
       <span>
-        {'Built with '}
+        {'Gjord med '}
         <span className={styles.emoji}>❤</span>
-        {' by '}
+        {' av '}
         <a className="animated" href="https://github.com/hontas">
           hontas
         </a>
@@ -51,7 +51,7 @@ export default () => {
 
       {beforeInstallEvent && (
         <Button theme="primary" isLoading={installingPWA} onClick={installPWA}>
-          {installingPWA ? 'Installing PWA' : 'Install PWA'}
+          {installingPWA ? 'Installerar appen' : 'Installera appen'}
         </Button>
       )}
 

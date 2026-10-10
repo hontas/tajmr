@@ -1,4 +1,5 @@
 import * as React from 'react';
+import classNames from 'classnames';
 import { useSelector } from '#/store/useStore.tsx';
 import UpdatePrompt from '#/components/updatePrompt/updatePrompt.tsx';
 import Loader from './Loader.tsx';
@@ -16,7 +17,7 @@ function Application() {
   const initialized = useSelector((state) => state.app.initialized);
 
   return (
-    <div className={styles.application}>
+    <div className={classNames(styles.application, { [styles.withActionBar]: user })}>
       <UpdatePrompt />
       <React.Suspense fallback={<Loader />}>
         {initialized ? (

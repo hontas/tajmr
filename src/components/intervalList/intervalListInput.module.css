@@ -1,50 +1,29 @@
 .container {
   display: flex;
-  color: white;
-  border-width: 0;
-  margin-left: 0.5em;
   flex: 1;
+  min-width: 0;
+  align-items: center;
+  color: white;
 }
 
-.error {
-  background: red;
-  border-color: darkred;
-  color: darkred;
+.date {
+  flex: none;
 }
 
 .input {
   flex: 1;
-  order: 1;
+  min-width: 0;
+  height: 2.75rem;
+  padding: 0 0.5rem;
+  border: 0;
+  border-radius: 4px;
   color: #333;
-  font-size: 1em;
-  padding: 0.5em;
-  width: 100%;
+  font: inherit;
+  font-size: 1rem;
 }
 
 .input[disabled] {
   background: whitesmoke;
   color: darkgray;
   cursor: not-allowed;
-}
-
-.input:focus ~ .date .date-picker__calendar {
-  display: block;
-  color: red;
-}
-
-.date {
-  padding-right: 0;
-}
-
-.date .date-picker__icon {
-  display: none;
-  @media screen and (min-width: 480px) {
-    display: block;
-  }
-}
-
-@media screen and (min-width: 480px) {
-  .date {
-    padding-right: 0.5em;
-  }
 }

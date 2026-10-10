@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="sv-SE">
   <head>
     <meta charset="UTF-8" />
@@ -8,7 +8,7 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="description" content="Record time sometime" />
     <meta name="application-name" content="tajmr" />
-    <meta name="theme-color" content="#1f8dd6" />
+    <meta name="theme-color" content="#2d3e50" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="tajmr" />
@@ -35,6 +35,9 @@
         --text-color-danger: lightgray;
         --text-color-light: #6fbef3;
 
+        --action-bar-height: 4.5rem;
+        --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+
         --screen-small: 480px;
         --screen-medium: 768px;
         --screen-large: 1024px;
@@ -42,7 +45,8 @@
       body {
         background: var(--primary-color-dark);
         color: var(--text-color-primary);
-        font-family: -apple-system, '.SFNSText-Regular', 'San Francisco', 'Roboto', 'Segoe UI',
+        font-family:
+          -apple-system, '.SFNSText-Regular', 'San Francisco', 'Roboto', 'Segoe UI',
           'Helvetica Neue', 'Lucida Grande', sans-serif;
         font-weight: 300;
         margin: 0;
@@ -61,7 +65,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100vh;
+        height: 100dvh;
       }
 
       .spinner {
@@ -77,39 +81,23 @@
         width: 6px;
         display: inline-block;
 
-        -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
         animation: sk-stretchdelay 1.2s infinite ease-in-out;
       }
 
       .spinner .rect2 {
-        -webkit-animation-delay: -1.1s;
         animation-delay: -1.1s;
       }
 
       .spinner .rect3 {
-        -webkit-animation-delay: -1s;
         animation-delay: -1s;
       }
 
       .spinner .rect4 {
-        -webkit-animation-delay: -0.9s;
         animation-delay: -0.9s;
       }
 
       .spinner .rect5 {
-        -webkit-animation-delay: -0.8s;
         animation-delay: -0.8s;
-      }
-
-      @-webkit-keyframes sk-stretchdelay {
-        0%,
-        40%,
-        100% {
-          -webkit-transform: scaleY(0.4);
-        }
-        20% {
-          -webkit-transform: scaleY(1);
-        }
       }
 
       @keyframes sk-stretchdelay {
@@ -117,11 +105,9 @@
         40%,
         100% {
           transform: scaleY(0.4);
-          -webkit-transform: scaleY(0.4);
         }
         20% {
           transform: scaleY(1);
-          -webkit-transform: scaleY(1);
         }
       }
     </style>

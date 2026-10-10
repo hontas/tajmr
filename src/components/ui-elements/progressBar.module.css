@@ -1,23 +1,18 @@
 .container {
   box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.1);
-  color: rgba(255, 255, 255, 0.25);
+  color: var(--text-color-primary);
   display: flex;
   margin: 0.5em;
   position: relative;
-  transition: margin 300ms;
-}
-.container:hover {
-  color: white;
 }
 
 .text,
 .rest,
 .progress {
-  line-height: 2em;
-  font-size: 0.75em;
-  font-weight: 100;
+  line-height: 2.25em;
+  font-size: 0.875em;
   flex: 1;
-  height: 2em;
+  height: 2.25em;
   transition: flex-basis 500ms;
   text-align: center;
 }
@@ -36,9 +31,8 @@
   top: 0;
   left: 0;
   width: 100%;
-}
-.text:hover {
-  transform: scale(1.8);
+  font-weight: 400;
+  text-shadow: 0 0 3px var(--primary-color-dark);
 }
 
 .overtime {

@@ -1,23 +1,22 @@
 .container {
-  margin-top: 1em;
-  padding-right: 0.5em;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1rem;
 }
 
 .intervalListItem {
-  flex: 2;
   margin-bottom: 0;
 }
 
-.saveBtn {
-  font-size: 1em;
-  padding: 0.5em;
-  width: 40px;
-  height: 38px;
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0 0.5rem;
 }
+
+.saveBtn,
 .cancelBtn {
-  composes: saveBtn;
-  margin-left: 0.5em;
+  flex: 1;
+  height: 2.75rem;
+  font-size: 1em;
 }

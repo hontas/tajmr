@@ -6,7 +6,8 @@ import { VitePWA } from 'vite-plugin-pwa';
 import { sentryVitePlugin } from '@sentry/vite-plugin';
 
 const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
-const themeColor = '#1f8dd6';
+const themeColor = '#2d3e50';
+const splashColor = '#1f8dd6';
 
 export default defineConfig(({ command, isPreview }) => {
   // `vite preview` serves the production build
@@ -133,7 +134,7 @@ export default defineConfig(({ command, isPreview }) => {
           display: 'standalone',
           start_url: base,
           theme_color: themeColor,
-          background_color: themeColor,
+          background_color: splashColor,
         },
       }),
       uploadSourceMaps &&

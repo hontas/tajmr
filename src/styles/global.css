@@ -44,7 +44,7 @@ body {
 }
 
 #root {
-  height: 100vh;
+  min-height: 100dvh;
 }
 
 a,
@@ -76,4 +76,8 @@ a.animated:hover {
 }
 a.animated:hover:after {
   transform: scaleX(1);
+}
+
+body:has(dialog:modal) {
+  overflow: hidden;
 }

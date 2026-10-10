@@ -1,32 +1,39 @@
 .container {
-  padding-top: 5em;
+  padding-top: calc(5em + env(safe-area-inset-top));
+  padding-bottom: calc(var(--action-bar-height) + env(safe-area-inset-bottom));
 }
 
 .actionButtons {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
   display: flex;
+  min-height: calc(var(--action-bar-height) + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: calc(var(--action-bar-height) + env(safe-area-inset-left));
+  padding-right: env(safe-area-inset-right);
+  background: var(--primary-color-dark);
+  box-shadow: 0 -1px 0 var(--primary-color-dark-translucent);
 }
 
 .prevWorkBtn {
+  flex: none;
   border-radius: 0;
   border-left: 1px solid var(--primary-color);
-}
-
-@supports (-webkit-overflow-scrolling: touch) {
-  .container {
-    padding-top: calc(5em + env(safe-area-inset-top));
-  }
-  .actionButtons {
-    margin-left: calc(-1 * env(safe-area-inset-left));
-    margin-right: calc(-1 * env(safe-area-inset-right));
-  }
-  .prevWorkBtn {
-    padding-right: max(1em, env(safe-area-inset-right));
-  }
 }
 
 @media screen and (min-width: 1024px) {
   .container {
     margin-bottom: 3em;
     padding-bottom: 1.5em;
+  }
+
+  .actionButtons {
+    position: static;
+    min-height: 0;
+    padding: 0;
+    box-shadow: none;
   }
 }

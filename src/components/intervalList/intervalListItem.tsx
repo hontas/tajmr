@@ -32,21 +32,22 @@ const IntervalListItem = ({
 
   return (
     <li className={classNames(styles.container, className)} data-testid="interval-item">
-      <IntervalListInput
-        key={startTime}
-        data-testid="interval-from-input"
-        titlePrefix="from"
-        timestamp={startTime}
-        onUpdate={updateTime('startTime')}
-      />
-
-      <IntervalListInput
-        key={endTime ?? 'active'}
-        data-testid="interval-end-input"
-        titlePrefix="end"
-        timestamp={endTime}
-        onUpdate={updateTime('endTime')}
-      />
+      <div className={styles.times}>
+        <IntervalListInput
+          key={startTime}
+          data-testid="interval-from-input"
+          label="Start"
+          timestamp={startTime}
+          onUpdate={updateTime('startTime')}
+        />
+        <IntervalListInput
+          key={endTime ?? 'active'}
+          data-testid="interval-end-input"
+          label="Slut"
+          timestamp={endTime}
+          onUpdate={updateTime('endTime')}
+        />
+      </div>
 
       <AutoComplete
         data-testid="interval-note-input"
@@ -57,20 +58,21 @@ const IntervalListItem = ({
         notes={notes}
       />
 
-      <input
-        data-testid="interval-not-work-checkbox"
-        className={styles.notWork}
-        type="checkbox"
-        title="not work"
-        checked={notWork || false}
-        onChange={({ target: { checked } }) => onUpdate({ ...interval, notWork: checked })}
-      />
+      <label className={styles.notWork}>
+        <input
+          data-testid="interval-not-work-checkbox"
+          type="checkbox"
+          checked={notWork || false}
+          onChange={({ target: { checked } }) => onUpdate({ ...interval, notWork: checked })}
+        />
+        Ej arbete
+      </label>
 
       {onDelete && (
         <Button
           className={styles.deleteBtn}
           theme="danger"
-          title="remove"
+          aria-label="Ta bort intervallet"
           data-testid="remove-interval"
           onClick={() => onDelete(interval.id)}
         >

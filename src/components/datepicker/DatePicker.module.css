@@ -1,6 +1,9 @@
 .container {
-  padding: 4.5px 0.5em 0 0;
   position: relative;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
 }
 
 .input {
@@ -14,6 +17,11 @@
 
 .input:disabled {
   cursor: default;
+}
+
+.container:has(.input:focus-visible) {
+  outline: 2px solid var(--text-color-light);
+  border-radius: 4px;
 }
 
 .disabled {
