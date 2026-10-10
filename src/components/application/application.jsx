@@ -5,24 +5,10 @@ import Loader from './Loader.jsx';
 
 import styles from './application.module.css';
 
-const Navbar = React.lazy(
-  () => import(/* webpackChunkName: "Navbar" */ '#/components/navbar/navbar.jsx'),
-);
-const Footer = React.lazy(
-  () => import(/* webpackChunkName: "Footer" */ '#/components/footer/footer.jsx'),
-);
-const CurrentIntervals = React.lazy(
-  () =>
-    import(
-      /* webpackChunkName: "CurrentIntervals" */ '#/components/containers/currentIntervals.jsx'
-    ),
-);
-const PreviousIntervals = React.lazy(
-  () =>
-    import(
-      /* webpackChunkName: "PreviousIntervals" */ '#/components/containers/previousIntervals.jsx'
-    ),
-);
+const Navbar = React.lazy(() => import('#/components/navbar/navbar.jsx'));
+const Footer = React.lazy(() => import('#/components/footer/footer.jsx'));
+const CurrentIntervals = React.lazy(() => import('#/components/containers/currentIntervals.jsx'));
+const PreviousIntervals = React.lazy(() => import('#/components/containers/previousIntervals.jsx'));
 const Login = React.lazy(() => import('#/components/auth/login.jsx'));
 
 function Application() {
