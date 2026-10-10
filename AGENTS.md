@@ -19,8 +19,8 @@ Do not run `npm run e2e` (Cypress) unless asked: it logs in with a hard-coded te
 ## Code rules
 
 - Never log interval data (notes, times) or any user data. Report errors to Sentry, ids only.
-- All Firebase access goes through `utils/firebaseApi.js`, all date maths through `utils/time.js`
-  (components never do date maths), validation of intervals through `utils/interValidator.js`.
+- All Firebase access goes through `utils/firebaseApi.ts`, all date maths through `utils/time.ts`
+  (components never do date maths), validation of intervals through `utils/interValidator.ts`.
 - Tests: mock `utils/firebaseApi`, never hit real Firebase. Tests run in `Europe/Stockholm`, but code must
   not depend on the timezone (`verify` reruns them in UTC, New York and Kolkata): build dates with
   `new Date(y, m, d)`, never `'2018-03-14'` (parsed as UTC).
@@ -33,8 +33,9 @@ Do not run `npm run e2e` (Cypress) unless asked: it logs in with a hard-coded te
   platform already does it (`fetch`, `IntersectionObserver`, `Intl`, `URL`, IndexedDB, Web Locks,
   `structuredClone`, `<dialog>`, CSS features, ...) in the browsers above (MDN / caniuse). Only reach for a
   package or custom code when the Web API can't do the job, and say why in the PR.
+- The code is TypeScript (strict), checked by `vp lint`: no `any`, no `@ts-ignore`, no casts that hide a problem. Data from Firebase is validated by the valibot schemas in `utils/interValidator.ts`; the `Interval` and settings types come from them.
 - Keep it simple: no new dependency, abstraction or config without a concrete need.
-- Import across folders from the `src` root with `#/` (`#/utils/time.js`, `#/components/button/button.jsx`, with the file extension; `package.json` `imports`). Relative imports only into the same folder or below (`./x.js`, `./sub/x.js`); the linter rejects `../`.
+- Import across folders from the `src` root with `#/` (`#/utils/time.ts`, `#/components/button/button.tsx`, with the real file extension; `package.json` `imports`). Relative imports only into the same folder or below (`./x.ts`, `./sub/x.ts`); the linter rejects `../`.
 - The React Compiler memoizes at build time: don't write `useMemo`, `useCallback` or `memo`. Keep components pure (no `Date.now()` or ref reads while rendering; use `useNow`), which the lint rules check.
 - **No comments by default.** Rename the function or variable instead. Add a comment only when a name
   can't explain code that would otherwise look wrong or make no sense, and then make it as short and
@@ -69,7 +70,7 @@ Do not run `npm run e2e` (Cypress) unless asked: it logs in with a hard-coded te
   `SENTRY_AUTH_TOKEN` (secret on the `production` environment), and fails at once if one is missing.
   Without the DSN Sentry stays off, as in dev and tests. Source maps are uploaded and deleted before
   publishing, so the source is never served. `.env.example` documents the variables.
-- The Firebase web config in `utils/firebaseApi.js` is public by design; it is not a secret.
+- The Firebase web config in `utils/firebaseApi.ts` is public by design; it is not a secret.
 - Versions are calendar versions (`YYYY.MM.DD`, plus `.N` from the second deploy of a day) computed by the
   deploy workflow; they are the Sentry release and the `v<version>` tag. `package.json`'s `version` is not
   used.

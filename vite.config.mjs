@@ -53,6 +53,7 @@ export default defineConfig(({ command, isPreview }) => {
         'no-var': 'error',
         'prefer-const': 'error',
         'import/no-unassigned-import': 'error',
+        'react/react-in-jsx-scope': 'off',
       },
       overrides: [
         {
@@ -87,7 +88,7 @@ export default defineConfig(({ command, isPreview }) => {
     test: {
       environment: 'jsdom',
       globals: true,
-      setupFiles: ['./test/setup.js'],
+      setupFiles: ['./test/setup.ts'],
       // Swedish time unless TZ is set (`npm run test:timezones` does), so results match on every machine
       env: { TZ: process.env.TZ || 'Europe/Stockholm' },
       coverage: {
@@ -143,7 +144,7 @@ export default defineConfig(({ command, isPreview }) => {
           telemetry: false,
           // the original source is never served
           sourcemaps: { filesToDeleteAfterUpload: ['dist/**/*.map'] },
-          // must equal Sentry.init({ release }) in app.jsx
+          // must equal Sentry.init({ release }) in app.tsx
           release: { name: release },
         }),
     ],

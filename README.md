@@ -28,7 +28,7 @@ Local development and tests need no environment variables. The deploy build (`SE
 source maps to Sentry using `SENTRY_AUTH_TOKEN`, `SENTRY_ORG` and `SENTRY_PROJECT`, which the deploy workflow
 injects at build time (it fails if one is missing, and removes the maps before publishing): `SENTRY_AUTH_TOKEN` is a secret on the `production` environment, `SENTRY_ORG` and
 `SENTRY_PROJECT` are repository variables. `.env.example` only documents them. The Firebase web config is committed in
-`src/utils/firebaseApi.js` (public by design).
+`src/utils/firebaseApi.ts` (public by design).
 
 ## deploy
 
