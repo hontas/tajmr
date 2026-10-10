@@ -6,8 +6,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'client/**'
-      - '!client/**/*.test.*'
+      - 'src/**'
+      - '!src/**/*.test.*'
       - index.html
       - 'public/**'
       - package.json
