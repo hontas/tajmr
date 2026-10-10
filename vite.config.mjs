@@ -53,6 +53,7 @@ export default defineConfig(({ command, isPreview }) => {
         'no-var': 'error',
         'prefer-const': 'error',
         'import/no-unassigned-import': 'error',
+        'react/react-in-jsx-scope': 'off',
       },
       overrides: [
         {

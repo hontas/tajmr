@@ -1,4 +1,11 @@
-import React, { useState, useRef } from 'react';
+import {
+  useRef,
+  useState,
+  type ChangeEvent,
+  type FocusEvent,
+  type KeyboardEvent,
+  type SyntheticEvent,
+} from 'react';
 import classNames from 'classnames';
 
 import styles from './AutoComplete.module.css';
@@ -36,7 +43,7 @@ const AutoComplete = ({
   const suggestionsList = useRef<HTMLUListElement>(null);
   const timeoutId = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleKeyDown = (evt: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyDown = (evt: KeyboardEvent<HTMLDivElement>) => {
     const list = suggestionsList.current;
     const { target } = evt;
     if (!(target instanceof HTMLElement)) return;
@@ -66,7 +73,7 @@ const AutoComplete = ({
     }
   };
 
-  const handleSelect = (evt: React.SyntheticEvent) => {
+  const handleSelect = (evt: SyntheticEvent) => {
     evt.preventDefault();
     if (!(evt.target instanceof HTMLElement)) return;
     if (timeoutId.current) clearTimeout(timeoutId.current);
@@ -76,7 +83,7 @@ const AutoComplete = ({
     onChange({ target: { value: selected } });
   };
 
-  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const nextQuery = target.value.toLowerCase();
     setQuery(nextQuery);
     setSuggestions(
@@ -84,7 +91,7 @@ const AutoComplete = ({
     );
   };
 
-  const handleBlur = ({ target }: React.FocusEvent<HTMLInputElement>) => {
+  const handleBlur = ({ target }: FocusEvent<HTMLInputElement>) => {
     setIsFocused(false);
     const nextValue = target.value.toLowerCase();
     // don't blur if tabbed to selection list

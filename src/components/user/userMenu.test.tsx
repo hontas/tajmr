@@ -1,4 +1,4 @@
-import React from 'react';
+import { type ComponentProps } from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 
 import type { AppUser } from '#/store/user.ts';
@@ -25,7 +25,7 @@ const userSettings: UserSettingsState = {
   hoursInWeek: 40,
 };
 
-const setup = (props: Partial<React.ComponentProps<typeof UserMenu>> = {}) => {
+const setup = (props: Partial<ComponentProps<typeof UserMenu>> = {}) => {
   const updateSettings = vi.fn<(prop: string, value: boolean | number | string) => void>();
   render(
     <UserMenu user={user} userSettings={userSettings} updateSettings={updateSettings} {...props} />,

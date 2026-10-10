@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import classNames from 'classnames';
 
 import DatePicker from '#/components/datepicker/DatePicker.tsx';
@@ -68,7 +68,7 @@ const IntervalListInput = ({
         className={styles.input}
         disabled={isActive}
         onBlur={validateAndPush}
-        onChange={({ target }: React.ChangeEvent<HTMLInputElement>) => setValue(target.value)}
+        onChange={({ target }) => setValue(target.value)}
         value={value}
       />
       <DatePicker

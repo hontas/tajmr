@@ -1,5 +1,5 @@
 import md5 from 'md5';
-import React, { useState, useRef } from 'react';
+import { useRef, useState, type ChangeEvent, type KeyboardEvent, type SyntheticEvent } from 'react';
 import classNames from 'classnames';
 import Button from '#/components/button/button.tsx';
 
@@ -13,8 +13,8 @@ const garavatarUrl = 'https://www.gravatar.com/avatar';
 
 const identity = <T,>(value: T) => value;
 
-const preventDefault = (evt: React.SyntheticEvent) => {
-  if (evt.type === 'keydown' && (evt as React.KeyboardEvent).key !== 'Enter') return;
+const preventDefault = (evt: SyntheticEvent) => {
+  if (evt.type === 'keydown' && (evt as KeyboardEvent).key !== 'Enter') return;
   evt.preventDefault();
 };
 
@@ -38,12 +38,12 @@ const UserMenu = ({ userSettings, user, className, updateSettings }: UserMenuPro
 
   const handleChange =
     (prop: string, transform: (value: string) => string | number = identity) =>
-    ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    ({ target }: ChangeEvent<HTMLInputElement>) => {
       const value = target.type === 'checkbox' ? target.checked : transform(target.value);
       updateSettings(prop, value);
     };
 
-  const saveUserSettings = (evt: React.SyntheticEvent) => {
+  const saveUserSettings = (evt: SyntheticEvent) => {
     evt.preventDefault();
     setIsSavingUserSettings(true);
 
@@ -52,7 +52,7 @@ const UserMenu = ({ userSettings, user, className, updateSettings }: UserMenuPro
     });
   };
 
-  const updateUserPassword = (evt: React.SyntheticEvent) => {
+  const updateUserPassword = (evt: SyntheticEvent) => {
     evt.preventDefault();
     setIsSavingUserPassword(true);
 

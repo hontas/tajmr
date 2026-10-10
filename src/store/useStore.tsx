@@ -1,17 +1,17 @@
-import React, { createContext, useContext, useSyncExternalStore } from 'react';
+import { createContext, use, useSyncExternalStore, type ReactNode } from 'react';
 
 import type { RootState, Store } from './types.ts';
 
 const StoreContext = createContext<Store | null>(null);
 
 function useStore() {
-  const store = useContext(StoreContext);
+  const store = use(StoreContext);
   if (!store) throw new Error('useStore must be used inside a StoreProvider');
   return store;
 }
 
-export function StoreProvider({ store, children }: { store: Store; children: React.ReactNode }) {
-  return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>;
+export function StoreProvider({ store, children }: { store: Store; children: ReactNode }) {
+  return <StoreContext value={store}>{children}</StoreContext>;
 }
 
 export function useDispatch() {

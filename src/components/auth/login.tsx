@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useRef, useState, type SyntheticEvent } from 'react';
 import firebaseApi from '#/utils/firebaseApi.ts';
 import Button from '#/components/button/button.tsx';
 
@@ -17,7 +17,7 @@ const Login = () => {
     setNotice('');
   };
 
-  const handleSubmit = (evt: React.SyntheticEvent) => {
+  const handleSubmit = (evt: SyntheticEvent) => {
     evt.preventDefault();
     resetMessages();
     setIsLoggingIn(true);
@@ -30,7 +30,7 @@ const Login = () => {
       });
   };
 
-  const forgotPassword = (evt: React.SyntheticEvent) => {
+  const forgotPassword = (evt: SyntheticEvent) => {
     evt.preventDefault();
     resetMessages();
     setIsResetting(true);

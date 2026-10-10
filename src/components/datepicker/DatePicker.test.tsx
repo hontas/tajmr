@@ -1,9 +1,9 @@
-import React from 'react';
+import { type ComponentProps } from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import DatePicker from './DatePicker.tsx';
 
-const setup = (props: Partial<React.ComponentProps<typeof DatePicker>> = {}) => {
+const setup = (props: Partial<ComponentProps<typeof DatePicker>> = {}) => {
   const onChange = vi.fn<(date: Date) => void>();
   render(<DatePicker buttonTitle="Start date" date={null} onChange={onChange} {...props} />);
   return { onChange, input: screen.getByLabelText<HTMLInputElement>('Start date') };

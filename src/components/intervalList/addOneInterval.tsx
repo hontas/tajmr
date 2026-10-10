@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, type ComponentProps, type SyntheticEvent } from 'react';
 import IntervalListItem, { type EditableInterval } from './intervalListItem.tsx';
 import type { NewInterval } from '#/utils/interValidator.ts';
 import Save from '#/components/icons/Save.tsx';
@@ -9,7 +9,7 @@ import styles from './addOneInterval.module.css';
 
 const startHour = 9;
 
-interface AddOneIntervalProps extends Omit<React.ComponentProps<'form'>, 'onSubmit'> {
+interface AddOneIntervalProps extends Omit<ComponentProps<'form'>, 'onSubmit'> {
   onAdd: (interval: NewInterval) => Promise<unknown>;
   onCancel: () => void;
   fullDay: number;
@@ -26,7 +26,7 @@ const AddOneInterval = ({ notes, onCancel, onAdd, fullDay, ...rest }: AddOneInte
     note: '',
   });
 
-  const handleClickSubmit = (evt: React.SyntheticEvent) => {
+  const handleClickSubmit = (evt: SyntheticEvent) => {
     evt.preventDefault();
     onAdd(interval)
       .then(() => setError(null))

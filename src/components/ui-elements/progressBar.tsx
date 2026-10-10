@@ -1,4 +1,3 @@
-import React from 'react';
 import classNames from 'classnames';
 
 import { maxOneDecimal } from '#/utils/number.ts';

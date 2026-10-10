@@ -1,5 +1,3 @@
-import React from 'react';
-
 import ProgressBar from '#/components/ui-elements/progressBar.tsx';
 import { oneHour, getMonth, getWorkDaysInMonth } from '#/utils/time.ts';
 import type { NewInterval } from '#/utils/interValidator.ts';

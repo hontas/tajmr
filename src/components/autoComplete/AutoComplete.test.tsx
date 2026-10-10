@@ -1,11 +1,11 @@
-import React from 'react';
+import { type ComponentProps } from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 
 import AutoComplete from './AutoComplete.tsx';
 
 const notes = ['Kodar', 'Kafferast', 'Möten'];
 
-const setup = (props: Partial<React.ComponentProps<typeof AutoComplete>> = {}) => {
+const setup = (props: Partial<ComponentProps<typeof AutoComplete>> = {}) => {
   const onChange = vi.fn<(evt: { target: { value: string } }) => void>();
   render(<AutoComplete dataTestId="note" onChange={onChange} notes={notes} {...props} />);
   return { onChange, input: screen.getByTestId('note') };

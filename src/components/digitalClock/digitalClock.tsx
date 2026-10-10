@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import useNow from '#/hooks/useNow.ts';
 import { getTimePartsFromElapsedTime, getDurationString } from '#/utils/time.ts';

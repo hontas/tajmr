@@ -1,10 +1,10 @@
-import React from 'react';
+import { type ComponentProps } from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 
 import type { NewInterval } from '#/utils/interValidator.ts';
 import AddOneInterval from './addOneInterval.tsx';
 
-const setup = (props: Partial<React.ComponentProps<typeof AddOneInterval>> = {}) => {
+const setup = (props: Partial<ComponentProps<typeof AddOneInterval>> = {}) => {
   const onAdd = vi.fn<(interval: NewInterval) => Promise<unknown>>(() => Promise.resolve());
   const onCancel = vi.fn<() => void>();
   render(<AddOneInterval fullDay={8} onAdd={onAdd} onCancel={onCancel} {...props} />);

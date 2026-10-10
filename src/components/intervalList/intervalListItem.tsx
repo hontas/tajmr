@@ -1,4 +1,3 @@
-import React from 'react';
 import classNames from 'classnames';
 
 import IntervalListInput from './intervalListInput.tsx';
@@ -65,9 +64,7 @@ const IntervalListItem = ({
         type="checkbox"
         title="not work"
         checked={notWork || false}
-        onChange={({ target: { checked } }: React.ChangeEvent<HTMLInputElement>) =>
-          onUpdate({ ...interval, notWork: checked })
-        }
+        onChange={({ target: { checked } }) => onUpdate({ ...interval, notWork: checked })}
       />
 
       {onDelete && (

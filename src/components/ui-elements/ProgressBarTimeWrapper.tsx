@@ -1,5 +1,3 @@
-import React from 'react';
-
 import ProgressBar from './progressBar.tsx';
 import useNow from '#/hooks/useNow.ts';
 import type { NewInterval } from '#/utils/interValidator.ts';

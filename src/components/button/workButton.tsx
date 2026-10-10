@@ -1,11 +1,11 @@
-import React from 'react';
+import { type MouseEventHandler } from 'react';
 
 import Button from './button.tsx';
 import styles from './workButton.module.css';
 
 interface WorkButtonProps {
   activeInterval: boolean;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onClick: MouseEventHandler<HTMLButtonElement>;
   isLoading?: boolean;
 }
 

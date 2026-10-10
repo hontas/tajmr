@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import * as Sentry from '@sentry/react';
 
 import MonthReport from '#/components/monthReport/MonthReport.tsx';

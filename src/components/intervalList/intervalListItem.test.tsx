@@ -1,4 +1,4 @@
-import React from 'react';
+import { type ComponentProps } from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import IntervalListItem, { type EditableInterval } from './intervalListItem.tsx';
@@ -14,7 +14,7 @@ const interval: EditableInterval = {
   notWork: false,
 };
 
-const setup = (props: Partial<React.ComponentProps<typeof IntervalListItem>> = {}) => {
+const setup = (props: Partial<ComponentProps<typeof IntervalListItem>> = {}) => {
   const onUpdate = vi.fn<(updated: EditableInterval) => void>();
   const onDelete = vi.fn<(id: string | undefined) => void>();
   render(

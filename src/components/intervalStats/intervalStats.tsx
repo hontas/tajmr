@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from '#/store/useStore.tsx';
 
 import type { Interval } from '#/utils/interValidator.ts';

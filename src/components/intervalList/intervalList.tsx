@@ -1,4 +1,4 @@
-import React from 'react';
+import { type ComponentProps } from 'react';
 
 import type { Interval } from '#/utils/interValidator.ts';
 import IntervalListItem, { type EditableInterval } from './intervalListItem.tsx';
@@ -11,7 +11,7 @@ function sortBy(array: Interval[], prop: 'startTime') {
 
 const emptyNotes: string[] = [];
 
-interface IntervalListProps extends React.ComponentProps<'ul'> {
+interface IntervalListProps extends ComponentProps<'ul'> {
   intervals: Interval[];
   onDelete: (id: string | undefined) => void;
   onUpdate: (interval: EditableInterval) => void;

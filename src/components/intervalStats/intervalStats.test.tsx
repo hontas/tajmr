@@ -1,4 +1,3 @@
-import React from 'react';
 import { StoreProvider } from '#/store/useStore.tsx';
 import { render, screen } from '@testing-library/react';
 
