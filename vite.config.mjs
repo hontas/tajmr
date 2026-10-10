@@ -32,13 +32,7 @@ export default defineConfig(({ command, isPreview }) => {
       arrowParens: 'always',
       printWidth: 100,
       sortPackageJson: false,
-      ignorePatterns: [
-        'client/styles/pure-css.min.css',
-        'client/styles/normalize.css',
-        'dist/',
-        'coverage/',
-        'package-lock.json',
-      ],
+      ignorePatterns: ['dist/', 'coverage/', 'package-lock.json'],
     },
     lint: {
       plugins: ['react', 'jsx-a11y', 'import', 'vitest'],
