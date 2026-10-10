@@ -26,31 +26,30 @@ const IntervalListItem = ({
   interval,
 }: IntervalListItemProps) => {
   const { startTime, endTime, note, notWork } = interval;
-  const updateTime =
-    (prop: 'startTime' | 'endTime') =>
-    ({ target: { value } }: { target: { value: number } }) =>
-      onUpdate({ ...interval, [prop]: value });
-  const updateNote = ({ target: { value } }: { target: { value: string } }) =>
-    onUpdate({ ...interval, note: value });
+  const updateTime = (prop: 'startTime' | 'endTime') => (value: number) =>
+    onUpdate({ ...interval, [prop]: value });
+  const updateNote = (value: string) => onUpdate({ ...interval, note: value });
 
   return (
     <li className={classNames(styles.container, className)} data-testid="interval-item">
       <IntervalListInput
-        dataTestId="interval-from-input"
+        key={startTime}
+        data-testid="interval-from-input"
         titlePrefix="from"
         timestamp={startTime}
         onUpdate={updateTime('startTime')}
       />
 
       <IntervalListInput
-        dataTestId="interval-end-input"
+        key={endTime ?? 'active'}
+        data-testid="interval-end-input"
         titlePrefix="end"
         timestamp={endTime}
         onUpdate={updateTime('endTime')}
       />
 
       <AutoComplete
-        dataTestId="interval-note-input"
+        data-testid="interval-note-input"
         className={styles.note}
         placeholder="Anteckning"
         onChange={updateNote}

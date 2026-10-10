@@ -6,8 +6,8 @@ import AutoComplete from './AutoComplete.tsx';
 const notes = ['Kodar', 'Kafferast', 'Möten'];
 
 const setup = (props: Partial<ComponentProps<typeof AutoComplete>> = {}) => {
-  const onChange = vi.fn<(evt: { target: { value: string } }) => void>();
-  render(<AutoComplete dataTestId="note" onChange={onChange} notes={notes} {...props} />);
+  const onChange = vi.fn<(value: string) => void>();
+  render(<AutoComplete data-testid="note" onChange={onChange} notes={notes} {...props} />);
   return { onChange, input: screen.getByTestId('note') };
 };
 
@@ -27,21 +27,21 @@ describe('AutoComplete', () => {
 
   test('follows a new value from outside', () => {
     const { rerender } = render(
-      <AutoComplete dataTestId="note" onChange={vi.fn<() => void>()} value="a" />,
+      <AutoComplete data-testid="note" onChange={vi.fn<() => void>()} value="a" />,
     );
-    rerender(<AutoComplete dataTestId="note" onChange={vi.fn<() => void>()} value="b" />);
+    rerender(<AutoComplete data-testid="note" onChange={vi.fn<() => void>()} value="b" />);
 
     expect(screen.getByTestId('note')).toHaveValue('b');
   });
 
   test('does not overwrite what is being typed when a new value arrives', () => {
     const { rerender } = render(
-      <AutoComplete dataTestId="note" onChange={vi.fn<() => void>()} value="a" />,
+      <AutoComplete data-testid="note" onChange={vi.fn<() => void>()} value="a" />,
     );
     const input = screen.getByTestId('note');
     fireEvent.focus(input);
     fireEvent.change(input, { target: { value: 'abc' } });
-    rerender(<AutoComplete dataTestId="note" onChange={vi.fn<() => void>()} value="b" />);
+    rerender(<AutoComplete data-testid="note" onChange={vi.fn<() => void>()} value="b" />);
 
     expect(input).toHaveValue('abc');
   });
@@ -69,7 +69,7 @@ describe('AutoComplete', () => {
     fireEvent.change(input, { target: { value: 'ka' } });
     fireEvent.click(screen.getByRole('button', { name: 'Kafferast' }));
 
-    expect(onChange).toHaveBeenCalledWith({ target: { value: 'Kafferast' } });
+    expect(onChange).toHaveBeenCalledWith('Kafferast');
     expect(input).toHaveValue('Kafferast');
     expect(screen.queryAllByRole('button')).toHaveLength(0);
   });
@@ -100,7 +100,7 @@ describe('AutoComplete', () => {
     fireEvent.change(input, { target: { value: 'm' } });
     fireEvent.keyDown(screen.getByRole('button', { name: 'Möten' }), { key: 'Enter' });
 
-    expect(onChange).toHaveBeenCalledWith({ target: { value: 'Möten' } });
+    expect(onChange).toHaveBeenCalledWith('Möten');
   });
 
   test('leaving the field with a new text reports it in lower case', () => {
@@ -111,7 +111,7 @@ describe('AutoComplete', () => {
       vi.advanceTimersByTime(5);
     });
 
-    expect(onChange).toHaveBeenCalledWith({ target: { value: 'nytt' } });
+    expect(onChange).toHaveBeenCalledWith('nytt');
   });
 
   test('leaving the field unchanged reports nothing', () => {

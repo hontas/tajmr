@@ -108,7 +108,7 @@ describe('UserMenu', () => {
     });
 
     test('shows the error message on failure', async () => {
-      vi.mocked(firebaseApi.updateUserPassword).mockRejectedValue({ message: 'Wrong password' });
+      vi.mocked(firebaseApi.updateUserPassword).mockRejectedValue(new Error('Wrong password'));
       setup();
       fill('bad', 'new');
 

@@ -16,17 +16,17 @@ interface AutoCompleteProps {
   className?: string;
   label?: string;
   placeholder?: string;
-  dataTestId?: string;
+  'data-testid'?: string;
   value?: string;
   notes?: string[];
-  onChange: (evt: { target: { value: string } }) => void;
+  onChange: (value: string) => void;
 }
 
 const AutoComplete = ({
   className,
   label = '',
   placeholder = '',
-  dataTestId,
+  'data-testid': testId,
   value,
   notes = noNotes,
   onChange,
@@ -80,7 +80,7 @@ const AutoComplete = ({
     const selected = evt.target.textContent ?? '';
     setQuery(selected);
     setSuggestions([]);
-    onChange({ target: { value: selected } });
+    onChange(selected);
   };
 
   const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
@@ -98,7 +98,7 @@ const AutoComplete = ({
     if (suggestionsList.current?.hasChildNodes()) return;
     if (nextValue === value) return;
     timeoutId.current = setTimeout(() => {
-      onChange({ target: { value: nextValue } });
+      onChange(nextValue);
       timeoutId.current = null;
     }, 1);
   };
@@ -112,7 +112,7 @@ const AutoComplete = ({
       <label className={styles.label}>
         {label}
         <input
-          data-testid={dataTestId}
+          data-testid={testId}
           type="text"
           value={query}
           placeholder={placeholder}

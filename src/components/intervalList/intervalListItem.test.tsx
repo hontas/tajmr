@@ -60,6 +60,28 @@ describe('IntervalListItem', () => {
     expect(onUpdate.mock.calls[0]?.[0].startTime).toBe(new Date(2021, 3, 7, 8, 15).getTime());
   });
 
+  test('shows the times of a new interval and drops a half-typed edit', () => {
+    const onUpdate = vi.fn<(updated: EditableInterval) => void>();
+    const { rerender } = render(<IntervalListItem interval={interval} onUpdate={onUpdate} />);
+    fireEvent.change(screen.getByTestId('interval-from-input'), { target: { value: '08:1' } });
+
+    rerender(
+      <IntervalListItem
+        interval={{
+          ...interval,
+          startTime: new Date(2021, 3, 7, 10, 0).getTime(),
+          endTime: undefined,
+        }}
+        onUpdate={onUpdate}
+      />,
+    );
+
+    expect(screen.getByTestId('interval-from-input')).toHaveValue(
+      getTimeString(new Date(2021, 3, 7, 10, 0).getTime()),
+    );
+    expect(screen.getByTestId('interval-end-input')).toHaveValue('active');
+  });
+
   test('picking another day moves the start and keeps the time of day', () => {
     const { onUpdate } = setup();
 

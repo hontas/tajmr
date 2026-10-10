@@ -1,5 +1,12 @@
 import md5 from 'md5';
-import { useRef, useState, type ChangeEvent, type KeyboardEvent, type SyntheticEvent } from 'react';
+import {
+  useRef,
+  useState,
+  useTransition,
+  type ChangeEvent,
+  type KeyboardEvent,
+  type SyntheticEvent,
+} from 'react';
 import classNames from 'classnames';
 import Button from '#/components/button/button.tsx';
 
@@ -28,8 +35,8 @@ interface UserMenuProps {
 const UserMenu = ({ userSettings, user, className, updateSettings }: UserMenuProps) => {
   const { displayMonthReport, displayNotifications, displayPreviousIntervals, hoursInWeek } =
     userSettings;
-  const [isSavingUserSettings, setIsSavingUserSettings] = useState(false);
-  const [isSavingUserPassword, setIsSavingUserPassword] = useState(false);
+  const [isSavingUserSettings, startSavingUserSettings] = useTransition();
+  const [isSavingUserPassword, startSavingUserPassword] = useTransition();
   const [updatePasswordError, setUpdatePasswordError] = useState<string | null>(null);
   const [updatePasswordSuccess, setUpdatePasswordSuccess] = useState(false);
   const oldPass = useRef<HTMLInputElement>(null);
@@ -45,32 +52,27 @@ const UserMenu = ({ userSettings, user, className, updateSettings }: UserMenuPro
 
   const saveUserSettings = (evt: SyntheticEvent) => {
     evt.preventDefault();
-    setIsSavingUserSettings(true);
-
-    firebaseApi.saveUserData(user.uid, userSettings).then(() => {
-      setIsSavingUserSettings(false);
-    });
+    startSavingUserSettings(() => firebaseApi.saveUserData(user.uid, userSettings));
   };
 
   const updateUserPassword = (evt: SyntheticEvent) => {
     evt.preventDefault();
-    setIsSavingUserPassword(true);
-
-    const handleResponse = ({ message }: { message: string }) => {
-      setIsSavingUserPassword(false);
-      setUpdatePasswordError(message);
-      setUpdatePasswordSuccess(!message);
-    };
-
-    firebaseApi
-      .updateUserPassword(oldPass.current?.value ?? '', newPass.current?.value ?? '')
-      .then(() => {
-        handleResponse({ message: '' });
+    startSavingUserPassword(async () => {
+      try {
+        await firebaseApi.updateUserPassword(
+          oldPass.current?.value ?? '',
+          newPass.current?.value ?? '',
+        );
+        setUpdatePasswordError(null);
+        setUpdatePasswordSuccess(true);
         setTimeout(() => setUpdatePasswordSuccess(false), 2000);
         if (oldPass.current) oldPass.current.value = '';
         if (newPass.current) newPass.current.value = '';
-      })
-      .catch(handleResponse);
+      } catch (error) {
+        setUpdatePasswordError(error instanceof Error ? error.message : String(error));
+        setUpdatePasswordSuccess(false);
+      }
+    });
   };
 
   return (
