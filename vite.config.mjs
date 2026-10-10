@@ -74,7 +74,7 @@ export default defineConfig(({ command, isPreview }) => {
       // Swedish time unless TZ is set (`npm run test:timezones` does), so results match on every machine
       env: { TZ: process.env.TZ || 'Europe/Stockholm' },
       coverage: {
-        include: ['client/js/**/*.{js,jsx}'],
+        include: ['src/**/*.{js,jsx}'],
         thresholds: { statements: 75, branches: 60, functions: 70, lines: 75 },
       },
     },

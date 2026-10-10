@@ -1,4 +1,4 @@
-import firebaseApi from '../../client/js/utils/firebaseApi';
+import firebaseApi from '../../src/utils/firebaseApi';
 import { testIds, animationDuration } from '../constants';
 
 const fromTime = '10:00';

@@ -40,7 +40,7 @@ Remove this section if there are no visual changes.
 
 <!--
 Say how you tested it, so someone else can repeat it. Commands that were run, e.g. `npm run verify` or
-`vp test client/js/utils/time.test.js`. For UI, numbered steps, e.g.
+`vp test src/utils/time.test.js`. For UI, numbered steps, e.g.
 1. Click the menu. 2. Turn on "View more". 3. Check that more intervals show.
 Be honest about what you did not test.
 -->
