@@ -12,7 +12,7 @@ import { WeekStatsTimeWrapper } from '#/components/intervalStats/weekStats.jsx';
 import { attemptUpdate, attemptRemove, updateTimestamp } from '#/store/intervals.js';
 import { useDispatch, useSelector } from '#/store/useStore.jsx';
 import AddOneInterval from '#/components/intervalList/addOneInterval.jsx';
-import { getIntervalSum, isActive, isComplete } from '#/utils/intervals.js';
+import { getIntervalSum, isActive, isComplete } from '#/utils/intervals.ts';
 import { getWeek, getMonth, getDayRange } from '#/utils/time.js';
 import { ErrorBoundaryFallback } from '#/components/ErrorBoundaryFallback.jsx';
 

@@ -6,7 +6,7 @@ import Button from '#/components/button/button.jsx';
 import { attemptUpdate, attemptRemove } from '#/store/intervals.js';
 import { useDispatch, useSelector } from '#/store/useStore.jsx';
 import { getWeek, getMonth, startOfDay } from '#/utils/time.js';
-import { isComplete } from '#/utils/intervals.js';
+import { isComplete } from '#/utils/intervals.ts';
 import { ErrorBoundaryFallback } from '#/components/ErrorBoundaryFallback.jsx';
 
 import styles from './previousIntervals.module.css';

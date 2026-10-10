@@ -26,7 +26,7 @@ export default defineConfig(({ command, isPreview }) => {
 
   return {
     staged: {
-      '*.{js,jsx,mjs,css,md}': 'vp check --fix',
+      '*.{js,jsx,mjs,ts,tsx,css,md}': 'vp check --fix',
     },
     fmt: {
       singleQuote: true,
@@ -36,6 +36,7 @@ export default defineConfig(({ command, isPreview }) => {
       ignorePatterns: ['dist/', 'coverage/', 'package-lock.json'],
     },
     lint: {
+      options: { typeAware: true, typeCheck: true },
       plugins: ['react', 'jsx-a11y', 'import', 'vitest'],
       categories: {
         correctness: 'error',
@@ -90,7 +91,7 @@ export default defineConfig(({ command, isPreview }) => {
       // Swedish time unless TZ is set (`npm run test:timezones` does), so results match on every machine
       env: { TZ: process.env.TZ || 'Europe/Stockholm' },
       coverage: {
-        include: ['src/**/*.{js,jsx}'],
+        include: ['src/**/*.{js,jsx,ts,tsx}'],
         thresholds: { statements: 75, branches: 60, functions: 70, lines: 75 },
       },
     },
