@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "description": "Record time sometime",
   "scripts": {
-    "format": "vp fmt \"src/**/*.{js,jsx,css}\" \"cypress/**/*.js\" \"test/*.js\" \"*.{js,mjs,md}\" \".github/**/*.md\"",
-    "format:check": "vp fmt --check \"src/**/*.{js,jsx,css}\" \"cypress/**/*.js\" \"test/*.js\" \"*.{js,mjs,md}\" \".github/**/*.md\"",
+    "format": "vp fmt \"src/**/*.{js,jsx,ts,tsx,css}\" \"cypress/**/*.js\" \"test/*.js\" \"*.{js,mjs,md}\" \".github/**/*.md\"",
+    "format:check": "vp fmt --check \"src/**/*.{js,jsx,ts,tsx,css}\" \"cypress/**/*.js\" \"test/*.js\" \"*.{js,mjs,md}\" \".github/**/*.md\"",
     "knip": "knip",
     "lint": "vp lint",
     "test": "vp test run",
