@@ -3,19 +3,19 @@ import { createRoot } from 'react-dom/client';
 import * as Sentry from '@sentry/react';
 
 import firebaseApi from './utils/firebaseApi';
-import createStore from './redux/createStore';
-import * as userActions from './redux/user';
-import * as appActions from './redux/app';
-import * as userSettingsActions from './redux/userSettings';
+import createStore from './store/createStore';
+import * as userActions from './store/user';
+import * as appActions from './store/app';
+import * as userSettingsActions from './store/userSettings';
 import {
   intervalAdded,
   intervalRemoved,
   intervalUpdated,
   fetchIntervalsForUser,
   reset as intervalReset,
-} from './redux/intervals';
+} from './store/intervals';
 import Application from './components/application/application.jsx';
-import { StoreProvider } from './hooks/useStore';
+import { StoreProvider } from './store/useStore';
 
 if (process.env.SENTRY_DSN) {
   Sentry.init({

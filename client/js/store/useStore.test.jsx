@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen, act } from '@testing-library/react';
 
-import createStore from '../redux/createStore';
-import { initialized } from '../redux/app';
-import { userLoggedIn } from '../redux/user';
+import createStore from './createStore';
+import { initialized } from './app';
+import { userLoggedIn } from './user';
 import { StoreProvider, useSelector, useDispatch } from './useStore';
 
 const renders = vi.fn();

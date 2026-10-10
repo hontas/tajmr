@@ -1,4 +1,4 @@
-import rootReducer from '.';
+import rootReducer from './rootReducer';
 
 export default function createStore(initialState = {}) {
   let state = rootReducer(initialState, { type: 'INIT' });

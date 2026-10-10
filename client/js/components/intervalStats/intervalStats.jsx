@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from '../../hooks/useStore';
+import { useSelector } from '../../store/useStore';
 
 import IntervalStatsItem from './intervalStatsItem.jsx';
 import { getTimePartsFromElapsedTime, getWeekday, zeroPad } from '../../utils/time';

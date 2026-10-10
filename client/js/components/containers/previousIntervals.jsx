@@ -3,8 +3,8 @@ import * as Sentry from '@sentry/react';
 
 import IntervalList from '../intervalList/intervalList.jsx';
 import Button from '../button/button.jsx';
-import { attemptUpdate, attemptRemove } from '../../redux/intervals';
-import { useDispatch, useSelector } from '../../hooks/useStore';
+import { attemptUpdate, attemptRemove } from '../../store/intervals';
+import { useDispatch, useSelector } from '../../store/useStore';
 import { getWeek, getMonth, startOfDay } from '../../utils/time';
 import { isComplete } from '../../utils/intervals';
 import { ErrorBoundaryFallback } from '../ErrorBoundaryFallback.jsx';

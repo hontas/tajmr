@@ -1,11 +1,11 @@
 import React from 'react';
-import { StoreProvider } from '../../hooks/useStore';
+import { StoreProvider } from '../../store/useStore';
 import { render /* screen */ } from '@testing-library/react';
 
-import createStore from '../../redux/createStore';
+import createStore from '../../store/createStore';
 import PreviousIntervals from './previousIntervals.jsx';
-import { intervalsFetched } from '../../redux/intervals';
-import { updateSettings } from '../../redux/userSettings';
+import { intervalsFetched } from '../../store/intervals';
+import { updateSettings } from '../../store/userSettings';
 import { intervals } from '../../../../test/test-data.json';
 
 describe('PreviousIntervals', () => {

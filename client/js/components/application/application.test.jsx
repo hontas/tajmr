@@ -1,12 +1,12 @@
 import React from 'react';
-import { StoreProvider } from '../../hooks/useStore';
+import { StoreProvider } from '../../store/useStore';
 import { render, screen } from '@testing-library/react';
 
 import Application from './application.jsx';
-import createStore from '../../redux/createStore';
-import { initialized } from '../../redux/app';
-import { userLoggedIn } from '../../redux/user';
-import { intervalsFetched } from '../../redux/intervals';
+import createStore from '../../store/createStore';
+import { initialized } from '../../store/app';
+import { userLoggedIn } from '../../store/user';
+import { intervalsFetched } from '../../store/intervals';
 
 vi.mock('../../utils/firebaseApi', () => ({
   __esModule: true,

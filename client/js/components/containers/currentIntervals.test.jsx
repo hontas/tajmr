@@ -1,10 +1,10 @@
 import React from 'react';
-import { StoreProvider } from '../../hooks/useStore';
+import { StoreProvider } from '../../store/useStore';
 import { render /* screen */ } from '@testing-library/react';
 
-import createStore from '../../redux/createStore';
+import createStore from '../../store/createStore';
 import CurrentIntervals from './currentIntervals.jsx';
-import { intervalsFetched } from '../../redux/intervals';
+import { intervalsFetched } from '../../store/intervals';
 import { intervals } from '../../../../test/test-data.json';
 
 describe('PreviousIntervals', () => {

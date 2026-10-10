@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import Button from '../button/button.jsx';
 import Hamburger from '../icons/Hamburger.jsx';
 import UserMenu from '../user/userMenu.jsx';
-import * as userSettingActions from '../../redux/userSettings';
-import { useDispatch, useSelector } from '../../hooks/useStore';
+import * as userSettingActions from '../../store/userSettings';
+import { useDispatch, useSelector } from '../../store/useStore';
 import { getDateTimeString } from '../../utils/time';
 import * as SpinKit from '../spinkit/spinkit.jsx';
 

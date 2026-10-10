@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useSelector } from '../../hooks/useStore';
+import { useSelector } from '../../store/useStore';
 import UpdatePrompt from '../updatePrompt/updatePrompt.jsx';
 import Loader from './Loader.jsx';
 
