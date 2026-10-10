@@ -10,8 +10,6 @@
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
     "strict": true,
-    "allowJs": true,
-    "checkJs": false,
     "noEmit": true,
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
@@ -19,6 +17,7 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "types": [
+      "node",
       "vite/client",
       "vitest/globals",
       "@testing-library/jest-dom"
@@ -29,7 +28,6 @@
   },
   "include": [
     "src",
-    "test",
-    "vite.config.mjs"
+    "test"
   ]
 }

@@ -1,11 +1,5 @@
-export interface Interval {
-  id?: string;
-  startTime: number;
-  endTime?: number;
-  note?: string;
-  notWork?: boolean;
-}
+import type { NewInterval } from '#/utils/interValidator.ts';
 
-export interface CompleteInterval extends Interval {
+export interface CompleteInterval extends NewInterval {
   endTime: number;
 }
