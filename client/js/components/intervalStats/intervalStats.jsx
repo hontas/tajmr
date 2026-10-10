@@ -1,7 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from '../../store/useStore';
 
-import * as propTypes from '../../constants/propTypes';
 import IntervalStatsItem from './intervalStatsItem.jsx';
 import { getTimePartsFromElapsedTime, getWeekday, zeroPad } from '../../utils/time';
 
@@ -25,7 +24,8 @@ function groupByDate(res, curr) {
   return res;
 }
 
-const IntervalStats = ({ intervals }) => {
+const IntervalStats = () => {
+  const intervals = useSelector((state) => state.intervals.items);
   const dateMap = intervals.map(getIntervalAndDate).slice(0, 5).reduce(groupByDate, {});
 
   const intervalsDayList = Object.keys(dateMap).map((date) => {
@@ -37,14 +37,4 @@ const IntervalStats = ({ intervals }) => {
   return <div className="interval-stats">{intervalsDayList}</div>;
 };
 
-IntervalStats.propTypes = {
-  intervals: propTypes.intervals.isRequired,
-};
-
-function mapStateToProps({ intervals }) {
-  return {
-    intervals: Object.keys(intervals.items).map((key) => intervals.items[key]),
-  };
-}
-
-export default connect(mapStateToProps)(IntervalStats);
+export default IntervalStats;

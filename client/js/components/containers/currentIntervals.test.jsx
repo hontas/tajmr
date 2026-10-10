@@ -1,10 +1,10 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import { StoreProvider } from '../../store/useStore';
 import { render /* screen */ } from '@testing-library/react';
 
-import createStore from '../../redux/createStore';
+import createStore from '../../store/createStore';
 import CurrentIntervals from './currentIntervals.jsx';
-import { intervalsFetched } from '../../redux/intervals';
+import { intervalsFetched } from '../../store/intervals';
 import { intervals } from '../../../../test/test-data.json';
 
 describe('PreviousIntervals', () => {
@@ -21,9 +21,9 @@ describe('PreviousIntervals', () => {
 
   test('should render', () => {
     const { container } = render(
-      <Provider store={store}>
+      <StoreProvider store={store}>
         <CurrentIntervals />
-      </Provider>,
+      </StoreProvider>,
     );
 
     expect(container).not.toBeEmptyDOMElement();

@@ -4,7 +4,7 @@ Guidance for coding agents (Claude Code, Cursor, Codex, ...) and contributors. T
 source of truth; `CLAUDE.md` only imports it. Keep it lean: a line belongs here only if it prevents a
 mistake that the code, the config or the tools wouldn't. Delete a line when a tool starts enforcing it.
 
-**tajmr** is a small time-recording PWA (React, Redux, Firebase Auth + Realtime Database, Vite+). The UI
+**tajmr** is a small time-recording PWA (React, Firebase Auth + Realtime Database, Vite+). The UI
 text is Swedish. The default branch is `main`.
 
 ## Before you push

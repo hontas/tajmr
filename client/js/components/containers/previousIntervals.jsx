@@ -1,12 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
 import * as Sentry from '@sentry/react';
 
-import * as customPropTypes from '../../constants/propTypes';
 import IntervalList from '../intervalList/intervalList.jsx';
 import Button from '../button/button.jsx';
-import { attemptUpdate, attemptRemove } from '../../redux/intervals';
+import { attemptUpdate, attemptRemove } from '../../store/intervals';
+import { useDispatch, useSelector } from '../../store/useStore';
 import { getWeek, getMonth, startOfDay } from '../../utils/time';
 import { isComplete } from '../../utils/intervals';
 import { ErrorBoundaryFallback } from '../ErrorBoundaryFallback.jsx';
@@ -20,77 +18,54 @@ const limits = {
   ALL: 3,
 };
 
-class PreviousIntervals extends React.Component {
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (!prevState.limit && nextProps.userSettings.displayPreviousIntervals) {
-      return { limit: limits.WEEK };
-    }
-    return null;
+const PreviousIntervals = () => {
+  const dispatch = useDispatch();
+  const items = useSelector((state) => state.intervals.items);
+  const userSettings = useSelector((state) => state.userSettings);
+  const [limit, setLimit] = useState(limits.ZERO);
+
+  if (!limit && userSettings.displayPreviousIntervals) {
+    setLimit(limits.WEEK);
   }
 
-  state = {
-    limit: limits.ZERO,
-  };
+  if (!userSettings.displayPreviousIntervals) return null;
 
-  render() {
-    const { userSettings } = this.props;
-    const { limit } = this.state;
-    const intervals = this.getIntervals();
-    const showMore = limit < limits.ALL;
-
-    if (!userSettings.displayPreviousIntervals) return null;
-
-    return (
-      <div className={styles.container}>
-        <h3 className={styles.title}>Tidigare</h3>
-        <Sentry.ErrorBoundary fallback={ErrorBoundaryFallback}>
-          <>
-            <IntervalList intervals={intervals} onDelete={this.onDelete} onUpdate={this.onUpdate} />
-            {showMore && (
-              <Button className={styles.showMore} onClick={this.showMore} theme="primary">
-                Visa fler
-              </Button>
-            )}
-          </>
-        </Sentry.ErrorBoundary>
-      </div>
-    );
+  const completeIntervals = items.filter(isComplete).filter(endedBeforeToday);
+  let intervals;
+  switch (limit) {
+    case limits.ALL:
+      intervals = completeIntervals;
+      break;
+    case limits.MONTH:
+      intervals = completeIntervals.filter(isSameMonth);
+      break;
+    default:
+      intervals = completeIntervals.filter(isSameWeek);
   }
 
-  showMore = () => {
-    this.setState(({ limit }) => ({ limit: limit + 1 }));
-  };
-
-  getIntervals = () => {
-    const intervals = this.props.intervals
-      .filter(isComplete)
-
-      .filter(endedBeforeToday);
-    switch (this.state.limit) {
-      case limits.ALL:
-        return intervals;
-      case limits.MONTH:
-        return intervals.filter(isSameMonth);
-      default:
-        return intervals.filter(isSameWeek);
-    }
-  };
-
-  onDelete = (id) => {
-    const { dispatch } = this.props;
-    dispatch(attemptRemove(id));
-  };
-
-  onUpdate = (interval) => {
-    const { dispatch } = this.props;
-    dispatch(attemptUpdate(interval));
-  };
-}
-
-PreviousIntervals.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  intervals: customPropTypes.intervals.isRequired,
-  userSettings: customPropTypes.userSettings.isRequired,
+  return (
+    <div className={styles.container}>
+      <h3 className={styles.title}>Tidigare</h3>
+      <Sentry.ErrorBoundary fallback={ErrorBoundaryFallback}>
+        <>
+          <IntervalList
+            intervals={intervals}
+            onDelete={(id) => dispatch(attemptRemove(id))}
+            onUpdate={(interval) => dispatch(attemptUpdate(interval))}
+          />
+          {limit < limits.ALL && (
+            <Button
+              className={styles.showMore}
+              onClick={() => setLimit((current) => current + 1)}
+              theme="primary"
+            >
+              Visa fler
+            </Button>
+          )}
+        </>
+      </Sentry.ErrorBoundary>
+    </div>
+  );
 };
 
 const now = Date.now();
@@ -109,11 +84,4 @@ function isSameMonth({ startTime }) {
   return startTime > month.startTime && startTime < month.endTime;
 }
 
-function mapStateToProps({ intervals: { items }, userSettings }) {
-  return {
-    userSettings,
-    intervals: items,
-  };
-}
-
-export default connect(mapStateToProps)(PreviousIntervals);
+export default PreviousIntervals;
