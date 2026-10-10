@@ -16,7 +16,14 @@ const AutoComplete = ({
   onChange,
 }) => {
   const [query, setQuery] = useState(value || '');
+  const [isFocused, setIsFocused] = useState(false);
+  const [previousValue, setPreviousValue] = useState(value);
   const [suggestions, setSuggestions] = useState([]);
+  if (value !== previousValue) {
+    setPreviousValue(value);
+    if (!isFocused) setQuery(value || '');
+  }
+
   const suggestionsList = useRef(null);
   const timeoutId = useRef(null);
 
@@ -63,6 +70,7 @@ const AutoComplete = ({
   };
 
   const handleBlur = ({ target }) => {
+    setIsFocused(false);
     const nextValue = target.value.toLowerCase();
     // don't blur if tabbed to selection list
     if (suggestionsList.current.hasChildNodes()) return;
@@ -87,6 +95,7 @@ const AutoComplete = ({
           value={query}
           placeholder={placeholder}
           className={styles.input}
+          onFocus={() => setIsFocused(true)}
           onBlur={handleBlur}
           onChange={handleChange}
         />

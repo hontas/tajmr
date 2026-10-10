@@ -17,6 +17,7 @@ import {
   onChildAdded,
   onChildChanged,
   onChildRemoved,
+  onValue,
 } from 'firebase/database';
 
 import api from './firebaseApi';
@@ -58,6 +59,7 @@ vi.mock('firebase/database', () => {
     onChildAdded: mockListener(),
     onChildChanged: mockListener(),
     onChildRemoved: mockListener(),
+    onValue: mockListener(),
   };
 });
 
@@ -202,14 +204,6 @@ describe('firebaseApi', () => {
 
       expect([...paths()]).toEqual([me]);
     });
-
-    test('getUserSettings reads users/{uid}', async () => {
-      const snap = snapshot({ hoursInWeek: 20 });
-      get.mockResolvedValue(snap);
-
-      await expect(api.getUserSettings({ uid: 'me' })).resolves.toBe(snap);
-      expect(get).toHaveBeenCalledWith({ path: 'users/me' });
-    });
   });
 
   describe('updateUserPassword', () => {
@@ -241,6 +235,7 @@ describe('firebaseApi', () => {
       intervalAdded: (i) => ({ type: 'added', i }),
       intervalUpdated: (i) => ({ type: 'updated', i }),
       intervalRemoved: (id) => ({ type: 'removed', id }),
+      settingsChanged: (settings) => ({ type: 'settings', settings }),
     };
 
     test('emits actions for added, changed and removed intervals of the user', () => {
@@ -262,10 +257,26 @@ describe('firebaseApi', () => {
       ]);
     });
 
-    test('only listens on the users own path, and only for new intervals when added', () => {
+    test('emits the settings of the user, also when they are missing', () => {
+      const emitted = [];
+      api.subscribe((action) => emitted.push(action));
+
+      api.listen(actions);
+      const [[, changed]] = onValue.mock.calls;
+      changed(snapshot({ hoursInWeek: 20 }, 'me'));
+      changed(snapshot(null, 'me'));
+
+      expect(emitted).toEqual([
+        { type: 'settings', settings: { hoursInWeek: 20 } },
+        { type: 'settings', settings: null },
+      ]);
+    });
+
+    test('only listens on the users own paths, and only for new intervals when added', () => {
       api.listen(actions);
 
-      expect([...paths()]).toEqual([me]);
+      expect([...paths()].sort()).toEqual(['userIntervals/me', 'users/me']);
+      expect(onValue).toHaveBeenCalledWith({ path: 'users/me' }, expect.any(Function));
       expect(onChildAdded).toHaveBeenCalledWith(
         { path: me, constraints: [{ orderByChild: 'startTime' }, { startAt: 9999 }] },
         expect.any(Function),
@@ -274,9 +285,9 @@ describe('firebaseApi', () => {
       expect(onChildRemoved).toHaveBeenCalledWith({ path: me }, expect.any(Function));
     });
 
-    test('returns a function that stops all three listeners', () => {
+    test('returns a function that stops all four listeners', () => {
       const stop = api.listen(actions);
-      expect(mock.stops).toHaveLength(3);
+      expect(mock.stops).toHaveLength(4);
 
       stop();
 
