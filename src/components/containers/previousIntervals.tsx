@@ -50,6 +50,7 @@ const PreviousIntervals = () => {
       <Sentry.ErrorBoundary fallback={ErrorBoundaryFallback}>
         <>
           <IntervalList
+            label="Tidigare intervall"
             intervals={intervals}
             onDelete={(id) => {
               if (id) dispatch(attemptRemove(id));

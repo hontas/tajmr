@@ -10,20 +10,13 @@ import styles from './addOneInterval.module.css';
 const startHour = 9;
 
 interface AddOneIntervalProps {
-  'data-testid'?: string;
   onAdd: (interval: NewInterval) => Promise<unknown>;
   onCancel: () => void;
   fullDay: number;
   notes?: string[];
 }
 
-const AddOneInterval = ({
-  notes,
-  onCancel,
-  onAdd,
-  fullDay,
-  'data-testid': testId,
-}: AddOneIntervalProps) => {
+const AddOneInterval = ({ notes, onCancel, onAdd, fullDay }: AddOneIntervalProps) => {
   const hours = Math.trunc(fullDay);
   const minutes = Math.round(60 * (fullDay - hours));
   const [error, setError] = useState<string | null>(null);
@@ -46,7 +39,11 @@ const AddOneInterval = ({
 
   return (
     <>
-      <form data-testid={testId} className={styles.container} onSubmit={handleClickSubmit}>
+      <form
+        data-testid="add-previous-interval-form"
+        className={styles.container}
+        onSubmit={handleClickSubmit}
+      >
         <IntervalListItem
           className={styles.intervalListItem}
           interval={interval}

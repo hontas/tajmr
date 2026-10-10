@@ -1,5 +1,5 @@
 import firebaseApi from '../../src/utils/firebaseApi';
-import { testIds, animationDuration } from '../constants';
+import { testIds, lists, animationDuration } from '../constants';
 
 const fromTime = '10:00';
 const toTime = '14:00';
@@ -48,7 +48,7 @@ context('previous work', () => {
 
     // when saved
     cy.getByTestId(testIds.addPrevIntervalForm).should('not.exist');
-    cy.getByTestId(testIds.currentIntervals).children().should('have.length', 1);
+    cy.getByLabel(lists.currentIntervals).children().should('have.length', 1);
     cy.getByTestId(testIds.intervalFromInput).should('have.value', fromTime);
     cy.getByTestId(testIds.intervalEndInput).should('have.value', toTime);
     cy.getByTestId(testIds.intervalNoteInput).should('have.value', noteText);

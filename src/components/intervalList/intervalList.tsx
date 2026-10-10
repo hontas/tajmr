@@ -10,7 +10,7 @@ function sortBy(array: Interval[], prop: 'startTime') {
 const emptyNotes: string[] = [];
 
 interface IntervalListProps {
-  'data-testid'?: string;
+  label: string;
   intervals: Interval[];
   onDelete: (id: string | undefined) => void;
   onUpdate: (interval: EditableInterval) => void;
@@ -22,9 +22,9 @@ const IntervalList = ({
   onDelete,
   onUpdate,
   notes = emptyNotes,
-  'data-testid': testId,
+  label,
 }: IntervalListProps) => (
-  <ul data-testid={testId} className={styles.container}>
+  <ul aria-label={label} className={styles.container}>
     {sortBy(intervals, 'startTime').map((interval) => (
       <IntervalListItem
         key={interval.id}

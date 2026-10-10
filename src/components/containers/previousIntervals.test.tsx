@@ -1,5 +1,5 @@
 import { StoreProvider } from '#/store/useStore.tsx';
-import { render /* screen */ } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import createStore from '#/store/createStore.ts';
 import type { Store } from '#/store/types.ts';
@@ -30,5 +30,15 @@ describe('PreviousIntervals', () => {
     );
 
     expect(container).not.toBeEmptyDOMElement();
+  });
+
+  test('has a named list of the intervals', () => {
+    render(
+      <StoreProvider store={store}>
+        <PreviousIntervals />
+      </StoreProvider>,
+    );
+
+    expect(screen.getByRole('list', { name: 'Tidigare intervall' })).toBeInTheDocument();
   });
 });

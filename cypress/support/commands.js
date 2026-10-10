@@ -4,6 +4,8 @@ Cypress.Commands.add('getByTestId', { prevSubject: 'optional' }, (withinSubject,
   cy.get(`[data-testid="${testId}"]`, { withinSubject }),
 );
 
+Cypress.Commands.add('getByLabel', (label) => cy.get(`[aria-label="${label}"]`));
+
 Cypress.Commands.add('waitUntilSaved', () =>
   cy.getByTestId('saving-intervals-container').should('not.exist'),
 );

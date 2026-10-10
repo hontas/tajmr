@@ -1,5 +1,5 @@
 import firebaseApi from '../../src/utils/firebaseApi';
-import { testIds, animationDuration } from '../constants';
+import { testIds, lists, animationDuration } from '../constants';
 
 context('login', () => {
   before(() => {
@@ -30,7 +30,7 @@ context('login', () => {
     // finish interval
     cy.getByTestId(testIds.workButton).click();
     cy.waitUntilSaved();
-    cy.getByTestId(testIds.currentIntervals).children().should('have.length', 1);
+    cy.getByLabel(lists.currentIntervals).children().should('have.length', 1);
 
     // edit time in input
     cy.getByTestId(testIds.interval)
@@ -63,6 +63,6 @@ context('login', () => {
     // remove intervals
     cy.getByTestId(testIds.removeIntervalBtn).click();
     cy.waitUntilSaved();
-    cy.getByTestId(testIds.currentIntervals).children().should('have.length', 0);
+    cy.getByLabel(lists.currentIntervals).children().should('have.length', 0);
   });
 });
