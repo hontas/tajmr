@@ -23,7 +23,7 @@
 }
 
 .rest {
-  background-color: color-mix(in srgb, var(--primary-color-dark) 25%, transparent);
+  background-color: alpha(var(--primary-color-dark, 0.25));
 }
 
 .text {
@@ -37,13 +37,5 @@
 
 .overtime {
   background-color: var(--success-color);
-  border-left: 1px solid color-mix(in srgb, var(--success-color-dark) 75%, transparent);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .text,
-  .rest,
-  .progress {
-    transition: none;
-  }
+  border-left: 1px solid alpha(var(--success-color-dark), 0.75);
 }

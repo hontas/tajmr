@@ -7,16 +7,6 @@
   font-weight: 500;
 }
 
-.workButton.idle {
-  background: var(--text-color-light);
-  color: var(--primary-color-dark);
-}
-
-.workButton.active {
-  background: var(--success-color-dark);
-  color: var(--text-color-primary);
-}
-
 @media screen and (min-width: 480px) {
   .workButton {
     font-size: 1.5em;
