@@ -60,6 +60,22 @@ export default defineConfig(({ command, isPreview }) => {
           env: { mocha: true },
           globals: { cy: 'readonly', Cypress: 'readonly' },
         },
+        {
+          files: ['src/**'],
+          rules: {
+            'no-restricted-imports': [
+              'error',
+              {
+                patterns: [
+                  {
+                    group: ['../*', '../**'],
+                    message: 'Import across folders with #/ (for example #/utils/time.js).',
+                  },
+                ],
+              },
+            ],
+          },
+        },
       ],
     },
     base,

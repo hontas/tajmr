@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import * as SpinKit from '../spinkit/spinkit.jsx';
+import * as SpinKit from '#/components/spinkit/spinkit.jsx';
 
 import styles from './button.module.css';
 

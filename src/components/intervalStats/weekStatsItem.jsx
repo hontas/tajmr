@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { getHours, getDurationString } from '../../utils/time';
+import { getHours, getDurationString } from '#/utils/time.js';
 
 import styles from './weekStatsItem.module.css';
 

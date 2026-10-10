@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import useNow from '../../hooks/useNow';
-import { getTimePartsFromElapsedTime, getDurationString } from '../../utils/time';
-import notify from '../../utils/notification';
+import useNow from '#/hooks/useNow.js';
+import { getTimePartsFromElapsedTime, getDurationString } from '#/utils/time.js';
+import notify from '#/utils/notification.js';
 
 import styles from './digitalClock.module.css';
 

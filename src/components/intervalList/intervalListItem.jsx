@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import IntervalListInput from './intervalListInput.jsx';
-import * as customPropTypes from '../../constants/propTypes';
-import Trashcan from '../icons/Trashcan.jsx';
-import Button from '../button/button.jsx';
-import AutoComplete from '../autoComplete/AutoComplete.jsx';
+import * as customPropTypes from '#/constants/propTypes.js';
+import Trashcan from '#/components/icons/Trashcan.jsx';
+import Button from '#/components/button/button.jsx';
+import AutoComplete from '#/components/autoComplete/AutoComplete.jsx';
 
 import styles from './intervalListItem.module.css';
 

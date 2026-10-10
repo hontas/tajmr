@@ -12,7 +12,7 @@ tajmr
 
 ## dev
 
-Use the Node version in `.nvmrc`.
+Use the Node version in `.node-version`.
 
 ```shell
 npm ci

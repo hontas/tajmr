@@ -2,10 +2,10 @@ import md5 from 'md5';
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Button from '../button/button.jsx';
+import Button from '#/components/button/button.jsx';
 
-import * as customPropTypes from '../../constants/propTypes';
-import firebaseApi from '../../utils/firebaseApi';
+import * as customPropTypes from '#/constants/propTypes.js';
+import firebaseApi from '#/utils/firebaseApi.js';
 
 import styles from './userMenu.module.css';
 

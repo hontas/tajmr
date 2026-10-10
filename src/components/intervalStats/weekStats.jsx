@@ -1,11 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
-import PropTypes, * as customPropTypes from '../../constants/propTypes';
+import PropTypes, * as customPropTypes from '#/constants/propTypes.js';
 
-import useNow from '../../hooks/useNow';
-import ProgressBar from '../ui-elements/progressBar.jsx';
+import useNow from '#/hooks/useNow.js';
+import ProgressBar from '#/components/ui-elements/progressBar.jsx';
 import WeekStatsItem from './weekStatsItem.jsx';
-import Button from '../button/button.jsx';
+import Button from '#/components/button/button.jsx';
 import {
   getHours,
   getDate,
@@ -13,7 +13,7 @@ import {
   getWeekNumber,
   createWorkWeek,
   oneWeek,
-} from '../../utils/time';
+} from '#/utils/time.js';
 
 import styles from './weekStats.module.css';
 

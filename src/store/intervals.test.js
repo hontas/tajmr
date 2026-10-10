@@ -14,10 +14,10 @@ import reducer, {
   fetchIntervalsForUser,
 } from './intervals';
 import createStore from './createStore';
-import firebaseApi from '../utils/firebaseApi';
+import firebaseApi from '#/utils/firebaseApi.js';
 
 vi.mock('@sentry/react', () => ({ captureException: vi.fn(), captureMessage: vi.fn() }));
-vi.mock('../utils/firebaseApi', () => ({
+vi.mock('#/utils/firebaseApi.js', () => ({
   __esModule: true,
   default: {
     createInterval: vi.fn(),

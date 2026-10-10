@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 
-import { maxOneDecimal } from '../../utils/number';
+import { maxOneDecimal } from '#/utils/number.js';
 
 import styles from './progressBar.module.css';
 

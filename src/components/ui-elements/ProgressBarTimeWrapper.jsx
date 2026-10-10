@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import * as customPropTypes from '../../constants/propTypes';
+import * as customPropTypes from '#/constants/propTypes.js';
 import ProgressBar from './progressBar.jsx';
-import useNow from '../../hooks/useNow';
-import getDisplayName from '../hoc/getDisplayName';
-import { getHours } from '../../utils/time';
+import useNow from '#/hooks/useNow.js';
+import getDisplayName from '#/components/hoc/getDisplayName.js';
+import { getHours } from '#/utils/time.js';
 
 const ProgressBarTimeWrapper = ({ intervals, max }) => {
   const now = useNow();

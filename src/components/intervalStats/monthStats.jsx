@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import * as customPropTypes from '../../constants/propTypes';
-import ProgressBar from '../ui-elements/progressBar.jsx';
-import { oneHour, getMonth, getWorkDaysInMonth } from '../../utils/time';
-import { getIntervalSum } from '../../utils/intervals';
+import * as customPropTypes from '#/constants/propTypes.js';
+import ProgressBar from '#/components/ui-elements/progressBar.jsx';
+import { oneHour, getMonth, getWorkDaysInMonth } from '#/utils/time.js';
+import { getIntervalSum } from '#/utils/intervals.js';
 
 import styles from './monthStats.module.css';
 

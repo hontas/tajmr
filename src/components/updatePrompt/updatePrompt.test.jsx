@@ -2,9 +2,9 @@ import React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 
 import UpdatePrompt from './updatePrompt.jsx';
-import registerServiceWorker from '../../register-sw';
+import registerServiceWorker from '#/register-sw.js';
 
-vi.mock('../../register-sw', () => ({ __esModule: true, default: vi.fn() }));
+vi.mock('#/register-sw.js', () => ({ __esModule: true, default: vi.fn() }));
 
 describe('UpdatePrompt', () => {
   let update;

@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import * as Sentry from '@sentry/react';
 
-import MonthReport from '../monthReport/MonthReport.jsx';
-import DigitalClock from '../digitalClock/digitalClock.jsx';
-import WorkButton from '../button/workButton.jsx';
-import ProgressBarTimeWrapper from '../ui-elements/ProgressBarTimeWrapper.jsx';
-import IntervalList from '../intervalList/intervalList.jsx';
-import MonthStats from '../intervalStats/monthStats.jsx';
-import Button from '../button/button.jsx';
-import { WeekStatsTimeWrapper } from '../intervalStats/weekStats.jsx';
-import { attemptUpdate, attemptRemove, updateTimestamp } from '../../store/intervals';
-import { useDispatch, useSelector } from '../../store/useStore';
-import AddOneInterval from '../intervalList/addOneInterval.jsx';
-import { getIntervalSum, isActive, isComplete } from '../../utils/intervals';
-import { getWeek, getMonth, getDayRange } from '../../utils/time';
-import { ErrorBoundaryFallback } from '../ErrorBoundaryFallback.jsx';
+import MonthReport from '#/components/monthReport/MonthReport.jsx';
+import DigitalClock from '#/components/digitalClock/digitalClock.jsx';
+import WorkButton from '#/components/button/workButton.jsx';
+import ProgressBarTimeWrapper from '#/components/ui-elements/ProgressBarTimeWrapper.jsx';
+import IntervalList from '#/components/intervalList/intervalList.jsx';
+import MonthStats from '#/components/intervalStats/monthStats.jsx';
+import Button from '#/components/button/button.jsx';
+import { WeekStatsTimeWrapper } from '#/components/intervalStats/weekStats.jsx';
+import { attemptUpdate, attemptRemove, updateTimestamp } from '#/store/intervals.js';
+import { useDispatch, useSelector } from '#/store/useStore.jsx';
+import AddOneInterval from '#/components/intervalList/addOneInterval.jsx';
+import { getIntervalSum, isActive, isComplete } from '#/utils/intervals.js';
+import { getWeek, getMonth, getDayRange } from '#/utils/time.js';
+import { ErrorBoundaryFallback } from '#/components/ErrorBoundaryFallback.jsx';
 
 import styles from './currentIntervals.module.css';
 

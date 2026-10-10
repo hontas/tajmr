@@ -1,14 +1,14 @@
 import React from 'react';
-import { StoreProvider } from '../../store/useStore';
+import { StoreProvider } from '#/store/useStore.jsx';
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import Navbar from './navbar.jsx';
-import createStore from '../../store/createStore';
-import { initialized } from '../../store/app';
-import { userLoggedIn } from '../../store/user';
-import { intervalsFetched, requestIntervalUpdate } from '../../store/intervals';
+import createStore from '#/store/createStore.js';
+import { initialized } from '#/store/app.js';
+import { userLoggedIn } from '#/store/user.js';
+import { intervalsFetched, requestIntervalUpdate } from '#/store/intervals.js';
 
-vi.mock('../../utils/firebaseApi', () => ({
+vi.mock('#/utils/firebaseApi.js', () => ({
   __esModule: true,
   default: { logout: vi.fn(), saveUserData: vi.fn(), updateUserPassword: vi.fn() },
 }));

@@ -1,13 +1,13 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import Button from '../button/button.jsx';
-import Hamburger from '../icons/Hamburger.jsx';
-import UserMenu from '../user/userMenu.jsx';
-import * as userSettingActions from '../../store/userSettings';
-import { useDispatch, useSelector } from '../../store/useStore';
-import { getDateTimeString } from '../../utils/time';
-import * as SpinKit from '../spinkit/spinkit.jsx';
+import Button from '#/components/button/button.jsx';
+import Hamburger from '#/components/icons/Hamburger.jsx';
+import UserMenu from '#/components/user/userMenu.jsx';
+import * as userSettingActions from '#/store/userSettings.js';
+import { useDispatch, useSelector } from '#/store/useStore.jsx';
+import { getDateTimeString } from '#/utils/time.js';
+import * as SpinKit from '#/components/spinkit/spinkit.jsx';
 
 import styles from './navbar.module.css';
 

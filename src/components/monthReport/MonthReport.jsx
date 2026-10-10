@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import Button from '../button/button.jsx';
-import useNow from '../../hooks/useNow';
-import * as customTypes from '../../constants/propTypes';
-import { getMonth, getHours, months, addMonths } from '../../utils/time';
+import Button from '#/components/button/button.jsx';
+import useNow from '#/hooks/useNow.js';
+import * as customTypes from '#/constants/propTypes.js';
+import { getMonth, getHours, months, addMonths } from '#/utils/time.js';
 
 import styles from './MonthReport.module.css';
 
