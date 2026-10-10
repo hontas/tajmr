@@ -2,7 +2,6 @@ import React from 'react';
 
 import ProgressBar from './progressBar.tsx';
 import useNow from '#/hooks/useNow.ts';
-import getDisplayName from '#/components/hoc/getDisplayName.ts';
 import type { NewInterval } from '#/utils/interValidator.ts';
 import { getHours } from '#/utils/time.ts';
 
@@ -19,7 +18,5 @@ const ProgressBarTimeWrapper = ({ intervals, max }: ProgressBarTimeWrapperProps)
 
   return <ProgressBar progress={getHours(intervalSum)} max={max} />;
 };
-
-ProgressBarTimeWrapper.displayName = getDisplayName(ProgressBar);
 
 export default ProgressBarTimeWrapper;
