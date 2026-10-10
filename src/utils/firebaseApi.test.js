@@ -1,60 +1,77 @@
-import firebase from 'firebase/app';
+import { initializeApp } from 'firebase/app';
+import {
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signOut,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  updatePassword,
+} from 'firebase/auth';
+import {
+  ref,
+  push,
+  set,
+  remove,
+  get,
+  onChildAdded,
+  onChildChanged,
+  onChildRemoved,
+} from 'firebase/database';
 
 import api from './firebaseApi';
 
-// `vi.mock` factories may only reference variables prefixed with `mock`.
-vi.mock('firebase/app', () => {
-  const mockNodes = {};
-  const mockNode = (path) => {
-    if (!mockNodes[path]) {
-      const node = {
-        set: vi.fn(() => Promise.resolve()),
-        remove: vi.fn(() => Promise.resolve()),
-        once: vi.fn(),
-        on: vi.fn((event, handler) => handler),
-        off: vi.fn(),
-        push: vi.fn(() => ({ key: 'new-id' })),
-      };
-      ['orderByChild', 'startAt', 'endAt'].forEach((method) => {
-        node[method] = vi.fn(() => node);
-      });
-      mockNodes[path] = node;
-    }
-    return mockNodes[path];
-  };
-  const mockAuth = {
-    currentUser: { uid: 'me', email: 'me@example.com' },
-    signInWithEmailAndPassword: vi.fn(() => Promise.resolve('signed-in')),
-    sendPasswordResetEmail: vi.fn(() => Promise.resolve()),
-    signOut: vi.fn(() => Promise.resolve()),
-  };
-  const mockDatabase = { ref: vi.fn((path) => mockNode(path)) };
+const mock = vi.hoisted(() => ({
+  auth: { currentUser: null },
+  stops: [],
+}));
 
-  const mockFirebase = {
-    initializeApp: vi.fn(),
-    database: vi.fn(() => mockDatabase),
-    auth: Object.assign(
-      vi.fn(() => mockAuth),
-      { EmailAuthProvider: { credential: vi.fn(() => 'credential') } },
-    ),
-    mockHandles: { nodes: mockNodes, node: mockNode, auth: mockAuth, database: mockDatabase },
+vi.mock('firebase/app', () => ({ initializeApp: vi.fn(() => 'app') }));
+vi.mock('firebase/auth', () => ({
+  getAuth: vi.fn(() => mock.auth),
+  onAuthStateChanged: vi.fn(() => 'unsubscribe'),
+  signInWithEmailAndPassword: vi.fn(() => Promise.resolve('signed-in')),
+  sendPasswordResetEmail: vi.fn(() => Promise.resolve()),
+  signOut: vi.fn(() => Promise.resolve()),
+  EmailAuthProvider: { credential: vi.fn(() => 'credential') },
+  reauthenticateWithCredential: vi.fn(() => Promise.resolve()),
+  updatePassword: vi.fn(() => Promise.resolve()),
+}));
+vi.mock('firebase/database', () => {
+  const mockListener = () =>
+    vi.fn(() => {
+      const stop = vi.fn();
+      mock.stops.push(stop);
+      return stop;
+    });
+  return {
+    getDatabase: vi.fn(() => 'database'),
+    ref: vi.fn((database, path) => ({ path })),
+    push: vi.fn(() => ({ key: 'new-id' })),
+    set: vi.fn(() => Promise.resolve()),
+    remove: vi.fn(() => Promise.resolve()),
+    get: vi.fn(),
+    query: vi.fn((target, ...constraints) => ({ ...target, constraints })),
+    orderByChild: vi.fn((child) => ({ orderByChild: child })),
+    startAt: vi.fn((value) => ({ startAt: value })),
+    endAt: vi.fn((value) => ({ endAt: value })),
+    onChildAdded: mockListener(),
+    onChildChanged: mockListener(),
+    onChildRemoved: mockListener(),
   };
-  return { __esModule: true, default: mockFirebase };
 });
-vi.mock('firebase/auth', () => ({}));
-vi.mock('firebase/database', () => ({}));
 
 // the app is initialised when firebaseApi is imported; mock call history is cleared before each test
-const initializeAppCalls = firebase.initializeApp.mock.calls.length;
-const { nodes, node, auth, database } = firebase.mockHandles;
+const initializeAppCalls = initializeApp.mock.calls.length;
 const snapshot = (value, key) => ({ val: () => value, key });
-const me = () => node('userIntervals/me');
+const me = 'userIntervals/me';
+const paths = () => new Set(ref.mock.calls.map(([, path]) => path));
 
 describe('firebaseApi', () => {
   beforeEach(() => {
     vi.spyOn(Date, 'now').mockReturnValue(9999);
-    Object.keys(nodes).forEach((path) => delete nodes[path]);
-    auth.currentUser = { uid: 'me', email: 'me@example.com' };
+    mock.auth.currentUser = { uid: 'me', email: 'me@example.com' };
+    mock.stops.length = 0;
   });
 
   afterEach(() => vi.restoreAllMocks());
@@ -66,13 +83,20 @@ describe('firebaseApi', () => {
   describe('auth', () => {
     test('login, logout and password reset delegate to firebase auth', async () => {
       await expect(api.login('a@b.c', 'pw')).resolves.toBe('signed-in');
-      expect(auth.signInWithEmailAndPassword).toHaveBeenCalledWith('a@b.c', 'pw');
+      expect(signInWithEmailAndPassword).toHaveBeenCalledWith(mock.auth, 'a@b.c', 'pw');
 
       await api.sendPasswordResetEmail('a@b.c');
-      expect(auth.sendPasswordResetEmail).toHaveBeenCalledWith('a@b.c');
+      expect(sendPasswordResetEmail).toHaveBeenCalledWith(mock.auth, 'a@b.c');
 
       await api.logout();
-      expect(auth.signOut).toHaveBeenCalled();
+      expect(signOut).toHaveBeenCalledWith(mock.auth);
+    });
+
+    test('onAuthStateChanged listens to the auth state and returns the stop function', () => {
+      const callback = vi.fn();
+
+      expect(api.onAuthStateChanged(callback)).toBe('unsubscribe');
+      expect(onAuthStateChanged).toHaveBeenCalledWith(mock.auth, callback);
     });
 
     test('getCurrentUserId returns the uid', () => {
@@ -98,43 +122,39 @@ describe('firebaseApi', () => {
     test('createInterval writes userIntervals/<uid>/<new id> with createdAt and updatedAt, no user field', async () => {
       const result = await api.createInterval({ startTime: 1, note: 'n' });
 
-      expect(node('userIntervals/me/new-id').set).toHaveBeenCalledWith({
-        startTime: 1,
-        note: 'n',
-        createdAt: 9999,
-        updatedAt: 9999,
-      });
+      expect(push).toHaveBeenCalledWith({ path: me });
+      expect(set).toHaveBeenCalledWith(
+        { path: `${me}/new-id` },
+        { startTime: 1, note: 'n', createdAt: 9999, updatedAt: 9999 },
+      );
       expect(result).toEqual({ startTime: 1, note: 'n', createdAt: 9999, id: 'new-id' });
     });
 
     test('updateInterval sets updatedAt and resolves without it', async () => {
       const result = await api.updateInterval({ id: 'i1', startTime: 5 });
 
-      expect(node('userIntervals/me/i1').set).toHaveBeenCalledWith({
-        startTime: 5,
-        updatedAt: 9999,
-      });
+      expect(set).toHaveBeenCalledWith({ path: `${me}/i1` }, { startTime: 5, updatedAt: 9999 });
       expect(result).toEqual({ id: 'i1', startTime: 5 });
     });
 
     test('removeInterval removes the interval of the user', async () => {
       await api.removeInterval('i1');
-      expect(node('userIntervals/me/i1').remove).toHaveBeenCalled();
+      expect(remove).toHaveBeenCalledWith({ path: `${me}/i1` });
     });
 
     test('saveUserData writes to users/{id}', async () => {
       await api.saveUserData('u1', { hoursInWeek: 30 });
-      expect(node('users/u1').set).toHaveBeenCalledWith({ hoursInWeek: 30 });
+      expect(set).toHaveBeenCalledWith({ path: 'users/u1' }, { hoursInWeek: 30 });
     });
 
     test('rejects (without touching the database) when nobody is signed in', async () => {
-      auth.currentUser = null;
+      mock.auth.currentUser = null;
 
       await expect(api.createInterval({ startTime: 1 })).rejects.toThrow('Not signed in');
       await expect(api.updateInterval({ id: 'i1', startTime: 1 })).rejects.toThrow('Not signed in');
       await expect(api.removeInterval('i1')).rejects.toThrow('Not signed in');
       await expect(api.fetchIntervalsForUser()).rejects.toThrow('Not signed in');
-      expect(Object.keys(nodes)).toEqual([]);
+      expect(ref).not.toHaveBeenCalled();
     });
   });
 
@@ -142,67 +162,76 @@ describe('firebaseApi', () => {
     const data = { a: { startTime: 1 }, b: { startTime: 2 } };
 
     test('fetchIntervalsForUser returns the users intervals ordered by startTime', async () => {
-      me().once.mockResolvedValue(snapshot(data));
+      get.mockResolvedValue(snapshot(data));
 
       await expect(api.fetchIntervalsForUser()).resolves.toEqual(data);
-      expect(me().orderByChild).toHaveBeenCalledWith('startTime');
+      expect(get).toHaveBeenCalledWith({
+        path: me,
+        constraints: [{ orderByChild: 'startTime' }],
+      });
     });
 
     test('fetchIntervalsInWeek queries the week range', async () => {
-      me().once.mockResolvedValue(snapshot(data));
+      get.mockResolvedValue(snapshot(data));
 
       await expect(api.fetchIntervalsInWeek(new Date(2021, 3, 7, 12).getTime())).resolves.toEqual(
         data,
       );
-      expect(me().startAt).toHaveBeenCalledWith(+new Date(2021, 3, 5));
-      expect(me().endAt).toHaveBeenCalledWith(+new Date(2021, 3, 12));
+      expect(get).toHaveBeenCalledWith({
+        path: me,
+        constraints: [
+          { orderByChild: 'startTime' },
+          { startAt: +new Date(2021, 3, 5) },
+          { endAt: +new Date(2021, 3, 12) },
+        ],
+      });
     });
 
     test('a user without intervals gets an empty object', async () => {
-      me().once.mockResolvedValue(snapshot(null));
+      get.mockResolvedValue(snapshot(null));
 
       await expect(api.fetchIntervalsForUser()).resolves.toEqual({});
       await expect(api.fetchIntervalsInWeek(Date.UTC(2021, 3, 7))).resolves.toEqual({});
     });
 
     test('never reads the shared intervals node or another users path', async () => {
-      me().once.mockResolvedValue(snapshot(data));
+      get.mockResolvedValue(snapshot(data));
 
       await api.fetchIntervalsForUser();
       await api.fetchIntervalsInWeek();
 
-      expect(Object.keys(nodes)).toEqual(['userIntervals/me']);
-      expect(database.ref).not.toHaveBeenCalledWith('intervals');
+      expect([...paths()]).toEqual([me]);
     });
 
     test('getUserSettings reads users/{uid}', async () => {
       const snap = snapshot({ hoursInWeek: 20 });
-      node('users/me').once.mockResolvedValue(snap);
+      get.mockResolvedValue(snap);
 
       await expect(api.getUserSettings({ uid: 'me' })).resolves.toBe(snap);
+      expect(get).toHaveBeenCalledWith({ path: 'users/me' });
     });
   });
 
   describe('updateUserPassword', () => {
     test('reauthenticates before changing the password', async () => {
       const calls = [];
-      auth.currentUser.reauthenticateWithCredential = vi.fn(() => {
+      reauthenticateWithCredential.mockImplementationOnce(() => {
         calls.push('reauth');
         return Promise.resolve();
       });
-      auth.currentUser.updatePassword = vi.fn(() => {
+      updatePassword.mockImplementationOnce(() => {
         calls.push('update');
         return Promise.resolve();
       });
 
       await api.updateUserPassword('old', 'new');
 
-      expect(firebase.auth.EmailAuthProvider.credential).toHaveBeenCalledWith(
-        'me@example.com',
-        'old',
+      expect(EmailAuthProvider.credential).toHaveBeenCalledWith('me@example.com', 'old');
+      expect(reauthenticateWithCredential).toHaveBeenCalledWith(
+        mock.auth.currentUser,
+        'credential',
       );
-      expect(auth.currentUser.reauthenticateWithCredential).toHaveBeenCalledWith('credential');
-      expect(auth.currentUser.updatePassword).toHaveBeenCalledWith('new');
+      expect(updatePassword).toHaveBeenCalledWith(mock.auth.currentUser, 'new');
       expect(calls).toEqual(['reauth', 'update']);
     });
   });
@@ -213,15 +242,15 @@ describe('firebaseApi', () => {
       intervalUpdated: (i) => ({ type: 'updated', i }),
       intervalRemoved: (id) => ({ type: 'removed', id }),
     };
-    const handlers = () =>
-      Object.fromEntries(me().on.mock.calls.map(([event, handler]) => [event, handler]));
 
     test('emits actions for added, changed and removed intervals of the user', () => {
       const emitted = [];
       api.subscribe((action) => emitted.push(action));
 
       api.listen(actions);
-      const { child_added: added, child_changed: changed, child_removed: removed } = handlers();
+      const [[, added]] = onChildAdded.mock.calls;
+      const [[, changed]] = onChildChanged.mock.calls;
+      const [[, removed]] = onChildRemoved.mock.calls;
       added(snapshot({ startTime: 1 }, 'a1'));
       changed(snapshot({ startTime: 2 }, 'c1'));
       removed(snapshot(null, 'r1'));
@@ -236,29 +265,30 @@ describe('firebaseApi', () => {
     test('only listens on the users own path, and only for new intervals when added', () => {
       api.listen(actions);
 
-      expect(Object.keys(nodes)).toEqual(['userIntervals/me']);
-      expect(me().orderByChild).toHaveBeenCalledWith('startTime');
-      expect(me().startAt).toHaveBeenCalledWith(9999);
+      expect([...paths()]).toEqual([me]);
+      expect(onChildAdded).toHaveBeenCalledWith(
+        { path: me, constraints: [{ orderByChild: 'startTime' }, { startAt: 9999 }] },
+        expect.any(Function),
+      );
+      expect(onChildChanged).toHaveBeenCalledWith({ path: me }, expect.any(Function));
+      expect(onChildRemoved).toHaveBeenCalledWith({ path: me }, expect.any(Function));
     });
 
-    test('returns a function that detaches the same handlers', () => {
+    test('returns a function that stops all three listeners', () => {
       const stop = api.listen(actions);
-      const registered = Object.fromEntries(me().on.mock.calls);
+      expect(mock.stops).toHaveLength(3);
 
       stop();
 
-      expect(me().off).toHaveBeenCalledTimes(3);
-      Object.entries(registered).forEach(([event, handler]) => {
-        expect(me().off).toHaveBeenCalledWith(event, handler);
-      });
+      mock.stops.forEach((stopListener) => expect(stopListener).toHaveBeenCalledTimes(1));
     });
 
     test('does nothing when nobody is signed in', () => {
-      auth.currentUser = null;
+      mock.auth.currentUser = null;
 
       const stop = api.listen(actions);
 
-      expect(Object.keys(nodes)).toEqual([]);
+      expect(ref).not.toHaveBeenCalled();
       expect(() => stop()).not.toThrow();
     });
   });

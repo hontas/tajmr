@@ -29,7 +29,7 @@ if (process.env.SENTRY_DSN) {
 export const store = createStore();
 firebaseApi.subscribe((action) => store.dispatch(action));
 let stopListening = () => {};
-firebaseApi.auth.onAuthStateChanged((user) => {
+firebaseApi.onAuthStateChanged((user) => {
   stopListening();
   stopListening = () => {};
   store.dispatch(appActions.initialized());

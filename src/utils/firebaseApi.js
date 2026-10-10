@@ -1,6 +1,29 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/database';
+import { initializeApp } from 'firebase/app';
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signOut,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  updatePassword,
+} from 'firebase/auth';
+import {
+  getDatabase,
+  ref,
+  push,
+  set,
+  remove,
+  get,
+  query,
+  orderByChild,
+  startAt,
+  endAt,
+  onChildAdded,
+  onChildChanged,
+  onChildRemoved,
+} from 'firebase/database';
 
 import { getWeek } from './time';
 
@@ -12,14 +35,15 @@ const config = {
   storageBucket: 'firebase-tajmr.appspot.com',
   messagingSenderId: '784102119013',
 };
-// Initialize Firebase
-firebase.initializeApp(config);
-const database = firebase.database();
-const auth = firebase.auth();
+const app = initializeApp(config);
+const database = getDatabase(app);
+const auth = getAuth(app);
 
 const subscribers = [];
 const api = {
-  auth,
+  onAuthStateChanged(callback) {
+    return onAuthStateChanged(auth, callback);
+  },
 
   subscribe(fn) {
     subscribers.push(fn);
@@ -30,47 +54,43 @@ const api = {
   },
 
   login(email, password) {
-    return Promise.resolve(auth.signInWithEmailAndPassword(email, password));
+    return signInWithEmailAndPassword(auth, email, password);
   },
 
   sendPasswordResetEmail(email) {
-    return Promise.resolve(auth.sendPasswordResetEmail(email));
+    return sendPasswordResetEmail(auth, email);
   },
 
   logout() {
-    return Promise.resolve(auth.signOut());
+    return signOut(auth);
   },
-
-  ref: firebase,
 
   // the database rules restrict each user to their own path,
   // so nothing here filters by user
   async createInterval(data) {
-    const id = intervalsRef().push().key;
+    const id = push(intervalsRef()).key;
     return api.updateInterval({ ...data, id, createdAt: Date.now() });
   },
 
   async updateInterval({ id, ...interval }) {
-    await intervalRef(id).set({ ...interval, updatedAt: Date.now() });
+    await set(intervalRef(id), { ...interval, updatedAt: Date.now() });
     return { ...interval, id };
   },
 
   async removeInterval(id) {
-    return intervalRef(id).remove();
+    return remove(intervalRef(id));
   },
 
   async fetchIntervalsInWeek(timestamp = Date.now()) {
     const { startTime, endTime } = getWeek(timestamp);
-    const snapshot = await intervalsRef()
-      .orderByChild('startTime')
-      .startAt(startTime)
-      .endAt(endTime)
-      .once('value');
+    const snapshot = await get(
+      query(intervalsRef(), orderByChild('startTime'), startAt(startTime), endAt(endTime)),
+    );
     return snapshot.val() || {}; // null when there are no intervals
   },
 
   async fetchIntervalsForUser() {
-    const snapshot = await intervalsRef().orderByChild('startTime').once('value');
+    const snapshot = await get(query(intervalsRef(), orderByChild('startTime')));
     return snapshot.val() || {}; // null when there are no intervals
   },
 
@@ -79,43 +99,35 @@ const api = {
   },
 
   getUserSettings(user) {
-    return database.ref(`users/${user.uid}`).once('value');
+    return get(ref(database, `users/${user.uid}`));
   },
 
-  updateUserPassword(oldPass, newPass) {
-    const credential = firebase.auth.EmailAuthProvider.credential(auth.currentUser.email, oldPass);
-    return auth.currentUser
-      .reauthenticateWithCredential(credential)
-      .then(() => auth.currentUser.updatePassword(newPass));
+  async updateUserPassword(oldPass, newPass) {
+    const { currentUser } = auth;
+    const credential = EmailAuthProvider.credential(currentUser.email, oldPass);
+    await reauthenticateWithCredential(currentUser, credential);
+    return updatePassword(currentUser, newPass);
   },
 
   saveUserData(userId, data) {
-    return database.ref(`users/${userId}`).set(data);
+    return set(ref(database, `users/${userId}`), data);
   },
 
   listen({ intervalAdded, intervalRemoved, intervalUpdated }) {
     const uid = api.getCurrentUserId();
     if (!uid) return () => {};
 
-    const ref = database.ref(`userIntervals/${uid}`);
-    const upcoming = ref.orderByChild('startTime').startAt(Date.now());
+    const intervals = ref(database, `userIntervals/${uid}`);
+    const upcoming = query(intervals, orderByChild('startTime'), startAt(Date.now()));
     const toInterval = (snapshot) => ({ ...snapshot.val(), id: snapshot.key });
 
-    const onAdded = upcoming.on('child_added', (snapshot) =>
-      api.emit(intervalAdded(toInterval(snapshot))),
-    );
-    const onChanged = ref.on('child_changed', (snapshot) =>
-      api.emit(intervalUpdated(toInterval(snapshot))),
-    );
-    const onRemoved = ref.on('child_removed', (snapshot) =>
-      api.emit(intervalRemoved(snapshot.key)),
-    );
+    const stopListening = [
+      onChildAdded(upcoming, (snapshot) => api.emit(intervalAdded(toInterval(snapshot)))),
+      onChildChanged(intervals, (snapshot) => api.emit(intervalUpdated(toInterval(snapshot)))),
+      onChildRemoved(intervals, (snapshot) => api.emit(intervalRemoved(snapshot.key))),
+    ];
 
-    return () => {
-      upcoming.off('child_added', onAdded);
-      ref.off('child_changed', onChanged);
-      ref.off('child_removed', onRemoved);
-    };
+    return () => stopListening.forEach((stop) => stop());
   },
 };
 
@@ -126,11 +138,11 @@ function requireUserId() {
 }
 
 function intervalsRef() {
-  return database.ref(`userIntervals/${requireUserId()}`);
+  return ref(database, `userIntervals/${requireUserId()}`);
 }
 
 function intervalRef(id) {
-  return database.ref(`userIntervals/${requireUserId()}/${id}`);
+  return ref(database, `userIntervals/${requireUserId()}/${id}`);
 }
 
 export default api;
