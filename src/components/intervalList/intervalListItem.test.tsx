@@ -37,7 +37,7 @@ describe('IntervalListItem', () => {
   test('shows an active (disabled) end input for an interval without endTime', () => {
     setup({ interval: { ...interval, endTime: undefined } });
 
-    expect(screen.getByTestId('interval-end-input')).toHaveValue('active');
+    expect(screen.getByTestId('interval-end-input')).toHaveValue('pågår');
     expect(screen.getByTestId('interval-end-input')).toBeDisabled();
   });
 
@@ -60,10 +60,10 @@ describe('IntervalListItem', () => {
     expect(onUpdate.mock.calls[0]?.[0].startTime).toBe(new Date(2021, 3, 7, 8, 15).getTime());
   });
 
-  test('shows the times of a new interval and drops a half-typed edit', () => {
+  test('shows the times of a new interval and drops an unsaved edit', () => {
     const onUpdate = vi.fn<(updated: EditableInterval) => void>();
     const { rerender } = render(<IntervalListItem interval={interval} onUpdate={onUpdate} />);
-    fireEvent.change(screen.getByTestId('interval-from-input'), { target: { value: '08:1' } });
+    fireEvent.change(screen.getByTestId('interval-from-input'), { target: { value: '08:15' } });
 
     rerender(
       <IntervalListItem
@@ -79,13 +79,13 @@ describe('IntervalListItem', () => {
     expect(screen.getByTestId('interval-from-input')).toHaveValue(
       getTimeString(new Date(2021, 3, 7, 10, 0).getTime()),
     );
-    expect(screen.getByTestId('interval-end-input')).toHaveValue('active');
+    expect(screen.getByTestId('interval-end-input')).toHaveValue('pågår');
   });
 
   test('picking another day moves the start and keeps the time of day', () => {
     const { onUpdate } = setup();
 
-    fireEvent.change(screen.getByLabelText('from date'), { target: { value: '2022-01-31' } });
+    fireEvent.change(screen.getByLabelText('Startdatum'), { target: { value: '2022-01-31' } });
 
     expect(onUpdate.mock.calls[0]?.[0].startTime).toBe(new Date(2022, 0, 31, 9, 0).getTime());
   });

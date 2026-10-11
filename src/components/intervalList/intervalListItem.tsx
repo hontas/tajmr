@@ -35,15 +35,14 @@ const IntervalListItem = ({
       <IntervalListInput
         key={startTime}
         data-testid="interval-from-input"
-        titlePrefix="from"
+        label="Start"
         timestamp={startTime}
         onUpdate={updateTime('startTime')}
       />
-
       <IntervalListInput
         key={endTime ?? 'active'}
         data-testid="interval-end-input"
-        titlePrefix="end"
+        label="Slut"
         timestamp={endTime}
         onUpdate={updateTime('endTime')}
       />
@@ -57,20 +56,21 @@ const IntervalListItem = ({
         notes={notes}
       />
 
-      <input
-        data-testid="interval-not-work-checkbox"
-        className={styles.notWork}
-        type="checkbox"
-        title="not work"
-        checked={notWork || false}
-        onChange={({ target: { checked } }) => onUpdate({ ...interval, notWork: checked })}
-      />
+      <label className={styles.notWork}>
+        <input
+          data-testid="interval-not-work-checkbox"
+          type="checkbox"
+          checked={notWork || false}
+          onChange={({ target: { checked } }) => onUpdate({ ...interval, notWork: checked })}
+        />
+        <span className={styles.notWorkText}>Ej arbete</span>
+      </label>
 
       {onDelete && (
         <Button
           className={styles.deleteBtn}
           theme="danger"
-          title="remove"
+          aria-label="Ta bort intervallet"
           data-testid="remove-interval"
           onClick={() => onDelete(interval.id)}
         >

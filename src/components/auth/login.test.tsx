@@ -29,7 +29,7 @@ describe('Login', () => {
     render(<Login />);
     typeCredentials('me@example.com', 'secret');
 
-    fireEvent.click(screen.getByRole('button', { name: 'Log in' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Logga in' }));
 
     await waitFor(() => expect(firebaseApi.login).toHaveBeenCalledTimes(1));
     expect(firebaseApi.login).toHaveBeenCalledWith('me@example.com', 'secret');
@@ -48,7 +48,7 @@ describe('Login', () => {
     render(<Login />);
     typeCredentials('me@example.com', '');
 
-    fireEvent.click(screen.getByRole('button', { name: 'Forgot password' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Glömt lösenordet?' }));
 
     await waitFor(() =>
       expect(firebaseApi.sendPasswordResetEmail).toHaveBeenCalledWith('me@example.com'),
@@ -61,7 +61,7 @@ describe('Login', () => {
     render(<Login />);
     typeCredentials('me@example.com', 'bad');
 
-    fireEvent.click(screen.getByRole('button', { name: 'Log in' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Logga in' }));
 
     expect(await screen.findByText(/The password is invalid/)).toBeInTheDocument();
   });
@@ -70,12 +70,12 @@ describe('Login', () => {
     vi.mocked(firebaseApi.login).mockRejectedValueOnce(new Error('The password is invalid'));
     render(<Login />);
     typeCredentials('me@example.com', 'bad');
-    fireEvent.click(screen.getByRole('button', { name: 'Log in' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Logga in' }));
     await screen.findByText(/The password is invalid/);
 
     const login = Promise.withResolvers<UserCredential>();
     vi.mocked(firebaseApi.login).mockReturnValue(login.promise);
-    fireEvent.click(screen.getByRole('button', { name: 'Log in' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Logga in' }));
 
     await waitFor(() =>
       expect(screen.queryByText(/The password is invalid/)).not.toBeInTheDocument(),
@@ -89,10 +89,12 @@ describe('Login', () => {
     render(<Login />);
     typeCredentials('me@example.com', 'secret');
 
-    fireEvent.click(screen.getByRole('button', { name: 'Log in' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Logga in' }));
 
-    await waitFor(() => expect(screen.getByRole('button', { name: 'Log in' })).toBeInTheDocument());
-    expect(screen.getByRole('button', { name: 'Log in' }).children.length).toBeGreaterThan(0);
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: 'Logga in' })).toBeInTheDocument(),
+    );
+    expect(screen.getByRole('button', { name: 'Logga in' }).children.length).toBeGreaterThan(0);
     await act(async () => login.resolve({} as UserCredential));
   });
 
@@ -101,11 +103,11 @@ describe('Login', () => {
     render(<Login />);
     typeCredentials('me@example.com', 'bad');
 
-    fireEvent.click(screen.getByRole('button', { name: 'Log in' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Logga in' }));
 
     await screen.findByText(/nope/);
     await waitFor(() =>
-      expect(screen.getByRole('button', { name: 'Log in' }).children).toHaveLength(0),
+      expect(screen.getByRole('button', { name: 'Logga in' }).children).toHaveLength(0),
     );
   });
 
@@ -113,9 +115,9 @@ describe('Login', () => {
     render(<Login />);
     typeCredentials('me@example.com', '');
 
-    fireEvent.click(screen.getByRole('button', { name: 'Forgot password' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Glömt lösenordet?' }));
 
-    expect(await screen.findByText(/Password reset email sent/)).toBeInTheDocument();
+    expect(await screen.findByText(/Återställningsmejl skickat/)).toBeInTheDocument();
   });
 
   test('shows the error message when the password reset fails', async () => {
@@ -125,7 +127,7 @@ describe('Login', () => {
     render(<Login />);
     typeCredentials('nobody@example.com', '');
 
-    fireEvent.click(screen.getByRole('button', { name: 'Forgot password' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Glömt lösenordet?' }));
 
     expect(await screen.findByText(/There is no user record/)).toBeInTheDocument();
   });

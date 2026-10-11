@@ -33,13 +33,8 @@ context('login', () => {
     cy.getByLabel(lists.currentIntervals).children().should('have.length', 1);
 
     // edit time in input
-    cy.getByTestId(testIds.interval)
-      .getByTestId(testIds.intervalFromInput)
-      .type('{selectall}09:00');
-    cy.getByTestId(testIds.interval)
-      .getByTestId(testIds.intervalEndInput)
-      .type('{selectall}17:00')
-      .blur();
+    cy.getByTestId(testIds.interval).getByTestId(testIds.intervalFromInput).type('09:00');
+    cy.getByTestId(testIds.interval).getByTestId(testIds.intervalEndInput).type('17:00').blur();
     cy.waitUntilSaved();
 
     // view interval in week view

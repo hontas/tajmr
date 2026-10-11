@@ -6,85 +6,69 @@ import { getTimeString } from '#/utils/time.ts';
 
 import styles from './intervalListInput.module.css';
 
-const textFromTimestamp = (timestamp?: number) => (timestamp ? getTimeString(timestamp) : 'active');
-
 interface IntervalListInputProps {
   className?: string;
   'data-testid'?: string;
-  titlePrefix?: string;
+  label: string;
   timestamp?: number;
   onUpdate: (timestamp: number) => void;
 }
 
 const IntervalListInput = ({
-  className = '',
+  className,
   'data-testid': testId,
+  label,
   timestamp,
-  titlePrefix,
   onUpdate,
 }: IntervalListInputProps) => {
-  const [value, setValue] = useState(textFromTimestamp(timestamp));
-  const [isValid, setIsValid] = useState(true);
-  const isActive = !timestamp;
+  const [value, setValue] = useState(timestamp ? getTimeString(timestamp) : '');
 
-  const validateAndPush = () => {
-    if (!timestamp) return;
-    const valueIsValid = validateTimeString(value);
-    const hasChanged = value !== getTimeString(timestamp);
-
-    if (!hasChanged) return;
-    if (valueIsValid) {
-      const [hours, minutes] = value.split(':');
-      const date = new Date(timestamp);
-
-      date.setHours(Number(hours));
-      date.setMinutes(Number(minutes));
-      onUpdate(date.getTime());
-    }
-    setIsValid(valueIsValid);
+  const pushTime = () => {
+    if (!timestamp || !value || value === getTimeString(timestamp)) return;
+    const [hours, minutes] = value.split(':').map(Number);
+    const date = new Date(timestamp);
+    date.setHours(hours ?? 0, minutes ?? 0);
+    onUpdate(date.getTime());
   };
 
-  const handleDateChange = (nextDate: Date) => {
+  const pushDate = (nextDate: Date) => {
     if (!timestamp) return;
-    const currentDate = new Date(timestamp);
-    currentDate.setFullYear(nextDate.getFullYear(), nextDate.getMonth(), nextDate.getDate());
-
-    onUpdate(currentDate.getTime());
+    const date = new Date(timestamp);
+    date.setFullYear(nextDate.getFullYear(), nextDate.getMonth(), nextDate.getDate());
+    onUpdate(date.getTime());
   };
 
   return (
-    <div className={classNames(styles.container, className, { [styles.error]: !isValid })}>
-      <input
-        type="text"
-        data-testid={testId}
-        title={`${titlePrefix} time`}
-        className={styles.input}
-        disabled={isActive}
-        onBlur={validateAndPush}
-        onChange={({ target }) => setValue(target.value)}
-        value={value}
-      />
+    <div className={classNames(styles.container, className)}>
       <DatePicker
-        buttonTitle={`${titlePrefix} date`}
+        buttonTitle={`${label}datum`}
         className={styles.date}
         date={timestamp}
-        onChange={handleDateChange}
+        onChange={pushDate}
       />
+      {timestamp ? (
+        <input
+          type="time"
+          data-testid={testId}
+          aria-label={`${label}tid`}
+          className={styles.input}
+          onBlur={pushTime}
+          onChange={({ target }) => setValue(target.value)}
+          value={value}
+        />
+      ) : (
+        <input
+          type="text"
+          data-testid={testId}
+          aria-label={`${label}tid`}
+          className={styles.input}
+          disabled
+          value="pågår"
+          readOnly
+        />
+      )}
     </div>
   );
 };
-
-function validateTimeString(time: string) {
-  const [hours, minutes] = time.split(':').map((v) => parseInt(v, 10));
-  return (
-    hours !== undefined &&
-    minutes !== undefined &&
-    hours >= 0 &&
-    hours < 24 &&
-    minutes >= 0 &&
-    minutes < 60 &&
-    /^\d{2}:\d{2}$/.test(time)
-  );
-}
 
 export default IntervalListInput;

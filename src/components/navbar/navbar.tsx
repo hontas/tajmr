@@ -1,7 +1,7 @@
-import * as React from 'react';
-import classNames from 'classnames';
+import { useRef } from 'react';
 
 import Button from '#/components/button/button.tsx';
+import Credits from '#/components/credits/credits.tsx';
 import Hamburger from '#/components/icons/Hamburger.tsx';
 import UserMenu from '#/components/user/userMenu.tsx';
 import * as userSettingActions from '#/store/userSettings.ts';
@@ -11,6 +11,14 @@ import * as SpinKit from '#/components/spinkit/spinkit.tsx';
 
 import styles from './navbar.module.css';
 
+const closeOnBackdropClick = (dialog: HTMLDialogElement) => {
+  const close = (evt: MouseEvent) => {
+    if (evt.target === dialog) dialog.close();
+  };
+  dialog.addEventListener('click', close);
+  return () => dialog.removeEventListener('click', close);
+};
+
 function Navbar() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -18,35 +26,21 @@ function Navbar() {
   const isSaving = useSelector((state) => state.intervals.isSaving);
   const userSettings = useSelector((state) => state.userSettings);
   const appInitialized = useSelector((state) => state.app.initialized);
-  const [showUserMenu, setShowUserMenu] = React.useState(false);
-  const navBarInnerRef = React.useRef<HTMLDivElement>(null);
+  const menu = useRef<HTMLDialogElement>(null);
   const isLoading = appInitialized && (isSaving || isFetching);
-
-  const userMenuToggle = React.useRef<HTMLButtonElement>(null);
-  const userMenuBackdrop = React.useRef<HTMLButtonElement>(null);
 
   const updateSettings = (prop: string, value: boolean | number | string) => {
     dispatch(userSettingActions.updateSettings({ [prop]: value }));
   };
 
-  const toggleUserMenu = () => {
-    if (showUserMenu) {
-      document.body.style.overflow = '';
-      userMenuToggle.current?.focus();
-    } else {
-      document.body.style.overflow = 'hidden';
-      userMenuBackdrop.current?.focus();
-    }
-    setShowUserMenu(!showUserMenu);
-  };
-
   return (
     <nav className={styles.navbar}>
-      <div className={styles.inner} ref={navBarInnerRef}>
+      <div className={styles.inner}>
         <h1 className={styles.brand}>TajmR</h1>
         <span className={styles.version}>
           <small>{`${process.env.RELEASE} - ${getDateTimeString(process.env.BUILD_TIME)}`}</small>
         </span>
+        <Credits className={styles.credits} />
         {isLoading && (
           <div
             data-testid={isFetching ? 'loading-intervals-container' : 'saving-intervals-container'}
@@ -62,30 +56,38 @@ function Navbar() {
         {user && (
           <>
             <Button
-              ref={userMenuToggle}
               className={styles.menuBtn}
               data-testid="user-menu-toggle"
-              onClick={toggleUserMenu}
+              aria-label="Öppna menyn"
+              aria-haspopup="dialog"
+              onClick={() => menu.current?.showModal()}
             >
-              <Hamburger active={showUserMenu} />
+              <Hamburger />
             </Button>
-            <button
-              ref={userMenuBackdrop}
-              className={classNames(styles.userMenuBackdrop, {
-                [styles.userMenuBackdropActive]: showUserMenu,
-              })}
-              onClick={toggleUserMenu}
-              title="Close user menu"
-              aria-label="Close user menu"
-            />
-            <UserMenu
-              user={user}
-              userSettings={userSettings}
-              updateSettings={updateSettings}
-              className={classNames(styles.userMenu, {
-                [styles.userMenuActive]: showUserMenu,
-              })}
-            />
+            <dialog
+              ref={(dialog) => {
+                menu.current = dialog;
+                return dialog ? closeOnBackdropClick(dialog) : undefined;
+              }}
+              className={styles.menu}
+              aria-label="Meny"
+              data-testid="user-menu-dialog"
+            >
+              <div className={styles.menuPanel}>
+                <header className={styles.menuHeader}>
+                  <h2 className={styles.menuTitle}>Meny</h2>
+                  <Button
+                    className={styles.closeBtn}
+                    data-testid="user-menu-close"
+                    aria-label="Stäng menyn"
+                    onClick={() => menu.current?.close()}
+                  >
+                    ✕
+                  </Button>
+                </header>
+                <UserMenu user={user} userSettings={userSettings} updateSettings={updateSettings} />
+              </div>
+            </dialog>
           </>
         )}
       </div>

@@ -1,29 +1,34 @@
 .footer {
+  display: none;
   background-color: var(--primary-color-dark);
-  color: whitesmoke;
-  display: flex;
-  justify-content: space-between;
+  color: var(--text-color-secondary);
   align-items: center;
+  gap: 1em;
   padding: 1em;
+  padding-left: max(1em, env(safe-area-inset-left));
+  padding-right: max(1em, env(safe-area-inset-right));
+  padding-bottom: max(1em, env(safe-area-inset-bottom));
 }
 
-.emoji {
-  color: var(--danger-color);
+.withInstall {
+  display: flex;
+  justify-content: center;
+}
+
+.credits {
+  display: none;
 }
 
 @media screen and (min-width: 1024px) {
   .footer {
+    display: flex;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
   }
-}
 
-@supports (-webkit-overflow-scrolling: touch) {
-  .footer {
-    padding-left: max(1em, env(safe-area-inset-left));
-    padding-right: max(1em, env(safe-area-inset-right));
-    padding-bottom: max(1em, env(safe-area-inset-bottom));
+  .credits {
+    display: flex;
   }
 }

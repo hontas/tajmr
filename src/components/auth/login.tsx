@@ -39,7 +39,7 @@ const Login = () => {
     startReset(async () => {
       try {
         await firebaseApi.sendPasswordResetEmail(email);
-        setFeedback({ kind: 'notice', text: 'Password reset email sent' });
+        setFeedback({ kind: 'notice', text: 'Återställningsmejl skickat' });
       } catch (error) {
         showError(error);
       }
@@ -49,6 +49,7 @@ const Login = () => {
   return (
     <div className={styles.login}>
       <form className={styles.authForm} onSubmit={handleSubmit} data-testid="login-form">
+        <h2 className={styles.title}>Logga in</h2>
         {feedback?.kind === 'error' && (
           <p className={styles.error}>
             <span aria-hidden="true">⚠</span>
@@ -56,17 +57,43 @@ const Login = () => {
           </p>
         )}
         {feedback?.kind === 'notice' && <p>{feedback.text}</p>}
-        <label aria-label="email">
-          <input type="email" name="email" autoComplete="email" />
+        <label className={styles.field}>
+          E-post
+          <input
+            className={styles.input}
+            type="email"
+            name="email"
+            autoComplete="email"
+            inputMode="email"
+            autoCapitalize="none"
+          />
         </label>
-        <label aria-label="password">
-          <input type="password" name="password" autoComplete="current-password" />
+        <label className={styles.field}>
+          Lösenord
+          <input
+            className={styles.input}
+            type="password"
+            name="password"
+            autoComplete="current-password"
+          />
         </label>
-        <Button block type="submit" isLoading={isLoggingIn} theme="primary">
-          Log in
+        <Button
+          block
+          className={styles.submit}
+          type="submit"
+          isLoading={isLoggingIn}
+          theme="primary"
+        >
+          Logga in
         </Button>
-        <Button block onClick={forgotPassword} isLoading={isResetting} theme="link">
-          Forgot password
+        <Button
+          block
+          className={styles.forgot}
+          onClick={forgotPassword}
+          isLoading={isResetting}
+          theme="link"
+        >
+          Glömt lösenordet?
         </Button>
       </form>
     </div>

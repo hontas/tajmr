@@ -1,50 +1,51 @@
 .container {
   display: flex;
-  color: white;
-  border-width: 0;
-  margin-left: 0.5em;
-  flex: 1;
-}
-
-.error {
-  background: red;
-  border-color: darkred;
-  color: darkred;
-}
-
-.input {
-  flex: 1;
-  order: 1;
-  color: #333;
-  font-size: 1em;
-  padding: 0.5em;
-  width: 100%;
-}
-
-.input[disabled] {
-  background: whitesmoke;
-  color: darkgray;
-  cursor: not-allowed;
-}
-
-.input:focus ~ .date .date-picker__calendar {
-  display: block;
-  color: red;
+  flex: 0 1 auto;
+  min-width: 0;
+  align-items: center;
+  color: var(--text-color-primary);
 }
 
 .date {
-  padding-right: 0;
+  flex: none;
+  align-self: stretch;
 }
 
-.date .date-picker__icon {
+.input {
+  flex: 0 1 6ch;
+  min-width: 0;
+  padding-inline: 0.25rem;
+  text-align: center;
+}
+.input[type='time'] {
+  padding-right: 0.5rem;
+}
+
+.input::-webkit-calendar-picker-indicator {
   display: none;
-  @media screen and (min-width: 480px) {
-    display: block;
-  }
+  margin: 0;
+  margin-left: 0.2em;
+  padding: 0;
+}
+
+.input::-webkit-datetime-edit,
+.input::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+.input::-webkit-inner-spin-button {
+  height: auto; /* Hindrar pilarna från att sträcka ut fältet */
 }
 
 @media screen and (min-width: 480px) {
-  .date {
-    padding-right: 0.5em;
+  .input {
+    flex-basis: 8ch;
+  }
+
+  .input[type='time'] {
+    padding-right: 0.25rem;
+  }
+
+  .input::-webkit-calendar-picker-indicator {
+    display: block;
   }
 }

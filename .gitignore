@@ -17,3 +17,5 @@ serviceAccount*.json
 # cypress.io
 cypress/videos
 cypress/screenshots
+# local Firebase exports (contain user data)
+*-export.json

@@ -1,25 +1,71 @@
 .login {
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.error {
-  color: whitesmoke;
+  min-height: 100%;
+  padding: 5rem 1rem 2rem;
 }
 
 .authForm {
-  color: #333;
-  padding: 0.5em;
+  display: grid;
+  gap: 1rem;
   width: 100%;
+  max-width: 22rem;
+  padding: 1.5rem;
+  border-radius: var(--radius-large);
+  background: var(--primary-color-dark);
+  color: var(--text-color-primary);
+  box-shadow: 0 8px 24px var(--primary-color-dark-translucent);
+}
+
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.error,
+.authForm p {
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+.error {
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--radius);
+  background: var(--danger-color-dark);
+  color: var(--text-color-primary);
+}
+
+.error span {
+  margin-right: 0.5em;
+}
+
+.field {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  color: var(--text-color-light);
 }
 
 .input {
-  border: 1px solid lightgray;
-  border-radius: 4px;
-  display: block;
-  margin-bottom: 0.5em;
-  padding: 0.5em;
   width: 100%;
+  padding: 0.75rem;
+}
+
+.authForm .submit {
+  padding: 0.75rem;
+  background: var(--text-color-light);
+  color: var(--primary-color-dark);
+  font-weight: 500;
+}
+
+.authForm .forgot {
+  color: var(--text-color-light);
+}
+
+@media screen and (min-width: 480px) {
+  .login {
+    padding-top: 6rem;
+  }
 }

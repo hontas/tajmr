@@ -15,6 +15,6 @@
 }
 
 .button {
-  color: white;
+  color: var(--text-color-primary);
   background-color: transparent;
 }

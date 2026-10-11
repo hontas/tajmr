@@ -19,7 +19,7 @@ const DatePicker = ({
   buttonTitle = '',
 }: DatePickerProps) => (
   <div className={classNames(styles.container, className, { [styles.disabled]: !date })}>
-    <Calendar />
+    <Calendar size={24} />
     <input
       type="date"
       className={styles.input}

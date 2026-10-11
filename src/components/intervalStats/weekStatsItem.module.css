@@ -35,6 +35,7 @@
   opacity: 0;
   margin: 0;
   transition: opacity 400ms;
+  text-shadow: var(--text-shadow);
 }
 
 .bar:focus .info {
@@ -46,8 +47,9 @@
 
 .total {
   position: absolute;
-  bottom: 0px;
+  bottom: 0;
   margin: 0;
   min-height: 20px;
   width: 100%;
+  text-shadow: var(--text-shadow);
 }

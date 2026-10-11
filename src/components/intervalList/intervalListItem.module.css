@@ -1,26 +1,58 @@
 .container {
   display: flex;
-  margin-bottom: 0.5em;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+  padding: 0 0.5rem;
 }
 
 .note {
-  color: #333;
-  font-size: 1em;
-  flex: 1;
-  margin: 0 0.5em;
-}
-.note[disabled] {
-  background: whitesmoke;
-  color: darkgray;
-  cursor: not-allowed;
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 .notWork {
-  margin: 0.75em 0.5em 0 0;
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-width: 1.75rem;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.notWork input {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0;
+}
+
+.notWorkText {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
 }
 
 .deleteBtn {
-  flex-basis: 40px;
-  margin-right: 0.5em;
-  padding: 0.5em;
+  flex: none;
+  align-self: stretch;
+  width: 2.5rem;
+  padding: 0;
+}
+
+@media screen and (min-width: 480px) {
+  .container {
+    gap: 0.5rem;
+  }
+
+  .notWorkText {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+  }
 }
