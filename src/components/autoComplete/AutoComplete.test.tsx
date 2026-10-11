@@ -1,5 +1,5 @@
 import { type ComponentProps } from 'react';
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 
 import AutoComplete from './AutoComplete.tsx';
 
@@ -11,15 +11,16 @@ const setup = (props: Partial<ComponentProps<typeof AutoComplete>> = {}) => {
   return { onChange, input: screen.getByTestId('note') };
 };
 
+const typeIn = (input: HTMLElement, value: string) => {
+  input.focus();
+  fireEvent.change(input, { target: { value } });
+};
+
+const leaveField = (input: HTMLElement) => {
+  fireEvent.focusOut(input, { relatedTarget: document.body });
+};
+
 describe('AutoComplete', () => {
-  beforeEach(() => {
-    vi.useFakeTimers();
-  });
-
-  afterEach(() => {
-    vi.useRealTimers();
-  });
-
   test('starts with the given value', () => {
     const { input } = setup({ value: 'planering' });
     expect(input).toHaveValue('planering');
@@ -39,7 +40,7 @@ describe('AutoComplete', () => {
       <AutoComplete data-testid="note" onChange={vi.fn<() => void>()} value="a" />,
     );
     const input = screen.getByTestId('note');
-    fireEvent.focus(input);
+    input.focus();
     fireEvent.change(input, { target: { value: 'abc' } });
     rerender(<AutoComplete data-testid="note" onChange={vi.fn<() => void>()} value="b" />);
 
@@ -48,7 +49,7 @@ describe('AutoComplete', () => {
 
   test('suggests the notes that start with what is typed', () => {
     const { input } = setup();
-    fireEvent.change(input, { target: { value: 'k' } });
+    typeIn(input, 'k');
 
     expect(screen.getAllByRole('button').map((button) => button.textContent)).toEqual([
       'Kodar',
@@ -58,7 +59,7 @@ describe('AutoComplete', () => {
 
   test('suggests nothing for an empty query', () => {
     const { input } = setup();
-    fireEvent.change(input, { target: { value: 'k' } });
+    typeIn(input, 'k');
     fireEvent.change(input, { target: { value: '' } });
 
     expect(screen.queryAllByRole('button')).toHaveLength(0);
@@ -66,7 +67,7 @@ describe('AutoComplete', () => {
 
   test('picking a suggestion reports it and closes the list', () => {
     const { input, onChange } = setup();
-    fireEvent.change(input, { target: { value: 'ka' } });
+    typeIn(input, 'ka');
     fireEvent.click(screen.getByRole('button', { name: 'Kafferast' }));
 
     expect(onChange).toHaveBeenCalledWith('Kafferast');
@@ -74,17 +75,20 @@ describe('AutoComplete', () => {
     expect(screen.queryAllByRole('button')).toHaveLength(0);
   });
 
-  test('Escape closes the list', () => {
+  test('Escape closes the list but click shows it again', () => {
     const { input } = setup();
-    fireEvent.change(input, { target: { value: 'k' } });
+    typeIn(input, 'k');
     fireEvent.keyDown(input, { key: 'Escape' });
 
     expect(screen.queryAllByRole('button')).toHaveLength(0);
+
+    fireEvent.click(input);
+    expect(screen.getAllByRole('button')).toHaveLength(2);
   });
 
   test('ArrowDown moves focus through the suggestions and ArrowUp back', () => {
     const { input } = setup();
-    fireEvent.change(input, { target: { value: 'k' } });
+    typeIn(input, 'k');
     const [first, second] = screen.getAllByRole('button');
 
     fireEvent.keyDown(input, { key: 'ArrowDown' });
@@ -95,31 +99,37 @@ describe('AutoComplete', () => {
     expect(first).toHaveFocus();
   });
 
-  test('Enter on a suggestion picks it', () => {
+  test('ArrowDown reopens the list after Escape', () => {
+    const { input } = setup();
+    typeIn(input, 'k');
+    fireEvent.keyDown(input, { key: 'Escape' });
+    expect(screen.queryAllByRole('button')).toHaveLength(0);
+
+    fireEvent.keyDown(input, { key: 'ArrowDown' });
+    const [first] = screen.getAllByRole('button');
+    expect(first).toHaveFocus();
+  });
+
+  test('clicking a suggestion picks it', () => {
     const { input, onChange } = setup();
-    fireEvent.change(input, { target: { value: 'm' } });
-    fireEvent.keyDown(screen.getByRole('button', { name: 'Möten' }), { key: 'Enter' });
+    typeIn(input, 'm');
+    fireEvent.click(screen.getByRole('button', { name: 'Möten' }));
 
     expect(onChange).toHaveBeenCalledWith('Möten');
   });
 
   test('leaving the field with a new text reports it in lower case', () => {
     const { input, onChange } = setup({ value: 'kodar' });
-    fireEvent.change(input, { target: { value: 'Nytt' } });
-    fireEvent.blur(input);
-    act(() => {
-      vi.advanceTimersByTime(5);
-    });
+    typeIn(input, 'Nytt');
+    leaveField(input);
 
     expect(onChange).toHaveBeenCalledWith('nytt');
   });
 
   test('leaving the field unchanged reports nothing', () => {
     const { input, onChange } = setup({ value: 'kodar' });
-    fireEvent.blur(input);
-    act(() => {
-      vi.advanceTimersByTime(5);
-    });
+    input.focus();
+    leaveField(input);
 
     expect(onChange).not.toHaveBeenCalled();
   });

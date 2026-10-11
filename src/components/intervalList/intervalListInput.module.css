@@ -12,19 +12,37 @@
 }
 
 .input {
-  flex: 0 1 4.25rem;
+  flex: 0 1 6ch;
   min-width: 0;
   padding-inline: 0.25rem;
   text-align: center;
 }
+.input[type='time'] {
+  padding-right: 0.5rem;
+}
 
 .input::-webkit-calendar-picker-indicator {
   display: none;
+  margin: 0;
+  margin-left: 0.2em;
+  padding: 0;
+}
+
+.input::-webkit-datetime-edit,
+.input::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+.input::-webkit-inner-spin-button {
+  height: auto; /* Hindrar pilarna från att sträcka ut fältet */
 }
 
 @media screen and (min-width: 480px) {
   .input {
-    flex-basis: 6rem;
+    flex-basis: 8ch;
+  }
+
+  .input[type='time'] {
+    padding-right: 0.25rem;
   }
 
   .input::-webkit-calendar-picker-indicator {

@@ -1,10 +1,10 @@
 import {
+  useEffect,
   useRef,
   useState,
   type ChangeEvent,
   type FocusEvent,
   type KeyboardEvent,
-  type SyntheticEvent,
 } from 'react';
 import classNames from 'classnames';
 
@@ -32,107 +32,136 @@ const AutoComplete = ({
   onChange,
 }: AutoCompleteProps) => {
   const [query, setQuery] = useState(value || '');
-  const [isFocused, setIsFocused] = useState(false);
-  const [previousValue, setPreviousValue] = useState(value);
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  if (value !== previousValue) {
-    setPreviousValue(value);
-    if (!isFocused) setQuery(value || '');
-  }
 
-  const suggestionsList = useRef<HTMLUListElement>(null);
-  const timeoutId = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
 
   const handleKeyDown = (evt: KeyboardEvent<HTMLDivElement>) => {
-    const list = suggestionsList.current;
     const { target } = evt;
     if (!(target instanceof HTMLElement)) return;
-    if (list && ['ArrowDown', 'ArrowUp'].includes(evt.key) && suggestions.length) {
-      const delta = evt.key === 'ArrowUp' ? -1 : 1;
-      const currentIndex = Array.from(list.children).findIndex(
-        (child) => child === target.parentNode,
-      );
-      const nextIndex = currentIndex === -1 ? 0 : currentIndex + delta;
-      if (nextIndex < 0 || nextIndex >= list.children.length) return;
-      const nextButton = list.children[nextIndex]?.firstElementChild;
-      if (nextButton instanceof HTMLElement) nextButton.focus();
-      evt.preventDefault();
-      return;
-    }
 
     switch (evt.key) {
-      case 'Enter':
-        if (target.classList.contains(styles.suggestionBtn)) {
-          handleSelect(evt);
+      case 'ArrowUp':
+      case 'ArrowDown': {
+        evt.preventDefault();
+        if (suggestions.length === 0) return;
+        showPopover(popoverRef.current, inputRef.current);
+        const buttons = [
+          ...(popoverRef.current?.querySelectorAll<HTMLButtonElement>('button') ?? []),
+        ];
+        if (buttons.length === 0) return;
+        const current = buttons.indexOf(document.activeElement as HTMLButtonElement);
+        if (evt.key === 'ArrowDown') {
+          (buttons[current + 1] ?? buttons[0]).focus();
+        } else if (current <= 0) {
+          inputRef.current?.focus();
+        } else {
+          buttons[current - 1].focus();
         }
         break;
+      }
       case 'Escape':
-        setSuggestions([]);
+        hidePopover(popoverRef.current);
+        inputRef.current?.focus();
         break;
       default:
     }
   };
 
-  const handleSelect = (evt: SyntheticEvent) => {
-    evt.preventDefault();
-    if (!(evt.target instanceof HTMLElement)) return;
-    if (timeoutId.current) clearTimeout(timeoutId.current);
-    const selected = evt.target.textContent ?? '';
-    setQuery(selected);
+  const openSuggestions = () => {
+    if (suggestions.length > 0) {
+      showPopover(popoverRef.current, inputRef.current);
+    }
+  };
+
+  const handleSelect = (note: string) => {
+    setQuery(note);
     setSuggestions([]);
-    onChange(selected);
+    onChange(note);
   };
 
   const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const nextQuery = target.value.toLowerCase();
-    setQuery(nextQuery);
-    setSuggestions(
-      nextQuery ? notes.filter((note) => note.toLowerCase().startsWith(nextQuery)) : [],
-    );
+    setQuery(target.value);
+    const matches = nextQuery
+      ? notes.filter((note) => note.toLowerCase().startsWith(nextQuery))
+      : [];
+    setSuggestions(matches);
   };
 
-  const handleBlur = ({ target }: FocusEvent<HTMLInputElement>) => {
-    setIsFocused(false);
-    const nextValue = target.value.toLowerCase();
-    // don't blur if tabbed to selection list
-    if (suggestionsList.current?.hasChildNodes()) return;
-    if (nextValue === value) return;
-    timeoutId.current = setTimeout(() => {
-      onChange(nextValue);
-      timeoutId.current = null;
-    }, 1);
+  const handleContainerBlur = (evt: FocusEvent<HTMLDivElement>) => {
+    if (evt.currentTarget.contains(evt.relatedTarget)) return;
+    hidePopover(popoverRef.current);
+    const nextValue = (inputRef.current?.value ?? '').toLowerCase();
+    if (nextValue !== value) onChange(nextValue);
   };
+
+  useEffect(() => {
+    if (suggestions.length > 0 && containerRef.current?.matches(':focus-within')) {
+      showPopover(popoverRef.current, inputRef.current);
+    } else {
+      hidePopover(popoverRef.current);
+    }
+  }, [suggestions]);
+
+  useEffect(() => {
+    // sync state unless editing
+    if (!containerRef.current?.matches(':focus-within')) {
+      setQuery(value || '');
+    }
+  }, [value]);
 
   return (
     <div
       className={classNames(styles.container, className)}
       onKeyDown={handleKeyDown}
       role="presentation"
+      ref={containerRef}
+      onBlur={handleContainerBlur}
     >
       <label className={styles.label}>
         {label}
         <input
           data-testid={testId}
+          ref={inputRef}
           type="text"
           value={query}
           placeholder={placeholder}
           className={styles.input}
-          onFocus={() => setIsFocused(true)}
-          onBlur={handleBlur}
+          onFocus={openSuggestions}
+          onClick={openSuggestions}
           onChange={handleChange}
         />
       </label>
-      <ul className={styles.suggestions} ref={suggestionsList}>
-        {suggestions.map((note) => (
-          <li key={note}>
-            <button className={styles.suggestionBtn} onClick={handleSelect} type="button">
-              {note}
-            </button>
-          </li>
-        ))}
-      </ul>
+      <div popover="manual" ref={popoverRef} className={styles.popover}>
+        <ul className={styles.suggestions}>
+          {suggestions.map((note) => (
+            <li key={note}>
+              <button
+                className={styles.suggestionBtn}
+                onClick={() => handleSelect(note)}
+                type="button"
+                onMouseDown={(evt) => evt.preventDefault()}
+              >
+                {note}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
+
+function showPopover(popover: HTMLDivElement | null, source: HTMLElement | null) {
+  if (!popover || popover.matches(':popover-open')) return;
+  popover.showPopover({ source: source ?? undefined });
+}
+function hidePopover(popover: HTMLDivElement | null) {
+  if (!popover || !popover.matches(':popover-open')) return;
+  popover.hidePopover();
+}
 
 export default AutoComplete;
