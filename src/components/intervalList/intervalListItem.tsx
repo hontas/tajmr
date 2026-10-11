@@ -32,22 +32,20 @@ const IntervalListItem = ({
 
   return (
     <li className={classNames(styles.container, className)} data-testid="interval-item">
-      <div className={styles.times}>
-        <IntervalListInput
-          key={startTime}
-          data-testid="interval-from-input"
-          label="Start"
-          timestamp={startTime}
-          onUpdate={updateTime('startTime')}
-        />
-        <IntervalListInput
-          key={endTime ?? 'active'}
-          data-testid="interval-end-input"
-          label="Slut"
-          timestamp={endTime}
-          onUpdate={updateTime('endTime')}
-        />
-      </div>
+      <IntervalListInput
+        key={startTime}
+        data-testid="interval-from-input"
+        label="Start"
+        timestamp={startTime}
+        onUpdate={updateTime('startTime')}
+      />
+      <IntervalListInput
+        key={endTime ?? 'active'}
+        data-testid="interval-end-input"
+        label="Slut"
+        timestamp={endTime}
+        onUpdate={updateTime('endTime')}
+      />
 
       <AutoComplete
         data-testid="interval-note-input"
@@ -65,7 +63,7 @@ const IntervalListItem = ({
           checked={notWork || false}
           onChange={({ target: { checked } }) => onUpdate({ ...interval, notWork: checked })}
         />
-        Ej arbete
+        <span className={styles.notWorkText}>Ej arbete</span>
       </label>
 
       {onDelete && (
