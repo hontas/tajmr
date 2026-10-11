@@ -17,8 +17,6 @@ import styles from './userMenu.module.css';
 
 const garavatarUrl = 'https://www.gravatar.com/avatar';
 
-const identity = <T,>(value: T) => value;
-
 const preventDefault = (evt: SyntheticEvent) => {
   if (evt.type === 'keydown' && (evt as KeyboardEvent).key !== 'Enter') return;
   evt.preventDefault();
@@ -42,10 +40,14 @@ const UserMenu = ({ userSettings, user, updateSettings }: UserMenuProps) => {
   const photoURL = user && (user.photoURL || `${garavatarUrl}/${md5(user.email ?? '')}`);
 
   const handleChange =
-    (prop: string, transform: (value: string) => string | number = identity) =>
+    (prop: string, transform?: (value: string) => string | number) =>
     ({ target }: ChangeEvent<HTMLInputElement>) => {
-      const value = target.type === 'checkbox' ? target.checked : transform(target.value);
-      updateSettings(prop, value);
+      if (target.type === 'checkbox') {
+        updateSettings(prop, target.checked);
+      } else {
+        const value = transform ? transform(target.value) : target.value;
+        updateSettings(prop, value);
+      }
     };
 
   const saveUserSettings = (evt: SyntheticEvent) => {
