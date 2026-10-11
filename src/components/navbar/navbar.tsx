@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 
 import Button from '#/components/button/button.tsx';
+import Credits from '#/components/credits/credits.tsx';
 import Hamburger from '#/components/icons/Hamburger.tsx';
 import UserMenu from '#/components/user/userMenu.tsx';
 import * as userSettingActions from '#/store/userSettings.ts';
@@ -39,6 +40,7 @@ function Navbar() {
         <span className={styles.version}>
           <small>{`${process.env.RELEASE} - ${getDateTimeString(process.env.BUILD_TIME)}`}</small>
         </span>
+        <Credits className={styles.credits} />
         {isLoading && (
           <div
             data-testid={isFetching ? 'loading-intervals-container' : 'saving-intervals-container'}

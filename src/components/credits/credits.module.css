@@ -1,0 +1,32 @@
+.credits {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+}
+
+.emoji {
+  color: var(--danger-color);
+}
+
+.repo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  text-decoration: none;
+}
+
+.repo:hover .repoLabel {
+  text-decoration: underline;
+}
+
+.repoLabel {
+  display: none;
+}
+
+@media screen and (min-width: 1024px) {
+  .repoLabel {
+    display: inline;
+  }
+}
