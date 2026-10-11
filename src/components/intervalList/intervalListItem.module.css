@@ -9,19 +9,6 @@
 .note {
   flex: 1 1 0;
   min-width: 0;
-  color: #333;
-  font-size: 1em;
-}
-
-.note input {
-  box-sizing: border-box;
-  height: 2.75rem;
-}
-
-.note[disabled] {
-  background: whitesmoke;
-  color: darkgray;
-  cursor: not-allowed;
 }
 
 .notWork {
@@ -31,7 +18,6 @@
   justify-content: center;
   gap: 0.35rem;
   min-width: 1.75rem;
-  min-height: 2.75rem;
   font-size: 0.875rem;
   white-space: nowrap;
 }
@@ -52,8 +38,8 @@
 
 .deleteBtn {
   flex: none;
+  align-self: stretch;
   width: 2.5rem;
-  height: 2.5rem;
   padding: 0;
 }
 

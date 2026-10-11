@@ -13,7 +13,7 @@
 
 .button {
   background-color: transparent;
-  color: white;
+  color: var(--text-color-primary);
 }
 
 .filters {
@@ -26,13 +26,13 @@
 
 .filter {
   background-color: var(--primary-color-dark-translucent);
-  color: rgba(255, 255, 255, 0.5);
+  color: alpha(from var(--text-color-primary) / 50%);
   margin-bottom: 0.25em;
 }
 
 .filterActive {
   background-color: var(--primary-color-dark-hazy);
-  color: rgba(255, 255, 255, 0.9);
+  color: alpha(from var(--text-color-primary) / 90%);
 }
 
 .list {
@@ -48,7 +48,7 @@
 }
 .listItem:first-child,
 .listItem:last-child {
-  border-top: 1px solid rgba(255, 255, 255, 0.75);
+  border-top: 1px solid alpha(from var(--text-color-primary) / 75%);
 }
 
 .notWork {

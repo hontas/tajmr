@@ -4,7 +4,7 @@
 
 .title {
   background: var(--primary-color-dark);
-  color: white;
+  color: var(--text-color-primary);
   padding: 0.5em;
 }
 

@@ -3,7 +3,6 @@
   top: 0;
   left: 0;
   z-index: 3;
-  box-sizing: border-box;
   width: 100%;
   padding-top: max(0.5em, env(safe-area-inset-top));
   padding-left: max(0.5em, env(safe-area-inset-left));
@@ -22,7 +21,7 @@
 }
 
 .version {
-  color: #aaa;
+  color: var(--text-color-muted);
   display: none;
 }
 
@@ -43,7 +42,7 @@
 }
 
 .loadingContainer {
-  color: gray;
+  color: var(--text-color-muted);
   display: grid;
   grid-auto-flow: column;
   grid-gap: 0.5em;
@@ -71,7 +70,7 @@
   padding: 0;
   border-radius: 0;
   background-color: var(--primary-color-dark);
-  color: white;
+  color: var(--text-color-primary);
   font-size: 14px;
 }
 
@@ -91,7 +90,7 @@
   border: 0;
   overflow: hidden;
   background: var(--primary-color-dark);
-  color: whitesmoke;
+  color: var(--text-color-primary);
   opacity: 0;
   transform: translateX(100%);
   transition:
@@ -133,7 +132,6 @@
 }
 
 .menuPanel {
-  box-sizing: border-box;
   height: 100%;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -161,7 +159,7 @@
   height: 2.75em;
   padding: 0;
   background: transparent;
-  color: white;
+  color: var(--text-color-primary);
   font-size: 1.25em;
 }
 

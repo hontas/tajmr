@@ -5,19 +5,14 @@
   grid-gap: 0.5em;
   justify-content: center;
   align-items: center;
-  box-sizing: border-box;
   padding: 0.5em 1em;
   border: 0;
-  border-radius: 2px;
-  background-color: #e6e6e6;
-  color: rgba(0, 0, 0, 0.8);
-  font: inherit;
+  border-radius: var(--radius);
+  background-color: var(--neutral-color);
+  color: var(--text-color-dark);
   line-height: normal;
   text-align: center;
-  text-decoration: none;
   white-space: nowrap;
-  vertical-align: middle;
-  cursor: pointer;
   user-select: none;
 }
 
@@ -46,8 +41,8 @@
 }
 
 .accent {
-  background-color: #0078e7;
-  color: #fff;
+  background-color: var(--accent-color);
+  color: var(--text-color-primary);
 }
 
 .primary {

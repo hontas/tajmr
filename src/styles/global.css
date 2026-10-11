@@ -1,57 +1,80 @@
-/* the little of a reset we rely on */
-html {
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-}
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
 
-button,
-input,
-select,
-textarea {
-  color: inherit;
-  font: inherit;
-  margin: 0;
-}
+  button,
+  input,
+  select,
+  textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+  }
 
-small {
-  font-size: 80%;
-}
+  /* one look for every text-like input; components only set layout */
+  input:not([type='checkbox'], [type='radio']),
+  select,
+  textarea {
+    padding: 0.5em;
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--surface-color);
+    color: var(--text-color-dark);
+    font-size: 1rem;
+  }
 
-code,
-pre {
-  font-family: monospace, monospace;
-  font-size: 1em;
-}
+  input:disabled,
+  select:disabled,
+  textarea:disabled {
+    background: var(--surface-color-disabled);
+    color: var(--text-color-disabled);
+    cursor: not-allowed;
+  }
 
-button {
-  cursor: pointer;
-}
+  input:not([type='checkbox'], [type='radio']):focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--text-color-light);
+    outline-offset: 1px;
+  }
 
-input[type='checkbox'],
-input[type='radio'] {
-  box-sizing: border-box;
-  padding: 0;
-}
+  input:not([type='checkbox'], [type='radio']):user-invalid,
+  textarea:user-invalid {
+    outline: 2px solid var(--danger-color);
+  }
 
-html,
-body {
-  box-sizing: border-box;
-}
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
+  small {
+    font-size: 80%;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  input[type='checkbox'],
+  input[type='radio'] {
+    padding: 0;
+  }
+
+  html,
+  body {
+    box-sizing: border-box;
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
 }
 
 #root {
   min-height: 100dvh;
 }
 
-a,
-a:hover,
-a:focus,
-a:visited,
-a:active {
+a {
   color: var(--text-color-light);
 }
 
@@ -71,9 +94,6 @@ a.animated:after {
   transition: transform 0.2s ease-out;
 }
 
-a.animated:hover {
-  text-decoration: none;
-}
 a.animated:hover:after {
   transform: scaleX(1);
 }
