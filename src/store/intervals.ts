@@ -228,6 +228,7 @@ export default function intervalsReducer(state = initialState, action: Action): 
         ...state,
         updatedAt: Date.now(),
         isSaving: true,
+        error: '',
       };
 
     // add and update are upserts: the success handler and the Firebase listener

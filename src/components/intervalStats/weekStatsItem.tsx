@@ -5,6 +5,7 @@ import { getHours, getDurationString } from '#/utils/time.ts';
 import styles from './weekStatsItem.module.css';
 
 export interface WeekDayInterval {
+  startTime: number;
   timespan: number;
   note?: string;
   notWork?: boolean;
@@ -34,16 +35,18 @@ const WeekDayItem = ({
   return (
     <div className={styles.container}>
       <div className={styles.bar} style={style} tabIndex={-1} data-testid="week-stats-item">
-        {intervals.map(({ timespan, note, notWork }) => {
+        {intervals.map(({ startTime, timespan, note, notWork }) => {
           const flexBasis = Math.round((timespan / total) * barHeight * 2) / 2;
 
           return (
             <div
               className={classNames(styles.item, { [styles.notWork]: notWork })}
               style={{ flexBasis: `${flexBasis}px` }}
-              key={timespan}
+              key={startTime}
             >
-              <p className={styles.info}>{`${getDurationString(timespan)} ${note}`}</p>
+              <p className={styles.info}>
+                {note ? `${getDurationString(timespan)} ${note}` : getDurationString(timespan)}
+              </p>
             </div>
           );
         })}
