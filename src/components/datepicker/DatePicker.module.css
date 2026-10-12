@@ -3,15 +3,20 @@
   display: grid;
   place-items: center;
   width: 1.75rem;
+  overflow: clip;
 }
 
 .input {
+  appearance: none;
   cursor: pointer;
   inset: 0;
   opacity: 0;
   position: absolute;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   height: 100%;
+  padding: 0;
 }
 
 .input:disabled {
