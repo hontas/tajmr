@@ -129,7 +129,7 @@ const api = {
   },
 
   saveUserData(userId: string, data: UserSettingsData) {
-    return set(ref(database, `users/${userId}`), data);
+    return set(ref(database, `users/${userId}`), v.parse(userSettingsSchema, data));
   },
 
   listen({ intervalAdded, intervalRemoved, intervalUpdated, settingsChanged }: ListenActions) {

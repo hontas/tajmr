@@ -15,7 +15,7 @@ const intervalSchema = v.strictObject({
 });
 
 export const userSettingsSchema = v.partial(
-  v.strictObject({
+  v.object({
     displayMonthReport: v.boolean(),
     displayNotifications: v.boolean(),
     displayPreviousIntervals: v.boolean(),
