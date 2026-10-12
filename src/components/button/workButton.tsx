@@ -15,7 +15,6 @@ const WorkButton = ({ isLoading = false, activeInterval, onClick, ...props }: Wo
   return (
     <Button
       {...props}
-      data-testid="work-button"
       theme="primary"
       className={styles.workButton}
       onClick={onClick}

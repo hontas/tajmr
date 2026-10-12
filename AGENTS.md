@@ -25,7 +25,7 @@ Do not run `npm run e2e` (Cypress) unless asked: it logs in with a hard-coded te
   not depend on the timezone (`verify` reruns them in UTC, New York and Kolkata): build dates with
   `new Date(y, m, d)`, never `'2018-03-14'` (parsed as UTC).
 - Tests named `BUG: ...` pin known wrong behaviour on purpose; the PR that fixes it flips them.
-- `data-testid` attributes are used by the Cypress specs; don't rename them casually.
+- The Cypress specs find elements by role, label and text (`aria-label`s are part of the contract: don't rename them casually). `data-testid` only exists where there is nothing else to query (the week bars).
 - Coverage thresholds are in `vite.config.mjs`. Raise them when coverage improves, never lower them.
 - Browser support: the latest 2 versions of major browsers, including iOS Safari (the app is installed as
   a PWA on iPhone). No polyfills. Vite's default build target covers this.

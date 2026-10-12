@@ -57,12 +57,20 @@
 }
 
 .loadingText {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
 }
 
 @media screen and (min-width: 480px) {
   .loadingText {
-    display: initial;
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
   }
 }
 

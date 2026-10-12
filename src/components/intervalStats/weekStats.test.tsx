@@ -64,10 +64,10 @@ describe('WeekStats', () => {
   test('previous / next week fetch the neighbouring week', () => {
     const { fetchIntervalsInWeek } = setup();
 
-    fireEvent.click(screen.getByTestId('prev-week-btn'));
+    fireEvent.click(screen.getByRole('button', { name: 'Föregående vecka' }));
     expect(fetchIntervalsInWeek).toHaveBeenLastCalledWith(wednesday - oneWeek);
 
-    fireEvent.click(screen.getByTestId('next-week-btn'));
+    fireEvent.click(screen.getByRole('button', { name: 'Nästa vecka' }));
     expect(fetchIntervalsInWeek).toHaveBeenLastCalledWith(wednesday + oneWeek);
   });
 });
