@@ -15,20 +15,20 @@ describe('AddOneInterval', () => {
   test('prefills a full day starting at 09:00', () => {
     setup({ fullDay: 8 });
 
-    expect(screen.getByTestId('interval-from-input')).toHaveValue('09:00');
-    expect(screen.getByTestId('interval-end-input')).toHaveValue('17:00');
+    expect(screen.getByLabelText('Starttid')).toHaveValue('09:00');
+    expect(screen.getByLabelText('Sluttid')).toHaveValue('17:00');
   });
 
   test('supports fractional full days', () => {
     setup({ fullDay: 7.5 });
 
-    expect(screen.getByTestId('interval-end-input')).toHaveValue('16:30');
+    expect(screen.getByLabelText('Sluttid')).toHaveValue('16:30');
   });
 
   test('save calls onAdd with the prefilled interval', async () => {
     const { onAdd } = setup();
 
-    fireEvent.click(screen.getByTestId('add-one-interval-save-btn'));
+    fireEvent.click(screen.getByRole('button', { name: 'Spara' }));
 
     await waitFor(() => expect(onAdd).toHaveBeenCalledTimes(1));
     const added = onAdd.mock.calls[0]?.[0];
@@ -44,7 +44,7 @@ describe('AddOneInterval', () => {
   test('cancel calls onCancel', () => {
     const { onCancel } = setup();
 
-    fireEvent.click(screen.getByTestId('add-one-interval-cancel-btn'));
+    fireEvent.click(screen.getByRole('button', { name: 'Avbryt' }));
 
     expect(onCancel).toHaveBeenCalledTimes(1);
   });
@@ -57,7 +57,7 @@ describe('AddOneInterval', () => {
       ),
     });
 
-    fireEvent.click(screen.getByTestId('add-one-interval-save-btn'));
+    fireEvent.click(screen.getByRole('button', { name: 'Spara' }));
 
     expect(await screen.findByText(/Saving failed/)).toBeInTheDocument();
   });

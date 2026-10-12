@@ -49,7 +49,7 @@ const WeekStats = ({
         <Button
           className={styles.button}
           onClick={() => fetchIntervalsInWeek(timestamp - oneWeek)}
-          data-testid="prev-week-btn"
+          aria-label="Föregående vecka"
         >
           ◀︎
         </Button>
@@ -57,7 +57,7 @@ const WeekStats = ({
         <Button
           className={styles.button}
           onClick={() => fetchIntervalsInWeek(timestamp + oneWeek)}
-          data-testid="next-week-btn"
+          aria-label="Nästa vecka"
         >
           ▶︎
         </Button>

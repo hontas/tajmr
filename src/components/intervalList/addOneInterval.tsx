@@ -39,11 +39,7 @@ const AddOneInterval = ({ notes, onCancel, onAdd, fullDay }: AddOneIntervalProps
 
   return (
     <>
-      <form
-        data-testid="add-previous-interval-form"
-        className={styles.container}
-        onSubmit={handleClickSubmit}
-      >
+      <form aria-label="Efterregistrera" className={styles.container} onSubmit={handleClickSubmit}>
         <IntervalListItem
           className={styles.intervalListItem}
           interval={interval}
@@ -51,21 +47,11 @@ const AddOneInterval = ({ notes, onCancel, onAdd, fullDay }: AddOneIntervalProps
           notes={notes}
         />
         <div className={styles.actions}>
-          <Button
-            className={styles.saveBtn}
-            data-testid="add-one-interval-save-btn"
-            type="submit"
-            theme="primary"
-          >
+          <Button className={styles.saveBtn} type="submit" theme="primary">
             <Save size={16} />
             Spara
           </Button>
-          <Button
-            className={styles.cancelBtn}
-            data-testid="add-one-interval-cancel-btn"
-            theme="primary"
-            onClick={onCancel}
-          >
+          <Button className={styles.cancelBtn} theme="primary" onClick={onCancel}>
             Avbryt
           </Button>
         </div>

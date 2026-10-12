@@ -7,8 +7,8 @@ const notes = ['Kodar', 'Kafferast', 'Möten'];
 
 const setup = (props: Partial<ComponentProps<typeof AutoComplete>> = {}) => {
   const onChange = vi.fn<(value: string) => void>();
-  render(<AutoComplete data-testid="note" onChange={onChange} notes={notes} {...props} />);
-  return { onChange, input: screen.getByTestId('note') };
+  render(<AutoComplete aria-label="Anteckning" onChange={onChange} notes={notes} {...props} />);
+  return { onChange, input: screen.getByLabelText('Anteckning') };
 };
 
 const typeIn = (input: HTMLElement, value: string) => {
@@ -28,21 +28,21 @@ describe('AutoComplete', () => {
 
   test('follows a new value from outside', () => {
     const { rerender } = render(
-      <AutoComplete data-testid="note" onChange={vi.fn<() => void>()} value="a" />,
+      <AutoComplete aria-label="Anteckning" onChange={vi.fn<() => void>()} value="a" />,
     );
-    rerender(<AutoComplete data-testid="note" onChange={vi.fn<() => void>()} value="b" />);
+    rerender(<AutoComplete aria-label="Anteckning" onChange={vi.fn<() => void>()} value="b" />);
 
-    expect(screen.getByTestId('note')).toHaveValue('b');
+    expect(screen.getByLabelText('Anteckning')).toHaveValue('b');
   });
 
   test('does not overwrite what is being typed when a new value arrives', () => {
     const { rerender } = render(
-      <AutoComplete data-testid="note" onChange={vi.fn<() => void>()} value="a" />,
+      <AutoComplete aria-label="Anteckning" onChange={vi.fn<() => void>()} value="a" />,
     );
-    const input = screen.getByTestId('note');
+    const input = screen.getByLabelText('Anteckning');
     input.focus();
     fireEvent.change(input, { target: { value: 'abc' } });
-    rerender(<AutoComplete data-testid="note" onChange={vi.fn<() => void>()} value="b" />);
+    rerender(<AutoComplete aria-label="Anteckning" onChange={vi.fn<() => void>()} value="b" />);
 
     expect(input).toHaveValue('abc');
   });

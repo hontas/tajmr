@@ -48,7 +48,7 @@ const Login = () => {
 
   return (
     <div className={styles.login}>
-      <form className={styles.authForm} onSubmit={handleSubmit} data-testid="login-form">
+      <form className={styles.authForm} onSubmit={handleSubmit}>
         <h2 className={styles.title}>Logga in</h2>
         {feedback?.kind === 'error' && (
           <p className={styles.error}>

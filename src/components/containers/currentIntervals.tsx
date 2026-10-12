@@ -84,7 +84,6 @@ const CurrentIntervals = () => {
             <WorkButton activeInterval={!!activeInterval} onClick={onClick} isLoading={isLoading} />
             <Button
               className={styles.prevWorkBtn}
-              data-testid="register-previous-work-button"
               theme="primary"
               onClick={() => setDisplayAddForm(true)}
             >

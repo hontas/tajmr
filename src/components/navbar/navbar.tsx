@@ -42,22 +42,18 @@ function Navbar() {
         </span>
         <Credits className={styles.credits} />
         {isLoading && (
-          <div
-            data-testid={isFetching ? 'loading-intervals-container' : 'saving-intervals-container'}
-            className={styles.loadingContainer}
-          >
+          <output className={styles.loadingContainer}>
             <SpinKit.Wave color="currentColor" />
             <small className={styles.loadingText}>
               {isFetching ? 'Laddar intervall...' : 'Sparar...'}
             </small>
-          </div>
+          </output>
         )}
 
         {user && (
           <>
             <Button
               className={styles.menuBtn}
-              data-testid="user-menu-toggle"
               aria-label="Öppna menyn"
               aria-haspopup="dialog"
               onClick={() => menu.current?.showModal()}
@@ -71,14 +67,12 @@ function Navbar() {
               }}
               className={styles.menu}
               aria-label="Meny"
-              data-testid="user-menu-dialog"
             >
               <div className={styles.menuPanel}>
                 <header className={styles.menuHeader}>
                   <h2 className={styles.menuTitle}>Meny</h2>
                   <Button
                     className={styles.closeBtn}
-                    data-testid="user-menu-close"
                     aria-label="Stäng menyn"
                     onClick={() => menu.current?.close()}
                   >
