@@ -170,6 +170,17 @@ describe('firebaseApi', () => {
       expect(vi.mocked(remove)).toHaveBeenCalledWith({ path: `${me}/i1` });
     });
 
+    test('saveUserData writes only the settings, not the rest of the state', async () => {
+      const state = { hoursInWeek: 30, displayName: 'x', updatedAt: 1760000000000 };
+
+      await api.saveUserData('u1', state);
+
+      expect(vi.mocked(set)).toHaveBeenCalledWith(
+        { path: 'users/u1' },
+        { hoursInWeek: 30, displayName: 'x' },
+      );
+    });
+
     test('saveUserData writes to users/{id}', async () => {
       await api.saveUserData('u1', { hoursInWeek: 30 });
       expect(vi.mocked(set)).toHaveBeenCalledWith({ path: 'users/u1' }, { hoursInWeek: 30 });
@@ -311,6 +322,24 @@ describe('firebaseApi', () => {
       expect(emitted).toEqual([
         { type: 'USER_UPDATE_SETTINGS', settings: { hoursInWeek: 20 } },
         { type: 'USER_UPDATE_SETTINGS', settings: null },
+      ]);
+    });
+
+    test('emits the saved settings although the document holds more than the settings', () => {
+      const emitted: Action[] = [];
+      api.subscribe((action) => emitted.push(action));
+
+      api.listen(actions);
+      const [[, changed]] = vi.mocked(onValue).mock.calls;
+      changed(
+        snapshot({ hoursInWeek: 20, displayMonthReport: true, updatedAt: 1760000000000 }, 'me'),
+      );
+
+      expect(emitted).toEqual([
+        {
+          type: 'USER_UPDATE_SETTINGS',
+          settings: { hoursInWeek: 20, displayMonthReport: true },
+        },
       ]);
     });
 
