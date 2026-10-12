@@ -34,10 +34,10 @@ describe('IntervalListItem', () => {
     expect(screen.getByTestId('interval-not-work-checkbox')).not.toBeChecked();
   });
 
-  test('shows an active (disabled) end input for an interval without endTime', () => {
+  test('shows an empty, disabled end input for an interval without endTime', () => {
     setup({ interval: { ...interval, endTime: undefined } });
 
-    expect(screen.getByTestId('interval-end-input')).toHaveValue('pågår');
+    expect(screen.getByTestId('interval-end-input')).toHaveValue('');
     expect(screen.getByTestId('interval-end-input')).toBeDisabled();
   });
 
@@ -79,7 +79,7 @@ describe('IntervalListItem', () => {
     expect(screen.getByTestId('interval-from-input')).toHaveValue(
       getTimeString(new Date(2021, 3, 7, 10, 0).getTime()),
     );
-    expect(screen.getByTestId('interval-end-input')).toHaveValue('pågår');
+    expect(screen.getByTestId('interval-end-input')).toHaveValue('');
   });
 
   test('picking another day moves the start and keeps the time of day', () => {

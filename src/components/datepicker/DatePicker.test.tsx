@@ -33,10 +33,15 @@ describe('DatePicker', () => {
     expect(onChange).not.toHaveBeenCalled();
   });
 
-  test('opens the native picker on click', () => {
+  test('opens the native picker from the calendar button', () => {
     const { input } = setup({ date: new Date(2026, 9, 7).getTime() });
     input.showPicker = vi.fn<() => void>();
-    fireEvent.click(input);
+    fireEvent.click(screen.getByRole('button', { hidden: true }));
     expect(input.showPicker).toHaveBeenCalled();
+  });
+
+  test('the calendar button is disabled without a date', () => {
+    setup();
+    expect(screen.getByRole('button', { hidden: true })).toBeDisabled();
   });
 });

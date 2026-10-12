@@ -3,31 +3,39 @@
   display: grid;
   place-items: center;
   width: 1.75rem;
-  overflow: clip;
+}
+
+.button {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.button:disabled {
+  color: var(--text-color-light);
+  cursor: default;
 }
 
 .input {
   appearance: none;
-  cursor: pointer;
-  inset: 0;
-  opacity: 0;
   position: absolute;
-  width: 100%;
-  min-width: 0;
-  max-width: 100%;
-  height: 100%;
+  top: 50%;
+  left: 50%;
+  width: 1px;
+  height: 1px;
   padding: 0;
-}
-
-.input:disabled {
-  cursor: default;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .container:has(.input:focus-visible) {
   outline: 2px solid var(--text-color-light);
   border-radius: var(--radius);
-}
-
-.disabled {
-  color: var(--text-color-light);
 }

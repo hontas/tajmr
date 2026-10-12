@@ -46,27 +46,16 @@ const IntervalListInput = ({
         date={timestamp}
         onChange={pushDate}
       />
-      {timestamp ? (
-        <input
-          type="time"
-          data-testid={testId}
-          aria-label={`${label}tid`}
-          className={styles.input}
-          onBlur={pushTime}
-          onChange={({ target }) => setValue(target.value)}
-          value={value}
-        />
-      ) : (
-        <input
-          type="text"
-          data-testid={testId}
-          aria-label={`${label}tid`}
-          className={styles.input}
-          disabled
-          value="pågår"
-          readOnly
-        />
-      )}
+      <input
+        type="time"
+        data-testid={testId}
+        aria-label={`${label}tid`}
+        className={styles.input}
+        disabled={!timestamp}
+        onBlur={pushTime}
+        onChange={({ target }) => setValue(target.value)}
+        value={value}
+      />
     </div>
   );
 };

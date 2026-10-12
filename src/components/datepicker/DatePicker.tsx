@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import classNames from 'classnames';
 
 import Calendar from '#/components/icons/Calendar.tsx';
@@ -17,20 +18,33 @@ const DatePicker = ({
   date = null,
   onChange,
   buttonTitle = '',
-}: DatePickerProps) => (
-  <div className={classNames(styles.container, className, { [styles.disabled]: !date })}>
-    <Calendar size={24} />
-    <input
-      type="date"
-      className={styles.input}
-      title={buttonTitle}
-      aria-label={buttonTitle}
-      disabled={!date}
-      value={date ? toDateInputValue(date) : ''}
-      onClick={(evt) => evt.currentTarget.showPicker?.()}
-      onChange={({ target }) => target.value && onChange(fromDateInputValue(target.value))}
-    />
-  </div>
-);
+}: DatePickerProps) => {
+  const input = useRef<HTMLInputElement>(null);
+
+  return (
+    <div className={classNames(styles.container, className)}>
+      <button
+        type="button"
+        className={styles.button}
+        aria-hidden
+        tabIndex={-1}
+        disabled={!date}
+        onClick={() => input.current?.showPicker?.()}
+      >
+        <Calendar size={24} />
+      </button>
+      <input
+        ref={input}
+        type="date"
+        className={styles.input}
+        title={buttonTitle}
+        aria-label={buttonTitle}
+        disabled={!date}
+        value={date ? toDateInputValue(date) : ''}
+        onChange={({ target }) => target.value && onChange(fromDateInputValue(target.value))}
+      />
+    </div>
+  );
+};
 
 export default DatePicker;
