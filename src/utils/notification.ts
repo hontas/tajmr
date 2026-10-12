@@ -1,16 +1,23 @@
+import * as Sentry from '@sentry/react';
+
 const fiveSeconds = 5000;
 const title = 'tajmr';
 
 export default async function notify(message: string) {
-  if (!('Notification' in window)) return;
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
 
-  const permission = await Notification.requestPermission();
-  if (permission !== 'granted') return;
+  try {
+    const registration = await navigator.serviceWorker?.getRegistration();
+    if (!registration) return;
 
-  const notification = new Notification(title, {
-    body: message,
-    icon: 'icons/apple-touch-icon.png',
-    tag: title,
-  });
-  setTimeout(() => notification.close(), fiveSeconds);
+    await registration.showNotification(title, {
+      body: message,
+      icon: 'icons/apple-touch-icon.png',
+      tag: title,
+    });
+    const [notification] = await registration.getNotifications({ tag: title });
+    setTimeout(() => notification?.close(), fiveSeconds);
+  } catch (error) {
+    Sentry.captureException(error);
+  }
 }

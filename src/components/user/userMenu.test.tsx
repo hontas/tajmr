@@ -60,6 +60,57 @@ describe('UserMenu', () => {
     expect(updateSettings).toHaveBeenCalledWith('displayMonthReport', true);
   });
 
+  describe('notifications', () => {
+    const stubNotification = (permission: NotificationPermission) => {
+      const requestPermission = vi.fn<() => Promise<NotificationPermission>>();
+      requestPermission.mockResolvedValue('granted');
+      vi.stubGlobal('Notification', { permission, requestPermission });
+      return requestPermission;
+    };
+
+    afterEach(() => vi.unstubAllGlobals());
+
+    test('turning the setting on asks the browser for permission', () => {
+      const requestPermission = stubNotification('default');
+      setup({ userSettings: { ...userSettings, displayNotifications: false } });
+
+      fireEvent.click(screen.getByLabelText('Visa notifiering'));
+
+      expect(requestPermission).toHaveBeenCalledTimes(1);
+    });
+
+    test('turning the setting off does not ask', () => {
+      const requestPermission = stubNotification('granted');
+      setup();
+
+      fireEvent.click(screen.getByLabelText('Visa notifiering'));
+
+      expect(requestPermission).not.toHaveBeenCalled();
+    });
+
+    test('says when the browser blocks notifications', () => {
+      stubNotification('denied');
+      setup();
+
+      expect(screen.getByText(/blockerade i webbläsarens inställningar/)).toBeInTheDocument();
+    });
+
+    test('says when notifications are not supported', () => {
+      vi.stubGlobal('Notification', undefined);
+      Reflect.deleteProperty(window, 'Notification');
+      setup();
+
+      expect(screen.getByText(/lägg till appen på hemskärmen/)).toBeInTheDocument();
+    });
+
+    test('shows no hint when notifications are allowed', () => {
+      stubNotification('granted');
+      setup();
+
+      expect(screen.queryByText(/Notiser/)).not.toBeInTheDocument();
+    });
+  });
+
   test('hours in week is converted to a number', () => {
     const { updateSettings } = setup();
 
