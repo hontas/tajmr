@@ -8,19 +8,12 @@ import styles from './intervalListInput.module.css';
 
 interface IntervalListInputProps {
   className?: string;
-  'data-testid'?: string;
   label: string;
   timestamp?: number;
   onUpdate: (timestamp: number) => void;
 }
 
-const IntervalListInput = ({
-  className,
-  'data-testid': testId,
-  label,
-  timestamp,
-  onUpdate,
-}: IntervalListInputProps) => {
+const IntervalListInput = ({ className, label, timestamp, onUpdate }: IntervalListInputProps) => {
   const [value, setValue] = useState(timestamp ? getTimeString(timestamp) : '');
 
   const pushTime = () => {
@@ -48,7 +41,6 @@ const IntervalListInput = ({
       />
       <input
         type="time"
-        data-testid={testId}
         aria-label={`${label}tid`}
         className={styles.input}
         disabled={!timestamp}

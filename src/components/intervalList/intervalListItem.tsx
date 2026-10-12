@@ -31,24 +31,22 @@ const IntervalListItem = ({
   const updateNote = (value: string) => onUpdate({ ...interval, note: value });
 
   return (
-    <li className={classNames(styles.container, className)} data-testid="interval-item">
+    <li className={classNames(styles.container, className)}>
       <IntervalListInput
         key={startTime}
-        data-testid="interval-from-input"
         label="Start"
         timestamp={startTime}
         onUpdate={updateTime('startTime')}
       />
       <IntervalListInput
         key={endTime ?? 'active'}
-        data-testid="interval-end-input"
         label="Slut"
         timestamp={endTime}
         onUpdate={updateTime('endTime')}
       />
 
       <AutoComplete
-        data-testid="interval-note-input"
+        aria-label="Anteckning"
         className={styles.note}
         placeholder="Anteckning"
         onChange={updateNote}
@@ -58,7 +56,6 @@ const IntervalListItem = ({
 
       <label className={styles.notWork}>
         <input
-          data-testid="interval-not-work-checkbox"
           type="checkbox"
           checked={notWork || false}
           onChange={({ target: { checked } }) => onUpdate({ ...interval, notWork: checked })}
@@ -71,7 +68,6 @@ const IntervalListItem = ({
           className={styles.deleteBtn}
           theme="danger"
           aria-label="Ta bort intervallet"
-          data-testid="remove-interval"
           onClick={() => onDelete(interval.id)}
         >
           <Trashcan size={15} />
