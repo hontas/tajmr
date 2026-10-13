@@ -5,6 +5,7 @@ import IntervalList from '#/components/intervalList/intervalList.tsx';
 import Button from '#/components/button/button.tsx';
 import { attemptUpdate, attemptRemove } from '#/store/intervals.ts';
 import { useDispatch, useSelector } from '#/store/useStore.tsx';
+import useNow from '#/hooks/useNow.ts';
 import { getWeek, getMonth, startOfDay } from '#/utils/time.ts';
 import type { Interval } from '#/utils/interValidator.ts';
 import { isComplete } from '#/utils/intervals.ts';
@@ -21,6 +22,7 @@ const limits = {
 
 const PreviousIntervals = () => {
   const dispatch = useDispatch();
+  const now = useNow();
   const items = useSelector((state) => state.intervals.items);
   const userSettings = useSelector((state) => state.userSettings);
   const [limit, setLimit] = useState(limits.ZERO);
@@ -31,7 +33,16 @@ const PreviousIntervals = () => {
 
   if (!userSettings.displayPreviousIntervals) return null;
 
-  const completeIntervals = items.filter(isComplete).filter(endedBeforeToday);
+  const today = +startOfDay(now);
+  const week = getWeek(now);
+  const month = getMonth(now);
+  const completeIntervals = items
+    .filter(isComplete)
+    .filter(({ endTime }) => endTime !== undefined && endTime < today);
+  const isSameWeek = ({ startTime }: Interval) =>
+    startTime > week.startTime && startTime < week.endTime;
+  const isSameMonth = ({ startTime }: Interval) =>
+    startTime > month.startTime && startTime < month.endTime;
   let intervals: Interval[];
   switch (limit) {
     case limits.ALL:
@@ -71,21 +82,5 @@ const PreviousIntervals = () => {
     </div>
   );
 };
-
-const now = Date.now();
-const today = +startOfDay(now);
-function endedBeforeToday({ endTime }: Interval) {
-  return endTime !== undefined && endTime < today;
-}
-
-const week = getWeek(now);
-function isSameWeek({ startTime }: Interval) {
-  return startTime > week.startTime && startTime < week.endTime;
-}
-
-const month = getMonth(now);
-function isSameMonth({ startTime }: Interval) {
-  return startTime > month.startTime && startTime < month.endTime;
-}
 
 export default PreviousIntervals;
