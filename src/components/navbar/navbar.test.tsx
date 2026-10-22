@@ -51,35 +51,39 @@ describe('Navbar', () => {
 
   test('has no user menu when logged out', () => {
     setup(initialized());
-    expect(screen.queryByTestId('user-menu-toggle')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Öppna menyn' })).not.toBeInTheDocument();
   });
 
   test('shows the user menu toggle when logged in', () => {
     setup(initialized(), userLoggedIn({ uid: 'u1', email: 'me@example.com', photoURL: null }));
-    expect(screen.getByTestId('user-menu-toggle')).toBeInTheDocument();
-    expect(screen.getByTestId('user-menu')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Öppna menyn' })).toBeInTheDocument();
+    expect(screen.getByLabelText('Meny', { selector: 'dialog' })).toBeInTheDocument();
   });
 
   describe('menu dialog', () => {
     const openMenu = () => {
       setup(initialized(), userLoggedIn({ uid: 'u1', email: 'me@example.com', photoURL: null }));
-      fireEvent.click(screen.getByTestId('user-menu-toggle'));
-      return screen.getByTestId<HTMLDialogElement>('user-menu-dialog');
+      fireEvent.click(screen.getByRole('button', { name: 'Öppna menyn' }));
+      return screen.getByLabelText<HTMLDialogElement>('Meny', { selector: 'dialog' });
     };
 
     test('is closed until the toggle is clicked', () => {
       setup(initialized(), userLoggedIn({ uid: 'u1', email: 'me@example.com', photoURL: null }));
-      expect(screen.getByTestId<HTMLDialogElement>('user-menu-dialog').open).toBe(false);
+      expect(screen.getByLabelText<HTMLDialogElement>('Meny', { selector: 'dialog' }).open).toBe(
+        false,
+      );
 
-      fireEvent.click(screen.getByTestId('user-menu-toggle'));
+      fireEvent.click(screen.getByRole('button', { name: 'Öppna menyn' }));
 
-      expect(screen.getByTestId<HTMLDialogElement>('user-menu-dialog').open).toBe(true);
+      expect(screen.getByLabelText<HTMLDialogElement>('Meny', { selector: 'dialog' }).open).toBe(
+        true,
+      );
     });
 
     test('closes with the close button', () => {
       const dialog = openMenu();
 
-      fireEvent.click(screen.getByTestId('user-menu-close'));
+      fireEvent.click(screen.getByRole('button', { name: 'Stäng menyn' }));
 
       expect(dialog.open).toBe(false);
     });
@@ -87,7 +91,7 @@ describe('Navbar', () => {
     test('closes when the backdrop is clicked, not when the menu is', () => {
       const dialog = openMenu();
 
-      fireEvent.click(screen.getByTestId('user-menu'));
+      fireEvent.click(screen.getByRole('heading', { name: 'Meny' }));
       expect(dialog.open).toBe(true);
 
       fireEvent.click(dialog);
@@ -104,16 +108,16 @@ describe('Navbar', () => {
 
   test('shows a fetching indicator while intervals load', () => {
     setup(initialized());
-    expect(screen.getByTestId('loading-intervals-container')).toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveTextContent('Laddar intervall...');
   });
 
   test('shows a saving indicator while saving', () => {
     setup(initialized(), intervalsFetched({}), requestIntervalUpdate());
-    expect(screen.getByTestId('saving-intervals-container')).toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveTextContent('Sparar...');
   });
 
   test('shows no indicator before the app is initialised', () => {
     setup();
-    expect(screen.queryByTestId('loading-intervals-container')).not.toBeInTheDocument();
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
   });
 });

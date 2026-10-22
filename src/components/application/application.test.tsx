@@ -39,14 +39,14 @@ describe('Application', () => {
 
   test('shows the loader until the app is initialised', () => {
     setup();
-    expect(screen.getByTestId('app-init')).toBeInTheDocument();
-    expect(screen.queryByTestId('login-form')).not.toBeInTheDocument();
+    expect(screen.getByRole('status', { name: 'Laddar appen' })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Logga in' })).not.toBeInTheDocument();
   });
 
   test('shows the login form for a logged-out user', async () => {
     setup(initialized());
 
-    expect(await screen.findByTestId('login-form')).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: 'Logga in' })).toBeInTheDocument();
     expect(await screen.findByText('TajmR')).toBeInTheDocument();
   });
 
@@ -57,7 +57,7 @@ describe('Application', () => {
       intervalsFetched({}),
     );
 
-    expect(await screen.findByTestId('user-menu-toggle')).toBeInTheDocument();
-    expect(screen.queryByTestId('login-form')).not.toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: 'Öppna menyn' })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Logga in' })).not.toBeInTheDocument();
   });
 });
