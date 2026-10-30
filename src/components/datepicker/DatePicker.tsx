@@ -13,6 +13,16 @@ interface DatePickerProps {
   onChange: (date: Date) => void;
 }
 
+const openPicker = (input: HTMLInputElement | null) => {
+  if (!input) return;
+  input.click();
+  try {
+    input.showPicker();
+  } catch {
+    // the picker is already open, or the browser can't show one
+  }
+};
+
 const DatePicker = ({
   className = '',
   date = null,
@@ -29,7 +39,7 @@ const DatePicker = ({
         aria-hidden
         tabIndex={-1}
         disabled={!date}
-        onClick={() => input.current?.showPicker?.()}
+        onClick={() => openPicker(input.current)}
       >
         <Calendar size={24} />
       </button>

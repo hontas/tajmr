@@ -36,8 +36,18 @@ describe('DatePicker', () => {
   test('opens the native picker from the calendar button', () => {
     const { input } = setup({ date: new Date(2026, 9, 7).getTime() });
     input.showPicker = vi.fn<() => void>();
+    const click = vi.spyOn(input, 'click');
     fireEvent.click(screen.getByRole('button', { hidden: true }));
+    expect(click).toHaveBeenCalled();
     expect(input.showPicker).toHaveBeenCalled();
+  });
+
+  test('does not fail when the browser cannot show a picker', () => {
+    const { input } = setup({ date: new Date(2026, 9, 7).getTime() });
+    input.showPicker = vi.fn<() => void>(() => {
+      throw new DOMException('already open', 'InvalidStateError');
+    });
+    expect(() => fireEvent.click(screen.getByRole('button', { hidden: true }))).not.toThrow();
   });
 
   test('the calendar button is disabled without a date', () => {
