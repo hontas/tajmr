@@ -8,37 +8,27 @@ import styles from './DatePicker.module.css';
 
 interface DatePickerProps {
   className?: string;
-  buttonTitle?: string;
+  label: string;
   date?: number | null;
   onChange: (date: Date) => void;
 }
 
-const DatePicker = ({
-  className = '',
-  date = null,
-  onChange,
-  buttonTitle = '',
-}: DatePickerProps) => {
+const DatePicker = ({ className = '', date = null, onChange, label }: DatePickerProps) => {
   const input = useRef<HTMLInputElement>(null);
 
   return (
-    <div className={classNames(styles.container, className)}>
-      <button
-        type="button"
-        className={styles.button}
-        aria-hidden
-        tabIndex={-1}
-        disabled={!date}
-        onClick={() => input.current?.showPicker?.()}
-      >
-        <Calendar size={24} />
-      </button>
+    <div
+      className={classNames(styles.container, className)}
+      style={{ color: date ? undefined : 'var(--text-color-light)' }}
+    >
+      <Calendar size={24} />
       <input
         ref={input}
         type="date"
         className={styles.input}
-        title={buttonTitle}
-        aria-label={buttonTitle}
+        name={label}
+        title={label}
+        aria-label={label}
         disabled={!date}
         value={date ? toDateInputValue(date) : ''}
         onChange={({ target }) => target.value && onChange(fromDateInputValue(target.value))}

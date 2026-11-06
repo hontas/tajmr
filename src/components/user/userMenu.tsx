@@ -34,9 +34,10 @@ interface UserMenuProps {
   updateSettings: (prop: string, value: boolean | number | string) => void;
   user: AppUser;
   userSettings: UserSettingsState;
+  onClose: () => void;
 }
 
-const UserMenu = ({ userSettings, user, updateSettings }: UserMenuProps) => {
+const UserMenu = ({ userSettings, user, updateSettings, onClose }: UserMenuProps) => {
   const { displayMonthReport, displayNotifications, displayPreviousIntervals, hoursInWeek } =
     userSettings;
   const [isSavingUserSettings, startSavingUserSettings] = useTransition();
@@ -86,97 +87,110 @@ const UserMenu = ({ userSettings, user, updateSettings }: UserMenuProps) => {
   };
 
   return (
-    <form data-testid="user-menu" className={styles.container} onSubmit={preventDefault}>
-      <div className={styles.row}>
-        <img alt="Profilbild" className={styles.profileImage} src={photoURL} />
-        <Button className={styles.logOut} theme="link" onClick={firebaseApi.logout}>
-          Logga ut
+    <div className={styles.menuPanel}>
+      <header className={styles.menuHeader}>
+        <h2 className={styles.menuTitle}>Meny</h2>
+        <Button
+          className={styles.closeBtn}
+          data-testid="user-menu-close"
+          aria-label="Stäng menyn"
+          onClick={onClose}
+        >
+          ❌
         </Button>
-      </div>
-      <fieldset className={styles.fieldset}>
-        <label className={styles.label}>
-          Visa notifiering
-          <input
-            checked={displayNotifications}
-            onChange={handleChange('displayNotifications')}
-            style={{ float: 'right' }}
-            type="checkbox"
-          />
-        </label>
-        {displayNotifications && notificationHint[permission] && (
-          <p className={styles.hint}>{notificationHint[permission]}</p>
-        )}
-        <label className={styles.label}>
-          Visa tidigare intervall
-          <input
-            checked={displayPreviousIntervals}
-            onChange={handleChange('displayPreviousIntervals')}
-            style={{ float: 'right' }}
-            type="checkbox"
-          />
-        </label>
-        <label className={styles.label}>
-          Visa månadsrapport
-          <input
-            checked={displayMonthReport}
-            onChange={handleChange('displayMonthReport')}
-            style={{ float: 'right' }}
-            type="checkbox"
-          />
-        </label>
-        <label className={styles.label}>
-          Full arbetsvecka (h)
-          <input
-            value={hoursInWeek}
-            onChange={handleChange('hoursInWeek', Number)}
-            style={{ float: 'right', width: '100px' }}
-            type="number"
-          />
-        </label>
-      </fieldset>
-      <Button
-        theme="accent"
-        isLoading={isSavingUserSettings}
-        onClick={saveUserSettings}
-        text="Spara inställningar"
-      />
-      <fieldset className={styles.fieldset}>
-        {updatePasswordError && <p style={{ whiteSpace: 'normal' }}>{updatePasswordError}</p>}
-        <div className={styles.changePass}>
-          <div className={styles.changePassLabel}>
-            <input
-              onKeyDown={preventDefault}
-              autoComplete="current-password"
-              className={styles.changePassInput}
-              ref={oldPass}
-              type="password"
-              placeholder="Nuvarande lösenord"
-              aria-label="Nuvarande lösenord"
-              id="oldPassword"
-            />
-          </div>
-          <div className={styles.changePassLabel}>
-            <input
-              onKeyDown={preventDefault}
-              autoComplete="new-password"
-              className={styles.changePassInput}
-              ref={newPass}
-              type="password"
-              placeholder="Nytt lösenord"
-              aria-label="Nytt lösenord"
-              id="newPassword"
-            />
-          </div>
-          <Button
-            theme={updatePasswordSuccess ? 'success' : 'accent'}
-            className={styles.changePassBtn}
-            isLoading={isSavingUserPassword}
-            onClick={updateUserPassword}
-            text={updatePasswordSuccess ? '👍' : 'Ändra'}
-          />
+      </header>
+      <form data-testid="user-menu" className={styles.container} onSubmit={preventDefault}>
+        <div className={styles.row}>
+          <img alt="Profilbild" className={styles.profileImage} src={photoURL} />
+          <Button className={styles.logOut} theme="link" onClick={firebaseApi.logout}>
+            Logga ut
+          </Button>
         </div>
-      </fieldset>
-    </form>
+        <fieldset className={styles.fieldset}>
+          <label className={styles.label}>
+            Visa notifiering
+            <input
+              checked={displayNotifications}
+              onChange={handleChange('displayNotifications')}
+              style={{ float: 'right' }}
+              type="checkbox"
+            />
+          </label>
+          {displayNotifications && notificationHint[permission] && (
+            <p className={styles.hint}>{notificationHint[permission]}</p>
+          )}
+          <label className={styles.label}>
+            Visa tidigare intervall
+            <input
+              checked={displayPreviousIntervals}
+              onChange={handleChange('displayPreviousIntervals')}
+              style={{ float: 'right' }}
+              type="checkbox"
+            />
+          </label>
+          <label className={styles.label}>
+            Visa månadsrapport
+            <input
+              checked={displayMonthReport}
+              onChange={handleChange('displayMonthReport')}
+              style={{ float: 'right' }}
+              type="checkbox"
+            />
+          </label>
+          <label className={styles.label}>
+            Full arbetsvecka (h)
+            <input
+              value={hoursInWeek}
+              onChange={handleChange('hoursInWeek', Number)}
+              style={{ float: 'right', width: '100px' }}
+              type="number"
+            />
+          </label>
+        </fieldset>
+        <Button
+          theme="accent"
+          isLoading={isSavingUserSettings}
+          onClick={saveUserSettings}
+          text="Spara inställningar"
+        />
+        <fieldset className={styles.fieldset}>
+          {updatePasswordError && <p style={{ whiteSpace: 'normal' }}>{updatePasswordError}</p>}
+          <div className={styles.changePass}>
+            <div className={styles.changePassLabel}>
+              <input
+                onKeyDown={preventDefault}
+                autoComplete="current-password"
+                className={styles.changePassInput}
+                ref={oldPass}
+                type="password"
+                placeholder="Nuvarande lösenord"
+                aria-label="Nuvarande lösenord"
+                id="oldPassword"
+              />
+            </div>
+            <div className={styles.changePassLabel}>
+              <input
+                onKeyDown={preventDefault}
+                autoComplete="new-password"
+                className={styles.changePassInput}
+                ref={newPass}
+                type="password"
+                placeholder="Nytt lösenord"
+                aria-label="Nytt lösenord"
+                id="newPassword"
+              />
+            </div>
+            <Button
+              theme={updatePasswordSuccess ? 'success' : 'accent'}
+              className={styles.changePassBtn}
+              isLoading={isSavingUserPassword}
+              onClick={updateUserPassword}
+              text={updatePasswordSuccess ? '👍' : 'Ändra'}
+            />
+          </div>
+        </fieldset>
+      </form>
+    </div>
   );
 };
 

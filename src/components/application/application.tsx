@@ -17,7 +17,7 @@ function Application() {
   const initialized = useSelector((state) => state.app.initialized);
 
   return (
-    <div className={classNames(styles.application, { [styles.withActionBar]: user })}>
+    <div className={classNames(styles.application, { [styles.loggedIn]: user })}>
       <UpdatePrompt />
       <React.Suspense fallback={<Loader />}>
         {initialized ? (
@@ -28,6 +28,7 @@ function Application() {
                 <>
                   <CurrentIntervals />
                   <PreviousIntervals />
+                  <div className={styles.spacer} />
                 </>
               ) : (
                 <Login />

@@ -29,7 +29,7 @@ const Button = ({
   const classes = classNames(styles.button, styles[theme], { [styles.block]: block }, className);
 
   return (
-    <button {...rest} className={classes} type={type} disabled={disabled}>
+    <button {...rest} className={classes} type={type} disabled={disabled || isLoading}>
       {text}
       {children}
       {isLoading && <SpinKit.Bounce size="15px" />}
