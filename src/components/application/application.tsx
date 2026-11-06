@@ -28,6 +28,7 @@ function Application() {
                 <>
                   <CurrentIntervals />
                   <PreviousIntervals />
+                  <div className={styles.spacer} />
                 </>
               ) : (
                 <Login />

@@ -73,20 +73,12 @@ function Navbar() {
               aria-label="Meny"
               data-testid="user-menu-dialog"
             >
-              <div className={styles.menuPanel}>
-                <header className={styles.menuHeader}>
-                  <h2 className={styles.menuTitle}>Meny</h2>
-                  <Button
-                    className={styles.closeBtn}
-                    data-testid="user-menu-close"
-                    aria-label="Stäng menyn"
-                    onClick={() => menu.current?.close()}
-                  >
-                    ✕
-                  </Button>
-                </header>
-                <UserMenu user={user} userSettings={userSettings} updateSettings={updateSettings} />
-              </div>
+              <UserMenu
+                user={user}
+                userSettings={userSettings}
+                updateSettings={updateSettings}
+                onClose={() => menu.current?.close()}
+              />
             </dialog>
           </>
         )}
