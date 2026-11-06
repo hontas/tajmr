@@ -20,10 +20,17 @@ const userSettings: UserSettingsState = {
 
 const setup = (props: Partial<ComponentProps<typeof UserMenu>> = {}) => {
   const updateSettings = vi.fn<(prop: string, value: boolean | number | string) => void>();
+  const onClose = vi.fn<() => void>();
   render(
-    <UserMenu user={user} userSettings={userSettings} updateSettings={updateSettings} {...props} />,
+    <UserMenu
+      user={user}
+      userSettings={userSettings}
+      updateSettings={updateSettings}
+      onClose={onClose}
+      {...props}
+    />,
   );
-  return { updateSettings };
+  return { updateSettings, onClose };
 };
 
 describe('UserMenu', () => {
@@ -167,5 +174,11 @@ describe('UserMenu', () => {
 
       expect(await screen.findByText('Wrong password')).toBeInTheDocument();
     });
+  });
+
+  test('the close button calls onClose', () => {
+    const { onClose } = setup();
+    fireEvent.click(screen.getByRole('button', { name: 'Stäng menyn' }));
+    expect(onClose).toHaveBeenCalledTimes(1);
   });
 });
