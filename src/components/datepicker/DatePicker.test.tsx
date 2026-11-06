@@ -5,7 +5,7 @@ import DatePicker from './DatePicker.tsx';
 
 const setup = (props: Partial<ComponentProps<typeof DatePicker>> = {}) => {
   const onChange = vi.fn<(date: Date) => void>();
-  render(<DatePicker buttonTitle="Start date" date={null} onChange={onChange} {...props} />);
+  render(<DatePicker label="Start date" date={null} onChange={onChange} {...props} />);
   return { onChange, input: screen.getByLabelText<HTMLInputElement>('Start date') };
 };
 
@@ -31,27 +31,5 @@ describe('DatePicker', () => {
     const { input, onChange } = setup({ date: new Date(2026, 9, 7).getTime() });
     fireEvent.change(input, { target: { value: '' } });
     expect(onChange).not.toHaveBeenCalled();
-  });
-
-  test('opens the native picker from the calendar button', () => {
-    const { input } = setup({ date: new Date(2026, 9, 7).getTime() });
-    input.showPicker = vi.fn<() => void>();
-    const click = vi.spyOn(input, 'click');
-    fireEvent.click(screen.getByRole('button', { hidden: true }));
-    expect(click).toHaveBeenCalled();
-    expect(input.showPicker).toHaveBeenCalled();
-  });
-
-  test('does not fail when the browser cannot show a picker', () => {
-    const { input } = setup({ date: new Date(2026, 9, 7).getTime() });
-    input.showPicker = vi.fn<() => void>(() => {
-      throw new DOMException('already open', 'InvalidStateError');
-    });
-    expect(() => fireEvent.click(screen.getByRole('button', { hidden: true }))).not.toThrow();
-  });
-
-  test('the calendar button is disabled without a date', () => {
-    setup();
-    expect(screen.getByRole('button', { hidden: true })).toBeDisabled();
   });
 });

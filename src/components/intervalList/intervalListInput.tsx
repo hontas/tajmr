@@ -41,7 +41,7 @@ const IntervalListInput = ({
   return (
     <div className={classNames(styles.container, className)}>
       <DatePicker
-        buttonTitle={`${label}datum`}
+        label={`${label}datum`}
         className={styles.date}
         date={timestamp}
         onChange={pushDate}
