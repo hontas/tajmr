@@ -6,7 +6,7 @@ interface IntervalStatsItemProps {
 }
 
 const IntervalStatsItem = ({ day, time }: IntervalStatsItemProps) => (
-  <div className={styles.container}>
+  <div className={styles.container} data-testid="interval-stats-item">
     <h4>{day}</h4>
     <p>{time}</p>
   </div>

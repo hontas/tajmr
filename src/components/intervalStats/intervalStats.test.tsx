@@ -21,8 +21,8 @@ const renderWith = (intervals: Record<string, Interval>) => {
 
 describe('IntervalStats', () => {
   test('renders nothing for no intervals', () => {
-    const { container } = renderWith({});
-    expect(container.querySelector('.interval-stats')).toBeEmptyDOMElement();
+    renderWith({});
+    expect(screen.queryAllByTestId('interval-stats-item')).toHaveLength(0);
   });
 
   test('sums the time per day', () => {
@@ -41,8 +41,8 @@ describe('IntervalStats', () => {
     for (let i = 1; i <= 7; i += 1) {
       intervals[`i${i}`] = { startTime: day(i), endTime: day(i) + hour, createdAt: 0 };
     }
-    const { container } = renderWith(intervals);
+    renderWith(intervals);
 
-    expect(container.querySelectorAll('h4')).toHaveLength(5);
+    expect(screen.getAllByTestId('interval-stats-item')).toHaveLength(5);
   });
 });
