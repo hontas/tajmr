@@ -96,7 +96,7 @@ function groupByWeekDay(intervals: NewInterval[], now: number) {
           ...current,
           notWork: notWork || current.notWork,
           total: current.total + timespan,
-          intervals: [...current.intervals, { notWork, timespan, note }],
+          intervals: [...current.intervals, { startTime, notWork, timespan, note }],
         },
       };
     },

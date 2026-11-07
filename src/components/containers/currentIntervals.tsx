@@ -14,13 +14,17 @@ import { useDispatch, useSelector } from '#/store/useStore.tsx';
 import AddOneInterval from '#/components/intervalList/addOneInterval.tsx';
 import { getIntervalSum, isActive, isComplete } from '#/utils/intervals.ts';
 import type { Interval, NewInterval } from '#/utils/interValidator.ts';
+import useNow from '#/hooks/useNow.ts';
 import { getWeek, getMonth, getDayRange } from '#/utils/time.ts';
+import ErrorMessage from '#/components/error/Error.tsx';
 import { ErrorBoundaryFallback } from '#/components/ErrorBoundaryFallback.tsx';
 
 import styles from './currentIntervals.module.css';
 
-const todayRange = getDayRange(Date.now());
-function isToday({ startTime, endTime }: Interval) {
+function isToday(
+  { startTime, endTime }: Interval,
+  todayRange: { startTime: number; endTime: number },
+) {
   const startedToday = startTime > todayRange.startTime;
   const endedToday =
     endTime !== undefined && endTime > todayRange.startTime && endTime < todayRange.endTime;
@@ -29,9 +33,12 @@ function isToday({ startTime, endTime }: Interval) {
 
 const CurrentIntervals = () => {
   const dispatch = useDispatch();
+  const now = useNow();
+  const todayRange = getDayRange(now);
   const intervals = useSelector((state) => state.intervals.items);
   const timestamp = useSelector((state) => state.intervals.timestamp);
   const isLoading = useSelector((state) => state.intervals.isFetching || state.intervals.isSaving);
+  const error = useSelector((state) => state.intervals.error);
   const userSettings = useSelector((state) => state.userSettings);
   const [displayAddForm, setDisplayAddForm] = useState(false);
 
@@ -42,7 +49,9 @@ const CurrentIntervals = () => {
         .filter((note): note is string => Boolean(note)),
     ),
   ];
-  const todaysIntervals = intervals.filter(isToday).filter(isComplete);
+  const todaysIntervals = intervals
+    .filter((interval) => isToday(interval, todayRange))
+    .filter(isComplete);
   const activeInterval = intervals.find(isActive);
 
   const activeAndCurrentIntervals = activeInterval
@@ -99,6 +108,7 @@ const CurrentIntervals = () => {
               notes={notes}
             />
           )}
+          {error && !displayAddForm && <ErrorMessage error={String(error)} />}
           <IntervalList
             label="Dagens intervall"
             intervals={activeAndCurrentIntervals}

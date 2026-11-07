@@ -11,7 +11,7 @@ interface BeforeInstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 }
 
-export default () => {
+const Footer = () => {
   const [beforeInstallEvent, setBeforeInstallEvent] = useState<BeforeInstallPromptEvent | null>(
     null,
   );
@@ -29,13 +29,13 @@ export default () => {
     setInstallingPWA(false);
   };
 
-  function onBeforeInstall(event: Event) {
-    // Prevent the mini-infobar from appearing on mobile
-    event.preventDefault();
-    setBeforeInstallEvent(event as BeforeInstallPromptEvent);
-  }
-
   useEffect(() => {
+    function onBeforeInstall(event: Event) {
+      // Prevent the mini-infobar from appearing on mobile
+      event.preventDefault();
+      setBeforeInstallEvent(event as BeforeInstallPromptEvent);
+    }
+
     window.addEventListener('beforeinstallprompt', onBeforeInstall);
     return () => window.removeEventListener('beforeinstallprompt', onBeforeInstall);
   }, []);
@@ -54,3 +54,5 @@ export default () => {
     </footer>
   );
 };
+
+export default Footer;

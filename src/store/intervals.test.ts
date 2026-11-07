@@ -109,6 +109,11 @@ describe('intervals reducer', () => {
     expect(state).toMatchObject({ error: 'boom', isSaving: false });
   });
 
+  test('a new request clears the previous error', () => {
+    const state = reducer({ ...initial(), error: 'boom' }, requestIntervalUpdate());
+    expect(state).toMatchObject({ error: '', isSaving: true });
+  });
+
   test('INTERVALS_UPDATE_TIMESTAMP sets timestamp', () => {
     expect(reducer(initial(), updateTimestamp(42)).timestamp).toBe(42);
   });

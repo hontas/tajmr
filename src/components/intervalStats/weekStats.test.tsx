@@ -61,6 +61,22 @@ describe('WeekStats', () => {
     expect(screen.getAllByText('03:00').length).toBeGreaterThan(0);
   });
 
+  test('shows only the duration for an interval without a note', () => {
+    setup({ intervals: [{ startTime: wednesday, endTime: wednesday + hour }] });
+    expect(screen.queryByText(/undefined/)).not.toBeInTheDocument();
+  });
+
+  test('renders every interval of a day, also two of the same length', () => {
+    setup({
+      intervals: [
+        { startTime: wednesday, endTime: wednesday + hour, note: 'a' },
+        { startTime: wednesday + 2 * hour, endTime: wednesday + 3 * hour, note: 'b' },
+      ],
+    });
+    expect(screen.getByText('01:00 a')).toBeInTheDocument();
+    expect(screen.getByText('01:00 b')).toBeInTheDocument();
+  });
+
   test('previous / next week fetch the neighbouring week', () => {
     const { fetchIntervalsInWeek } = setup();
 
