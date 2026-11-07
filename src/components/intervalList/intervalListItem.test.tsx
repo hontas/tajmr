@@ -27,31 +27,29 @@ describe('IntervalListItem', () => {
   test('shows start and end time, note and notWork state', () => {
     setup();
 
-    expect(screen.getByTestId('interval-from-input')).toHaveValue(
-      getTimeString(interval.startTime),
-    );
-    expect(screen.getByTestId('interval-end-input')).toHaveValue(getTimeString(endTime));
-    expect(screen.getByTestId('interval-not-work-checkbox')).not.toBeChecked();
+    expect(screen.getByLabelText('Starttid')).toHaveValue(getTimeString(interval.startTime));
+    expect(screen.getByLabelText('Sluttid')).toHaveValue(getTimeString(endTime));
+    expect(screen.getByRole('checkbox', { name: 'Ej arbete' })).not.toBeChecked();
   });
 
   test('shows an empty, disabled end input for an interval without endTime', () => {
     setup({ interval: { ...interval, endTime: undefined } });
 
-    expect(screen.getByTestId('interval-end-input')).toHaveValue('');
-    expect(screen.getByTestId('interval-end-input')).toBeDisabled();
+    expect(screen.getByLabelText('Sluttid')).toHaveValue('');
+    expect(screen.getByLabelText('Sluttid')).toBeDisabled();
   });
 
   test('toggling notWork calls onUpdate with the updated interval', () => {
     const { onUpdate } = setup();
 
-    fireEvent.click(screen.getByTestId('interval-not-work-checkbox'));
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Ej arbete' }));
 
     expect(onUpdate).toHaveBeenCalledWith({ ...interval, notWork: true });
   });
 
   test('editing the start time and blurring calls onUpdate with the new timestamp', () => {
     const { onUpdate } = setup();
-    const input = screen.getByTestId('interval-from-input');
+    const input = screen.getByLabelText('Starttid');
 
     fireEvent.change(input, { target: { value: '08:15' } });
     fireEvent.blur(input);
@@ -63,7 +61,7 @@ describe('IntervalListItem', () => {
   test('shows the times of a new interval and drops an unsaved edit', () => {
     const onUpdate = vi.fn<(updated: EditableInterval) => void>();
     const { rerender } = render(<IntervalListItem interval={interval} onUpdate={onUpdate} />);
-    fireEvent.change(screen.getByTestId('interval-from-input'), { target: { value: '08:15' } });
+    fireEvent.change(screen.getByLabelText('Starttid'), { target: { value: '08:15' } });
 
     rerender(
       <IntervalListItem
@@ -76,10 +74,10 @@ describe('IntervalListItem', () => {
       />,
     );
 
-    expect(screen.getByTestId('interval-from-input')).toHaveValue(
+    expect(screen.getByLabelText('Starttid')).toHaveValue(
       getTimeString(new Date(2021, 3, 7, 10, 0).getTime()),
     );
-    expect(screen.getByTestId('interval-end-input')).toHaveValue('');
+    expect(screen.getByLabelText('Sluttid')).toHaveValue('');
   });
 
   test('picking another day moves the start and keeps the time of day', () => {
@@ -92,7 +90,7 @@ describe('IntervalListItem', () => {
 
   test('an invalid time is not pushed', () => {
     const { onUpdate } = setup();
-    const input = screen.getByTestId('interval-from-input');
+    const input = screen.getByLabelText('Starttid');
     const logSpy = vi.spyOn(console, 'log');
 
     fireEvent.change(input, { target: { value: '25:99' } });
@@ -106,7 +104,7 @@ describe('IntervalListItem', () => {
   test('delete button calls onDelete with the id', () => {
     const { onDelete } = setup();
 
-    fireEvent.click(screen.getByTestId('remove-interval'));
+    fireEvent.click(screen.getByRole('button', { name: 'Ta bort intervallet' }));
 
     expect(onDelete).toHaveBeenCalledWith('i1');
   });
@@ -114,6 +112,6 @@ describe('IntervalListItem', () => {
   test('no delete button without onDelete', () => {
     setup({ onDelete: undefined });
 
-    expect(screen.queryByTestId('remove-interval')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Ta bort intervallet' })).not.toBeInTheDocument();
   });
 });

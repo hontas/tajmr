@@ -22,6 +22,16 @@ npm run dev
 Run `npm run verify` before pushing: it runs what the PR check runs (lint, format check, knip, tests with
 coverage, production build). See [AGENTS.md](AGENTS.md) for the conventions and workflow.
 
+### e2e
+
+The Cypress specs in `cypress/e2e` log in with a test account against the **live Firebase project**, so
+they are not part of CI or `npm run verify`. With the dev server running (`npm run dev`, port 5173):
+
+```shell
+npm ci   # without CYPRESS_INSTALL_BINARY=0, so the Cypress binary is downloaded
+npm run e2e
+```
+
 ## environment
 
 Local development and tests need no environment variables. The deploy build (`SENTRY_UPLOAD=true`) uploads

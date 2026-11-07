@@ -21,7 +21,7 @@ describe('UpdatePrompt', () => {
     render(<UpdatePrompt />);
 
     expect(registerServiceWorker).toHaveBeenCalledTimes(1);
-    expect(screen.queryByTestId('update-prompt')).not.toBeInTheDocument();
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
   });
 
   test('announces the update and only installs it when the user asks', () => {
@@ -41,7 +41,7 @@ describe('UpdatePrompt', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Senare' }));
 
-    expect(screen.queryByTestId('update-prompt')).not.toBeInTheDocument();
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
     expect(update).not.toHaveBeenCalled();
   });
 });
