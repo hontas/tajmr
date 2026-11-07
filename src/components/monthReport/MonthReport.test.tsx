@@ -34,7 +34,8 @@ describe('MonthReport', () => {
   afterEach(() => vi.useRealTimers());
 
   const renderReport = () => render(<MonthReport intervals={intervals} />);
-  const row = (title: string) => screen.getByText(title, { selector: 'p' }).closest('li');
+  const row = (title: string) =>
+    screen.getByTestId(title === 'TOTAL:' ? 'month-report-row-total' : `month-report-row-${title}`);
 
   test('shows the current month and year', () => {
     renderReport();

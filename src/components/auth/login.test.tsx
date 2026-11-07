@@ -91,10 +91,7 @@ describe('Login', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Logga in' }));
 
-    await waitFor(() =>
-      expect(screen.getByRole('button', { name: 'Logga in' })).toBeInTheDocument(),
-    );
-    expect(screen.getByRole('button', { name: 'Logga in' }).children.length).toBeGreaterThan(0);
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Logga in' })).toBeDisabled());
     await act(async () => login.resolve({} as UserCredential));
   });
 
@@ -107,7 +104,7 @@ describe('Login', () => {
 
     await screen.findByText(/nope/);
     await waitFor(() =>
-      expect(screen.getByRole('button', { name: 'Logga in' }).children).toHaveLength(0),
+      expect(screen.getByRole('button', { name: 'Logga in' })).not.toBeDisabled(),
     );
   });
 

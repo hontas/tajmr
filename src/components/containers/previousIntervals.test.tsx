@@ -22,16 +22,6 @@ describe('PreviousIntervals', () => {
     store.dispatch(intervalsFetched(intervals));
   });
 
-  test('should render', () => {
-    const { container } = render(
-      <StoreProvider store={store}>
-        <PreviousIntervals />
-      </StoreProvider>,
-    );
-
-    expect(container).not.toBeEmptyDOMElement();
-  });
-
   test('has a named list of the intervals', () => {
     render(
       <StoreProvider store={store}>
