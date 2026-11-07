@@ -74,3 +74,13 @@ Do not run `npm run e2e` (Cypress) unless asked: it logs in with a hard-coded te
 - Versions are calendar versions (`YYYY.MM.DD`, plus `.N` from the second deploy of a day) computed by the
   deploy workflow; they are the Sentry release and the `v<version>` tag. `package.json`'s `version` is not
   used.
+
+## Agent skills
+
+### Issue tracker
+
+Issues live as GitHub issues in `hontas/tajmr`, managed via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Domain docs
+
+Single-context: `GLOSSARY.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
