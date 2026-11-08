@@ -16,7 +16,7 @@ export default function UpdatePrompt() {
   if (!updateAvailable) return null;
 
   return (
-    <output className={styles.toast} data-testid="update-prompt">
+    <output className={styles.toast}>
       <span className={styles.message}>En ny version av appen finns</span>
       <div className={styles.actions}>
         <Button

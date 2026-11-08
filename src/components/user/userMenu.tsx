@@ -90,16 +90,11 @@ const UserMenu = ({ userSettings, user, updateSettings, onClose }: UserMenuProps
     <div className={styles.menuPanel}>
       <header className={styles.menuHeader}>
         <h2 className={styles.menuTitle}>Meny</h2>
-        <Button
-          className={styles.closeBtn}
-          data-testid="user-menu-close"
-          aria-label="Stäng menyn"
-          onClick={onClose}
-        >
+        <Button className={styles.closeBtn} aria-label="Stäng menyn" onClick={onClose}>
           ❌
         </Button>
       </header>
-      <form data-testid="user-menu" className={styles.container} onSubmit={preventDefault}>
+      <form className={styles.container} onSubmit={preventDefault}>
         <div className={styles.row}>
           <img alt="Profilbild" className={styles.profileImage} src={photoURL} />
           <Button className={styles.logOut} theme="link" onClick={firebaseApi.logout}>

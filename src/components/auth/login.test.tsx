@@ -39,7 +39,7 @@ describe('Login', () => {
     render(<Login />);
     typeCredentials('me@example.com', 'secret');
 
-    fireEvent.submit(screen.getByTestId('login-form'));
+    fireEvent.click(screen.getByRole('button', { name: 'Logga in' }));
 
     await waitFor(() => expect(firebaseApi.login).toHaveBeenCalledWith('me@example.com', 'secret'));
   });

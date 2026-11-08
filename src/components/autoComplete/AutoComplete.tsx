@@ -16,7 +16,7 @@ interface AutoCompleteProps {
   className?: string;
   label?: string;
   placeholder?: string;
-  'data-testid'?: string;
+  'aria-label'?: string;
   value?: string;
   notes?: string[];
   onChange: (value: string) => void;
@@ -26,7 +26,7 @@ const AutoComplete = ({
   className,
   label = '',
   placeholder = '',
-  'data-testid': testId,
+  'aria-label': ariaLabel,
   value,
   notes = noNotes,
   onChange,
@@ -124,7 +124,7 @@ const AutoComplete = ({
       <label className={styles.label}>
         {label}
         <input
-          data-testid={testId}
+          aria-label={ariaLabel}
           ref={inputRef}
           type="text"
           value={query}
