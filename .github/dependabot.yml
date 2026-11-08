@@ -9,13 +9,19 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    # Wait a week after a release before proposing it. Security updates bypass this.
+    # Wait a week after a release (a month for a new major) before proposing it.
+    # Security updates bypass this.
     cooldown:
       default-days: 7
+      semver-major-days: 30
     open-pull-requests-limit: 5
     commit-message:
       prefix: "chore(deps)"
     groups:
+      # vite-plus bundles vitest and requires the matching @vitest/coverage-v8.
+      # A dependency joins the first group it matches, so this one goes first.
+      vite-plus:
+        patterns: ["vite-plus", "vitest", "@vitest/*"]
       minor-and-patch:
         update-types: ["minor", "patch"]
   - package-ecosystem: "github-actions"
@@ -24,6 +30,7 @@ updates:
       interval: "weekly"
     cooldown:
       default-days: 7
+      semver-major-days: 30
     commit-message:
       prefix: "chore(ci)"
     groups:
