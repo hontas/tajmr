@@ -2,7 +2,7 @@ import { useState } from 'react';
 import classNames from 'classnames';
 
 import DatePicker from '#/components/datepicker/DatePicker.tsx';
-import { getTimeString } from '#/utils/time.ts';
+import { getTimeString, mergeDate, mergeTimeOfDay } from '#/utils/time.ts';
 
 import styles from './intervalListInput.module.css';
 
@@ -17,18 +17,13 @@ const IntervalListInput = ({ className, label, timestamp, onUpdate }: IntervalLi
   const [value, setValue] = useState(timestamp ? getTimeString(timestamp) : '');
 
   const pushTime = () => {
-    if (!timestamp || !value || value === getTimeString(timestamp)) return;
-    const [hours, minutes] = value.split(':').map(Number);
-    const date = new Date(timestamp);
-    date.setHours(hours ?? 0, minutes ?? 0);
-    onUpdate(date.getTime());
+    const merged = mergeTimeOfDay(timestamp, value);
+    if (merged !== undefined) onUpdate(merged);
   };
 
   const pushDate = (nextDate: Date) => {
-    if (!timestamp) return;
-    const date = new Date(timestamp);
-    date.setFullYear(nextDate.getFullYear(), nextDate.getMonth(), nextDate.getDate());
-    onUpdate(date.getTime());
+    const merged = mergeDate(timestamp, nextDate);
+    if (merged !== undefined) onUpdate(merged);
   };
 
   return (

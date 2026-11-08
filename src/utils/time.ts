@@ -57,6 +57,21 @@ export function fromDateInputValue(value: string) {
   return new Date(year, month - 1, day);
 }
 
+export function mergeTimeOfDay(timestamp: number | undefined, value: string) {
+  if (!timestamp || !value || value === getTimeString(timestamp)) return undefined;
+  const [hours, minutes] = value.split(':').map(Number);
+  const date = new Date(timestamp);
+  date.setHours(hours ?? 0, minutes ?? 0);
+  return date.getTime();
+}
+
+export function mergeDate(timestamp: number | undefined, nextDate: Date) {
+  if (!timestamp) return undefined;
+  const date = new Date(timestamp);
+  date.setFullYear(nextDate.getFullYear(), nextDate.getMonth(), nextDate.getDate());
+  return date.getTime();
+}
+
 export function getHours(timestamp: number) {
   return timestamp / oneHour;
 }
