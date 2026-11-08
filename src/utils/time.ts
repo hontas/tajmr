@@ -153,7 +153,7 @@ export function getWeekNumber(timestamp: number | Date) {
   return Math.ceil(((d.getTime() - yearStart.getTime()) / oneDay + 1) / 7);
 }
 
-export function zeroPad(num: number) {
+function zeroPad(num: number) {
   return num < 10 ? `0${num}` : num;
 }
 

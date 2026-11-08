@@ -26,12 +26,6 @@ describe('CurrentIntervals', () => {
       </StoreProvider>,
     );
 
-  test('should render', () => {
-    const { container } = setup();
-
-    expect(container).not.toBeEmptyDOMElement();
-  });
-
   test('has a named list of the intervals and a work button', () => {
     setup();
 
