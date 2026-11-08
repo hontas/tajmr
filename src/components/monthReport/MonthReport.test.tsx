@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, within } from '@testing-library/react';
 
 import MonthReport from './MonthReport.tsx';
 
@@ -34,8 +34,12 @@ describe('MonthReport', () => {
   afterEach(() => vi.useRealTimers());
 
   const renderReport = () => render(<MonthReport intervals={intervals} />);
-  const row = (title: string) =>
-    screen.getByTestId(title === 'TOTAL:' ? 'month-report-row-total' : `month-report-row-${title}`);
+  const row = (title: string) => {
+    const items = within(screen.getByRole('list')).getAllByRole('listitem');
+    const match = items.find((item) => within(item).queryByText(title));
+    if (!match) throw new Error(`No row titled "${title}"`);
+    return match;
+  };
 
   test('shows the current month and year', () => {
     renderReport();

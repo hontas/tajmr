@@ -75,7 +75,6 @@ const MonthReport = ({ className, intervals }: MonthReportProps) => {
         {filteredCategories.map((note) => (
           <li
             key={note}
-            data-testid={`month-report-row-${note}`}
             className={classNames(styles.listItem, {
               [styles.notWork]: note.startsWith(isNotWork),
             })}
@@ -84,7 +83,7 @@ const MonthReport = ({ className, intervals }: MonthReportProps) => {
             <p className={styles.listItemValue}>{`${getHours(grouped[note]).toFixed(1)}h`}</p>
           </li>
         ))}
-        <li className={styles.listItem} data-testid="month-report-row-total">
+        <li className={styles.listItem}>
           <p className={styles.listItemTitle}>TOTAL:</p>
           <p className={styles.listItemValue}>{`${getHours(totalMinusNotWork).toFixed(1)}h`}</p>
         </li>

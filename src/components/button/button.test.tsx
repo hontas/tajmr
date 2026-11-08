@@ -33,8 +33,8 @@ describe('Button', () => {
     expect(onClick).not.toHaveBeenCalled();
   });
 
-  test('passes through extra props such as data-testid', () => {
-    render(<Button text="a" data-testid="my-btn" onClick={() => {}} />);
-    expect(screen.getByTestId('my-btn')).toBeInTheDocument();
+  test('passes through extra props such as aria-label', () => {
+    render(<Button text="a" aria-label="Spara" onClick={() => {}} />);
+    expect(screen.getByRole('button', { name: 'Spara' })).toBeInTheDocument();
   });
 });

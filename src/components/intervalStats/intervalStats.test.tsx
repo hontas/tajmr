@@ -22,7 +22,7 @@ const renderWith = (intervals: Record<string, Interval>) => {
 describe('IntervalStats', () => {
   test('renders nothing for no intervals', () => {
     renderWith({});
-    expect(screen.queryAllByTestId('interval-stats-item')).toHaveLength(0);
+    expect(screen.queryAllByRole('heading', { level: 4 })).toHaveLength(0);
   });
 
   test('sums the time per day', () => {
@@ -43,6 +43,6 @@ describe('IntervalStats', () => {
     }
     renderWith(intervals);
 
-    expect(screen.getAllByTestId('interval-stats-item')).toHaveLength(5);
+    expect(screen.getAllByRole('heading', { level: 4 })).toHaveLength(5);
   });
 });
