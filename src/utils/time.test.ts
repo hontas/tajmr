@@ -5,6 +5,8 @@ import {
   getWeekday,
   toDateInputValue,
   fromDateInputValue,
+  mergeTimeOfDay,
+  mergeDate,
   getWeekNumber,
   getDayRange,
   getWeek,
@@ -65,6 +67,47 @@ describe('time', () => {
 
     test('fromDateInputValue gives local midnight of that day', () => {
       expect(+fromDateInputValue('2026-10-07')).toBe(+new Date(2026, 9, 7));
+    });
+  });
+
+  describe('#mergeTimeOfDay', () => {
+    const nineOClock = new Date(2021, 3, 7, 9, 0).getTime();
+
+    test('changes only the time of day and keeps the date', () => {
+      expect(mergeTimeOfDay(nineOClock, '08:15')).toBe(new Date(2021, 3, 7, 8, 15).getTime());
+    });
+
+    test('has nothing to push without a base timestamp', () => {
+      expect(mergeTimeOfDay(undefined, '08:15')).toBeUndefined();
+    });
+
+    test('has nothing to push for an empty value', () => {
+      expect(mergeTimeOfDay(nineOClock, '')).toBeUndefined();
+    });
+
+    test('has nothing to push when the value is the time already there', () => {
+      expect(mergeTimeOfDay(nineOClock, getTimeString(nineOClock))).toBeUndefined();
+    });
+  });
+
+  describe('#mergeDate', () => {
+    const nineThirty = new Date(2021, 3, 7, 9, 30).getTime();
+
+    test('changes only the date and keeps the time of day', () => {
+      expect(mergeDate(nineThirty, new Date(2022, 0, 31))).toBe(
+        new Date(2022, 0, 31, 9, 30).getTime(),
+      );
+    });
+
+    test('moves from the 31st to a shorter month without rolling over', () => {
+      const thirtyFirst = new Date(2021, 0, 31, 9, 0).getTime();
+      expect(mergeDate(thirtyFirst, new Date(2021, 1, 28))).toBe(
+        new Date(2021, 1, 28, 9, 0).getTime(),
+      );
+    });
+
+    test('has nothing to push without a base timestamp', () => {
+      expect(mergeDate(undefined, new Date(2022, 0, 31))).toBeUndefined();
     });
   });
 
