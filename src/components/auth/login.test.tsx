@@ -72,6 +72,7 @@ describe('Login', () => {
     typeCredentials('me@example.com', 'bad');
     fireEvent.click(screen.getByRole('button', { name: 'Logga in' }));
     await screen.findByText(/The password is invalid/);
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Logga in' })).toBeEnabled());
 
     const login = Promise.withResolvers<UserCredential>();
     vi.mocked(firebaseApi.login).mockReturnValue(login.promise);
